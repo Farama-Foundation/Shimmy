@@ -31,7 +31,7 @@ def test_all_envs(domain_name):
         term, trunc = False, False
 
         # run until termination
-        while not term or trunc:
+        while not term and not trunc:
             obs, rew, term, trunc, info = env.step(env.action_space.sample())
 
 
