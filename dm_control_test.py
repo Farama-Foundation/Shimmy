@@ -10,12 +10,11 @@ env = suite.load("hopper", "stand", task_kwargs={"random": random_state})
 
 # convert the environment
 env = dm_control_wrapper(env, render_mode="rgb_array")
-
-obs = env.reset()
+env.reset()
 
 frames = []
 for _ in range(100):
-    env.step(env.action_space.sample())
+    obs, rew, term, trunc, info = env.step(env.action_space.sample())
     frames.append(env.render())
 print(len(frames))
 
