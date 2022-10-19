@@ -13,6 +13,7 @@ from gymnasium.utils import seeding
 
 
 def dmc_spec2gym_space(spec):
+    """Converts a dm_control spec to a gymnasium space."""
     if isinstance(spec, OrderedDict) or isinstance(spec, dict):
         spec = copy.copy(spec)
         for k, v in spec.items():
@@ -38,6 +39,7 @@ def dmc_spec2gym_space(spec):
 
 
 def dmc_obs2gym_obs(obs):
+    """Converts a dm_control observation to a numpy array."""
     if isinstance(obs, OrderedDict) or isinstance(obs, dict):
         obs = copy.copy(obs)
         for k, v in obs.items():
@@ -48,6 +50,9 @@ def dmc_obs2gym_obs(obs):
 
 
 class dm_control_wrapper(gym.Env):
+    """Wrapper that converts a dm_control environment into a gymnasium environment.
+    """
+
 
     metadata = {"render_modes": ["human", "rgb_array"]}
 
@@ -59,6 +64,15 @@ class dm_control_wrapper(gym.Env):
         render_width: int = 84,
         camera_id: int = 0,
     ):
+        """Wrapper that converts a dm_control environment into a gymnasium environment.
+
+        Args:
+            env (dm_env.Environment): the base environment
+            render_mode (str): render mode of the environment, must be specified at start
+            render_height (int): the height of the render window
+            render_width (int): the width of the render window
+            camera_id (int): the ID of the camera that is used for rendering
+        """
         self._env = env
 
         # convert spaces
@@ -78,22 +92,45 @@ class dm_control_wrapper(gym.Env):
             self.viewer = Viewer(
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
-        else:
-            self.viewer = None
 
     def __getattr__(self, name):
+        """__getattr__.
+
+        Args:
+            name:
+        """
         return getattr(self._env, name)
 
     def __repr__(self):
+        """__repr__.
+        """
         description = f"All I can tell you is {self._env._task}."
+        return description
 
     def seed(self, seed: int):
+        """Seeds the base environment.
+
+        Args:
+            seed (int): seed
+        """
         if hasattr(self._env, "random_state"):
             self._env.random_state.seed(seed)
         else:
             self._env.task.random.seed(seed)
 
     def step(self, action: np.ndarray):
+        """Steps the underlying environment.
+
+        Args:
+            action (np.ndarray): action
+
+        Returns:
+            obs (np.ndarray): the observation of this step
+            reward (float): the reward of this step
+            terminated (bool): whether the environment has ended because of a terminal state
+            truncated (bool): whether the enviornment has ended by exceeding the maximum time step
+            info (dict): a dictionary of auxiliary information
+        """
         assert self.action_space.contains(action)
 
         # get stuff from the environment by stepping
@@ -115,6 +152,12 @@ class dm_control_wrapper(gym.Env):
         return obs, reward, terminated, truncated, info
 
     def reset(self, seed: Optional[int] = None, options: Optional[dict] = None):
+        """Resets the underlying environment.
+
+        Args:
+            seed (Optional[int]): seed
+            options (Optional[dict]): options
+        """
         if seed is not None:
             self._np_random, seed = seeding.np_random(seed)
             self.seed(seed=seed)
@@ -126,9 +169,11 @@ class dm_control_wrapper(gym.Env):
         return obs, info
 
     def render(self):
+        """Renders the environment depending on what `render_modes` is set to.
+        """
         assert (
             self.render_mode in dm_control_wrapper.metadata["render_modes"]
-        ), f"Can't find {self.render_mode=} in metadata with possible modes {dm_control_wrapper.metadata['render_modes']}."
+        ), f"Can't find render_mode '{self.render_mode}' in metadata with possible modes {dm_control_wrapper.metadata['render_modes']}."
 
         if self.render_mode == "rgb_array":
             return self._env.physics.render(

@@ -1,12 +1,31 @@
+"""Tests the functionality of the dm_control_wrapper."""
+
 import inspect
 
 import numpy as np
 import pytest
 from dm_control import suite
-from dm_control.suite import (acrobot, ball_in_cup, cartpole, cheetah, dog,
-                              finger, fish, hopper, humanoid, humanoid_CMU,
-                              lqr, manipulator, pendulum, point_mass,
-                              quadruped, reacher, stacker, swimmer, walker)
+from dm_control.suite import (
+    acrobot,
+    ball_in_cup,
+    cartpole,
+    cheetah,
+    dog,
+    finger,
+    fish,
+    hopper,
+    humanoid,
+    humanoid_CMU,
+    lqr,
+    manipulator,
+    pendulum,
+    point_mass,
+    quadruped,
+    reacher,
+    stacker,
+    swimmer,
+    walker,
+)
 from PIL import Image
 
 from shimmy import dm_control_wrapper
@@ -21,6 +40,7 @@ _DOMAINS = {
 
 @pytest.mark.parametrize("domain_name", _DOMAINS.keys())
 def test_all_envs(domain_name):
+    """Tests the conversion of all dm_control envs."""
     # for each possible task in the domain:
     for task_name in _DOMAINS[domain_name].SUITE:
         # load the suite
@@ -38,6 +58,7 @@ def test_all_envs(domain_name):
 
 
 def test_seeding():
+    """Tests the seeding of the dm_control conversion wrapper."""
     # load envs
     env1 = suite.load("hopper", "stand")
     env2 = suite.load("hopper", "stand")
@@ -59,12 +80,14 @@ def test_seeding():
                 assert (stuff1 == stuff2).all(), f"Incorrect returns on iteration {i}."
 
 
-def test_render():
+@pytest.mark.parametrize("camera_id", [0, 1])
+def test_render(camera_id):
+    """Tests the rendering of the dm_control conversion wrapper."""
     # load an env
     env = suite.load("hopper", "stand")
 
     # convert the environment
-    env = dm_control_wrapper(env, render_mode="rgb_array")
+    env = dm_control_wrapper(env, render_mode="rgb_array", camera_id=camera_id)
     env.reset()
 
     frames = []
