@@ -2,7 +2,7 @@ import numpy as np
 from dm_control import suite
 from PIL import Image
 
-from shimmy.dm_control_compatibility import dm_control_wrapper
+from shimmy import dm_control_wrapper
 
 # Load the environment
 random_state = np.random.RandomState(42)
