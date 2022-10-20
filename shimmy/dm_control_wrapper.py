@@ -169,6 +169,9 @@ class dm_control_wrapper(gym.Env):
         obs = dmc_obs2gym_obs(time_step.observation)
         info = {}
 
+        if self.render_mode == "human":
+            self.viewer.render()
+
         return obs, info
 
     def render(self):
