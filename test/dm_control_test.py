@@ -57,9 +57,9 @@ _DOMAINS = [
 def test_all_envs(domain):
     """Tests the conversion of all dm_control envs."""
     # for each possible task in the domain:
-    for task_name in domain.SUITE:
+    for task in domain.SUITE.values():
         # load the suite
-        env = domain.SUITE[task_name]()
+        env = task()
 
         # convert the environment
         env = dm_control_wrapper(env, render_mode="rgb_array")
