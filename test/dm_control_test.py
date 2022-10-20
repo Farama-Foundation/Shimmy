@@ -1,7 +1,5 @@
 """Tests the functionality of the dm_control_wrapper."""
 
-import inspect
-
 import numpy as np
 import pytest
 from dm_control import suite
@@ -32,20 +30,36 @@ from PIL import Image
 from shimmy import dm_control_wrapper
 
 # Find all domains imported.
-_DOMAINS = {
-    name: module
-    for name, module in locals().items()
-    if inspect.ismodule(module) and hasattr(module, "SUITE")
-}
+_DOMAINS = [
+    acrobot,
+    ball_in_cup,
+    cartpole,
+    cheetah,
+    dog,
+    finger,
+    fish,
+    hopper,
+    humanoid,
+    humanoid_CMU,
+    lqr,
+    manipulator,
+    pendulum,
+    point_mass,
+    quadruped,
+    reacher,
+    stacker,
+    swimmer,
+    walker,
+]
 
 
-@pytest.mark.parametrize("domain_name", _DOMAINS.keys())
-def test_all_envs(domain_name):
+@pytest.mark.parametrize("domain", _DOMAINS)
+def test_all_envs(domain):
     """Tests the conversion of all dm_control envs."""
     # for each possible task in the domain:
-    for task_name in _DOMAINS[domain_name].SUITE:
+    for task_name in domain.SUITE:
         # load the suite
-        env = suite.load(domain_name, task_name)
+        env = domain.SUITE[task_name]()
 
         # convert the environment
         env = dm_control_wrapper(env, render_mode="rgb_array")
