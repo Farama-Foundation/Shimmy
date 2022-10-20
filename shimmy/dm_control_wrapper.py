@@ -31,11 +31,11 @@ def dmc_spec2gym_space(spec):
             low = float("-inf")
             high = float("inf")
         else:
-            raise ValueError()
+            raise ValueError(f"Unknown dtype {spec.dtype} for spec {spec}.")
 
         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
     else:
-        raise NotImplementedError
+        raise NotImplementedError(f"Unkown spec {spec} for environment, not converting.")
 
 
 def dmc_obs2gym_obs(obs):
@@ -101,9 +101,8 @@ class dm_control_wrapper(gym.Env):
         """
         return getattr(self._env, name)
 
-    def __repr__(self):
-        """__repr__.
-        """
+    def __str__(self):
+        """Gives a str representation of this environment."""
         description = f"All I can tell you is {self._env._task}."
         return description
 

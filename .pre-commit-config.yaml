@@ -29,7 +29,6 @@ repos:
     rev: 6.1.1  # pick a git hash / tag to point to
     hooks:
       - id: pydocstyle
-        exclude: ^(gymnasium/envs/)|(tests/)|(docs/)
         args:
           - --source
           - --explain
@@ -40,7 +39,7 @@ repos:
     hooks:
       - id: pyupgrade
         # TODO: remove `--keep-runtime-typing` option
-        args: ["--py36-plus", "--keep-runtime-typing"]
+        args: ["--py37-plus", "--keep-runtime-typing"]
   - repo: local
     hooks:
       - id: pyright
