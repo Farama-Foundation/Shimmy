@@ -58,11 +58,9 @@ def test_all_envs(domain):
     """Tests the conversion of all dm_control envs."""
     # for each possible task in the domain:
     for task in domain.SUITE.values():
-        # load the suite
-        env = task()
 
-        # convert the environment
-        env = dm_control_wrapper(env, render_mode="rgb_array")
+        # convert the task to gymnasium environment
+        env = dm_control_wrapper(task(), render_mode="rgb_array")
 
         # check the environment using gymnasium
         check_env(env)
