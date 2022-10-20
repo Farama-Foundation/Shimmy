@@ -26,6 +26,7 @@ from dm_control.suite import (
     swimmer,
     walker,
 )
+from gymnasium.utils.env_checker import check_env
 from PIL import Image
 
 from shimmy import dm_control_wrapper
@@ -48,8 +49,12 @@ def test_all_envs(domain_name):
 
         # convert the environment
         env = dm_control_wrapper(env, render_mode="rgb_array")
-        env.reset()
 
+        # check the environment using gymnasium
+        check_env(env)
+
+        # reset and begin test
+        env.reset()
         term, trunc = False, False
 
         # run until termination

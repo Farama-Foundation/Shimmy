@@ -1,3 +1,4 @@
+"""Wrapper to convert a dm_control environment into a gymnasium compatible environment."""
 # Taken from
 # https://github.com/ikostrikov/dmcgym/blob/main/dmcgym/env.py
 # and modified to modern gymnasium API
@@ -35,7 +36,9 @@ def dmc_spec2gym_space(spec):
 
         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
     else:
-        raise NotImplementedError(f"Unkown spec {spec} for environment, not converting.")
+        raise NotImplementedError(
+            f"Unknown spec {spec} for environment, not converting."
+        )
 
 
 def dmc_obs2gym_obs(obs):
@@ -50,9 +53,7 @@ def dmc_obs2gym_obs(obs):
 
 
 class dm_control_wrapper(gym.Env):
-    """Wrapper that converts a dm_control environment into a gymnasium environment.
-    """
-
+    """Wrapper that converts a dm_control environment into a gymnasium environment."""
 
     metadata = {"render_modes": ["human", "rgb_array"]}
 
@@ -93,11 +94,11 @@ class dm_control_wrapper(gym.Env):
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str):
         """__getattr__.
 
         Args:
-            name:
+            name (str): name of variable to get from the underlying environment
         """
         return getattr(self._env, name)
 
@@ -116,26 +117,33 @@ class dm_control_wrapper(gym.Env):
             obs (np.ndarray): the observation of this step
             reward (float): the reward of this step
             terminated (bool): whether the environment has ended because of a terminal state
-            truncated (bool): whether the enviornment has ended by exceeding the maximum time step
+            truncated (bool): whether the environment has ended by exceeding the maximum time step
             info (dict): a dictionary of auxiliary information
         """
         assert self.action_space.contains(action)
 
         # get stuff from the environment by stepping
-        time_step = self._env.step(action)
+        timestep = self._env.step(action)
 
-        # open up the timestep
-        obs = dmc_obs2gym_obs(time_step.observation)
-        reward = time_step.reward or 0
-        terminated = False
-        truncated = False
-        info = {}
+        # open up the timestep and process reward and observation
+        obs = dmc_obs2gym_obs(timestep.observation)
+        reward = timestep.reward or 0
 
         # set terminated and truncated
-        if time_step.last() and time_step.discount == 1.0:
+        if timestep.last() and timestep.discount == 1.0:
+            terminated = False
             truncated = True
-        elif time_step.last() and time_step.discount != 1.0:
+        elif timestep.last() and timestep.discount != 1.0:
             terminated = True
+            truncated = False
+        else:
+            terminated = False
+            truncated = False
+
+        info = dict()
+        info["timestep.last"] = timestep.last()
+        info["timestep.discount"] = timestep.discount
+        info["timestep.step_type"] = timestep.step_type
 
         if self.render_mode == "human":
             self.viewer.render()
@@ -149,6 +157,8 @@ class dm_control_wrapper(gym.Env):
             seed (Optional[int]): seed
             options (Optional[dict]): options
         """
+        super().reset(seed=seed)
+
         if seed is not None:
             if hasattr(self._env, "random_state"):
                 self._env.random_state.seed(seed)
@@ -165,8 +175,7 @@ class dm_control_wrapper(gym.Env):
         return obs, info
 
     def render(self):
-        """Renders the environment depending on what `render_modes` is set to.
-        """
+        """Renders the environment depending on what `render_modes` is set to."""
         assert (
             self.render_mode in dm_control_wrapper.metadata["render_modes"]
         ), f"Can't find render_mode '{self.render_mode}' in metadata with possible modes {dm_control_wrapper.metadata['render_modes']}."
