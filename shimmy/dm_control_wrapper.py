@@ -107,17 +107,6 @@ class dm_control_wrapper(gym.Env):
         description = f"All I can tell you is {self._env._task}."
         return description
 
-    def seed(self, seed: int):
-        """Seeds the base environment.
-
-        Args:
-            seed (int): seed
-        """
-        if hasattr(self._env, "random_state"):
-            self._env.random_state.seed(seed)
-        else:
-            self._env.task.random.seed(seed)
-
     def step(self, action: np.ndarray):
         """Steps the underlying environment.
 
@@ -162,8 +151,10 @@ class dm_control_wrapper(gym.Env):
             options (Optional[dict]): options
         """
         if seed is not None:
-            self._np_random, seed = seeding.np_random(seed)
-            self.seed(seed=seed)
+            if hasattr(self._env, "random_state"):
+                self._env.random_state.seed(seed)
+            else:
+                self._env.task.random.seed(seed)
 
         time_step = self._env.reset()
         obs = dmc_obs2gym_obs(time_step.observation)
