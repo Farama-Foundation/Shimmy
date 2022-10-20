@@ -149,6 +149,9 @@ class dm_control_wrapper(gym.Env):
         elif time_step.last() and time_step.discount != 1.0:
             terminated = True
 
+        if self.render_mode == "human":
+            self.viewer.render()
+
         return obs, reward, terminated, truncated, info
 
     def reset(self, seed: Optional[int] = None, options: Optional[dict] = None):
@@ -181,5 +184,3 @@ class dm_control_wrapper(gym.Env):
                 width=self.render_width,
                 camera_id=self.camera_id,
             )
-        elif self.render_mode == "human":
-            self.viewer.render()
