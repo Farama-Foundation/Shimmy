@@ -130,10 +130,10 @@ class dm_control_wrapper(gym.Env):
         reward = timestep.reward or 0
 
         # set terminated and truncated
-        if timestep.last() and timestep.discount == 1.0:
+        if timestep.last() and timestep.discount != 0:
             terminated = False
             truncated = True
-        elif timestep.last() and timestep.discount != 1.0:
+        elif timestep.last() and timestep.discount == 0:
             terminated = True
             truncated = False
         else:
