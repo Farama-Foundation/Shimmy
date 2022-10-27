@@ -1,4 +1,4 @@
-"""Tests the functionality of the dm_control_wrapper."""
+"""Tests the functionality of the dm_env_wrapper on dm_control envs."""
 
 import numpy as np
 import pytest
@@ -27,7 +27,7 @@ from dm_control.suite import (
 from gymnasium.utils.env_checker import check_env
 from PIL import Image
 
-from shimmy import dm_control_wrapper
+from shimmy import dm_env_wrapper
 
 # Find all domains imported.
 _DOMAINS = [
@@ -60,7 +60,7 @@ def test_all_envs(domain):
     for task in domain.SUITE.values():
 
         # convert the task to gymnasium environment
-        env = dm_control_wrapper(task(), render_mode="rgb_array")
+        env = dm_env_wrapper(task(), render_mode="rgb_array")
 
         # check the environment using gymnasium
         check_env(env)
@@ -81,8 +81,8 @@ def test_seeding():
     env2 = suite.load("hopper", "stand")
 
     # convert the environment
-    env1 = dm_control_wrapper(env1, render_mode="rgb_array")
-    env2 = dm_control_wrapper(env2, render_mode="rgb_array")
+    env1 = dm_env_wrapper(env1, render_mode="rgb_array")
+    env2 = dm_env_wrapper(env2, render_mode="rgb_array")
     env1.reset(seed=42)
     env2.reset(seed=42)
 
@@ -104,7 +104,7 @@ def test_render(camera_id):
     env = suite.load("hopper", "stand")
 
     # convert the environment
-    env = dm_control_wrapper(env, render_mode="rgb_array", camera_id=camera_id)
+    env = dm_env_wrapper(env, render_mode="rgb_array", camera_id=camera_id)
     env.reset()
 
     frames = []

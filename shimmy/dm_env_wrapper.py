@@ -1,4 +1,4 @@
-"""Wrapper to convert a dm_control environment into a gymnasium compatible environment."""
+"""Wrapper to convert a dm_env environment into a gymnasium compatible environment."""
 # Taken from
 # https://github.com/ikostrikov/dmcgym/blob/main/dmcgym/env.py
 # and modified to modern gymnasium API
@@ -13,18 +13,18 @@ from gymnasium import spaces
 from gymnasium.utils import seeding
 
 
-def dmc_spec2gym_space(spec):
-    """Converts a dm_control spec to a gymnasium space."""
+def dm_spec2gym_spec(spec):
+    """Converts a dm_env spec to a gymnasium space."""
     if isinstance(spec, OrderedDict) or isinstance(spec, dict):
         spec = copy.copy(spec)
         for k, v in spec.items():
-            spec[k] = dmc_spec2gym_space(v)
+            spec[k] = dm_spec2gym_spec(v)
         return spaces.Dict(spec)
-    elif isinstance(spec, dm_env.specs.BoundedArray):
+    elif type(spec) is dm_env.specs.BoundedArray:
         low = np.broadcast_to(spec.minimum, spec.shape)
         high = np.broadcast_to(spec.maximum, spec.shape)
         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
-    elif isinstance(spec, dm_env.specs.Array):
+    elif type(spec) is dm_env.specs.Array:
         if np.issubdtype(spec.dtype, np.integer):
             low = np.iinfo(spec.dtype).min
             high = np.iinfo(spec.dtype).max
@@ -35,25 +35,27 @@ def dmc_spec2gym_space(spec):
             raise ValueError(f"Unknown dtype {spec.dtype} for spec {spec}.")
 
         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
+    elif type(spec) is dm_env.specs.DiscreteArray:
+        return spaces.Discrete(spec.num_values)
     else:
         raise NotImplementedError(
             f"Unknown spec {spec} for environment, not converting."
         )
 
 
-def dmc_obs2gym_obs(obs):
-    """Converts a dm_control observation to a numpy array."""
+def dm_obs2gym_obs(obs):
+    """Converts a dm_env observation to a numpy array."""
     if isinstance(obs, OrderedDict) or isinstance(obs, dict):
         obs = copy.copy(obs)
         for k, v in obs.items():
-            obs[k] = dmc_obs2gym_obs(v)
+            obs[k] = dm_obs2gym_obs(v)
         return obs
     else:
         return np.asarray(obs)
 
 
-class dm_control_wrapper(gym.Env):
-    """Wrapper that converts a dm_control environment into a gymnasium environment."""
+class dm_env_wrapper(gym.Env):
+    """Wrapper that converts a dm_env environment into a gymnasium environment."""
 
     metadata = {"render_modes": ["human", "rgb_array"]}
 
@@ -65,7 +67,7 @@ class dm_control_wrapper(gym.Env):
         render_width: int = 84,
         camera_id: int = 0,
     ):
-        """Wrapper that converts a dm_control environment into a gymnasium environment.
+        """Wrapper that converts a dm_env environment into a gymnasium environment.
 
         Args:
             env (dm_env.Environment): the base environment
@@ -77,8 +79,8 @@ class dm_control_wrapper(gym.Env):
         self._env = env
 
         # convert spaces
-        self.observation_space = dmc_spec2gym_space(self._env.observation_spec())
-        self.action_space = dmc_spec2gym_space(self._env.action_spec())
+        self.observation_space = dm_spec2gym_spec(self._env.observation_spec())
+        self.action_space = dm_spec2gym_spec(self._env.action_spec())
 
         # camera rendering properties
         self.render_mode = render_mode
@@ -126,7 +128,7 @@ class dm_control_wrapper(gym.Env):
         timestep = self._env.step(action)
 
         # open up the timestep and process reward and observation
-        obs = dmc_obs2gym_obs(timestep.observation)
+        obs = dm_obs2gym_obs(timestep.observation)
         reward = timestep.reward or 0
 
         # set terminated and truncated
@@ -166,7 +168,7 @@ class dm_control_wrapper(gym.Env):
                 self._env.task.random.seed(seed)
 
         time_step = self._env.reset()
-        obs = dmc_obs2gym_obs(time_step.observation)
+        obs = dm_obs2gym_obs(time_step.observation)
         info = {}
 
         if self.render_mode == "human":
@@ -177,8 +179,8 @@ class dm_control_wrapper(gym.Env):
     def render(self):
         """Renders the environment depending on what `render_modes` is set to."""
         assert (
-            self.render_mode in dm_control_wrapper.metadata["render_modes"]
-        ), f"Can't find render_mode '{self.render_mode}' in metadata with possible modes {dm_control_wrapper.metadata['render_modes']}."
+            self.render_mode in dm_env_wrapper.metadata["render_modes"]
+        ), f"Can't find render_mode '{self.render_mode}' in metadata with possible modes {dm_env_wrapper.metadata['render_modes']}."
 
         if self.render_mode == "rgb_array":
             return self._env.physics.render(
