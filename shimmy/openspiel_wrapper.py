@@ -2,172 +2,199 @@
 
 import functools
 
-import copy
-from typing import Optional, OrderedDict
-
-import dm_env
-
-import pyspiel
-
-import pettingzoo as pz
-import gymnasium as gym
 import numpy as np
+import pettingzoo as pz
+import pyspiel
 from gymnasium import spaces
 from gymnasium.utils import seeding
 
 
-class openspiel_wrapper(pz.AECEnv):
+class OpenspielWrapper(pz.AECEnv):
     """Wrapper that converts a openspiel environment into a pettingzoo environment."""
 
-    metadata = {"render_modes": ["human", "rgb_array"]}
+    metadata = {"render_modes": [None]}
 
     def __init__(
         self,
-        env: pyspiel.Game,
-        render_mode: str,
+        game: pyspiel.Game,
+        render_mode: None,
     ):
-        self.env = env
-        self.possible_agents = ["player_" + str(r) for r in range(self.env.num_players())]
-        self.agent_name_mapping = dict(
-            zip(self.possible_agents, list(range(len(self.possible_agents))))
+        self.game = game
+        self.possible_agents = [
+            "player_" + str(r) for r in range(self.game.num_players())
+        ]
+        self.agent_id_name_mapping = dict(
+            zip(range(self.game.num_players()), self.possible_agents)
+        )
+        self.agent_name_id_mapping = dict(
+            zip(self.possible_agents, range(self.game.num_players()))
         )
 
         self.render_mode = render_mode
 
     @functools.lru_cache(maxsize=None)
     def observation_space(self, agent):
-        # gymnasium spaces are defined and documented here: https://gymnasium.farama.org/api/spaces/
-        return spaces.Box(low=-inf, high=inf, shape=self.env.observation_tensor_shape())
+        try:
+            return spaces.Box(
+                low=-np.inf, high=np.inf, shape=self.game.observation_tensor_shape()
+            )
+        except pyspiel.SpielError as e:
+            raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
     @functools.lru_cache(maxsize=None)
     def action_space(self, agent):
-        return spaces.Discrete()
+        try:
+            return spaces.Discrete(self.game.num_distinct_actions())
+        except pyspiel.SpielError as e:
+            raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
     def render(self):
-        """
-        Renders the environment. In human mode, it can print to terminal, open
-        up a graphical window, or open up some other display that a human can see and understand.
-        """
-        if self.render_mode is None:
-            gymnasium.logger.WARN(
-                "You are calling render method without specifying any render mode."
-            )
-            return
-
-        if len(self.agents) == 2:
-            string = "Current state: Agent1: {} , Agent2: {}".format(
-                MOVES[self.state[self.agents[0]]], MOVES[self.state[self.agents[1]]]
-            )
-        else:
-            string = "Game over"
-        print(string)
+        raise NotImplementedError("No render available for openspiel.")
 
     def observe(self, agent):
-        """
-        Observe should return the observation of the specified agent. This function
-        should return a sane observation (though not necessarily the most up to date possible)
-        at any time after reset() is called.
-        """
-        # observation of one agent is the previous state of the other
         return np.array(self.observations[agent])
 
     def close(self):
-        """
-        Close should release any graphical displays, subprocesses, network connections
-        or any other environment data which should not be kept around after the
-        user is no longer using the environment.
-        """
         pass
 
     def reset(self, seed=None, return_info=False, options=None):
-        """
-        Reset needs to initialize the following attributes
-        - agents
-        - rewards
-        - _cumulative_rewards
-        - terminations
-        - truncations
-        - infos
-        - agent_selection
-        And must set up the environment so that render(), step(), and observe()
-        can be called without issues.
-        Here it sets up the state dictionary which is used by step() and the observations dictionary which is used by step() and observe()
-        """
-        self.agents = self.possible_agents[:]
-        self.rewards = {agent: 0 for agent in self.agents}
-        self._cumulative_rewards = {agent: 0 for agent in self.agents}
-        self.terminations = {agent: False for agent in self.agents}
-        self.truncations = {agent: False for agent in self.agents}
-        self.infos = {agent: {} for agent in self.agents}
-        self.state = {agent: NONE for agent in self.agents}
-        self.observations = {agent: NONE for agent in self.agents}
-        self.num_moves = 0
-        """
-        Our agent_selector utility allows easy cyclic stepping through the agents list.
-        """
-        self._agent_selector = agent_selector(self.agents)
-        self.agent_selection = self._agent_selector.next()
+        # initialize the seed
+        self.np_random, seed = seeding.np_random(seed)
 
-    def step(self, action):
-        """
-        step(action) takes in an action for the current agent (specified by
-        agent_selection) and needs to update
-        - rewards
-        - _cumulative_rewards (accumulating the rewards)
-        - terminations
-        - truncations
-        - infos
-        - agent_selection (to the next agent)
-        And any internal state used by observe() or render()
-        """
+        # all agents
+        self.agents = self.possible_agents[:]
+
+        # boilerplate stuff
+        self._cumulative_rewards = {a: 0 for a in self.agents}
+        self.rewards = {a: 0 for a in self.agents}
+        self.terminations = {a: False for a in self.agents}
+        self.truncations = {a: False for a in self.agents}
+        self.infos = {a: {} for a in self.agents}
+
+        # get a new game state, game_length = number of game nodes
+        self.game_length = 1
+        self.game_state = self.game.new_initial_state()
+
+        # holders in case of simultaneous actions
+        self.simultaneous_actions = dict()
+
+        # step through chance nodes, then update obs and act masks
+        self._execute_chance_node()
+        self._update_observations()
+        self._update_action_masks()
+
+        # get the current agent and update all action masks
+        self.agent_selection = self.agent_id_name_mapping[
+            self.game_state.current_player()
+        ]
+
+    def _execute_chance_node(self):
+        # if the game state is a chance node, choose a random outcome
+        while self.game_state.is_chance_node():
+            self.game_length += 1
+            outcomes_with_probs = self.game_state.chance_outcomes()
+            action_list, prob_list = zip(*outcomes_with_probs)
+            action = self.np_random.choice(action_list, p=prob_list)
+            self.game_state.apply_action(action)
+
+    def _execute_action_node(self, action):
+        # if the game state is a simultaneous node, we need to collect all actions first
+        if self.game_state.is_simultaneous_node():
+            # store the agent's action
+            self.simultaneous_actions[self.agent_selection] = action
+
+            # set the agents reward to 0 since it's seen it
+            self._cumulative_rewards[self.agent_selection] = 0
+
+            # find agents for whom we don't have actions yet and get its action
+            for agent in self.agents:
+                if agent not in self.simultaneous_actions:
+                    self.agent_selection = agent
+                    return
+
+            # if we already have all the actions, just step regularly
+            self.game_state.apply_action(self.simultaneous_actions.values())
+            self.game_length += 1
+
+            # clear the simultaneous actions holder
+            self.simultaneous_actions = dict()
+        else:
+            # if not simultaneous, step the state generically
+            self.game_state.apply_action(action)
+            self.game_length += 1
+
+            # select the next agent depending on the type of agent
+            current_player = self.game_state.current_player()
+            if current_player >= 0:
+                self.agent_selection = self.agent_id_name_mapping[current_player]
+            else:
+                self.agent_selection = self.agents[0]
+
+    def _update_observations(self):
+        try:
+            self.observations = {
+                a: self.game_state.observation_tensor(self.agent_name_id_mapping[a])
+                for a in self.agents
+            }
+        except pyspiel.SpielError as e:
+            raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
+
+    def _update_action_masks(self):
+        for agent_id in range(self.game.num_players()):
+            agent_name = self.agent_id_name_mapping[agent_id]
+            action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
+            action_mask[self.game_state.legal_actions(agent_id)] = 1
+            self.infos[agent_name] = {"action_mask": action_mask}
+
+    def _update_rewards(self):
+        # update cumulative rewards
+        rewards = self.game_state.rewards()
+        self._cumulative_rewards = {
+            self.agent_id_name_mapping[id]: rewards[id]
+            for id in range(self.game.num_players())
+        }
+
+    def _end_routine(self):
+        # special function to deal with ending steps
+        # in openspiel, all agents end together so we need to
+        # treat it as so
+
+        self.terminations = {a: False for a in self.agents}
+        # check for terminal
+        if self.game_state.is_terminal():
+            self.terminations = {a: True for a in self.agents}
+
+        # check for truncation
+        self.truncations = {a: False for a in self.agents}
+        if self.game_length > self.game.max_game_length():
+            self.truncations = {a: True for a in self.agents}
+
+        # check for action masks because openspiel doesn't do it themselves
+        for agent in self.agents:
+            if np.sum(self.infos[agent]["action_mask"]) == 0:
+                self.terminations = {a: True for a in self.agents}
+
+        # if terminal, start deleting agents
         if (
             self.terminations[self.agent_selection]
             or self.truncations[self.agent_selection]
         ):
-            # handles stepping an agent which is already dead
-            # accepts a None action for the one agent, and moves the agent_selection to
-            # the next dead agent,  or if there are no more dead agents, to the next live agent
-            self._was_dead_step(action)
+            self.agents.remove(self.agent_selection)
+            if self.agents:
+                self.agent_selection = self.agents[0]
+
+            return True
+
+        return False
+
+    def step(self, action):
+        # handle the possibility of an end step
+        if self._end_routine():
             return
-
-        agent = self.agent_selection
-
-        # the agent which stepped last had its _cumulative_rewards accounted for
-        # (because it was returned by last()), so the _cumulative_rewards for this
-        # agent should start again at 0
-        self._cumulative_rewards[agent] = 0
-
-        # stores action of current agent
-        self.state[self.agent_selection] = action
-
-        # collect reward if it is the last agent to act
-        if self._agent_selector.is_last():
-            # rewards for all agents are placed in the .rewards dictionary
-            self.rewards[self.agents[0]], self.rewards[self.agents[1]] = REWARD_MAP[
-                (self.state[self.agents[0]], self.state[self.agents[1]])
-            ]
-
-            self.num_moves += 1
-            # The truncations dictionary must be updated for all players.
-            self.truncations = {
-                agent: self.num_moves >= NUM_ITERS for agent in self.agents
-            }
-
-            # observe the current state
-            for i in self.agents:
-                self.observations[i] = self.state[
-                    self.agents[1 - self.agent_name_mapping[i]]
-                ]
         else:
-            # necessary so that observe() returns a reasonable observation at all times.
-            self.state[self.agents[1 - self.agent_name_mapping[agent]]] = NONE
-            # no rewards are allocated until both players give an action
-            self._clear_rewards()
-
-        # selects the next agent.
-        self.agent_selection = self._agent_selector.next()
-        # Adds .rewards to ._cumulative_rewards
-        self._accumulate_rewards()
-
-        if self.render_mode == "human":
-            self.render()
+            # step the environment
+            self._execute_action_node(action)
+            self._execute_chance_node()
+            self._update_observations()
+            self._update_action_masks()
+            self._update_rewards()
