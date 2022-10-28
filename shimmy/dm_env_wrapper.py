@@ -54,7 +54,7 @@ def dm_obs2gym_obs(obs):
         return np.asarray(obs)
 
 
-class dm_env_wrapper(gym.Env):
+class DMEnvWrapper(gym.Env):
     """Wrapper that converts a dm_env environment into a gymnasium environment."""
 
     metadata = {"render_modes": ["human", "rgb_array"]}
@@ -179,8 +179,8 @@ class dm_env_wrapper(gym.Env):
     def render(self):
         """Renders the environment depending on what `render_modes` is set to."""
         assert (
-            self.render_mode in dm_env_wrapper.metadata["render_modes"]
-        ), f"Can't find render_mode '{self.render_mode}' in metadata with possible modes {dm_env_wrapper.metadata['render_modes']}."
+            self.render_mode in DMEnvWrapper.metadata["render_modes"]
+        ), f"Can't find render_mode '{self.render_mode}' in metadata with possible modes {DMEnvWrapper.metadata['render_modes']}."
 
         if self.render_mode == "rgb_array":
             return self._env.physics.render(

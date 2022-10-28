@@ -32,18 +32,16 @@ class openspiel_wrapper(pz.AECEnv):
             zip(self.possible_agents, list(range(len(self.possible_agents))))
         )
 
-        self._action_spaces = dict()
-        self._observation_spaces = dict()
         self.render_mode = render_mode
 
     @functools.lru_cache(maxsize=None)
     def observation_space(self, agent):
         # gymnasium spaces are defined and documented here: https://gymnasium.farama.org/api/spaces/
-        return spaces.Discrete(self.env)
+        return spaces.Box(low=-inf, high=inf, shape=self.env.observation_tensor_shape())
 
     @functools.lru_cache(maxsize=None)
     def action_space(self, agent):
-        return Discrete()
+        return spaces.Discrete()
 
     def render(self):
         """
