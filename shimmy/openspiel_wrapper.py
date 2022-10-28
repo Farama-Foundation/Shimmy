@@ -8,6 +8,7 @@ import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
 from gymnasium.utils import seeding
+from pettingzoo.utils.env import AgentID
 
 
 class OpenspielWrapper(pz.AECEnv):
@@ -40,11 +41,11 @@ class OpenspielWrapper(pz.AECEnv):
         self.render_mode = render_mode
 
     @functools.lru_cache(maxsize=None)
-    def observation_space(self, agent):
+    def observation_space(self, agent: AgentID):
         """observation_space.
 
         Args:
-            agent:
+            agent (AgentID): agent
         """
         try:
             return spaces.Box(
@@ -54,11 +55,11 @@ class OpenspielWrapper(pz.AECEnv):
             raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
     @functools.lru_cache(maxsize=None)
-    def action_space(self, agent):
+    def action_space(self, agent: AgentID):
         """action_space.
 
         Args:
-            agent:
+            agent (AgentID): agent
         """
         try:
             return spaces.Discrete(self.game.num_distinct_actions())
@@ -69,11 +70,11 @@ class OpenspielWrapper(pz.AECEnv):
         """render."""
         raise NotImplementedError("No render available for openspiel.")
 
-    def observe(self, agent):
+    def observe(self, agent: AgentID):
         """observe.
 
         Args:
-            agent:
+            agent (AgentID): agent
         """
         return np.array(self.observations[agent])
 
@@ -188,10 +189,7 @@ class OpenspielWrapper(pz.AECEnv):
                 self.agent_selection = self.agents[0]
 
     def _update_observations(self):
-        """_update_observations.
-
-        Updates all the observations inside the observations dictionary.
-        """
+        """Updates all the observations inside the observations dictionary."""
         try:
             self.observations = {
                 a: self.game_state.observation_tensor(self.agent_name_id_mapping[a])
@@ -201,10 +199,7 @@ class OpenspielWrapper(pz.AECEnv):
             raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
     def _update_action_masks(self):
-        """_update_action_masks.
-
-        Updates all the action masks inside the infos dictionary.
-        """
+        """Updates all the action masks inside the infos dictionary."""
         for agent_id in range(self.game.num_players()):
             agent_name = self.agent_id_name_mapping[agent_id]
             action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
@@ -212,10 +207,7 @@ class OpenspielWrapper(pz.AECEnv):
             self.infos[agent_name] = {"action_mask": action_mask}
 
     def _update_rewards(self):
-        """_update_rewards.
-
-        Updates all the _cumulative_rewards of the environment.
-        """
+        """Updates all the _cumulative_rewards of the environment."""
         # update cumulative rewards
         rewards = self.game_state.rewards()
         self._cumulative_rewards = {
@@ -224,12 +216,10 @@ class OpenspielWrapper(pz.AECEnv):
         }
 
     def _end_routine(self):
-        """_end_routine.
+        """Method that handles the routines that happen at environment termination.
 
-        Special function to deal with ending steps in openspiel.
         Since all agents end together we can hack our way around it.
         """
-
         self.terminations = {a: False for a in self.agents}
         # check for terminal
         if self.game_state.is_terminal():
@@ -259,9 +249,7 @@ class OpenspielWrapper(pz.AECEnv):
         return False
 
     def step(self, action: int):
-        """step.
-
-        Steps the environment.
+        """Steps the environment.
 
         Args:
             action (int): action

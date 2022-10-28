@@ -1,9 +1,10 @@
+"""Tests the functionality of the OpenspielWrapper on openspiel envs."""
+
 import numpy as np
 import pyspiel
 import pytest
 
 from shimmy import OpenspielWrapper
-
 
 _PASSING_GAMES = [
     "2048",
@@ -64,6 +65,44 @@ _PASSING_GAMES = [
     "ultimate_tic_tac_toe",
     "universal_poker",
     "y",
+]
+
+_FAILING_GAMES = [
+    "battleship",
+    "blotto",
+    "bridge_uncontested_bidding",
+    "coin_game",
+    "coop_box_pushing",
+    "coordinated_mp",
+    "efg_game",
+    "euchre",
+    "goofspiel",
+    "hearts",
+    "laser_tag",
+    "markov_soccer",
+    "matching_pennies_3p",
+    "matrix_cd",
+    "matrix_coordination",
+    "matrix_mp",
+    "matrix_pd",
+    "matrix_rps",
+    "matrix_rpsw",
+    "matrix_sh",
+    "matrix_shapleys_game",
+    "mfg_dynamic_routing",
+    "misere",
+    "morpion_solitaire",
+    "nfg_game",
+    "normal_form_extensive_game",
+    "oh_hell",
+    "oshi_zumo",
+    "pathfinding",
+    "repeated_game",
+    "restricted_nash_response",
+    "sheriff",
+    "start_at",
+    "tarok",
+    "turn_based_simultaneous_game",
 ]
 
 
