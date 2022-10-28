@@ -1,0 +1,20 @@
+[tool.pyright]
+
+include = [
+    "shimmy/**",
+    "test/**"
+]
+
+exclude = [
+    "**/node_modules",
+    "**/__pycache__",
+]
+
+strict = [
+
+]
+
+typeCheckingMode = "basic"
+pythonVersion = "3.7"
+pythonPlatform = "All"
+enableTypeIgnoreComments = true
