@@ -1,6 +1,7 @@
 """Wrapper to convert a openspiel environment into a pettingzoo compatible environment."""
 
 import functools
+from typing import Dict, Optional
 
 import numpy as np
 import pettingzoo as pz
@@ -17,8 +18,14 @@ class OpenspielWrapper(pz.AECEnv):
     def __init__(
         self,
         game: pyspiel.Game,
-        render_mode: None,
+        render_mode: Optional[str],
     ):
+        """Wrapper that converts a openspiel environment into a pettingzoo environment.
+
+        Args:
+            game (pyspiel.Game): game
+            render_mode (Optional[str]): render_mode
+        """
         self.game = game
         self.possible_agents = [
             "player_" + str(r) for r in range(self.game.num_players())
@@ -34,6 +41,11 @@ class OpenspielWrapper(pz.AECEnv):
 
     @functools.lru_cache(maxsize=None)
     def observation_space(self, agent):
+        """observation_space.
+
+        Args:
+            agent:
+        """
         try:
             return spaces.Box(
                 low=-np.inf, high=np.inf, shape=self.game.observation_tensor_shape()
@@ -43,21 +55,45 @@ class OpenspielWrapper(pz.AECEnv):
 
     @functools.lru_cache(maxsize=None)
     def action_space(self, agent):
+        """action_space.
+
+        Args:
+            agent:
+        """
         try:
             return spaces.Discrete(self.game.num_distinct_actions())
         except pyspiel.SpielError as e:
             raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
     def render(self):
+        """render."""
         raise NotImplementedError("No render available for openspiel.")
 
     def observe(self, agent):
+        """observe.
+
+        Args:
+            agent:
+        """
         return np.array(self.observations[agent])
 
     def close(self):
+        """close."""
         pass
 
-    def reset(self, seed=None, return_info=False, options=None):
+    def reset(
+        self,
+        seed: Optional[int] = None,
+        return_info: Optional[bool] = False,
+        options: Optional[Dict] = None,
+    ):
+        """reset.
+
+        Args:
+            seed (Optional[int]): seed
+            return_info (Optional[bool]): return_info
+            options (Optional[Dict]): options
+        """
         # initialize the seed
         self.np_random, seed = seeding.np_random(seed)
 
@@ -89,6 +125,12 @@ class OpenspielWrapper(pz.AECEnv):
         ]
 
     def _execute_chance_node(self):
+        """_execute_chance_node.
+
+        Some game states in the environment are out of the control of the agent.
+        In these states, we need to sample the next state.
+        There is also the possibility of multiple consecutive chance states, hence the `while`.
+        """
         # if the game state is a chance node, choose a random outcome
         while self.game_state.is_chance_node():
             self.game_length += 1
@@ -97,7 +139,22 @@ class OpenspielWrapper(pz.AECEnv):
             action = self.np_random.choice(action_list, p=prob_list)
             self.game_state.apply_action(action)
 
-    def _execute_action_node(self, action):
+    def _execute_action_node(self, action: int):
+        """_execute_action_node.
+
+        Advances the game state.
+        We need to deal with 2 possible cases:
+            - simultaneous game state where all the agents must step together
+            - non-simultaneous game state where only one agent steps at a time
+
+        To handle the simultaneous game state, we must step the environment a sufficient number of times,
+        such that all actions for all agents have been collected before we can step the environment.
+
+        To handle the non-simultaneous game state, we can just step the environment one agent at a time.
+
+        Args:
+            action (int): action
+        """
         # if the game state is a simultaneous node, we need to collect all actions first
         if self.game_state.is_simultaneous_node():
             # store the agent's action
@@ -131,6 +188,10 @@ class OpenspielWrapper(pz.AECEnv):
                 self.agent_selection = self.agents[0]
 
     def _update_observations(self):
+        """_update_observations.
+
+        Updates all the observations inside the observations dictionary.
+        """
         try:
             self.observations = {
                 a: self.game_state.observation_tensor(self.agent_name_id_mapping[a])
@@ -140,6 +201,10 @@ class OpenspielWrapper(pz.AECEnv):
             raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
     def _update_action_masks(self):
+        """_update_action_masks.
+
+        Updates all the action masks inside the infos dictionary.
+        """
         for agent_id in range(self.game.num_players()):
             agent_name = self.agent_id_name_mapping[agent_id]
             action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
@@ -147,6 +212,10 @@ class OpenspielWrapper(pz.AECEnv):
             self.infos[agent_name] = {"action_mask": action_mask}
 
     def _update_rewards(self):
+        """_update_rewards.
+
+        Updates all the _cumulative_rewards of the environment.
+        """
         # update cumulative rewards
         rewards = self.game_state.rewards()
         self._cumulative_rewards = {
@@ -155,9 +224,11 @@ class OpenspielWrapper(pz.AECEnv):
         }
 
     def _end_routine(self):
-        # special function to deal with ending steps
-        # in openspiel, all agents end together so we need to
-        # treat it as so
+        """_end_routine.
+
+        Special function to deal with ending steps in openspiel.
+        Since all agents end together we can hack our way around it.
+        """
 
         self.terminations = {a: False for a in self.agents}
         # check for terminal
@@ -187,7 +258,14 @@ class OpenspielWrapper(pz.AECEnv):
 
         return False
 
-    def step(self, action):
+    def step(self, action: int):
+        """step.
+
+        Steps the environment.
+
+        Args:
+            action (int): action
+        """
         # handle the possibility of an end step
         if self._end_routine():
             return

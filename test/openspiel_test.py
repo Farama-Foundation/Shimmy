@@ -66,6 +66,7 @@ _PASSING_GAMES = [
     "y",
 ]
 
+
 @pytest.mark.parametrize("game", _PASSING_GAMES)
 def test_all_games(game):
     """Tests the conversion of all openspiel envs."""
