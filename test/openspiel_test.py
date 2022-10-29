@@ -103,6 +103,8 @@ _FAILING_GAMES = [
     "turn_based_simultaneous_game",
 ]
 
+_STUPID_GAMES = ["nfg_game", "goofspiel"]
+
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
 def test_passing_games(game):
