@@ -108,7 +108,7 @@ _FAILING_GAMES = [
 
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
-def test_all_games(game):
+def test_passing_games(game):
     """Tests the conversion of all openspiel envs."""
     game = pyspiel.load_game(game)
     env = OpenspielWrapperV0(game=game, render_mode=None)
@@ -122,6 +122,10 @@ def test_all_games(game):
         action = env.action_space(agent).sample(mask=info["action_mask"])
         env.step(action)
 
+@pytest.mark.parametrize("game", _FAILING_GAMES)
+def test_failing_games(game):
+    with pytest.raises(Exception):
+        test_passing_games(game)
 
 def test_seeding():
     """Tests the seeding of the openspiel conversion wrapper."""

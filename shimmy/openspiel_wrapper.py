@@ -1,6 +1,5 @@
 """Wrapper to convert a openspiel environment into a pettingzoo compatible environment."""
 
-import functools
 from typing import Dict, Optional
 
 import numpy as np
@@ -40,7 +39,6 @@ class OpenspielWrapper(pz.AECEnv):
 
         self.render_mode = render_mode
 
-    @functools.lru_cache(maxsize=None)
     def observation_space(self, agent: AgentID):
         """observation_space.
 
@@ -57,7 +55,6 @@ class OpenspielWrapper(pz.AECEnv):
         except pyspiel.SpielError as e:
             raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
-    @functools.lru_cache(maxsize=None)
     def action_space(self, agent: AgentID):
         """action_space.
 

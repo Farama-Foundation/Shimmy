@@ -55,7 +55,7 @@ _FAILING_DOMAINS = [lqr]
 
 
 @pytest.mark.parametrize("domain", _PASSING_DOMAINS)
-def test_all_envs(domain):
+def test_passing_domains(domain):
     """Tests the conversion of all dm_control envs."""
     # for each possible task in the domain:
     for task in domain.SUITE.values():
@@ -74,6 +74,10 @@ def test_all_envs(domain):
         while not term and not trunc:
             obs, rew, term, trunc, info = env.step(env.action_space.sample())
 
+@pytest.mark.parametrize("game", _FAILING_DOMAINS)
+def test_failing_games(game):
+    with pytest.raises(Exception):
+        test_passing_domains(game)
 
 def test_seeding():
     """Tests the seeding of the dm_control conversion wrapper."""
