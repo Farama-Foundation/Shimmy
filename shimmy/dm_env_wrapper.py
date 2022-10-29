@@ -54,10 +54,10 @@ def dm_obs2gym_obs(obs):
         return np.asarray(obs)
 
 
-class DMEnvWrapperV0(gym.Env):
+class DMEnvWrapper(gym.Env):
     """Wrapper that converts a dm_env environment into a gymnasium environment."""
 
-    metadata = {"render_modes": ["human", "rgb_array"], "version": 0}
+    metadata = {"render_modes": ["human", "rgb_array"]}
 
     def __init__(
         self,

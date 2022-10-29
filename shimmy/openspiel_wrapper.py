@@ -1,5 +1,6 @@
 """Wrapper to convert a openspiel environment into a pettingzoo compatible environment."""
 
+import functools
 from typing import Dict, Optional
 
 import numpy as np
@@ -10,10 +11,10 @@ from gymnasium.utils import seeding
 from pettingzoo.utils.env import AgentID
 
 
-class OpenspielWrapperV0(pz.AECEnv):
+class OpenspielWrapper(pz.AECEnv):
     """Wrapper that converts a openspiel environment into a pettingzoo environment."""
 
-    metadata = {"render_modes": [None], "version": 0}
+    metadata = {"render_modes": [None]}
 
     def __init__(
         self,
@@ -39,6 +40,7 @@ class OpenspielWrapperV0(pz.AECEnv):
 
         self.render_mode = render_mode
 
+    @functools.lru_cache(maxsize=None)
     def observation_space(self, agent: AgentID):
         """observation_space.
 
@@ -47,11 +49,15 @@ class OpenspielWrapperV0(pz.AECEnv):
         """
         try:
             return spaces.Box(
-                low=-np.inf, high=np.inf, shape=self.game.observation_tensor_shape()
+                low=-np.inf,
+                high=np.inf,
+                shape=self.game.observation_tensor_shape(),
+                dtype=np.float64,
             )
         except pyspiel.SpielError as e:
             raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
+    @functools.lru_cache(maxsize=None)
     def action_space(self, agent: AgentID):
         """action_space.
 
@@ -82,12 +88,14 @@ class OpenspielWrapperV0(pz.AECEnv):
     def reset(
         self,
         seed: Optional[int] = None,
+        return_info: Optional[bool] = False,
         options: Optional[Dict] = None,
     ):
         """reset.
 
         Args:
             seed (Optional[int]): seed
+            return_info (Optional[bool]): return_info
             options (Optional[Dict]): options
         """
         # initialize the seed
@@ -187,7 +195,9 @@ class OpenspielWrapperV0(pz.AECEnv):
         """Updates all the observations inside the observations dictionary."""
         try:
             self.observations = {
-                a: self.game_state.observation_tensor(self.agent_name_id_mapping[a])
+                a: np.array(
+                    self.game_state.observation_tensor(self.agent_name_id_mapping[a])
+                ).reshape(self.game.observation_tensor_shape())
                 for a in self.agents
             }
         except pyspiel.SpielError as e:
@@ -236,6 +246,11 @@ class OpenspielWrapperV0(pz.AECEnv):
             or self.truncations[self.agent_selection]
         ):
             self.agents.remove(self.agent_selection)
+            self._cumulative_rewards.pop(self.agent_selection)
+            self.rewards.pop(self.agent_selection)
+            self.terminations.pop(self.agent_selection)
+            self.truncations.pop(self.agent_selection)
+            self.infos.pop(self.agent_selection)
             if self.agents:
                 self.agent_selection = self.agents[0]
 
