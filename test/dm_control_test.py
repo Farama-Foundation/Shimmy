@@ -74,10 +74,13 @@ def test_passing_domains(domain):
         while not term and not trunc:
             obs, rew, term, trunc, info = env.step(env.action_space.sample())
 
-@pytest.mark.parametrize("game", _FAILING_DOMAINS)
-def test_failing_games(game):
+
+@pytest.mark.parametrize("domain", _FAILING_DOMAINS)
+def test_failing_games(domain):
+    """Ensures that failing domains are still failing."""
     with pytest.raises(Exception):
-        test_passing_domains(game)
+        test_passing_domains(domain)
+
 
 def test_seeding():
     """Tests the seeding of the dm_control conversion wrapper."""

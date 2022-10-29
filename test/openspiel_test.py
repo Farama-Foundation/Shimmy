@@ -10,9 +10,9 @@ from shimmy import OpenspielWrapperV0
 _PASSING_GAMES = [
     "2048",
     "amazons",
-    "backgammon",
     "bargaining",
     "blackjack",
+    "blotto",
     "breakthrough",
     "bridge",
     "catch",
@@ -22,6 +22,7 @@ _PASSING_GAMES = [
     "clobber",
     "colored_trails",
     "connect_four",
+    "coop_box_pushing",
     "coop_to_1p",
     "cursor_go",
     "dark_chess",
@@ -31,16 +32,26 @@ _PASSING_GAMES = [
     "first_sealed_auction",
     "gin_rummy",
     "go",
-    "hanabi",
     "havannah",
     "hex",
     "kriegspiel",
     "kuhn_poker",
+    "laser_tag",
     "leduc_poker",
     "lewis_signaling",
     "liars_dice",
     "liars_dice_ir",
     "mancala",
+    "markov_soccer",
+    "matching_pennies_3p",
+    "matrix_cd",
+    "matrix_coordination",
+    "matrix_mp",
+    "matrix_pd",
+    "matrix_rps",
+    "matrix_rpsw",
+    "matrix_sh",
+    "matrix_shapleys_game",
     "mfg_crowd_modelling",
     "mfg_crowd_modelling_2d",
     "mfg_garnet",
@@ -48,6 +59,7 @@ _PASSING_GAMES = [
     "nim",
     "othello",
     "oware",
+    "pathfinding",
     "pentago",
     "phantom_go",
     "phantom_ttt",
@@ -64,40 +76,25 @@ _PASSING_GAMES = [
     "tiny_hanabi",
     "trade_comm",
     "ultimate_tic_tac_toe",
-    "universal_poker",
     "y",
+    "oshi_zumo",
 ]
 
 _FAILING_GAMES = [
+    "backgammon",
     "battleship",
-    "blotto",
     "bridge_uncontested_bidding",
     "coin_game",
-    "coop_box_pushing",
     "coordinated_mp",
     "efg_game",
     "euchre",
-    "goofspiel",
+    "hanabi",
     "hearts",
-    "laser_tag",
-    "markov_soccer",
-    "matching_pennies_3p",
-    "matrix_cd",
-    "matrix_coordination",
-    "matrix_mp",
-    "matrix_pd",
-    "matrix_rps",
-    "matrix_rpsw",
-    "matrix_sh",
-    "matrix_shapleys_game",
     "mfg_dynamic_routing",
     "misere",
     "morpion_solitaire",
-    "nfg_game",
     "normal_form_extensive_game",
     "oh_hell",
-    "oshi_zumo",
-    "pathfinding",
     "repeated_game",
     "restricted_nash_response",
     "sheriff",
@@ -122,10 +119,13 @@ def test_passing_games(game):
         action = env.action_space(agent).sample(mask=info["action_mask"])
         env.step(action)
 
+
 @pytest.mark.parametrize("game", _FAILING_GAMES)
 def test_failing_games(game):
-    with pytest.raises(Exception):
+    """Ensures that failing games are still failing."""
+    with pytest.raises((pyspiel.SpielError, NotImplementedError)):
         test_passing_games(game)
+
 
 def test_seeding():
     """Tests the seeding of the openspiel conversion wrapper."""

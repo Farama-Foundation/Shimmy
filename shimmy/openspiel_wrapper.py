@@ -1,5 +1,6 @@
 """Wrapper to convert a openspiel environment into a pettingzoo compatible environment."""
 
+import functools
 from typing import Dict, Optional
 
 import numpy as np
@@ -13,7 +14,7 @@ from pettingzoo.utils.env import AgentID
 class OpenspielWrapper(pz.AECEnv):
     """Wrapper that converts a openspiel environment into a pettingzoo environment."""
 
-    metadata = {"render_modes": [None]}
+    metadata = {"render_modes": []}
 
     def __init__(
         self,
@@ -39,6 +40,7 @@ class OpenspielWrapper(pz.AECEnv):
 
         self.render_mode = render_mode
 
+    @functools.lru_cache(maxsize=None)
     def observation_space(self, agent: AgentID):
         """observation_space.
 
@@ -55,6 +57,7 @@ class OpenspielWrapper(pz.AECEnv):
         except pyspiel.SpielError as e:
             raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
+    @functools.lru_cache(maxsize=None)
     def action_space(self, agent: AgentID):
         """action_space.
 
@@ -115,15 +118,13 @@ class OpenspielWrapper(pz.AECEnv):
         # holders in case of simultaneous actions
         self.simultaneous_actions = dict()
 
-        # step through chance nodes, then update obs and act masks
+        # step through chance nodes
+        # then update obs and act masks
+        # then choose next agent
         self._execute_chance_node()
         self._update_observations()
         self._update_action_masks()
-
-        # get the current agent and update all action masks
-        self.agent_selection = self.agent_id_name_mapping[
-            self.game_state.current_player()
-        ]
+        self._choose_next_agent()
 
     def _execute_chance_node(self):
         """_execute_chance_node.
@@ -167,11 +168,15 @@ class OpenspielWrapper(pz.AECEnv):
             # find agents for whom we don't have actions yet and get its action
             for agent in self.agents:
                 if agent not in self.simultaneous_actions:
-                    self.agent_selection = agent
-                    return
+                    if np.sum(self.infos[agent]["action_mask"]) != 0:
+                        self.agent_selection = agent
+                        return
+                    else:
+                        # this will raise assertations with PZ api
+                        self.simultaneous_actions[agent] = None
 
             # if we already have all the actions, just step regularly
-            self.game_state.apply_action(self.simultaneous_actions.values())
+            self.game_state.apply_actions(list(self.simultaneous_actions.values()))
             self.game_length += 1
 
             # clear the simultaneous actions holder
@@ -181,12 +186,18 @@ class OpenspielWrapper(pz.AECEnv):
             self.game_state.apply_action(action)
             self.game_length += 1
 
-            # select the next agent depending on the type of agent
-            current_player = self.game_state.current_player()
-            if current_player >= 0:
-                self.agent_selection = self.agent_id_name_mapping[current_player]
-            else:
-                self.agent_selection = self.agents[0]
+            self._choose_next_agent()
+
+    def _choose_next_agent(self):
+        current_player = self.game_state.current_player()
+        if current_player >= 0:
+            # if it's a normal node, just select the next agent according to the node
+            self.agent_selection = self.agent_id_name_mapping[current_player]
+        else:
+            # if not a normal node, we need to be careful to choose only valid agents
+            for agent in self.agents:
+                if np.sum(self.infos[agent]["action_mask"]) != 0:
+                    self.agent_selection = agent
 
     def _update_observations(self):
         """Updates all the observations inside the observations dictionary."""
@@ -222,20 +233,24 @@ class OpenspielWrapper(pz.AECEnv):
 
         Since all agents end together we can hack our way around it.
         """
-        self.terminations = {a: False for a in self.agents}
         # check for terminal
+        self.terminations = {a: False for a in self.agents}
         if self.game_state.is_terminal():
+            self.terminations = {a: True for a in self.agents}
+
+        # check for action masks because openspiel doesn't do it themselves
+        action_mask_sum = 0
+        for agent in self.agents:
+            action_mask_sum += np.sum(self.infos[agent]["action_mask"])
+
+        # if all actions are illegal for all agents, declare terminal
+        if action_mask_sum == 0:
             self.terminations = {a: True for a in self.agents}
 
         # check for truncation
         self.truncations = {a: False for a in self.agents}
         if self.game_length > self.game.max_game_length():
             self.truncations = {a: True for a in self.agents}
-
-        # check for action masks because openspiel doesn't do it themselves
-        for agent in self.agents:
-            if np.sum(self.infos[agent]["action_mask"]) == 0:
-                self.terminations = {a: True for a in self.agents}
 
         # if terminal, start deleting agents
         if (
@@ -248,6 +263,7 @@ class OpenspielWrapper(pz.AECEnv):
             self.terminations.pop(self.agent_selection)
             self.truncations.pop(self.agent_selection)
             self.infos.pop(self.agent_selection)
+
             if self.agents:
                 self.agent_selection = self.agents[0]
 
