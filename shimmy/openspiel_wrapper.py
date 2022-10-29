@@ -220,7 +220,12 @@ class OpenspielWrapper(pz.AECEnv):
         for agent_id in range(self.game.num_players()):
             agent_name = self.agent_id_name_mapping[agent_id]
             action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
-            action_mask[self.game_state.legal_actions(agent_id)] = 1
+
+            try:
+                action_mask[self.game_state.legal_actions(agent_id)] = 1
+            except pyspiel.SpielError:
+                pass
+
             self.infos[agent_name] = {"action_mask": action_mask}
 
     def _update_rewards(self):

@@ -10,6 +10,7 @@ from shimmy import OpenspielWrapperV0
 _PASSING_GAMES = [
     "2048",
     "amazons",
+    "backgammon",
     "bargaining",
     "battleship",
     "blackjack",
@@ -61,8 +62,6 @@ _PASSING_GAMES = [
     "morpion_solitaire",
     "negotiation",
     "nim",
-    "nim",
-    "nim",
     "othello",
     "oware",
     "pathfinding",
@@ -82,11 +81,11 @@ _PASSING_GAMES = [
     "tiny_hanabi",
     "trade_comm",
     "ultimate_tic_tac_toe",
+    "universal_poker",
     "y",
 ]
 
 _FAILING_GAMES = [
-    "backgammon",
     "bridge_uncontested_bidding",
     "efg_game",
     "euchre",
@@ -102,10 +101,10 @@ _FAILING_GAMES = [
     "start_at",
     "tarok",
     "turn_based_simultaneous_game",
-    "universal_poker",
 ]
 
-_INTERMITTENT_GAMES = ["nfg_game", "goofspiel", "oshi_zumo"]
+_INTERMITTENT_GAMES = ["nfg_game", "goofspiel", "oshi_zumo", "universal_poker"]
+
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
 # @pytest.mark.parametrize("game", pyspiel.registered_names())
