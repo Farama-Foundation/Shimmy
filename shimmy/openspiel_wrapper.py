@@ -2,6 +2,7 @@
 
 import functools
 from typing import Dict, Optional
+from gymnasium.spaces import space
 
 import numpy as np
 import pettingzoo as pz
@@ -54,8 +55,8 @@ class OpenspielWrapper(pz.AECEnv):
                 shape=self.game.observation_tensor_shape(),
                 dtype=np.float64,
             )
-        except pyspiel.SpielError as e:
-            raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
+        except pyspiel.SpielError:
+            return spaces.Text(max_length=2**16)
 
     @functools.lru_cache(maxsize=None)
     def action_space(self, agent: AgentID):
@@ -79,7 +80,7 @@ class OpenspielWrapper(pz.AECEnv):
         Args:
             agent (AgentID): agent
         """
-        return np.array(self.observations[agent])
+        return self.observations[agent]
 
     def close(self):
         """close."""
@@ -201,15 +202,18 @@ class OpenspielWrapper(pz.AECEnv):
 
     def _update_observations(self):
         """Updates all the observations inside the observations dictionary."""
-        try:
+        if isinstance(self.observation_space(self.agents[0]), spaces.Box):
             self.observations = {
                 a: np.array(
                     self.game_state.observation_tensor(self.agent_name_id_mapping[a])
                 ).reshape(self.game.observation_tensor_shape())
                 for a in self.agents
             }
-        except pyspiel.SpielError as e:
-            raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
+        elif isinstance(self.observation_space(self.agents[0]), spaces.Text):
+            self.observations = {
+                a: self.game_state.observation_string(self.agent_name_id_mapping[a])
+                for a in self.agents
+            }
 
     def _update_action_masks(self):
         """Updates all the action masks inside the infos dictionary."""

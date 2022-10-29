@@ -11,6 +11,7 @@ _PASSING_GAMES = [
     "2048",
     "amazons",
     "bargaining",
+    "battleship",
     "blackjack",
     "blotto",
     "breakthrough",
@@ -20,10 +21,12 @@ _PASSING_GAMES = [
     "chess",
     "cliff_walking",
     "clobber",
+    "coin_game",
     "colored_trails",
     "connect_four",
     "coop_box_pushing",
     "coop_to_1p",
+    "coordinated_mp",
     "cursor_go",
     "dark_chess",
     "dark_hex",
@@ -55,7 +58,10 @@ _PASSING_GAMES = [
     "mfg_crowd_modelling",
     "mfg_crowd_modelling_2d",
     "mfg_garnet",
+    "morpion_solitaire",
     "negotiation",
+    "nim",
+    "nim",
     "nim",
     "othello",
     "oware",
@@ -77,22 +83,17 @@ _PASSING_GAMES = [
     "trade_comm",
     "ultimate_tic_tac_toe",
     "y",
-    "oshi_zumo",
 ]
 
 _FAILING_GAMES = [
     "backgammon",
-    "battleship",
     "bridge_uncontested_bidding",
-    "coin_game",
-    "coordinated_mp",
     "efg_game",
     "euchre",
     "hanabi",
     "hearts",
     "mfg_dynamic_routing",
     "misere",
-    "morpion_solitaire",
     "normal_form_extensive_game",
     "oh_hell",
     "repeated_game",
@@ -101,12 +102,13 @@ _FAILING_GAMES = [
     "start_at",
     "tarok",
     "turn_based_simultaneous_game",
+    "universal_poker",
 ]
 
-_STUPID_GAMES = ["nfg_game", "goofspiel"]
-
+_INTERMITTENT_GAMES = ["nfg_game", "goofspiel", "oshi_zumo"]
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
+# @pytest.mark.parametrize("game", pyspiel.registered_names())
 def test_passing_games(game):
     """Tests the conversion of all openspiel envs."""
     game = pyspiel.load_game(game)
