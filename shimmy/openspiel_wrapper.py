@@ -1,6 +1,5 @@
 """Wrapper to convert a openspiel environment into a pettingzoo compatible environment."""
 
-import functools
 from typing import Dict, Optional
 
 import numpy as np
@@ -11,10 +10,10 @@ from gymnasium.utils import seeding
 from pettingzoo.utils.env import AgentID
 
 
-class OpenspielWrapper(pz.AECEnv):
+class OpenspielWrapperV0(pz.AECEnv):
     """Wrapper that converts a openspiel environment into a pettingzoo environment."""
 
-    metadata = {"render_modes": [None]}
+    metadata = {"render_modes": [None], "version": 0}
 
     def __init__(
         self,
@@ -40,7 +39,6 @@ class OpenspielWrapper(pz.AECEnv):
 
         self.render_mode = render_mode
 
-    @functools.lru_cache(maxsize=None)
     def observation_space(self, agent: AgentID):
         """observation_space.
 
@@ -54,7 +52,6 @@ class OpenspielWrapper(pz.AECEnv):
         except pyspiel.SpielError as e:
             raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
 
-    @functools.lru_cache(maxsize=None)
     def action_space(self, agent: AgentID):
         """action_space.
 
@@ -85,14 +82,12 @@ class OpenspielWrapper(pz.AECEnv):
     def reset(
         self,
         seed: Optional[int] = None,
-        return_info: Optional[bool] = False,
         options: Optional[Dict] = None,
     ):
         """reset.
 
         Args:
             seed (Optional[int]): seed
-            return_info (Optional[bool]): return_info
             options (Optional[Dict]): options
         """
         # initialize the seed

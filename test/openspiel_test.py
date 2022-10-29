@@ -4,7 +4,8 @@ import numpy as np
 import pyspiel
 import pytest
 
-from shimmy import OpenspielWrapper
+from shimmy import OpenspielWrapperV0
+from pettingzoo.test import api_test
 
 _PASSING_GAMES = [
     "2048",
@@ -110,7 +111,10 @@ _FAILING_GAMES = [
 def test_all_games(game):
     """Tests the conversion of all openspiel envs."""
     game = pyspiel.load_game(game)
-    env = OpenspielWrapper(game=game, render_mode=None)
+    env = OpenspielWrapperV0(game=game, render_mode=None)
+
+    # api test the env
+    api_test(env)
 
     env.reset()
     for agent in env.agent_iter():
@@ -126,8 +130,8 @@ def test_seeding():
     env2 = pyspiel.load_game("2048")
 
     # convert the environment
-    env1 = OpenspielWrapper(env1, render_mode=None)
-    env2 = OpenspielWrapper(env2, render_mode=None)
+    env1 = OpenspielWrapperV0(env1, render_mode=None)
+    env2 = OpenspielWrapperV0(env2, render_mode=None)
     env1.reset(seed=42)
     env2.reset(seed=42)
 
