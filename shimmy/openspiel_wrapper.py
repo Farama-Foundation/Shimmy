@@ -123,8 +123,8 @@ class OpenspielWrapper(pz.AECEnv):
         # then update obs and act masks
         # then choose next agent
         self._execute_chance_node()
-        self._update_observations()
         self._update_action_masks()
+        self._update_observations()
         self._choose_next_agent()
 
     def _execute_chance_node(self):
@@ -166,39 +166,54 @@ class OpenspielWrapper(pz.AECEnv):
             # set the agents reward to 0 since it's seen it
             self._cumulative_rewards[self.agent_selection] = 0
 
-            # find agents for whom we don't have actions yet and get its action
+            if all(a in self.simultaneous_actions for a in self.agents):
+                # if we already have all the actions, just step regularly
+                self.game_state.apply_actions(list(self.simultaneous_actions.values()))
+                self.game_length += 1
+
+                # clear the simultaneous actions holder
+                self.simultaneous_actions = dict()
+        else:
+            # if not simultaneous, step the state generically
+            self.game_state.apply_action(action)
+            self.game_length += 1
+
+    def _choose_next_agent(self):
+        # handle possibility that we don't have anymore agents
+        if not self.agents:
+            return
+
+        # handle terminal state
+        if any(self.terminations.values()) or any(self.truncations.values()):
+            # if terminal, choose the next valid agent
+            if self.agents:
+                self.agent_selection = self.agents[0]
+            return
+
+        # handle possibility for chance node
+        if self.game_state.is_chance_node():
+            # do nothing if chance node, we should not have gotten here
+            raise Exception(
+                "We should never have reached a point where we need to pick an agent on a chance node."
+            )
+
+        # handle possibility of simultaneous node
+        if self.game_state.is_simultaneous_node():
+            # find agents for whom we don't have actions yet if simultaneous node
             for agent in self.agents:
                 if agent not in self.simultaneous_actions:
                     if np.sum(self.infos[agent]["action_mask"]) != 0:
                         self.agent_selection = agent
                         return
                     else:
+                        # ignore agents where there are no valid actions
                         # this will raise assertations with PZ api
                         self.simultaneous_actions[agent] = None
+            return
 
-            # if we already have all the actions, just step regularly
-            self.game_state.apply_actions(list(self.simultaneous_actions.values()))
-            self.game_length += 1
-
-            # clear the simultaneous actions holder
-            self.simultaneous_actions = dict()
-        else:
-            # if not simultaneous, step the state generically
-            self.game_state.apply_action(action)
-            self.game_length += 1
-
-            self._choose_next_agent()
-
-    def _choose_next_agent(self):
-        current_player = self.game_state.current_player()
-        if current_player >= 0:
-            # if it's a normal node, just select the next agent according to the node
-            self.agent_selection = self.agent_id_name_mapping[current_player]
-        else:
-            # if not a normal node, we need to be careful to choose only valid agents
-            for agent in self.agents:
-                if np.sum(self.infos[agent]["action_mask"]) != 0:
-                    self.agent_selection = agent
+        # if we reached here, this is a normal node
+        current_agent = self.game_state.current_player()
+        self.agent_selection = self.agent_id_name_mapping[current_agent]
 
     def _update_observations(self):
         """Updates all the observations inside the observations dictionary."""
@@ -221,8 +236,7 @@ class OpenspielWrapper(pz.AECEnv):
             agent_name = self.agent_id_name_mapping[agent_id]
 
             action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
-            if not self.game_state.is_terminal():
-                action_mask[self.game_state.legal_actions(agent_id)] = 1
+            action_mask[self.game_state.legal_actions(agent_id)] = 1
 
             self.infos[agent_name] = {"action_mask": action_mask}
 
@@ -235,14 +249,11 @@ class OpenspielWrapper(pz.AECEnv):
             for id in range(self.game.num_players())
         }
 
-    def _end_routine(self):
-        """Method that handles the routines that happen at environment termination.
-
-        Since all agents end together we can hack our way around it.
-        """
+    def _update_termination_truncation(self):
+        """Updates all terminations and truncations of the environment."""
         # check for terminal
         self.terminations = {a: self.terminations[a] for a in self.agents}
-        if self.game_state.is_terminal():
+        if self.game_state.current_player() <= -4:
             self.terminations = {a: True for a in self.agents}
 
         # check for action masks because openspiel doesn't do it themselves
@@ -259,6 +270,11 @@ class OpenspielWrapper(pz.AECEnv):
         if self.game_length > self.game.max_game_length():
             self.truncations = {a: True for a in self.agents}
 
+    def _end_routine(self):
+        """Method that handles the routines that happen at environment termination.
+
+        Since all agents end together we can hack our way around it.
+        """
         # if terminal, start deleting agents
         if (
             self.terminations[self.agent_selection]
@@ -271,9 +287,6 @@ class OpenspielWrapper(pz.AECEnv):
             self.truncations.pop(self.agent_selection)
             self.infos.pop(self.agent_selection)
 
-            if self.agents:
-                self.agent_selection = self.agents[0]
-
             return True
 
         return False
@@ -285,12 +298,13 @@ class OpenspielWrapper(pz.AECEnv):
             action (int): action
         """
         # handle the possibility of an end step
-        if self._end_routine():
-            return
-        else:
+        if not self._end_routine():
             # step the environment
             self._execute_action_node(action)
-            self._update_action_masks()
             self._execute_chance_node()
+            self._update_action_masks()
             self._update_observations()
             self._update_rewards()
+            self._update_termination_truncation()
+
+        self._choose_next_agent()
