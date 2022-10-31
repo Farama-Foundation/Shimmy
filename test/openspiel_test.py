@@ -36,6 +36,7 @@ _PASSING_GAMES = [
     "first_sealed_auction",
     "gin_rummy",
     "go",
+    "hanabi",
     "havannah",
     "hex",
     "kriegspiel",
@@ -89,7 +90,6 @@ _FAILING_GAMES = [
     "bridge_uncontested_bidding",
     "efg_game",
     "euchre",
-    "hanabi",
     "hearts",
     "mfg_dynamic_routing",
     "misere",
@@ -107,7 +107,6 @@ _INTERMITTENT_GAMES = ["nfg_game", "goofspiel", "oshi_zumo", "universal_poker"]
 
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
-# @pytest.mark.parametrize("game", pyspiel.registered_names())
 def test_passing_games(game):
     """Tests the conversion of all openspiel envs."""
     game = pyspiel.load_game(game)

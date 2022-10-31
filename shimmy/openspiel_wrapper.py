@@ -219,12 +219,10 @@ class OpenspielWrapper(pz.AECEnv):
         """Updates all the action masks inside the infos dictionary."""
         for agent_id in range(self.game.num_players()):
             agent_name = self.agent_id_name_mapping[agent_id]
-            action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
 
-            try:
+            action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
+            if not self.game_state.is_terminal():
                 action_mask[self.game_state.legal_actions(agent_id)] = 1
-            except pyspiel.SpielError:
-                pass
 
             self.infos[agent_name] = {"action_mask": action_mask}
 
@@ -243,7 +241,7 @@ class OpenspielWrapper(pz.AECEnv):
         Since all agents end together we can hack our way around it.
         """
         # check for terminal
-        self.terminations = {a: False for a in self.agents}
+        self.terminations = {a: self.terminations[a] for a in self.agents}
         if self.game_state.is_terminal():
             self.terminations = {a: True for a in self.agents}
 
@@ -257,7 +255,7 @@ class OpenspielWrapper(pz.AECEnv):
             self.terminations = {a: True for a in self.agents}
 
         # check for truncation
-        self.truncations = {a: False for a in self.agents}
+        self.truncations = {a: self.truncations[a] for a in self.agents}
         if self.game_length > self.game.max_game_length():
             self.truncations = {a: True for a in self.agents}
 
@@ -292,7 +290,7 @@ class OpenspielWrapper(pz.AECEnv):
         else:
             # step the environment
             self._execute_action_node(action)
+            self._update_action_masks()
             self._execute_chance_node()
             self._update_observations()
-            self._update_action_masks()
             self._update_rewards()
