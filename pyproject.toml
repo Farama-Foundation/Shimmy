@@ -2,7 +2,7 @@
 
 include = [
     "shimmy/**",
-    "test/**"
+    "tests/**"
 ]
 
 exclude = [

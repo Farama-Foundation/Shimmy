@@ -3,9 +3,12 @@
 import numpy as np
 import pyspiel
 import pytest
-from pettingzoo.test import api_test
 
 from shimmy import OpenspielWrapperV0
+
+# todo add api_test however chess causes a OOM error
+# from pettingzoo.test import api_test
+
 
 _PASSING_GAMES = [
     "2048",
@@ -106,6 +109,7 @@ _FAILING_GAMES = [
 ]
 
 _UNKNOWN_BUGS_GAMES = ["nfg_game"]
+
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
 def test_passing_games(game):

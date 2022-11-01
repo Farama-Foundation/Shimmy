@@ -1,4 +1,5 @@
 """Setups up the Shimmy module."""
+import itertools
 
 from setuptools import find_packages, setup
 
@@ -19,7 +20,7 @@ def get_description():
 
 
 def get_version():
-    """Gets the shummy version."""
+    """Gets the shimmy version."""
     path = "shimmy/__init__.py"
     with open(path) as file:
         lines = file.readlines()
@@ -32,6 +33,15 @@ def get_version():
 
 version = get_version()
 header_count, long_description = get_description()
+
+extras = {
+    "dm-control": ["dm-control>=1.0.8"],
+    "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
+}
+extras["testing"] = list(set(itertools.chain.from_iterable(extras.values()))) + [
+    "pytest==7.1.3",
+    "pillow>=9.3.0",
+]
 
 setup(
     name="Shimmy",
@@ -46,8 +56,9 @@ setup(
     keywords=["Reinforcement Learning", "game", "RL", "AI"],
     python_requires=">=3.7",
     packages=find_packages(),
-    install_requires=["numpy>=1.18.0", "gymnasium>=0.26.0"],
-    extras={"dm-control": ["dm-control>=1.0.8"]},
+    install_requires=["numpy>=1.18.0", "gymnasium>=0.26"],
+    extras=extras,
+    tests_require=extras["testing"],
     classifiers=[
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.9",
@@ -57,4 +68,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     include_package_data=True,
+    entry_points={
+        "gymnasium.envs": ["__root__ = shimmy.registration:register_gymnasium_envs"]
+    },
 )

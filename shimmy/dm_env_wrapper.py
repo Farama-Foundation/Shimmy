@@ -2,6 +2,7 @@
 # Taken from
 # https://github.com/ikostrikov/dmcgym/blob/main/dmcgym/env.py
 # and modified to modern gymnasium API
+from __future__ import annotations
 
 import copy
 from typing import Optional, OrderedDict
@@ -9,22 +10,23 @@ from typing import Optional, OrderedDict
 import dm_env
 import gymnasium as gym
 import numpy as np
+from dm_env.specs import Array, BoundedArray, DiscreteArray
 from gymnasium import spaces
-from gymnasium.utils import seeding
 
 
 def dm_spec2gym_spec(spec):
     """Converts a dm_env spec to a gymnasium space."""
-    if isinstance(spec, OrderedDict) or isinstance(spec, dict):
+    if isinstance(spec, (OrderedDict, dict)):
         spec = copy.copy(spec)
         for k, v in spec.items():
             spec[k] = dm_spec2gym_spec(v)
         return spaces.Dict(spec)
-    elif type(spec) is dm_env.specs.BoundedArray:
+    # not possible to use isinstance due to inheritance
+    elif type(spec) is BoundedArray:
         low = np.broadcast_to(spec.minimum, spec.shape)
         high = np.broadcast_to(spec.maximum, spec.shape)
         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
-    elif type(spec) is dm_env.specs.Array:
+    elif type(spec) is Array:
         if np.issubdtype(spec.dtype, np.integer):
             low = np.iinfo(spec.dtype).min
             high = np.iinfo(spec.dtype).max
@@ -35,21 +37,18 @@ def dm_spec2gym_spec(spec):
             raise ValueError(f"Unknown dtype {spec.dtype} for spec {spec}.")
 
         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
-    elif type(spec) is dm_env.specs.DiscreteArray:
+    elif type(spec) is DiscreteArray:
         return spaces.Discrete(spec.num_values)
     else:
         raise NotImplementedError(
-            f"Unknown spec {spec} for environment, not converting."
+            f"Unknown spec {spec} that is unknown how to convert to Gymnasium space, please report."
         )
 
 
 def dm_obs2gym_obs(obs):
     """Converts a dm_env observation to a numpy array."""
-    if isinstance(obs, OrderedDict) or isinstance(obs, dict):
-        obs = copy.copy(obs)
-        for k, v in obs.items():
-            obs[k] = dm_obs2gym_obs(v)
-        return obs
+    if isinstance(obs, (OrderedDict, dict)):
+        return {key: dm_obs2gym_obs(value) for key, value in copy.copy(obs).items()}
     else:
         return np.asarray(obs)
 
@@ -106,8 +105,7 @@ class DMEnvWrapper(gym.Env):
 
     def __str__(self):
         """Gives a str representation of this environment."""
-        description = f"All I can tell you is {self._env._task}."
-        return description
+        return self._env._task
 
     def step(self, action: np.ndarray):
         """Steps the underlying environment.
@@ -152,7 +150,7 @@ class DMEnvWrapper(gym.Env):
 
         return obs, reward, terminated, truncated, info
 
-    def reset(self, seed: Optional[int] = None, options: Optional[dict] = None):
+    def reset(self, seed: int | None = None, options: dict | None = None):
         """Resets the underlying environment.
 
         Args:
