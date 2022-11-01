@@ -278,9 +278,7 @@ class OpenspielWrapper(pz.AECEnv):
 
     def _update_action_masks(self):
         """Updates all the action masks inside the infos dictionary."""
-        for agent_id in self.agent_ids:
-            agent_name = self.agent_id_name_mapping[agent_id]
-
+        for agent_id, agent_name in zip(self.agent_ids, self.agents):
             action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
             action_mask[self.game_state.legal_actions(agent_id)] = 1
 
