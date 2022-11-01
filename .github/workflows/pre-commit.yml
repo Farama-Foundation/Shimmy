@@ -15,7 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - run: pip install pre-commit
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          pip install -e .[all]
       - run: pre-commit --version
       - run: pre-commit install
       - run: pre-commit run --all-files
