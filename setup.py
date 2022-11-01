@@ -1,5 +1,4 @@
 """Setups up the Shimmy module."""
-
 from setuptools import find_packages, setup
 
 
@@ -33,6 +32,11 @@ def get_version():
 version = get_version()
 header_count, long_description = get_description()
 
+
+extras = {"dm-control": ["dm-control>=1.0.8"], "open-spiel": ["open-spiel>=1.2"]}
+extras["all"] = list(set([lib for libs in extras.values() for lib in libs]))
+
+
 setup(
     name="Shimmy",
     version=version,
@@ -47,7 +51,6 @@ setup(
     python_requires=">=3.7",
     packages=find_packages(),
     install_requires=["numpy>=1.18.0", "gymnasium>=0.26.0"],
-    extras={"dm-control": ["dm-control>=1.0.8"], "open-spiel": ["open-spiel>=1.2"]},
     classifiers=[
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.9",
@@ -56,5 +59,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    extras_require=extras,
     include_package_data=True,
 )
