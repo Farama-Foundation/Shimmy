@@ -132,11 +132,12 @@ def test_failing_games(game):
         test_passing_games(game)
 
 
-def test_seeding():
+@pytest.mark.parametrize("game", _PASSING_GAMES)
+def test_seeding(game):
     """Tests the seeding of the openspiel conversion wrapper."""
     # load envs
-    env1 = pyspiel.load_game("2048")
-    env2 = pyspiel.load_game("2048")
+    env1 = pyspiel.load_game(game)
+    env2 = pyspiel.load_game(game)
 
     # convert the environment
     env1 = OpenspielWrapperV0(env1, render_mode=None)
