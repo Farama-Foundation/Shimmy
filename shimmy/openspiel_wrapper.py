@@ -38,32 +38,44 @@ class OpenspielWrapper(pz.AECEnv):
             zip(self.possible_agents, range(self.game.num_players()))
         )
 
+        self.game_type = self.game.get_type()
+
         self.render_mode = render_mode
 
     @functools.lru_cache(maxsize=None)
     def observation_space(self, agent: AgentID):
         """observation_space.
 
+        We get the observation space from the underlying game.
+        Whenever the game provides an observation tensor, that takes precedence over information state tensors.
+        Tensor based observations take precedence over text based observations.
+
         Args:
             agent (AgentID): agent
         """
-        try:
-            try:
-                return spaces.Box(
-                    low=-np.inf,
-                    high=np.inf,
-                    shape=self.game.observation_tensor_shape(),
-                    dtype=np.float64,
-                )
-            except pyspiel.SpielError:
-                return spaces.Box(
-                    low=-np.inf,
-                    high=np.inf,
-                    shape=self.game.information_state_tensor_shape(),
-                    dtype=np.float64,
-                )
-        except pyspiel.SpielError:
+        if self.game_type.provides_observation_tensor:
+            return spaces.Box(
+                low=-np.inf,
+                high=np.inf,
+                shape=self.game.observation_tensor_shape(),
+                dtype=np.float64,
+            )
+        elif self.game_type.provides_information_state_tensor:
+            return spaces.Box(
+                low=-np.inf,
+                high=np.inf,
+                shape=self.game.information_state_tensor_shape(),
+                dtype=np.float64,
+            )
+        elif (
+            self.game_type.provides_information_state_string
+            or self.game_type.provides_observation_string
+        ):
             return spaces.Text(max_length=2**16)
+        else:
+            raise NotImplementedError(
+                f"No information/observation tensor/string implemented for {self.game}."
+            )
 
     @functools.lru_cache(maxsize=None)
     def action_space(self, agent: AgentID):
@@ -75,7 +87,9 @@ class OpenspielWrapper(pz.AECEnv):
         try:
             return spaces.Discrete(self.game.num_distinct_actions())
         except pyspiel.SpielError as e:
-            raise NotImplementedError(f"{str(e)[:-1]} for {self.game}.")
+            raise NotImplementedError(
+                f"{str(e)[:-1]} for action space for {self.game}."
+            )
 
     def render(self):
         """render."""
@@ -111,6 +125,7 @@ class OpenspielWrapper(pz.AECEnv):
 
         # all agents
         self.agents = self.possible_agents[:]
+        self.agent_ids = [self.agent_name_id_mapping[a] for a in self.agents]
 
         # boilerplate stuff
         self._cumulative_rewards = {a: 0 for a in self.agents}
@@ -227,61 +242,32 @@ class OpenspielWrapper(pz.AECEnv):
         if self.game_state.is_terminal():
             return
 
-        # HAHAHAHAHHAHAHAHAHAHHAHAHAHAHAHAHHAHAHAHAHAHHAHAHHAHHAHAHAHAHHA
-        if isinstance(self.observation_space(self.agents[0]), spaces.Box):
-            try:
-                try:
-                    self.observations = {
-                        a: np.array(
-                            self.game_state.observation_tensor(
-                                self.agent_name_id_mapping[a]
-                            )
-                        ).reshape(self.game.observation_tensor_shape())
-                        for a in self.agents
-                    }
-                except pyspiel.SpielError:
-                    self.observations[
-                        self.agent_id_name_mapping[self.game_state.current_player()]
-                    ] = self.game_state.observation_tensor()
-            except pyspiel.SpielError:
-                try:
-                    self.observations = {
-                        a: np.array(
-                            self.game_state.information_state_tensor(
-                                self.agent_name_id_mapping[a]
-                            )
-                        ).reshape(self.game.information_state_tensor_shape())
-                        for a in self.agents
-                    }
-                except pyspiel.SpielError:
-                    self.observations[
-                        self.agent_id_name_mapping[self.game_state.current_player()]
-                    ] = self.game_state.information_state_tensor()
-        elif isinstance(self.observation_space(self.agents[0]), spaces.Text):
-            try:
-                try:
-                    self.observations = {
-                        a: self.game_state.observation_string(
-                            self.agent_name_id_mapping[a]
-                        )
-                        for a in self.agents
-                    }
-                except pyspiel.SpielError:
-                    self.observations[
-                        self.agent_id_name_mapping[self.game_state.current_player()]
-                    ] = self.game_state.observation_string()
-            except pyspiel.SpielError:
-                try:
-                    self.observations = {
-                        a: self.game_state.information_state_string(
-                            self.agent_name_id_mapping[a]
-                        )
-                        for a in self.agents
-                    }
-                except pyspiel.SpielError:
-                    self.observations[
-                        self.agent_id_name_mapping[self.game_state.current_player()]
-                    ] = self.game_state.information_state_string()
+        if self.game_type.provides_observation_tensor:
+            self.observations = {
+                self.agents[a]: np.array(self.game_state.observation_tensor(a)).reshape(
+                    self.observation_space(self.agents[0]).shape
+                )
+                for a in self.agent_ids
+            }
+        elif self.game_type.provides_information_state_tensor:
+            self.observations = {
+                self.agents[a]: np.array(self.game_state.information_state_tensor(a)).reshape(
+                    self.observation_space(self.agents[0]).shape
+                )
+                for a in self.agent_ids
+            }
+        elif self.game_type.provides_observation_string:
+            self.observations = {
+                self.agents[a]: self.game_state.observation_string(a) for a in self.agent_ids
+            }
+        elif self.game_type.provides_information_state_string:
+            self.observations = {
+                self.agents[a]: self.game_state.information_state_string(a) for a in self.agent_ids
+            }
+        else:
+            raise NotImplementedError(
+                f"No information/observation tensor/string implemented for {self.game}."
+            )
 
     def _update_action_masks(self):
         """Updates all the action masks inside the infos dictionary."""

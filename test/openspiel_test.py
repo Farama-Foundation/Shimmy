@@ -63,6 +63,7 @@ _PASSING_GAMES = [
     "matrix_shapleys_game",
     "mfg_crowd_modelling",
     "mfg_crowd_modelling_2d",
+    "mfg_dynamic_routing",
     "mfg_garnet",
     "morpion_solitaire",
     "negotiation",
@@ -96,7 +97,6 @@ _PASSING_GAMES = [
 
 _FAILING_GAMES = [
     "efg_game",
-    "mfg_dynamic_routing",
     "misere",
     "normal_form_extensive_game",
     "repeated_game",
@@ -106,6 +106,7 @@ _FAILING_GAMES = [
 ]
 
 _UNKNOWN_BUGS_GAMES = ["nfg_game"]
+
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
 def test_passing_games(game):
