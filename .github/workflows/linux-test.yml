@@ -27,7 +27,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          sudo apt-get install python-opengl xvfb
+          pip install pytest
           pip install -e .
       - name: Source distribution test
         run: |
@@ -35,4 +35,4 @@ jobs:
           pip install dist/*.tar.gz
       - name: Release Test
         run: |
-          xvfb-run -s "-screen 0 1024x768x24" pytest -v -rw
+          pytest /tests -v -rw
