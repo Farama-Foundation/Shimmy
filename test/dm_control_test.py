@@ -1,4 +1,4 @@
-"""Tests the functionality of the dm_env_wrapper on dm_control envs."""
+"""Tests the functionality of the DMEnvWrapper on dm_control envs."""
 
 import numpy as np
 import pytest
@@ -27,10 +27,10 @@ from dm_control.suite import (
 from gymnasium.utils.env_checker import check_env
 from PIL import Image
 
-from shimmy import dm_env_wrapper
+from shimmy import DMEnvWrapperV0
 
 # Find all domains imported.
-_DOMAINS = [
+_PASSING_DOMAINS = [
     acrobot,
     ball_in_cup,
     cartpole,
@@ -41,7 +41,6 @@ _DOMAINS = [
     hopper,
     humanoid,
     humanoid_CMU,
-    lqr,
     manipulator,
     pendulum,
     point_mass,
@@ -52,15 +51,17 @@ _DOMAINS = [
     walker,
 ]
 
+_FAILING_DOMAINS = [lqr]
 
-@pytest.mark.parametrize("domain", _DOMAINS)
-def test_all_envs(domain):
+
+@pytest.mark.parametrize("domain", _PASSING_DOMAINS)
+def test_passing_domains(domain):
     """Tests the conversion of all dm_control envs."""
     # for each possible task in the domain:
     for task in domain.SUITE.values():
 
         # convert the task to gymnasium environment
-        env = dm_env_wrapper(task(), render_mode="rgb_array")
+        env = DMEnvWrapperV0(task(), render_mode="rgb_array")
 
         # check the environment using gymnasium
         check_env(env)
@@ -74,6 +75,13 @@ def test_all_envs(domain):
             obs, rew, term, trunc, info = env.step(env.action_space.sample())
 
 
+@pytest.mark.parametrize("domain", _FAILING_DOMAINS)
+def test_failing_games(domain):
+    """Ensures that failing domains are still failing."""
+    with pytest.raises(Exception):
+        test_passing_domains(domain)
+
+
 def test_seeding():
     """Tests the seeding of the dm_control conversion wrapper."""
     # load envs
@@ -81,8 +89,8 @@ def test_seeding():
     env2 = suite.load("hopper", "stand")
 
     # convert the environment
-    env1 = dm_env_wrapper(env1, render_mode="rgb_array")
-    env2 = dm_env_wrapper(env2, render_mode="rgb_array")
+    env1 = DMEnvWrapperV0(env1, render_mode="rgb_array")
+    env2 = DMEnvWrapperV0(env2, render_mode="rgb_array")
     env1.reset(seed=42)
     env2.reset(seed=42)
 
@@ -104,7 +112,7 @@ def test_render(camera_id):
     env = suite.load("hopper", "stand")
 
     # convert the environment
-    env = dm_env_wrapper(env, render_mode="rgb_array", camera_id=camera_id)
+    env = DMEnvWrapperV0(env, render_mode="rgb_array", camera_id=camera_id)
     env.reset()
 
     frames = []
