@@ -7,7 +7,6 @@ import numpy as np
 import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
-from gymnasium.spaces import space
 from gymnasium.utils import seeding
 from pettingzoo.utils.env import AgentID
 
