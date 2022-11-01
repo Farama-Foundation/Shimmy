@@ -47,8 +47,12 @@ class OpenspielWrapper(pz.AECEnv):
         """observation_space.
 
         We get the observation space from the underlying game.
-        Whenever the game provides an observation tensor, that takes precedence over information state tensors.
-        Tensor based observations take precedence over text based observations.
+        OpenSpiel possibly provides information and observation in several forms.
+        This wrapper chooses which one to use depending on the following precedence:
+            1. Observation Tensor
+            2. Information Tensor
+            3. Observation String
+            4. Information String
 
         Args:
             agent (AgentID): agent
