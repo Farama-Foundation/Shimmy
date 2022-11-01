@@ -238,8 +238,9 @@ class OpenspielWrapper(pz.AECEnv):
             return
 
         # if we reached here, this is a normal node
-        current_agent = self.game_state.current_player()
-        self.agent_selection = self.agent_id_name_mapping[current_agent]
+        self.agent_selection = self.agent_id_name_mapping[
+            self.game_state.current_player()
+        ]
 
     def _update_observations(self):
         """Updates all the observations inside the observations dictionary."""
@@ -255,18 +256,20 @@ class OpenspielWrapper(pz.AECEnv):
             }
         elif self.game_type.provides_information_state_tensor:
             self.observations = {
-                self.agents[a]: np.array(self.game_state.information_state_tensor(a)).reshape(
-                    self.observation_space(self.agents[0]).shape
-                )
+                self.agents[a]: np.array(
+                    self.game_state.information_state_tensor(a)
+                ).reshape(self.observation_space(self.agents[0]).shape)
                 for a in self.agent_ids
             }
         elif self.game_type.provides_observation_string:
             self.observations = {
-                self.agents[a]: self.game_state.observation_string(a) for a in self.agent_ids
+                self.agents[a]: self.game_state.observation_string(a)
+                for a in self.agent_ids
             }
         elif self.game_type.provides_information_state_string:
             self.observations = {
-                self.agents[a]: self.game_state.information_state_string(a) for a in self.agent_ids
+                self.agents[a]: self.game_state.information_state_string(a)
+                for a in self.agent_ids
             }
         else:
             raise NotImplementedError(
