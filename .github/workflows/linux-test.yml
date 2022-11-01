@@ -35,4 +35,4 @@ jobs:
           pip install dist/*.tar.gz
       - name: Release Test
         run: |
-          pytest /tests -v -rw
+          pytest tests/ -v -rw
