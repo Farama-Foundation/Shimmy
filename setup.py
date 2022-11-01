@@ -47,7 +47,7 @@ setup(
     python_requires=">=3.7",
     packages=find_packages(),
     install_requires=["numpy>=1.18.0", "gymnasium>=0.26.0"],
-    extras={"dm-control": ["dm-control>=1.0.8"]},
+    extras={"dm-control": ["dm-control>=1.0.8"], "open-spiel": ["open-spiel>=1.2"]},
     classifiers=[
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.9",

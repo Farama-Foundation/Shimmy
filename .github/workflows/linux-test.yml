@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pytest
-          pip install -e .
+          pip install -e .[all]
       - name: Source distribution test
         run: |
           python setup.py sdist

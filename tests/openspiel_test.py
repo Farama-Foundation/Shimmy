@@ -128,7 +128,7 @@ def test_passing_games(game):
 @pytest.mark.parametrize("game", _FAILING_GAMES)
 def test_failing_games(game):
     """Ensures that failing games are still failing."""
-    with pytest.raises((pyspiel.SpielError)):
+    with pytest.raises(pyspiel.SpielError):
         test_passing_games(game)
 
 
