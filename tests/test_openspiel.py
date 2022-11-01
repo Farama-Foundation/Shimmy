@@ -95,11 +95,11 @@ _PASSING_GAMES = [
     "ultimate_tic_tac_toe",
     "universal_poker",
     "y",
+    "mfg_dynamic_routing",
 ]
 
 _FAILING_GAMES = [
     "efg_game",
-    "mfg_dynamic_routing",
     "misere",
     "normal_form_extensive_game",
     "repeated_game",

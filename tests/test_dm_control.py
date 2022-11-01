@@ -1,126 +1,85 @@
 """Tests the functionality of the DMEnvWrapper on dm_control envs."""
+import warnings
 
+import dm_control.suite
+import gymnasium as gym
 import numpy as np
 import pytest
-from dm_control import suite
-from dm_control.suite import (
-    acrobot,
-    ball_in_cup,
-    cartpole,
-    cheetah,
-    dog,
-    finger,
-    fish,
-    hopper,
-    humanoid,
-    humanoid_CMU,
-    lqr,
-    manipulator,
-    pendulum,
-    point_mass,
-    quadruped,
-    reacher,
-    stacker,
-    swimmer,
-    walker,
-)
-from gymnasium.utils.env_checker import check_env
-from PIL import Image
+from gymnasium.utils.env_checker import check_env, data_equivalence
 
-from shimmy import DMEnvWrapperV0
+from shimmy.registration import DM_CONTROL_ENVS
 
-# Find all domains imported.
-_PASSING_DOMAINS = [
-    acrobot,
-    ball_in_cup,
-    cartpole,
-    cheetah,
-    dog,
-    finger,
-    fish,
-    hopper,
-    humanoid,
-    humanoid_CMU,
-    manipulator,
-    pendulum,
-    point_mass,
-    quadruped,
-    reacher,
-    stacker,
-    swimmer,
-    walker,
+
+def test_dm_control_envs():
+    """Tests that all DM_CONTROL_ENVS are equal to the known dm-control.suite tasks."""
+    assert dm_control.suite.ALL_TASKS == DM_CONTROL_ENVS
+
+
+CHECK_ENV_IGNORE_WARNINGS = [
+    f"\x1b[33mWARN: {message}\x1b[0m"
+    for message in [
+        "A Box observation space minimum value is -infinity. This is probably too low.",
+        "A Box observation space maximum value is -infinity. This is probably too high.",
+        "For Box action spaces, we recommend using a symmetric and normalized space (range=[-1, 1] or [0, 1]). See https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html for more information.",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: ()",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (8, 2)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (2, 4)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (4, 4)",
+    ]
 ]
 
-_FAILING_DOMAINS = [lqr]
+
+@pytest.mark.parametrize("domain_name, task_name", DM_CONTROL_ENVS)
+def test_dm_control_check_env(domain_name, task_name):
+    """Check that environment pass the gymnasium check_env."""
+    env = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
+
+    with warnings.catch_warnings(record=True) as caught_warnings:
+        check_env(env.unwrapped)
+
+    for warning in caught_warnings:
+        if warning.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS:
+            raise gym.error.Error(f"Unexpected warning: {warning.message}")
+
+    env.close()
 
 
-@pytest.mark.parametrize("domain", _PASSING_DOMAINS)
-def test_passing_domains(domain):
-    """Tests the conversion of all dm_control envs."""
-    # for each possible task in the domain:
-    for task in domain.SUITE.values():
+@pytest.mark.parametrize("domain_name, task_name", DM_CONTROL_ENVS)
+def test_dm_control_seeding(domain_name, task_name):
+    """Test that dm-control seeding works."""
+    env_1 = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
+    env_2 = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
 
-        # convert the task to gymnasium environment
-        env = DMEnvWrapperV0(task(), render_mode="rgb_array")
-
-        # check the environment using gymnasium
-        check_env(env)
-
-        # reset and begin test
-        env.reset()
-        term, trunc = False, False
-
-        # run until termination
-        while not term and not trunc:
-            obs, rew, term, trunc, info = env.step(env.action_space.sample())
-
-
-@pytest.mark.parametrize("domain", _FAILING_DOMAINS)
-def test_failing_games(domain):
-    """Ensures that failing domains are still failing."""
-    with pytest.raises(Exception):
-        test_passing_domains(domain)
-
-
-def test_seeding():
-    """Tests the seeding of the dm_control conversion wrapper."""
-    # load envs
-    env1 = suite.load("hopper", "stand")
-    env2 = suite.load("hopper", "stand")
-
-    # convert the environment
-    env1 = DMEnvWrapperV0(env1, render_mode="rgb_array")
-    env2 = DMEnvWrapperV0(env2, render_mode="rgb_array")
-    env1.reset(seed=42)
-    env2.reset(seed=42)
-
-    for i in range(100):
-        returns1 = env1.step(env1.action_space.sample())
-        returns2 = env2.step(env2.action_space.sample())
-
-        for stuff1, stuff2 in zip(returns1, returns2):
-            if isinstance(stuff1, bool):
-                assert stuff1 == stuff2, f"Incorrect returns on iteration {i}."
-            elif isinstance(stuff1, np.ndarray):
-                assert (stuff1 == stuff2).all(), f"Incorrect returns on iteration {i}."
-
-
-@pytest.mark.parametrize("camera_id", [0, 1])
-def test_render(camera_id):
-    """Tests the rendering of the dm_control conversion wrapper."""
-    # load an env
-    env = suite.load("hopper", "stand")
-
-    # convert the environment
-    env = DMEnvWrapperV0(env, render_mode="rgb_array", camera_id=camera_id)
-    env.reset()
-
-    frames = []
+    obs_1, info_1 = env_1.reset(seed=42)
+    obs_2, info_2 = env_2.reset(seed=42)
+    assert data_equivalence(obs_1, obs_2)
+    assert data_equivalence(info_1, info_2)
     for _ in range(100):
-        obs, rew, term, trunc, info = env.step(env.action_space.sample())
-        frames.append(env.render())
+        actions = env_1.action_space.sample()
+        obs_1, reward_1, term_1, trunc_1, info_1 = env_1.step(actions)
+        obs_2, reward_2, term_2, trunc_2, info_2 = env_1.step(actions)
+        assert data_equivalence(obs_1, obs_2)
+        assert reward_1 == reward_2
+        assert term_1 == term_2 and trunc_1 == trunc_2
+        assert data_equivalence(info_1, info_2)
 
-    frames = [Image.fromarray(frame) for frame in frames]
-    frames[0].save(
-        "array.gif", save_all=True, append_images=frames[1:], duration=50, loop=0
+    env_1.close()
+    env_2.close()
+
+
+@pytest.mark.parametrize("domain_name, task_name", DM_CONTROL_ENVS)
+@pytest.mark.parametrize("camera_id", [0, 1])
+def test_dm_control_rendering(domain_name, task_name, camera_id):
+    """Test that dm-control rendering works."""
+    env = gym.make(
+        f"dm_control/{domain_name}-{task_name}-v0",
+        render_mode="rgb_array",
+        camera_id=camera_id,
     )
+    env.reset()
+    frames = []
+    for _ in range(10):
+        frames.append(env.render())
+        env.step(env.action_space.sample())
+
+    env.close()

@@ -1,24 +1,78 @@
 """Registers environments within gymnasium for optional modules."""
 from functools import partial
+from typing import Any
 
-import gymnasium
-from dm_control import suite
+from gymnasium.envs.registration import register
 
 from shimmy.dm_env_wrapper import DMEnvWrapper
 
+DM_CONTROL_ENVS = (
+    ("acrobot", "swingup"),
+    ("acrobot", "swingup_sparse"),
+    ("ball_in_cup", "catch"),
+    ("cartpole", "balance"),
+    ("cartpole", "balance_sparse"),
+    ("cartpole", "swingup"),
+    ("cartpole", "swingup_sparse"),
+    ("cartpole", "two_poles"),
+    ("cartpole", "three_poles"),
+    ("cheetah", "run"),
+    ("dog", "stand"),
+    ("dog", "walk"),
+    ("dog", "trot"),
+    ("dog", "run"),
+    ("dog", "fetch"),
+    ("finger", "spin"),
+    ("finger", "turn_easy"),
+    ("finger", "turn_hard"),
+    ("fish", "upright"),
+    ("fish", "swim"),
+    ("hopper", "stand"),
+    ("hopper", "hop"),
+    ("humanoid", "stand"),
+    ("humanoid", "walk"),
+    ("humanoid", "run"),
+    ("humanoid", "run_pure_state"),
+    ("humanoid_CMU", "stand"),
+    ("humanoid_CMU", "run"),
+    ("lqr", "lqr_2_1"),
+    ("lqr", "lqr_6_2"),
+    ("manipulator", "bring_ball"),
+    ("manipulator", "bring_peg"),
+    ("manipulator", "insert_ball"),
+    ("manipulator", "insert_peg"),
+    ("pendulum", "swingup"),
+    ("point_mass", "easy"),
+    ("point_mass", "hard"),
+    ("quadruped", "walk"),
+    ("quadruped", "run"),
+    ("quadruped", "escape"),
+    ("quadruped", "fetch"),
+    ("reacher", "easy"),
+    ("reacher", "hard"),
+    ("stacker", "stack_2"),
+    ("stacker", "stack_4"),
+    ("swimmer", "swimmer6"),
+    ("swimmer", "swimmer15"),
+    ("walker", "stand"),
+    ("walker", "walk"),
+    ("walker", "run"),
+)
+
 
 def _register_dm_control_envs():
+    """Registers all dm-control environments in gymnasium."""
     try:
-        import dm_control
+        import dm_control.suite
     except ImportError:
         return
 
     def _make_dm_control_env(
         domain_name: str,
         task_name: str,
-        task_kwargs=None,
-        environment_kwargs=None,
-        visualize_reward=None,
+        task_kwargs: dict[str, Any] = None,
+        environment_kwargs: dict[str, Any] = None,
+        visualize_reward: bool = False,
         **kwargs,
     ):
         env = dm_control.suite.load(
@@ -30,8 +84,8 @@ def _register_dm_control_envs():
         )
         return DMEnvWrapper(env, **kwargs)
 
-    for _domain_name, _task_name in suite.ALL_TASKS:
-        gymnasium.register(
+    for _domain_name, _task_name in DM_CONTROL_ENVS:
+        register(
             f"dm_control/{_domain_name}-{_task_name}-v0",
             partial(
                 _make_dm_control_env, domain_name=_domain_name, task_name=_task_name
@@ -39,6 +93,6 @@ def _register_dm_control_envs():
         )
 
 
-def register_gymnasium_environments():
+def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
     _register_dm_control_envs()

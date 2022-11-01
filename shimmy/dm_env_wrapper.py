@@ -41,7 +41,7 @@ def dm_spec2gym_spec(spec):
         return spaces.Discrete(spec.num_values)
     else:
         raise NotImplementedError(
-            f"Unknown spec {spec} that is unknown how to convert to Gymnasium space, please report."
+            f"Cannot convert dm_spec to gymnasium space, unknown spec: {spec}, please report."
         )
 
 
@@ -61,7 +61,7 @@ class DMEnvWrapper(gym.Env):
     def __init__(
         self,
         env: dm_env.Environment,
-        render_mode: str,
+        render_mode: Optional[str] = None,
         render_height: int = 84,
         render_width: int = 84,
         camera_id: int = 0,

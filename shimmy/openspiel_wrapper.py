@@ -28,6 +28,7 @@ class OpenspielWrapper(pz.AECEnv):
             game (pyspiel.Game): game
             render_mode (Optional[str]): render_mode
         """
+        super().__init__()
         self.game = game
         self.possible_agents = [
             "player_" + str(r) for r in range(self.game.num_players())
