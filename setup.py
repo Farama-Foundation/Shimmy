@@ -38,10 +38,8 @@ extras = {
     "dm-control": ["dm-control>=1.0.8"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
 }
-extras["testing"] = list(set(itertools.chain.from_iterable(extras.values()))) + [
-    "pytest==7.1.3",
-    "pillow>=9.3.0",
-]
+extras["all"] = list({lib for libs in extras.values() for lib in libs})
+extras["testing"] = extras["all"] + ["pytest==7.1.3", "pillow>=9.3.0"]
 
 setup(
     name="Shimmy",
@@ -56,9 +54,9 @@ setup(
     keywords=["Reinforcement Learning", "game", "RL", "AI"],
     python_requires=">=3.7",
     packages=find_packages(),
-    install_requires=["numpy>=1.18.0", "gymnasium>=0.26"],
-    extras=extras,
+    install_requires=["numpy>=1.18.0", "gymnasium>=0.26.0"],
     tests_require=extras["testing"],
+    extras_require=extras,
     classifiers=[
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.9",
