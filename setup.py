@@ -36,10 +36,9 @@ header_count, long_description = get_description()
 extras = {
     "dm-control": ["dm-control>=1.0.8", "pillow>=9.2.0"],
     "open-spiel": ["open-spiel>=1.2", "pettingzoo>=1.22.0"],
-    "testing": ["pre-commit>=2.20.0"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
-
+extras["testing"] = ["pre-commit>=2.20.0", "pytest>7.1.3"]
 
 setup(
     name="Shimmy",
