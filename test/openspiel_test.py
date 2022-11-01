@@ -171,3 +171,5 @@ def test_seeding(game):
                 assert stuff1 == stuff2, "Incorrect returns on iteration."
             elif isinstance(stuff1, np.ndarray):
                 assert (stuff1 == stuff2).all(), "Incorrect returns on iteration."
+            elif isinstance(stuff1, str):
+                assert stuff1 == stuff2, "Incorrect returns on iteration."
