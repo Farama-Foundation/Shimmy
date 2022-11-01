@@ -2,7 +2,7 @@
 
 include = [
     "shimmy/**",
-    "test/**"
+    "tests/**"
 ]
 
 exclude = [
@@ -18,3 +18,8 @@ typeCheckingMode = "basic"
 pythonVersion = "3.7"
 pythonPlatform = "All"
 enableTypeIgnoreComments = true
+# This is required as the CI pre-commit does not download the module (i.e. numpy, pygame, box2d)
+#   Therefore, we have to ignore missing imports
+reportMissingImports = "none"
+# Some modules are missing type stubs, which is an issue when running pyright locally
+reportMissingTypeStubs = false

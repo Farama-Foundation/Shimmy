@@ -63,6 +63,7 @@ _PASSING_GAMES = [
     "matrix_shapleys_game",
     "mfg_crowd_modelling",
     "mfg_crowd_modelling_2d",
+    "mfg_dynamic_routing",
     "mfg_garnet",
     "morpion_solitaire",
     "negotiation",
@@ -96,7 +97,6 @@ _PASSING_GAMES = [
 
 _FAILING_GAMES = [
     "efg_game",
-    "mfg_dynamic_routing",
     "misere",
     "normal_form_extensive_game",
     "repeated_game",
@@ -106,6 +106,7 @@ _FAILING_GAMES = [
 ]
 
 _UNKNOWN_BUGS_GAMES = ["nfg_game"]
+
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
 def test_passing_games(game):
@@ -127,15 +128,16 @@ def test_passing_games(game):
 @pytest.mark.parametrize("game", _FAILING_GAMES)
 def test_failing_games(game):
     """Ensures that failing games are still failing."""
-    with pytest.raises((pyspiel.SpielError, NotImplementedError)):
+    with pytest.raises(pyspiel.SpielError):
         test_passing_games(game)
 
 
-def test_seeding():
+@pytest.mark.parametrize("game", _PASSING_GAMES)
+def test_seeding(game):
     """Tests the seeding of the openspiel conversion wrapper."""
     # load envs
-    env1 = pyspiel.load_game("2048")
-    env2 = pyspiel.load_game("2048")
+    env1 = pyspiel.load_game(game)
+    env2 = pyspiel.load_game(game)
 
     # convert the environment
     env1 = OpenspielWrapperV0(env1, render_mode=None)
@@ -169,3 +171,5 @@ def test_seeding():
                 assert stuff1 == stuff2, "Incorrect returns on iteration."
             elif isinstance(stuff1, np.ndarray):
                 assert (stuff1 == stuff2).all(), "Incorrect returns on iteration."
+            elif isinstance(stuff1, str):
+                assert stuff1 == stuff2, "Incorrect returns on iteration."
