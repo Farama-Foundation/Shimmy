@@ -289,8 +289,7 @@ class OpenspielWrapper(pz.AECEnv):
         # update cumulative rewards
         rewards = self.game_state.rewards()
         self._cumulative_rewards = {
-            self.agent_id_name_mapping[id]: rewards[id]
-            for id in self.agent_ids
+            self.agent_id_name_mapping[id]: rewards[id] for id in self.agent_ids
         }
 
     def _update_termination_truncation(self):
