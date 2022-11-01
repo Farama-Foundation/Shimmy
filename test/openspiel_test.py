@@ -17,6 +17,7 @@ _PASSING_GAMES = [
     "blotto",
     "breakthrough",
     "bridge",
+    "bridge_uncontested_bidding",
     "catch",
     "checkers",
     "chess",
@@ -33,11 +34,14 @@ _PASSING_GAMES = [
     "dark_hex",
     "dark_hex_ir",
     "deep_sea",
+    "euchre",
     "first_sealed_auction",
     "gin_rummy",
     "go",
+    "goofspiel",
     "hanabi",
     "havannah",
+    "hearts",
     "hex",
     "kriegspiel",
     "kuhn_poker",
@@ -63,6 +67,8 @@ _PASSING_GAMES = [
     "morpion_solitaire",
     "negotiation",
     "nim",
+    "oh_hell",
+    "oshi_zumo",
     "othello",
     "oware",
     "pathfinding",
@@ -73,9 +79,11 @@ _PASSING_GAMES = [
     "pig",
     "quoridor",
     "rbc",
+    "sheriff",
     "skat",
     "solitaire",
     "stones_and_gems",
+    "tarok",
     "tic_tac_toe",
     "tiny_bridge_2p",
     "tiny_bridge_4p",
@@ -87,39 +95,33 @@ _PASSING_GAMES = [
 ]
 
 _FAILING_GAMES = [
-    "bridge_uncontested_bidding",
     "efg_game",
-    "euchre",
-    "hearts",
     "mfg_dynamic_routing",
     "misere",
     "normal_form_extensive_game",
-    "oh_hell",
     "repeated_game",
     "restricted_nash_response",
-    "sheriff",
     "start_at",
-    "tarok",
     "turn_based_simultaneous_game",
 ]
 
-_INTERMITTENT_GAMES = ["nfg_game", "goofspiel", "oshi_zumo", "universal_poker"]
-
+_UNKNOWN_BUGS_GAMES = ["nfg_game"]
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)
 def test_passing_games(game):
     """Tests the conversion of all openspiel envs."""
-    game = pyspiel.load_game(game)
-    env = OpenspielWrapperV0(game=game, render_mode=None)
+    for _ in range(5):
+        env = pyspiel.load_game(game)
+        env = OpenspielWrapperV0(game=env, render_mode=None)
 
-    # api test the env
-    # api_test(env)
+        # api test the env
+        # api_test(env)
 
-    env.reset()
-    for agent in env.agent_iter():
-        observation, reward, termination, truncation, info = env.last()
-        action = env.action_space(agent).sample(mask=info["action_mask"])
-        env.step(action)
+        env.reset()
+        for agent in env.agent_iter():
+            observation, reward, termination, truncation, info = env.last()
+            action = env.action_space(agent).sample(mask=info["action_mask"])
+            env.step(action)
 
 
 @pytest.mark.parametrize("game", _FAILING_GAMES)
