@@ -1,10 +1,12 @@
 """Registers environments within gymnasium for optional modules."""
+from __future__ import annotations
+
 from functools import partial
 from typing import Any
 
 from gymnasium.envs.registration import register
 
-from shimmy.dm_env_wrapper import DMEnvWrapper
+from shimmy.dm_control_compatibility import DmControlCompatibility
 
 DM_CONTROL_ENVS = (
     ("acrobot", "swingup"),
@@ -70,10 +72,10 @@ def _register_dm_control_envs():
     def _make_dm_control_env(
         domain_name: str,
         task_name: str,
-        task_kwargs: dict[str, Any] = None,
-        environment_kwargs: dict[str, Any] = None,
+        task_kwargs: dict[str, Any] | None = None,
+        environment_kwargs: dict[str, Any] | None = None,
         visualize_reward: bool = False,
-        **kwargs,
+        **render_kwargs,
     ):
         env = dm_control.suite.load(
             domain_name=domain_name,
@@ -82,7 +84,7 @@ def _register_dm_control_envs():
             environment_kwargs=environment_kwargs,
             visualize_reward=visualize_reward,
         )
-        return DMEnvWrapper(env, **kwargs)
+        return DmControlCompatibility(env, **render_kwargs)
 
     for _domain_name, _task_name in DM_CONTROL_ENVS:
         register(
