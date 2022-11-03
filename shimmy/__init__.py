@@ -3,6 +3,7 @@
 from shimmy.dm_control_compatibility import (
     DmControlCompatibility as DmControlCompatibilityV0,
 )
+from shimmy.dm_lab_compatibility import DmLabCompatibility as DmLabCompatibilityV0
 from shimmy.openspiel_wrapper import OpenspielWrapper as OpenspielWrapperV0
 
 __version__ = "0.0.1a"
