@@ -7,12 +7,15 @@ from typing import Any
 import numpy as np
 from gymnasium import spaces
 
+
 def dm_lab_spec2gym_space(spec) -> spaces.Space[Any]:
     """Converts a dm_lab spec to a gymnasium space."""
     if isinstance(spec, list):
         expanded = {}
         for desc in spec:
-            assert "name" in desc, f"Can't find name for the description: {desc} in spec."
+            assert (
+                "name" in desc
+            ), f"Can't find name for the description: {desc} in spec."
 
             # some observation spaces have a string description, we ignore those for now
             if "dtype" in desc:
@@ -37,7 +40,9 @@ def dm_lab_spec2gym_space(spec) -> spaces.Space[Any]:
                 low = float("-inf")
                 high = float("inf")
 
-            return spaces.Box(low=low, high=high, shape=spec["shape"], dtype=spec["dtype"])
+            return spaces.Box(
+                low=low, high=high, shape=spec["shape"], dtype=spec["dtype"]
+            )
 
         # this is an action space
         elif "min" in spec and "max" in spec:

@@ -10,9 +10,8 @@ from typing import Any
 
 import gymnasium
 import numpy as np
-from gymnasium.core import ObsType
-
 from dm_env import Environment
+from gymnasium.core import ObsType
 
 from shimmy.utils.dm_lab_utils import dm_lab_spec2gym_space
 

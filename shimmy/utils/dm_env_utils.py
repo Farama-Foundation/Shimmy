@@ -1,8 +1,6 @@
 """Utility functions for the compatibility wrappers."""
 from __future__ import annotations
 
-
-from gymnasium.core import ObsType
 import copy
 from collections import OrderedDict
 from typing import Any
@@ -10,6 +8,7 @@ from typing import Any
 import numpy as np
 from dm_env.specs import Array, BoundedArray, DiscreteArray
 from gymnasium import spaces
+from gymnasium.core import ObsType
 
 
 def dm_spec2gym_space(spec) -> spaces.Space[Any]:
