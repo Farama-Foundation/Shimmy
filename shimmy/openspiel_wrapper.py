@@ -1,4 +1,5 @@
 """Wrapper to convert a openspiel environment into a pettingzoo compatible environment."""
+from __future__ import annotations
 
 import functools
 from typing import Dict, Optional
@@ -12,14 +13,14 @@ from pettingzoo.utils.env import AgentID
 
 
 class OpenspielWrapper(pz.AECEnv):
-    """Wrapper that converts a openspiel environment into a pettingzoo environment."""
+    """Wrapper that converts an openspiel environment into a pettingzoo environment."""
 
     metadata = {"render_modes": []}
 
     def __init__(
         self,
         game: pyspiel.Game,
-        render_mode: Optional[str],
+        render_mode: str | None,
     ):
         """Wrapper that converts a openspiel environment into a pettingzoo environment.
 
@@ -27,6 +28,7 @@ class OpenspielWrapper(pz.AECEnv):
             game (pyspiel.Game): game
             render_mode (Optional[str]): render_mode
         """
+        super().__init__()
         self.game = game
         self.possible_agents = [
             "player_" + str(r) for r in range(self.game.num_players())
@@ -113,9 +115,9 @@ class OpenspielWrapper(pz.AECEnv):
 
     def reset(
         self,
-        seed: Optional[int] = None,
-        return_info: Optional[bool] = False,
-        options: Optional[Dict] = None,
+        seed: int | None = None,
+        return_info: bool | None = False,
+        options: dict | None = None,
     ):
         """reset.
 

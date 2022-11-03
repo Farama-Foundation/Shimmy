@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read # to fetch code (actions/checkout)
+  contents: read
 
 jobs:
   pre-commit:
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - run: pip install -e .[testing]
+      - run: pip install pre-commit
       - run: pre-commit --version
       - run: pre-commit install
       - run: pre-commit run --all-files

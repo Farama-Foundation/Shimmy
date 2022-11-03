@@ -1,4 +1,6 @@
 """Setups up the Shimmy module."""
+import itertools
+
 from setuptools import find_packages, setup
 
 
@@ -18,7 +20,7 @@ def get_description():
 
 
 def get_version():
-    """Gets the shummy version."""
+    """Gets the shimmy version."""
     path = "shimmy/__init__.py"
     with open(path) as file:
         lines = file.readlines()
@@ -32,13 +34,12 @@ def get_version():
 version = get_version()
 header_count, long_description = get_description()
 
-
 extras = {
-    "dm-control": ["dm-control>=1.0.8", "pillow>=9.2.0"],
-    "open-spiel": ["open-spiel>=1.2", "pettingzoo>=1.22.0"],
+    "dm-control": ["dm-control>=1.0.8"],
+    "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
-extras["testing"] = ["pre-commit>=2.20.0", "pytest>7.1.3"]
+extras["testing"] = extras["all"] + ["pytest==7.1.3", "pillow>=9.3.0"]
 
 setup(
     name="Shimmy",
@@ -54,6 +55,8 @@ setup(
     python_requires=">=3.7",
     packages=find_packages(),
     install_requires=["numpy>=1.18.0", "gymnasium>=0.26.0"],
+    tests_require=extras["testing"],
+    extras_require=extras,
     classifiers=[
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.9",
@@ -62,6 +65,8 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    extras_require=extras,
     include_package_data=True,
+    entry_points={
+        "gymnasium.envs": ["__root__ = shimmy.registration:register_gymnasium_envs"]
+    },
 )
