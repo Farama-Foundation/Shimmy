@@ -6,24 +6,25 @@ and modified to modern gymnasium API
 """
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, TypeVar
 
 import gymnasium
 import numpy as np
-from dm_env import Environment
 from gymnasium.core import ObsType
 
-from shimmy.utils.dm_lab_utils import dm_lab_spec2gym_space
+from shimmy.utils.dm_lab_utils import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
+
+deepmind_lab_env = TypeVar("deepmind_lab_env")
 
 
 class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
     """A compatibility wrapper that converts a dm_lab-control environment into a gymnasium environment."""
 
-    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 10}
+    metadata = {"render_modes": None, "render_fps": 10}
 
     def __init__(
         self,
-        env: Environment,
+        env: deepmind_lab_env,
         render_mode: str | None = None,
         render_height: int = 84,
         render_width: int = 84,
@@ -32,20 +33,15 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         """Initialises the environment with a render mode along with render information."""
         self._env = env
 
-        self.observation_space = dm_lab_spec2gym_space(env.observation_spec())
+        # need to do this to figure out what observation spec the user used
+        self._env.reset()
+        self.observation_space = dm_lab_obs2gym_obs_space(self._env.observations())
         self.action_space = dm_lab_spec2gym_space(env.action_spec())
 
-        assert render_mode is None or render_mode in self.metadata["render_modes"]
+        assert (
+            render_mode is None
+        ), "Render mode must be set on dm_lab environment init. Pass `renderer='sdl'` to enable human rendering."
         self.render_mode = render_mode
-        self.render_height, self.render_width = render_height, render_width
-        self.camera_id = camera_id
-
-        if self.render_mode == "human":
-            from gymnasium.envs.mujoco.mujoco_rendering import Viewer
-
-            self.viewer = Viewer(
-                self._env.physics.model.ptr, self._env.physics.data.ptr
-            )
 
     def reset(
         self, *, seed: int | None = None, options: dict[str, Any] | None = None
@@ -53,14 +49,13 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         """Resets the dm-lab environment."""
         super().reset(seed=seed)
 
-        timestep = self._env.reset()
-
-        obs, reward, terminated, truncated, info = expose_timestep(timestep)
-
-        obs = None
+        self._env.reset(seed=seed)
         info = {}
 
-        return obs, info  # pyright: ignore[reportGeneralTypeIssues]
+        return (
+            self._env.observations(),
+            info,
+        )  # pyright: ignore[reportGeneralTypeIssues]
 
     def step(
         self, action: np.ndarray
@@ -68,13 +63,12 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         """Steps through the dm-lab environment."""
         # there's some funky quantization happening here, dm_lab only accepts ints as actions
         action = np.array([a[0] for a in action.values()], dtype=np.intc)
-        timestep = self._env.step(action)
-        print(timestep)
+        reward = self._env.step(action)
 
-        obs, reward, terminated, truncated, info = expose_timestep(timestep)
-
-        if self.render_mode == "human":
-            self.viewer.render()
+        obs = self._env.observations()
+        terminated = False
+        truncated = False
+        info = {}
 
         return (  # pyright: ignore[reportGeneralTypeIssues]
             obs,

@@ -14,7 +14,7 @@ from dm_control.rl.control import Environment
 from gymnasium.core import ObsType
 from numpy.random import RandomState
 
-from shimmy.utils.dm_env_utils import dm_spec2gym_space, expose_timestep
+from shimmy.utils.dm_env_utils import dm_control_step2gym_step, dm_spec2gym_space
 
 
 class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
@@ -58,7 +58,7 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
 
         timestep = self._env.reset()
 
-        obs, reward, terminated, truncated, info = expose_timestep(timestep)
+        obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
 
         return obs, info  # pyright: ignore[reportGeneralTypeIssues]
 
@@ -68,7 +68,7 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         """Steps through the dm-control environment."""
         timestep = self._env.step(action)
 
-        obs, reward, terminated, truncated, info = expose_timestep(timestep)
+        obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
 
         if self.render_mode == "human":
             self.viewer.render()

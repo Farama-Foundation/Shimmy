@@ -6,8 +6,6 @@ from typing import Any
 
 from gymnasium.envs.registration import register
 
-from shimmy.dm_control_compatibility import DmControlCompatibility
-
 DM_CONTROL_ENVS = (
     ("acrobot", "swingup"),
     ("acrobot", "swingup_sparse"),
@@ -66,6 +64,8 @@ def _register_dm_control_envs():
     """Registers all dm-control environments in gymnasium."""
     try:
         import dm_control.suite
+
+        from shimmy.dm_control_compatibility import DmControlCompatibility
     except ImportError:
         return
 
