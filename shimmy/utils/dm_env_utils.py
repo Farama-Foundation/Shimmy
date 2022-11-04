@@ -50,7 +50,9 @@ def dm_obs2gym_obs(obs) -> np.ndarray | dict[str, Any]:
         return np.asarray(obs)
 
 
-def expose_timestep(timestep) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
+def dm_control_step2gym_step(
+    timestep,
+) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
     """Opens up the timestep to return obs, reward, terminated, truncated, info."""
     if isinstance(timestep, bool):
         raise AssertionError("wtf")
