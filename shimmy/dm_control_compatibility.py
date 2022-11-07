@@ -14,7 +14,7 @@ from dm_control.rl.control import Environment
 from gymnasium.core import ObsType
 from numpy.random import RandomState
 
-from shimmy.utils.dm_env_utils import dm_control_step2gym_step, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_control_step2gym_step, dm_spec2gym_space
 
 
 class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):

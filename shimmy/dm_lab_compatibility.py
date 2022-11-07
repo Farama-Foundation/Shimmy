@@ -12,7 +12,7 @@ import gymnasium
 import numpy as np
 from gymnasium.core import ObsType
 
-from shimmy.utils.dm_lab_utils import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
+from shimmy.utils.dm_lab import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
 
 deepmind_lab_env = TypeVar("deepmind_lab_env")
 
