@@ -1,22 +1,12 @@
 """Tests the functionality of the DMEnvWrapper on dm_control envs."""
 import warnings
-from typing import Callable
 
 import dm_control.suite
-import dm_env
 import gymnasium as gym
-import numpy as np
 import pytest
-from dm_control.suite.wrappers import (
-    action_noise,
-    action_scale,
-    mujoco_profiling,
-    pixels,
-)
 from gymnasium.error import Error
-from gymnasium.utils.env_checker import check_env, data_equivalence
+from gymnasium.utils.env_checker import check_env
 
-from shimmy.dm_control_compatibility import DmControlCompatibility
 from shimmy.registration import DM_CONTROL_ENVS
 
 
@@ -100,40 +90,40 @@ def test_check_env(domain_name, task_name):
 #     env.close()
 
 
-@pytest.mark.parametrize("height,width", [(84, 84), (48, 48), (128, 128), (100, 200)])
-def test_render_height_widths(height, width):
-    """Tests that dm-control rendering heights and widths works."""
-    domain_name, task_name = DM_CONTROL_ENVS[0]
-    env = gym.make(
-        f"dm_control/{domain_name}-{task_name}-v0",
-        render_mode="rgb_array",
-        render_height=height,
-        render_width=width,
-    )
-    env.reset()
-    frame = env.render()
-    assert isinstance(frame, np.ndarray)
-    assert frame.shape == (height, width, 3), frame.shape
+# @pytest.mark.parametrize("height,width", [(84, 84), (48, 48), (128, 128), (100, 200)])
+# def test_render_height_widths(height, width):
+#     """Tests that dm-control rendering heights and widths works."""
+#     domain_name, task_name = DM_CONTROL_ENVS[0]
+#     env = gym.make(
+#         f"dm_control/{domain_name}-{task_name}-v0",
+#         render_mode="rgb_array",
+#         render_height=height,
+#         render_width=width,
+#     )
+#     env.reset()
+#     frame = env.render()
+#     assert isinstance(frame, np.ndarray)
+#     assert frame.shape == (height, width, 3), frame.shape
 
 
-@pytest.mark.parametrize(
-    "wrapper_fn",
-    (
-        action_noise.Wrapper,
-        lambda x: action_scale.Wrapper(x, minimum=0, maximum=1),
-        mujoco_profiling.Wrapper,
-        pixels.Wrapper,
-    ),
-    ids=["action noise", "action scale", "mujoco profiling", "pixels"],
-)
-def test_dm_control_wrappers(
-    wrapper_fn: Callable[[dm_env.Environment], dm_env.Environment]
-):
-    """Test the built-in dm-control wrappers."""
-    domain_name, task_name = DM_CONTROL_ENVS[0]
-
-    dm_env = dm_control.suite.load(domain_name, task_name)
-    wrapped_env = wrapper_fn(dm_env)
-
-    env = DmControlCompatibility(wrapped_env)
-    check_env(env)
+# @pytest.mark.parametrize(
+#     "wrapper_fn",
+#     (
+#         action_noise.Wrapper,
+#         lambda x: action_scale.Wrapper(x, minimum=0, maximum=1),
+#         mujoco_profiling.Wrapper,
+#         pixels.Wrapper,
+#     ),
+#     ids=["action noise", "action scale", "mujoco profiling", "pixels"],
+# )
+# def test_dm_control_wrappers(
+#     wrapper_fn: Callable[[dm_env.Environment], dm_env.Environment]
+# ):
+#     """Test the built-in dm-control wrappers."""
+#     domain_name, task_name = DM_CONTROL_ENVS[0]
+#
+#     dm_env = dm_control.suite.load(domain_name, task_name)
+#     wrapped_env = wrapper_fn(dm_env)
+#
+#     env = DmControlCompatibility(wrapped_env)
+#     check_env(env)
