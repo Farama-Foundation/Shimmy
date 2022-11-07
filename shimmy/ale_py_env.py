@@ -36,8 +36,10 @@ class AtariEnv(gymnasium.Env[np.ndarray, int], EzPickle):
     """
 
     # No render modes
-    metadata = {"render_modes": ["human", "rgb_array"],
-                "obs_types": {"rgb", "grayscale", "ram"}}
+    metadata = {
+        "render_modes": ["human", "rgb_array"],
+        "obs_types": {"rgb", "grayscale", "ram"},
+    }
 
     def __init__(
         self,
@@ -221,10 +223,10 @@ class AtariEnv(gymnasium.Env[np.ndarray, int], EzPickle):
         return seed1, seed2
 
     def reset(
-            self,
-            *,
-            seed: int | None = None,
-            options: dict[str, Any] | None = None,
+        self,
+        *,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
     ) -> tuple[np.ndarray, AtariEnvStepMetadata]:
         """Resets environment and returns initial observation.
 

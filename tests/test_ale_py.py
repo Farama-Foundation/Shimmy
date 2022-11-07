@@ -1,17 +1,19 @@
+"""Tests the ale-py environments are correctly registered."""
 import warnings
 
+import gymnasium as gym
 import pytest
 from ale_py import roms
-from gymnasium.envs import registry
+from ale_py.roms import utils as rom_utils
+from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env
 
 from shimmy.utils.envs_configs import ALL_ATARI_GAMES
-from ale_py.roms import utils as rom_utils
-import gymnasium as gym
 
 
 def test_all_atari_roms():
+    """Tests that the static variable ALL_ATARI_GAME is equal to all actual roms."""
     assert ALL_ATARI_GAMES == tuple(map(rom_utils.rom_name_to_id, dir(roms)))
 
 
@@ -23,7 +25,14 @@ CHECK_ENV_IGNORE_WARNINGS = [
 ]
 
 
-@pytest.mark.parametrize("env_id", filter(lambda env_id: "Pong" in env_id and gym.spec(env_id).entry_point == "shimmy.ale_py_env:AtariEnv", registry.keys()))
+@pytest.mark.parametrize(
+    "env_id",
+    [
+        env_id
+        for env_id, env_spec in registry.items()
+        if "Pong" in env_id and env_spec.entry_point == "shimmy.ale_py_env:AtariEnv"
+    ],
+)
 def test_atari_envs(env_id):
     """Tests the atari envs, as there are 1000 possible environment, we only test the Pong variants.
 
