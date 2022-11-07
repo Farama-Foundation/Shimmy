@@ -82,22 +82,22 @@ def test_check_env(domain_name, task_name):
 #     env_2.close()
 
 
-@pytest.mark.parametrize("camera_id", [0, 1])
-def test_rendering_camera_id(camera_id):
-    """Test that dm-control rendering works."""
-    domain_name, task_name = DM_CONTROL_ENVS[0]
-    env = gym.make(
-        f"dm_control/{domain_name}-{task_name}-v0",
-        render_mode="rgb_array",
-        camera_id=camera_id,
-    )
-    env.reset()
-    frames = []
-    for _ in range(10):
-        frames.append(env.render())
-        env.step(env.action_space.sample())
-
-    env.close()
+# @pytest.mark.parametrize("camera_id", [0, 1])
+# def test_rendering_camera_id(camera_id):
+#     """Test that dm-control rendering works."""
+#     domain_name, task_name = DM_CONTROL_ENVS[0]
+#     env = gym.make(
+#         f"dm_control/{domain_name}-{task_name}-v0",
+#         render_mode="rgb_array",
+#         camera_id=camera_id,
+#     )
+#     env.reset()
+#     frames = []
+#     for _ in range(10):
+#         frames.append(env.render())
+#         env.step(env.action_space.sample())
+#
+#     env.close()
 
 
 @pytest.mark.parametrize("height,width", [(84, 84), (48, 48), (128, 128), (100, 200)])
