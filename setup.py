@@ -1,6 +1,4 @@
 """Setups up the Shimmy module."""
-import itertools
-
 from setuptools import find_packages, setup
 
 
@@ -37,6 +35,7 @@ header_count, long_description = get_description()
 extras = {
     "dm-control": ["dm-control>=1.0.8"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
+    "ale-py": ["ale-py~=0.8.0"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
 extras["testing"] = extras["all"] + ["pytest==7.1.3", "pillow>=9.3.0"]
