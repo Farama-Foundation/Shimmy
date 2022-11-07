@@ -1,9 +1,4 @@
-"""Wrapper to convert a dm_lab environment into a gymnasium compatible environment.
-
-Taken from
-https://github.com/ikostrikov/dmcgym/blob/main/dmcgym/env.py
-and modified to modern gymnasium API
-"""
+"""Wrapper to convert a dm_lab environment into a gymnasium compatible environment."""
 from __future__ import annotations
 
 from typing import Any, TypeVar
