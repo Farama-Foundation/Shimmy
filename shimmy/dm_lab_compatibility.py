@@ -14,7 +14,7 @@ from gymnasium.core import ObsType
 
 from shimmy.utils.dm_lab import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
 
-deepmind_lab_env = TypeVar("deepmind_lab_env")
+DmLabEnv = TypeVar("DmLabEnv")
 
 
 class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
@@ -24,7 +24,7 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
 
     def __init__(
         self,
-        env: deepmind_lab_env,
+        env: DmLabEnv,
         render_mode: str | None = None,
     ):
         """Initialises the environment with a render mode along with render information."""
