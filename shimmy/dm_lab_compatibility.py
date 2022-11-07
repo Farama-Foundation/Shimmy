@@ -37,7 +37,7 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
 
         assert (
             render_mode is None
-        ), "Render mode must be set on dm_lab environment init. Pass `renderer='sdl'` to enable human rendering."
+        ), "Render mode must be set on dm_lab environment init. Pass `renderer='sdl'` to the config of the base env."
         self.render_mode = render_mode
 
     def reset(
