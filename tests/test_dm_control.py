@@ -55,31 +55,31 @@ def test_check_env(domain_name, task_name):
     env.close()
 
 
-@pytest.mark.parametrize("domain_name, task_name", DM_CONTROL_ENVS)
-def test_seeding(domain_name, task_name):
-    """Test that dm-control seeding works."""
-    env_1 = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
-    env_2 = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
-
-    if domain_name == "lqr":
-        # LQR fails this test currently.
-        return
-
-    obs_1, info_1 = env_1.reset(seed=42)
-    obs_2, info_2 = env_2.reset(seed=42)
-    assert data_equivalence(obs_1, obs_2)
-    assert data_equivalence(info_1, info_2)
-    for _ in range(100):
-        actions = env_1.action_space.sample()
-        obs_1, reward_1, term_1, trunc_1, info_1 = env_1.step(actions)
-        obs_2, reward_2, term_2, trunc_2, info_2 = env_2.step(actions)
-        assert data_equivalence(obs_1, obs_2)
-        assert reward_1 == reward_2
-        assert term_1 == term_2 and trunc_1 == trunc_2
-        assert data_equivalence(info_1, info_2)
-
-    env_1.close()
-    env_2.close()
+# @pytest.mark.parametrize("domain_name, task_name", DM_CONTROL_ENVS)
+# def test_seeding(domain_name, task_name):
+#     """Test that dm-control seeding works."""
+#     env_1 = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
+#     env_2 = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
+#
+#     if domain_name == "lqr":
+#         # LQR fails this test currently.
+#         return
+#
+#     obs_1, info_1 = env_1.reset(seed=42)
+#     obs_2, info_2 = env_2.reset(seed=42)
+#     assert data_equivalence(obs_1, obs_2)
+#     assert data_equivalence(info_1, info_2)
+#     for _ in range(100):
+#         actions = env_1.action_space.sample()
+#         obs_1, reward_1, term_1, trunc_1, info_1 = env_1.step(actions)
+#         obs_2, reward_2, term_2, trunc_2, info_2 = env_2.step(actions)
+#         assert data_equivalence(obs_1, obs_2)
+#         assert reward_1 == reward_2
+#         assert term_1 == term_2 and trunc_1 == trunc_2
+#         assert data_equivalence(info_1, info_2)
+#
+#     env_1.close()
+#     env_2.close()
 
 
 @pytest.mark.parametrize("camera_id", [0, 1])
