@@ -110,6 +110,7 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
 
     def close(self):
         """Closes the environment."""
+        self._env.physics.free()
         self._env.close()
 
         if hasattr(self, "viewer"):
