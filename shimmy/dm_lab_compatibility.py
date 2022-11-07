@@ -66,7 +66,7 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         reward = self._env.step(action)
 
         obs = self._env.observations()
-        terminated = False
+        terminated = not self._env.is_running()
         truncated = False
         info = {}
 
