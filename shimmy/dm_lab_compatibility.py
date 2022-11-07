@@ -26,9 +26,6 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         self,
         env: deepmind_lab_env,
         render_mode: str | None = None,
-        render_height: int = 84,
-        render_width: int = 84,
-        camera_id: int = 0,
     ):
         """Initialises the environment with a render mode along with render information."""
         self._env = env
