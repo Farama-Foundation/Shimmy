@@ -3,28 +3,37 @@ import warnings
 from typing import Callable
 
 import dm_control.suite
-import dm_env
 import gymnasium as gym
 import numpy as np
 import pytest
+from dm_control import composer
+from dm_control.locomotion.examples.basic_cmu_2019 import cmu_humanoid_run_walls
 from dm_control.suite.wrappers import (
     action_noise,
     action_scale,
     mujoco_profiling,
     pixels,
 )
+from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
 from shimmy.dm_control_compatibility import DmControlCompatibility
-from shimmy.registration import DM_CONTROL_ENVS
+from shimmy.registration import DM_CONTROL_SUITE_ENVS
+
+DM_CONTROL_ENV_IDS = [
+    env_id
+    for env_id in registry
+    if env_id.startswith("dm_control") and env_id != "dm_control/compatibility-env-v0"
+]
 
 
-def test_dm_control_envs():
+def test_dm_control_suite_envs():
     """Tests that all DM_CONTROL_ENVS are equal to the known dm-control.suite tasks."""
-    assert dm_control.suite.ALL_TASKS == DM_CONTROL_ENVS
+    assert dm_control.suite.ALL_TASKS == DM_CONTROL_SUITE_ENVS
 
 
+# todo - gymnasium v27 should remove the need for some of these warnings
 CHECK_ENV_IGNORE_WARNINGS = [
     f"\x1b[33mWARN: {message}\x1b[0m"
     for message in [
@@ -35,14 +44,23 @@ CHECK_ENV_IGNORE_WARNINGS = [
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (8, 2)",
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (2, 4)",
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (4, 4)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 3)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 84, 84, 3)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 2)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 6)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 4)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 9)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 5)",
+        "It seems a Box observation space is an image but the `dtype` is not `np.uint8`, actual type: float64. If the Box observation space is not an image, we recommend flattening the observation to have only a 1D vector.",
+        "It seems a Box observation space is an image but the upper and lower bounds are not in [0, 255]. Generally, CNN policies assume observations are within that range, so you may encounter an issue if the observation values are not.",
     ]
 ]
 
 
-@pytest.mark.parametrize("domain_name, task_name", DM_CONTROL_ENVS)
-def test_check_env(domain_name, task_name):
+@pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS)
+def test_check_env(env_id):
     """Check that environment pass the gymnasium check_env."""
-    env = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
+    env = gym.make(env_id)
 
     with warnings.catch_warnings(record=True) as caught_warnings:
         check_env(env.unwrapped)
@@ -55,13 +73,13 @@ def test_check_env(domain_name, task_name):
     env.close()
 
 
-@pytest.mark.parametrize("domain_name, task_name", DM_CONTROL_ENVS)
-def test_seeding(domain_name, task_name):
+@pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS)
+def test_seeding(env_id):
     """Test that dm-control seeding works."""
-    env_1 = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
-    env_2 = gym.make(f"dm_control/{domain_name}-{task_name}-v0")
+    env_1 = gym.make(env_id)
+    env_2 = gym.make(env_id)
 
-    if domain_name == "lqr":
+    if "lqr" in env_id or env_1.spec.nondeterministic:
         # LQR fails this test currently.
         return
 
@@ -85,9 +103,8 @@ def test_seeding(domain_name, task_name):
 @pytest.mark.parametrize("camera_id", [0, 1])
 def test_rendering_camera_id(camera_id):
     """Test that dm-control rendering works."""
-    domain_name, task_name = DM_CONTROL_ENVS[0]
     env = gym.make(
-        f"dm_control/{domain_name}-{task_name}-v0",
+        DM_CONTROL_ENV_IDS[0],
         render_mode="rgb_array",
         camera_id=camera_id,
     )
@@ -103,9 +120,8 @@ def test_rendering_camera_id(camera_id):
 @pytest.mark.parametrize("height,width", [(84, 84), (48, 48), (128, 128), (100, 200)])
 def test_render_height_widths(height, width):
     """Tests that dm-control rendering heights and widths works."""
-    domain_name, task_name = DM_CONTROL_ENVS[0]
     env = gym.make(
-        f"dm_control/{domain_name}-{task_name}-v0",
+        DM_CONTROL_ENV_IDS[0],
         render_mode="rgb_array",
         render_height=height,
         render_width=width,
@@ -127,13 +143,20 @@ def test_render_height_widths(height, width):
     ids=["action noise", "action scale", "mujoco profiling", "pixels"],
 )
 def test_dm_control_wrappers(
-    wrapper_fn: Callable[[dm_env.Environment], dm_env.Environment]
+    wrapper_fn: Callable[[composer.Environment], composer.Environment],
 ):
     """Test the built-in dm-control wrappers."""
-    domain_name, task_name = DM_CONTROL_ENVS[0]
+    dm_control_env = dm_control.suite.load(*DM_CONTROL_SUITE_ENVS[0])
 
-    dm_env = dm_control.suite.load(domain_name, task_name)
-    wrapped_env = wrapper_fn(dm_env)
+    if wrapper_fn is action_noise.Wrapper and isinstance(
+        dm_control_env, composer.Environment
+    ):
+        return
+    wrapped_env = wrapper_fn(dm_control_env)
 
     env = DmControlCompatibility(wrapped_env)
     check_env(env)
+
+    env = gym.make("dm_control/compatibility-env-v0", env=wrapped_env)
+    check_env(env)
+    env.close()
