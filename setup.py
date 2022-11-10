@@ -38,7 +38,7 @@ extras = {
     "atari": ["ale-py~=0.8.0"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
-extras["testing"] = [
+extras["testing"] = extras["all"] + [
     "pytest==7.1.3",
     "pillow>=9.3.0",
     "autorom[accept-rom-license]~=0.4.2",
