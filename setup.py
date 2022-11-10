@@ -33,7 +33,7 @@ version = get_version()
 header_count, long_description = get_description()
 
 extras = {
-    "dm-control": ["dm-control>=1.0.8"],
+    "dm-control": ["dm-control>=1.0.8", "gymnasium[mujoco]"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
     "atari": ["ale-py~=0.8.0"],
 }
