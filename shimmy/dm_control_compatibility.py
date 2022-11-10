@@ -17,7 +17,7 @@ from dm_control.rl import control
 from gymnasium.core import ObsType
 from gymnasium.envs.mujoco.mujoco_rendering import Viewer
 
-from shimmy.utils import dm_obs2gym_obs, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
 
 
 class EnvType(Enum):
@@ -134,6 +134,7 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
 
     def close(self):
         """Closes the environment."""
+        self._env.physics.free()
         self._env.close()
 
         if hasattr(self, "viewer"):

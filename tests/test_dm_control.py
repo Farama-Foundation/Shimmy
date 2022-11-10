@@ -131,6 +131,8 @@ def test_render_height_widths(height, width):
     assert isinstance(frame, np.ndarray)
     assert frame.shape == (height, width, 3), frame.shape
 
+    env.close()
+
 
 @pytest.mark.parametrize(
     "wrapper_fn",
@@ -153,9 +155,15 @@ def test_dm_control_wrappers(
     ):
         return
     wrapped_env = wrapper_fn(dm_control_env)
-
     env = DmControlCompatibility(wrapped_env)
-    check_env(env)
+
+    with warnings.catch_warnings(record=True) as caught_warnings:
+        check_env(env)
+
+    for warning_message in caught_warnings:
+        assert isinstance(warning_message.message, Warning)
+        if warning_message.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS:
+            raise Error(f"Unexpected warning: {warning_message.message}")
 
     env = gym.make("dm_control/compatibility-env-v0", env=wrapped_env)
     check_env(env)
