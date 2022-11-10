@@ -93,7 +93,7 @@ def _register_atari_configs(
                     # Register the environment
                     register(
                         id=f"{prefix}{name}{flavour.suffix}-{config.version}",
-                        entry_point="shimmy.ale_py_env:AtariEnv",
+                        entry_point="shimmy.atari_env:AtariEnv",
                         kwargs={
                             "game": rom,
                             "obs_type": obs_type,

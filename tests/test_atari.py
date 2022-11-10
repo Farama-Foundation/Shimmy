@@ -30,7 +30,7 @@ CHECK_ENV_IGNORE_WARNINGS = [
     [
         env_id
         for env_id, env_spec in registry.items()
-        if "Pong" in env_id and env_spec.entry_point == "shimmy.ale_py_env:AtariEnv"
+        if "Pong" in env_id and env_spec.entry_point == "shimmy.atari_env:AtariEnv"
     ],
 )
 def test_atari_envs(env_id):
