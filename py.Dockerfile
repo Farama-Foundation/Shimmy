@@ -20,7 +20,6 @@ RUN apt-get -y update \
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
 
-# For testing the optional installs, we don't install shimmy by default
-# RUN pip install .[testing] --no-cache-dir
+RUN pip install .[testing] --no-cache-dir
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
