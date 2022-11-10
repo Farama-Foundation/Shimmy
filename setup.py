@@ -35,7 +35,7 @@ header_count, long_description = get_description()
 extras = {
     "dm-control": ["dm-control>=1.0.8"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
-    "ale-py": ["ale-py~=0.8.0"],
+    "atari": ["ale-py~=0.8.0"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
 extras["testing"] = extras["all"] + [
