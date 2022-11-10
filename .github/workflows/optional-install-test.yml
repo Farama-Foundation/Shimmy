@@ -7,31 +7,30 @@ permissions:
 jobs:
   optional-install:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.10']
     steps:
       - uses: actions/checkout@v2
       - run: |
            docker build -f py.Dockerfile \
-             --build-arg PYTHON_VERSION=${{ matrix.python-version }} \
+             --build-arg PYTHON_VERSION="3.10" \
              --tag shimmy-docker .
-      - run: docker run shimmy-docker pip install . --no-cache-dir
 
         # only install atari and run the pytest atari tests then uninstall atari
-      - run: docker run shimmy-docker pip install .[atari] --no-cache-dir
       - name: Run atari tests
-        run: docker run shimmy-docker pytest tests/test_atari.py
-      - run: docker run shimmy-docker pip uninstall --yes ale-py
+        run: |
+          docker run shimmy-docker pip install .[atari] --no-cache-dir
+          docker run shimmy-docker pytest tests/test_atari.py
+          docker run shimmy-docker pip uninstall --yes ale-py
 
         # Repeat for dm-control
-      - run: docker run shimmy-docker pip install .[dm-control] --no-cache-dir
       - name: Run dm-control tests
-        run: docker run shimmy-docker pytest tests/test_dm_control.py
-      - run: docker run shimmy-docker pip uninstall --yes dm_control
+        run: |
+          docker run shimmy-docker pip install .[dm-control] --no-cache-dir
+          docker run shimmy-docker pytest tests/test_dm_control.py 
+          docker run shimmy-docker pip uninstall --yes dm_control
 
         # Repeat for openspiel
-      - run: docker run shimmy-docker pip install .[openspiel] --no-cache-dir
       - name: Run openspiel tests
-        run: docker run shimmy-docker pytest tests/test_openspiel.py
-      - run: docker run shimmy-docker pip uninstall --yes openspiel
+        run: | 
+          docker run shimmy-docker pip install .[openspiel] --no-cache-dir 
+          docker run shimmy-docker pytest tests/test_openspiel.py 
+          docker run shimmy-docker pip uninstall --yes openspiel
