@@ -16,6 +16,6 @@ jobs:
            docker build -f py.Dockerfile \
              --build-arg PYTHON_VERSION=${{ matrix.python-version }} \
              --tag shimmy-docker .
-      - run: docker run shimmy-docker pip install .[testing] --no-cache-dir
+      - run: docker run shimmy-docker pip install .[all] --no-cache-dir
       - name: Run tests
         run: docker run shimmy-docker pytest
