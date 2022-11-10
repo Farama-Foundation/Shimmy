@@ -1,6 +1,6 @@
 """Environment configures."""
 
-DM_CONTROL_ENVS = (
+DM_CONTROL_SUITE_ENVS = (
     ("acrobot", "swingup"),
     ("acrobot", "swingup_sparse"),
     ("ball_in_cup", "catch"),
@@ -51,6 +51,35 @@ DM_CONTROL_ENVS = (
     ("walker", "stand"),
     ("walker", "walk"),
     ("walker", "run"),
+)
+
+
+DM_CONTROL_MANIPULATION_ENVS = (
+    "stack_2_bricks_features",
+    "stack_2_bricks_vision",
+    "stack_2_bricks_moveable_base_features",
+    "stack_2_bricks_moveable_base_vision",
+    "stack_3_bricks_features",
+    "stack_3_bricks_vision",
+    "stack_3_bricks_random_order_features",
+    "stack_2_of_3_bricks_random_order_features",
+    "stack_2_of_3_bricks_random_order_vision",
+    "reassemble_3_bricks_fixed_order_features",
+    "reassemble_3_bricks_fixed_order_vision",
+    "reassemble_5_bricks_random_order_features",
+    "reassemble_5_bricks_random_order_vision",
+    "lift_brick_features",
+    "lift_brick_vision",
+    "lift_large_box_features",
+    "lift_large_box_vision",
+    "place_brick_features",
+    "place_brick_vision",
+    "place_cradle_features",
+    "place_cradle_vision",
+    "reach_duplo_features",
+    "reach_duplo_vision",
+    "reach_site_features",
+    "reach_site_vision",
 )
 
 ALL_ATARI_GAMES = (

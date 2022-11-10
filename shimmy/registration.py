@@ -5,13 +5,15 @@ from collections import defaultdict
 from functools import partial
 from typing import Any, Callable, Mapping, NamedTuple, Sequence
 
+import numpy as np
 from ale_py.roms import utils as rom_utils
 from gymnasium.envs.registration import register
 
 from shimmy.dm_control_compatibility import DmControlCompatibility
 from shimmy.utils.envs_configs import (
     ALL_ATARI_GAMES,
-    DM_CONTROL_ENVS,
+    DM_CONTROL_MANIPULATION_ENVS,
+    DM_CONTROL_SUITE_ENVS,
     LEGACY_ATARI_GAMES,
 )
 
@@ -19,11 +21,20 @@ from shimmy.utils.envs_configs import (
 def _register_dm_control_envs():
     """Registers all dm-control environments in gymnasium."""
     try:
-        import dm_control.suite
+        import dm_control
     except ImportError:
         return
 
-    def _make_dm_control_env(
+    # Add generic environment support
+    def _make_dm_control_generic_env(env, **render_kwargs):
+        return DmControlCompatibility(env, **render_kwargs)
+
+    register("dm_control/compatibility-env-v0", _make_dm_control_generic_env)
+
+    # Register all suite environments
+    import dm_control.suite
+
+    def _make_dm_control_suite_env(
         domain_name: str,
         task_name: str,
         task_kwargs: dict[str, Any] | None = None,
@@ -31,6 +42,7 @@ def _register_dm_control_envs():
         visualize_reward: bool = False,
         **render_kwargs,
     ):
+        """The entry_point function for registration of dm-control environments."""
         env = dm_control.suite.load(
             domain_name=domain_name,
             task_name=task_name,
@@ -40,12 +52,58 @@ def _register_dm_control_envs():
         )
         return DmControlCompatibility(env, **render_kwargs)
 
-    for _domain_name, _task_name in DM_CONTROL_ENVS:
+    for _domain_name, _task_name in DM_CONTROL_SUITE_ENVS:
         register(
             f"dm_control/{_domain_name}-{_task_name}-v0",
             partial(
-                _make_dm_control_env, domain_name=_domain_name, task_name=_task_name
+                _make_dm_control_suite_env,
+                domain_name=_domain_name,
+                task_name=_task_name,
             ),
+        )
+
+    # Register all example locomotion environments
+    # Listed in https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/examples/examples_test.py
+    from dm_control import composer
+    from dm_control.locomotion.examples import basic_cmu_2019, basic_rodent_2020
+
+    def _make_dm_control_example_locomotion_env(
+        env_fn: Callable[[np.random.RandomState | None], composer.Environment],
+        random_state: np.random.RandomState | None = None,
+        **render_kwargs,
+    ):
+        return DmControlCompatibility(env_fn(random_state), **render_kwargs)
+
+    for locomotion_env, nondeterministic in (
+        (basic_cmu_2019.cmu_humanoid_run_walls, False),
+        (basic_cmu_2019.cmu_humanoid_run_gaps, False),
+        (basic_cmu_2019.cmu_humanoid_go_to_target, False),
+        (basic_cmu_2019.cmu_humanoid_maze_forage, True),
+        (basic_cmu_2019.cmu_humanoid_heterogeneous_forage, True),
+        (basic_rodent_2020.rodent_escape_bowl, False),
+        (basic_rodent_2020.rodent_run_gaps, False),
+        (basic_rodent_2020.rodent_maze_forage, True),
+        (basic_rodent_2020.rodent_two_touch, True),
+        # (cmu_2020_tracking.cmu_humanoid_tracking, False),
+    ):
+        register(
+            f"dm_control/{locomotion_env.__name__.title().replace('_', '')}-v0",
+            partial(_make_dm_control_example_locomotion_env, env_fn=locomotion_env),
+            nondeterministic=nondeterministic,
+        )
+
+    # Register all manipulation environments
+    import dm_control.manipulation
+
+    def _make_dm_control_manipulation_env(env_name: str, **render_kwargs):
+        env = dm_control.manipulation.load(env_name)
+        return DmControlCompatibility(env, **render_kwargs)
+
+    for env_name in DM_CONTROL_MANIPULATION_ENVS:
+        register(
+            f"dm_control/{env_name}-v0",
+            partial(_make_dm_control_manipulation_env, env_name=env_name),
+            nondeterministic=env_name.startswith("reassemble_5_bricks_random_order"),
         )
 
 
