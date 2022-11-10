@@ -166,3 +166,10 @@ def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
     _register_dm_control_envs()
     _register_atari_envs()
+
+    register(
+        "GymV26Compatibility", "shimmy.openai_gym_compatibility:GymV26Compatibility"
+    )
+    register(
+        "GymV22Compatibility", "shimmy.openai_gym_compatibility:GymV22Compatibility"
+    )
