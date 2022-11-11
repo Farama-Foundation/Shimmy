@@ -22,7 +22,10 @@ try:
 except ImportError:
     pass
 
-from shimmy.openai_gym_compatibility import GymV22Compatibility, GymV26Compatibility
+try:
+    from shimmy.dmcma_compatibility import DMCMACompatibility as DMCMACompatibilityV0
+except ImportError as e:
+    print(e)
 
 __all__ = [
     "DmControlCompatibility",
