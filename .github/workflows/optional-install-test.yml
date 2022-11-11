@@ -9,15 +9,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+        # Atari
       - run: |
            docker build -f bin/atari.Dockerfile \
              --build-arg PYTHON_VERSION='3.10' \
              --tag shimmy-atari-docker .
       - name: Run atari tests
         run: docker run shimmy-atari-docker pytest tests/test_atari.py
+
+        # dm-control
       - run: |
-          docker build -f bin/atari.Dockerfile \
+          docker build -f bin/dm_control.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
             --tag shimmy-dm-control-docker .
-      - name: Run tests
+      - name: Run dm-control tests
         run: docker run shimmy-dm-control-docker pytest tests/test_dm_control.py
+
+        # openspiel
+      - run: |
+          docker build -f bin/openspiel.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-dm-control-docker .
+      - name: Run openspiel tests
+        run: docker run shimmy-openspiel-docker pytest tests/test_openspiel.py
+
+        # add more options
