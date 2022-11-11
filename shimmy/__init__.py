@@ -8,9 +8,13 @@ except ImportError:
     pass
 
 try:
-    from shimmy.openspiel_wrapper import OpenspielWrapper as OpenspielWrapperV0
+    from shimmy.openspiel_compatibility import OpenspielCompatibility as OpenspielCompatibilityV0
 except ImportError:
     pass
 
+try:
+    from shimmy.dmcma_compatibility import DMCMACompatibility as DMCMACompatibilityV0
+except ImportError as e:
+    print(e)
 
 __version__ = "0.0.1a"

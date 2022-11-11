@@ -12,7 +12,7 @@ from gymnasium.utils import seeding
 from pettingzoo.utils.env import AgentID
 
 
-class OpenspielWrapper(pz.AECEnv):
+class OpenspielCompatibility(pz.AECEnv):
     """Wrapper that converts an openspiel environment into a pettingzoo environment."""
 
     metadata = {"render_modes": []}
