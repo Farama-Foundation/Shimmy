@@ -14,10 +14,10 @@ jobs:
              --build-arg PYTHON_VERSION='3.10' \
              --tag shimmy-atari-docker .
       - name: Run atari tests
-        run: docker run shimmy-atari-docker pytest/tests/test_atari.py
+        run: docker run shimmy-atari-docker tests/test_atari.py
       - run: |
           docker build -f bin/atari.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
             --tag shimmy-dm-control-docker .
       - name: Run tests
-        run: docker run shimmy-dm-control-docker pytest/tests/test_dm_control.py
+        run: docker run shimmy-dm-control-docker tests/test_dm_control.py
