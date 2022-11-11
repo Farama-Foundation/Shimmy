@@ -5,11 +5,8 @@ permissions:
   contents: read # to fetch code (actions/checkout)
 
 jobs:
-  testing:
+  optional-install:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10']
     steps:
       - uses: actions/checkout@v2
       - run: |
@@ -17,10 +14,10 @@ jobs:
              --build-arg PYTHON_VERSION='3.10' \
              --tag shimmy-atari-docker .
       - name: Run atari tests
-        run: docker run shimmy-atari-docker pytest/test_atari.py
+        run: docker run shimmy-atari-docker pytest/tests/test_atari.py
       - run: |
           docker build -f bin/atari.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
             --tag shimmy-dm-control-docker .
       - name: Run tests
-        run: docker run shimmy-dm-control-docker pytest/test_dm_control.py
+        run: docker run shimmy-dm-control-docker pytest/tests/test_dm_control.py
