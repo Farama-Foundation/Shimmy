@@ -125,9 +125,7 @@ class DMCMACompatibility(pz.ParallelEnv):
 
         timestep = self._env.reset()
 
-        observations, rewards, terminations, truncations, infos = _unravel_ma_timestep(
-            timestep, self.agents
-        )
+        observations, _, _, _, infos = _unravel_ma_timestep(timestep, self.agents)
 
         if not return_info:
             return observations
