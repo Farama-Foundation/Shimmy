@@ -12,4 +12,9 @@ try:
 except ImportError:
     pass
 
+try:
+    from shimmy.dm_lab_compatibility import DmLabCompatibility as DmLabCompatibilityV0
+except ImportError:
+    pass
+
 __version__ = "0.0.1a"

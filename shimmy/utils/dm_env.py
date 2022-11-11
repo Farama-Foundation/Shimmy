@@ -53,9 +53,6 @@ def dm_control_step2gym_step(
     timestep,
 ) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
     """Opens up the timestep to return obs, reward, terminated, truncated, info."""
-    if isinstance(timestep, bool):
-        raise AssertionError("wtf")
-
     obs = dm_obs2gym_obs(timestep.observation)
     reward = timestep.reward or 0
 

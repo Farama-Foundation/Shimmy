@@ -13,12 +13,12 @@ from shimmy.utils.dm_lab import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
 class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
     """A compatibility wrapper that converts a dm_lab-control environment into a gymnasium environment."""
 
-    metadata = {"render_modes": None, "render_fps": 10}
+    metadata = {"render_modes": [], "render_fps": 10}
 
     def __init__(
         self,
         env: Any,
-        render_mode: str | None = None,
+        render_mode: None = None,
     ):
         """Initialises the environment with a render mode along with render information."""
         self._env = env
@@ -48,7 +48,7 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         )  # pyright: ignore[reportGeneralTypeIssues]
 
     def step(
-        self, action: np.ndarray
+        self, action: dict[str, np.ndarray]
     ) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
         """Steps through the dm-lab environment."""
         # there's some funky quantization happening here, dm_lab only accepts ints as actions
@@ -68,7 +68,7 @@ class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
             info,
         )
 
-    def render(self) -> np.ndarray | None:
+    def render(self) -> None:
         """Renders the dm_lab env."""
         raise NotImplementedError
 
