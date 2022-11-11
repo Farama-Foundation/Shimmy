@@ -28,6 +28,9 @@ def dm_spec2gym_space(spec) -> spaces.Space[Any]:
         elif np.issubdtype(spec.dtype, np.inexact):
             low = float("-inf")
             high = float("inf")
+        elif spec.dtype == "bool":
+            low = int(0)
+            high = int(1)
         else:
             raise ValueError(f"Unknown dtype {spec.dtype} for spec {spec}.")
 
