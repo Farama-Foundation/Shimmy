@@ -81,9 +81,7 @@ class GymV26Compatibility(gymnasium.Env[ObsType, ActType]):
         self.metadata = getattr(self.gym_env, "metadata", {"render_modes": []})
         self.render_mode = self.gym_env.render_mode
         self.reward_range = getattr(self.gym_env, "reward_range", None)
-        self.spec = getattr(
-            self.gym_env, "spec", None
-        )
+        self.spec = getattr(self.gym_env, "spec", None)
 
     def reset(
         self, seed: int | None = None, options: dict | None = None
@@ -199,9 +197,7 @@ class GymV22Compatibility(gymnasium.Env[ObsType, ActType]):
         self.metadata = getattr(gym_env, "metadata", {"render_modes": []})
         self.render_mode = render_mode
         self.reward_range = getattr(gym_env, "reward_range", None)
-        self.spec = getattr(
-            gym_env, "spec", None
-        )
+        self.spec = getattr(gym_env, "spec", None)
 
         self.gym_env: LegacyV22Env = gym_env
 

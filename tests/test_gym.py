@@ -37,7 +37,10 @@ def test_gym_conversion_by_id(env_id):
         check_env(env)
 
     for warning in caught_warnings:
-        if warning.message not in CHECK_ENV_IGNORE_WARNINGS:
+        if (
+            isinstance(warning.message, Warning)
+            and warning.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS
+        ):
             raise Error(f"Unexpected warning: {warning.message}")
 
     env.close()
@@ -55,7 +58,10 @@ def test_gym_conversion_instantiated(env_id):
         check_env(env)
 
     for warning in caught_warnings:
-        if warning.message not in CHECK_ENV_IGNORE_WARNINGS:
+        if (
+            isinstance(warning.message, Warning)
+            and warning.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS
+        ):
             raise Error(f"Unexpected warning: {warning.message}")
 
     env.close()
