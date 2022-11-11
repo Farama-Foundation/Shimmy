@@ -6,25 +6,49 @@ and modified to modern gymnasium API
 """
 from __future__ import annotations
 
+from enum import Enum
 from typing import Any
 
+import dm_env
 import gymnasium
 import numpy as np
-from dm_control.rl.control import Environment
+from dm_control import composer
+from dm_control.rl import control
 from gymnasium.core import ObsType
-from numpy.random import RandomState
+from gymnasium.envs.mujoco.mujoco_rendering import Viewer
 
-from shimmy.utils.dm_env import dm_control_step2gym_step, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
+
+
+class EnvType(Enum):
+    """The environment type."""
+
+    COMPOSER = 0
+    RL_CONTROL = 1
 
 
 class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
-    """A compatibility wrapper that converts a dm-control environment into a gymnasium environment."""
+    """A compatibility wrapper that converts a dm-control environment into a gymnasium environment.
+
+    Dm-control actually has two Environments classes, `dm_control.composer.Environment` and
+    `dm_control.rl.control.Environment` that while both inherit from `dm_env.Environment`, they differ
+    in implementation.
+
+    For environment in `dm_control.suite` are `dm-control.rl.control.Environment` while
+    dm-control locomotion and manipulation environments use `dm-control.composer.Environment`.
+
+    This wrapper supports both Environment class through determining the base environment type.
+
+    Note:
+        dm-control uses `np.random.RandomState`, a legacy random number generator while gymnasium
+        uses `np.random.Generator`, therefore the return type of `np_random` is different from expected.
+    """
 
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 10}
 
     def __init__(
         self,
-        env: Environment,
+        env: composer.Environment | control.Environment | dm_env.Environment,
         render_mode: str | None = None,
         render_height: int = 84,
         render_width: int = 84,
@@ -32,6 +56,7 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
     ):
         """Initialises the environment with a render mode along with render information."""
         self._env = env
+        self.env_type = self._find_env_type(env)
 
         self.observation_space = dm_spec2gym_space(env.observation_spec())
         self.action_space = dm_spec2gym_space(env.action_spec())
@@ -42,8 +67,7 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         self.camera_id = camera_id
 
         if self.render_mode == "human":
-            from gymnasium.envs.mujoco.mujoco_rendering import Viewer
-
+            # We use the gymnasium mujoco rendering, dm-control provides more complex rendering options.
             self.viewer = Viewer(
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
@@ -54,7 +78,7 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
         """Resets the dm-control environment."""
         super().reset(seed=seed)
         if seed is not None:
-            self.np_random = RandomState(seed=seed)
+            self.np_random = np.random.RandomState(seed=seed)
 
         timestep = self._env.reset()
 
@@ -92,6 +116,7 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
 
     def close(self):
         """Closes the environment."""
+        self._env.physics.free()
         self._env.close()
 
         if hasattr(self, "viewer"):
@@ -100,12 +125,36 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
     @property
     def np_random(self) -> np.random.RandomState:
         """This should be np.random.Generator but dm-control uses np.random.RandomState."""
-        return self._env.task._random
+        if self.env_type is EnvType.RL_CONTROL:
+            return self._env.task._random
+        else:
+            return self._env._random_state
 
     @np_random.setter
     def np_random(self, value: np.random.RandomState):
-        self._env.task._random = value
+        if self.env_type is EnvType.RL_CONTROL:
+            self._env.task._random = value
+        else:
+            self._env._random_state = value
 
     def __getattr__(self, item: str):
         """If the attribute is missing, try getting the attribute from dm_control env."""
         return getattr(self._env, item)
+
+    def _find_env_type(self, env) -> EnvType:
+        """Tries to discover env types, in particular for environments with wrappers."""
+        if isinstance(env, composer.Environment):
+            return EnvType.COMPOSER
+        elif isinstance(env, control.Environment):
+            return EnvType.RL_CONTROL
+        else:
+            assert isinstance(env, dm_env.Environment)
+
+            if hasattr(env, "_env"):
+                return self._find_env_type(env._env)
+            elif hasattr(env, "env"):
+                return self._find_env_type(env.env)
+            else:
+                raise AttributeError(
+                    f"Can't know the dm-control environment type, actual type: {type(env)}"
+                )
