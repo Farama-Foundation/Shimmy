@@ -33,13 +33,14 @@ version = get_version()
 header_count, long_description = get_description()
 
 extras = {
+    "gym": ["gym>=0.26"],
     # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
     "dm-control": ["dm-control>=1.0.8", "imageio"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
     "atari": ["ale-py~=0.8.0"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
-extras["testing"] = extras["all"] + [
+extras["testing"] = [
     "pytest==7.1.3",
     "pillow>=9.3.0",
     "autorom[accept-rom-license]~=0.4.2",
