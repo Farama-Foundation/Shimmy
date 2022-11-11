@@ -25,7 +25,7 @@ except ImportError:
 try:
     from shimmy.dmcma_compatibility import DMCMACompatibility as DMCMACompatibilityV0
 except ImportError as e:
-    print(e)
+    pass
 
 __all__ = [
     "DmControlCompatibility",
