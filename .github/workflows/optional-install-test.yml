@@ -30,7 +30,7 @@ jobs:
       - run: |
           docker build -f bin/openspiel.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
-            --tag shimmy-dm-control-docker .
+            --tag shimmy-openspiel-docker .
       - name: Run openspiel tests
         run: docker run shimmy-openspiel-docker pytest tests/test_openspiel.py
 
