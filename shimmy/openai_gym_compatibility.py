@@ -1,4 +1,5 @@
 """Compatibility wrappers for OpenAI gym V22 and V26."""
+# pyright: reportGeneralTypeIssues=false, reportPrivateImportUsage=false
 from __future__ import annotations
 
 import sys
@@ -80,9 +81,7 @@ class GymV26Compatibility(gymnasium.Env[ObsType, ActType]):
         self.metadata = getattr(self.gym_env, "metadata", {"render_modes": []})
         self.render_mode = self.gym_env.render_mode
         self.reward_range = getattr(self.gym_env, "reward_range", None)
-        self.spec = getattr(  # pyright: ignore[reportGeneralTypeIssues]
-            self.gym_env, "spec", None
-        )
+        self.spec = getattr(self.gym_env, "spec", None)
 
     def reset(
         self, seed: int | None = None, options: dict | None = None
@@ -183,24 +182,24 @@ class GymV22Compatibility(gymnasium.Env[ObsType, ActType]):
             make_kwargs = {}
 
         if env is not None:
-            self.gym_env = env
+            gym_env = env
         elif env_id is not None:
-            self.gym_env = gym.make(env_id, **make_kwargs)
+            gym_env = gym.make(env_id, **make_kwargs)
         else:
             raise MissingArgument(
                 "Either env_id or env must be provided to create a legacy gym environment."
             )
-        self.observation_space = _convert_space(self.gym_env.observation_space)
-        self.action_space = _convert_space(self.gym_env.action_space)
+        self.observation_space = _convert_space(gym_env.observation_space)
+        self.action_space = _convert_space(gym_env.action_space)
 
-        self.gym_env = _strip_default_wrappers(self.gym_env)
+        gym_env = _strip_default_wrappers(gym_env)
 
-        self.metadata = getattr(self.gym_env, "metadata", {"render_modes": []})
+        self.metadata = getattr(gym_env, "metadata", {"render_modes": []})
         self.render_mode = render_mode
-        self.reward_range = getattr(self.gym_env, "reward_range", None)
-        self.spec = getattr(  # pyright: ignore[reportGeneralTypeIssues]
-            self.gym_env, "spec", None
-        )
+        self.reward_range = getattr(gym_env, "reward_range", None)
+        self.spec = getattr(gym_env, "spec", None)
+
+        self.gym_env: LegacyV22Env = gym_env
 
     def reset(
         self, seed: int | None = None, options: dict | None = None

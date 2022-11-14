@@ -1,18 +1,28 @@
-"""Wrapper to convert a dm_env multiagent environment into a pettingzoo compatible environment. """
+"""Wrapper to convert a dm_env multiagent environment into a pettingzoo compatible environment."""
 from __future__ import annotations
 
 import functools
 from itertools import repeat
+from typing import Any
 
+import dm_control.composer
 import dm_env
 import gymnasium
-from pettingzoo import ParallelEnv
 from gymnasium.envs.mujoco.mujoco_rendering import Viewer
+from pettingzoo import ParallelEnv
 
 from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
 
 
-def _unravel_ma_timestep(timestep, agents):
+def _unravel_ma_timestep(
+    timestep: dm_env.TimeStep, agents: list[str]
+) -> tuple[
+    dict[str, Any],
+    dict[str, float],
+    dict[str, bool],
+    dict[str, bool],
+    dict[str, Any],
+]:
     """Opens up the timestep to return obs, reward, terminated, truncated, info."""
     # set terminated and truncated
     term, trunc = False, False
@@ -23,7 +33,7 @@ def _unravel_ma_timestep(timestep, agents):
             term = True
 
     # expand the observations
-    observations = [dm_obs2gym_obs(o) for o in timestep.observation]
+    observations = [dm_obs2gym_obs(obs) for obs in timestep.observation]
     observations = dict(zip(agents, observations))
 
     # sometimes deepmind decides not to reward people
@@ -42,7 +52,7 @@ def _unravel_ma_timestep(timestep, agents):
     }
     info = dict(zip(agents, repeat(info)))
 
-    return (  # pyright: ignore[reportGeneralTypeIssues]
+    return (
         observations,
         rewards,
         terminations,
@@ -51,18 +61,20 @@ def _unravel_ma_timestep(timestep, agents):
     )
 
 
-class DMCMACompatibility(ParallelEnv):
+class DmControlMultiAgentCompatibility(ParallelEnv):
+    """Compatibility environment for multi-agent dm-control environments, primarily soccer."""
+
     metadata = {"render_modes": ["human"]}
 
     def __init__(
         self,
-        env: dm_env.Environment,
-        render_mode: str | None,
+        env: dm_control.composer.Environment,
+        render_mode: str | None = None,
     ):
-        """Wrapper that converts a dm control multiagent environment into a pettingzoo environment.
+        """Wrapper that converts a dm control multi-agent environment into a pettingzoo environment.
 
         Args:
-            env (dm_env.Environment): dm control multiagent environment
+            env (dm_env.Environment): dm control multi-agent environment
             render_mode (Optional[str]): render_mode
         """
         super().__init__()
@@ -92,16 +104,16 @@ class DMCMACompatibility(ParallelEnv):
 
     @functools.lru_cache(maxsize=None)
     def observation_space(self, agent):
+        """The observation space for agent."""
         return self.obs_spaces[agent]
 
     @functools.lru_cache(maxsize=None)
     def action_space(self, agent):
+        """The action space for agent."""
         return self.act_spaces[agent]
 
     def render(self):
-        """
-        Renders the environment.
-        """
+        """Renders the environment."""
         if self.render_mode is None:
             gymnasium.logger.warn(
                 "You are calling render method without specifying any render mode."
@@ -131,14 +143,9 @@ class DMCMACompatibility(ParallelEnv):
             return observations, infos
 
     def step(self, actions):
-        """
-        step(action) takes in an action for each agent and returns the
-        - observations
-        - rewards
-        - terminations
-        - truncations
-        - infos
-        dicts where each dict looks like {agent_1: item_1, agent_2: item_2}
+        """Steps through all agents with the actions.
+
+        The ``info`` looks like {agent_1: item_1, agent_2: item_2}
         """
         # assert that the actions _must_ have actions for all agents
         assert len(actions) == len(
@@ -148,9 +155,11 @@ class DMCMACompatibility(ParallelEnv):
         actions = actions.values()
         timestep = self._env.step(actions)
 
-        obs, rews, terms, truncs, infos = _unravel_ma_timestep(timestep, self.agents)
+        obs, rewards, terminations, truncations, infos = _unravel_ma_timestep(
+            timestep, self.agents
+        )
 
         if self.render_mode == "human":
             self.viewer.render()
 
-        return obs, rews, terms, truncs, infos
+        return obs, rewards, terminations, truncations, infos
