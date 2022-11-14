@@ -3,12 +3,10 @@ from __future__ import annotations
 
 import functools
 from itertools import repeat
-from pprint import pprint
 
 import dm_env
 import gymnasium
-import pettingzoo as pz
-from dm_control import viewer
+from pettingzoo import ParallelEnv
 from gymnasium.envs.mujoco.mujoco_rendering import Viewer
 
 from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
@@ -53,7 +51,7 @@ def _unravel_ma_timestep(timestep, agents):
     )
 
 
-class DMCMACompatibility(pz.ParallelEnv):
+class DMCMACompatibility(ParallelEnv):
     metadata = {"render_modes": ["human"]}
 
     def __init__(
