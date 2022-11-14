@@ -8,7 +8,6 @@ from typing import Any
 import dm_control.composer
 import dm_env
 import gymnasium
-import numpy as np
 from gymnasium.envs.mujoco.mujoco_rendering import Viewer
 from pettingzoo import ParallelEnv
 

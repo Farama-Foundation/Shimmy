@@ -22,11 +22,6 @@ try:
 except ImportError:
     pass
 
-try:
-    from shimmy.dmcma_compatibility import DMCMACompatibility as DMCMACompatibilityV0
-except ImportError as e:
-    print(e)
-
 __all__ = [
     "DmControlCompatibility",
     "OpenspielWrapperV0",
