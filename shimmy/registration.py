@@ -6,10 +6,8 @@ from functools import partial
 from typing import Any, Callable, Mapping, NamedTuple, Sequence
 
 import numpy as np
-from ale_py.roms import utils as rom_utils
 from gymnasium.envs.registration import register
 
-from shimmy.dm_control_compatibility import DmControlCompatibility
 from shimmy.utils.envs_configs import (
     ALL_ATARI_GAMES,
     DM_CONTROL_MANIPULATION_ENVS,
@@ -24,6 +22,8 @@ def _register_dm_control_envs():
         import dm_control
     except ImportError:
         return
+
+    from shimmy.dm_control_compatibility import DmControlCompatibility
 
     # Add generic environment support
     def _make_dm_control_generic_env(env, **render_kwargs):
@@ -128,6 +128,8 @@ def _register_atari_configs(
     configs: Sequence[GymConfig],
     prefix: str = "",
 ):
+    from ale_py.roms import utils as rom_utils
+
     for rom in roms:
         for obs_type in obs_types:
             for config in configs:
@@ -162,6 +164,11 @@ def _register_atari_configs(
 
 
 def _register_atari_envs():
+    try:
+        import ale_py
+    except ImportError:
+        return
+
     frameskip: dict[str, int] = defaultdict(lambda: 4, [("space_invaders", 3)])
 
     configs = [

@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-           docker build -f py.Dockerfile \
+           docker build -f bin/all.Dockerfile \
              --build-arg PYTHON_VERSION=${{ matrix.python-version }} \
              --tag shimmy-docker .
       - name: Run tests
