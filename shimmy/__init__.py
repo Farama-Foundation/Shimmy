@@ -18,6 +18,8 @@ except ImportError:
     pass
 
 try:
-    from shimmy.dmcma_compatibility import DMCMACompatibility as DMCMACompatibilityV0
-except ImportError as e:
+    from shimmy.dm_control_multiagent_compatibility import (
+        DmControlMultiAgentCompatibility as DmControlMultiAgentCompatibilityV0,
+    )
+except ImportError:
     pass
