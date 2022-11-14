@@ -1,5 +1,6 @@
 """Wrapper to convert a dm_env multiagent environment into a pettingzoo compatible environment."""
 from __future__ import annotations
+import numpy as np
 
 import functools
 from itertools import repeat
@@ -161,5 +162,8 @@ class DmControlMultiAgentCompatibility(ParallelEnv):
 
         if self.render_mode == "human":
             self.viewer.render()
+
+        if any(terminations.values()) or any(truncations.values()):
+            self.agents = []
 
         return obs, rewards, terminations, truncations, infos
