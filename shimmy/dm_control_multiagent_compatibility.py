@@ -1,6 +1,5 @@
 """Wrapper to convert a dm_env multiagent environment into a pettingzoo compatible environment."""
 from __future__ import annotations
-import numpy as np
 
 import functools
 from itertools import repeat
@@ -9,6 +8,7 @@ from typing import Any
 import dm_control.composer
 import dm_env
 import gymnasium
+import numpy as np
 from gymnasium.envs.mujoco.mujoco_rendering import Viewer
 from pettingzoo import ParallelEnv
 

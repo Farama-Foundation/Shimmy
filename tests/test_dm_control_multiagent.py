@@ -8,9 +8,12 @@ from pettingzoo.test import parallel_api_test
 
 from shimmy import DmControlMultiAgentCompatibilityV0
 
-WALKER_TYPES = [dm_soccer.WalkerType.BOXHEAD,
-                dm_soccer.WalkerType.ANT,
-                dm_soccer.WalkerType.HUMANOID]
+WALKER_TYPES = [
+    dm_soccer.WalkerType.BOXHEAD,
+    dm_soccer.WalkerType.ANT,
+    dm_soccer.WalkerType.HUMANOID,
+]
+
 
 @pytest.mark.parametrize("walker_type", WALKER_TYPES)
 def test_check_env(walker_type):
@@ -61,7 +64,7 @@ def test_seeding(walker_type):
 
     assert data_equivalence(obs_1, obs_2)
     for _ in range(100):
-        actions = dict([(a, env_1.action_space(a).sample()) for a in env_1.agents])
+        actions = {a: env_1.action_space(a).sample() for a in env_1.agents}
         obs_1, reward_1, term_1, trunc_1, info_1 = env_1.step(actions)
         obs_2, reward_2, term_2, trunc_2, info_2 = env_2.step(actions)
         assert data_equivalence(obs_1, obs_2)
