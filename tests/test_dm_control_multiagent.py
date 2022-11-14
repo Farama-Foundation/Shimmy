@@ -8,11 +8,12 @@ from pettingzoo.test import parallel_api_test
 
 from shimmy import DmControlMultiAgentCompatibilityV0
 
-DM_CONTROL_MULTIAGENT_ENVS = [1]
+WALKER_TYPES = [dm_soccer.WalkerType.BOXHEAD,
+                dm_soccer.WalkerType.ANT,
+                dm_soccer.WalkerType.HUMANOID]
 
-
-@pytest.mark.parametrize("env", DM_CONTROL_MULTIAGENT_ENVS)
-def test_check_env(env):
+@pytest.mark.parametrize("walker_type", WALKER_TYPES)
+def test_check_env(walker_type):
     """Check that environment pass the pettingzoo check_env."""
     env = dm_soccer.load(
         team_size=2,
@@ -20,7 +21,7 @@ def test_check_env(env):
         disable_walker_contacts=False,
         enable_field_box=True,
         terminate_on_goal=False,
-        walker_type=dm_soccer.WalkerType.BOXHEAD,
+        walker_type=walker_type,
     )
 
     env = DmControlMultiAgentCompatibilityV0(env)
@@ -30,8 +31,8 @@ def test_check_env(env):
     env.close()
 
 
-@pytest.mark.parametrize("env", DM_CONTROL_MULTIAGENT_ENVS)
-def test_seeding(env):
+@pytest.mark.parametrize("walker_type", WALKER_TYPES)
+def test_seeding(walker_type):
     """Test that dm-control seeding works. This fails because for some reason setting random state doesn't do anything."""
     env_1 = dm_soccer.load(
         team_size=2,
@@ -39,7 +40,7 @@ def test_seeding(env):
         disable_walker_contacts=False,
         enable_field_box=True,
         terminate_on_goal=False,
-        walker_type=dm_soccer.WalkerType.BOXHEAD,
+        walker_type=walker_type,
     )
 
     env_2 = dm_soccer.load(
