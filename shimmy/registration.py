@@ -233,8 +233,8 @@ def register_gymnasium_envs():
     _register_atari_envs()
 
     register(
-        "GymV26Compatibility-v0", "shimmy.openai_gym_compatibility:GymV26Compatibility"
+        "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26Compatibility"
     )
     register(
-        "GymV22Compatibility-v0", "shimmy.openai_gym_compatibility:GymV22Compatibility"
+        "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22Compatibility"
     )
