@@ -79,7 +79,7 @@ def test_seeding(env_id):
     env_1 = gym.make(env_id)
     env_2 = gym.make(env_id)
 
-    if "lqr" in env_id or env_1.spec.nondeterministic:
+    if "lqr" in env_id or (env_1.spec is not None and env_1.spec.nondeterministic):
         # LQR fails this test currently.
         return
 

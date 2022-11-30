@@ -4,9 +4,7 @@ __version__ = "0.1.0"
 
 
 try:
-    from shimmy.dm_control_compatibility import (
-        DmControlCompatibilityV0,
-    )
+    from shimmy.dm_control_compatibility import DmControlCompatibilityV0
 except ImportError:
     pass
 
@@ -21,5 +19,5 @@ __all__ = [
     "DmControlCompatibilityV0",
     "OpenspielWrapperV0",
     "GymV22CompatibilityV0",
-    "GymV26CompatibilityV0"
+    "GymV26CompatibilityV0",
 ]
