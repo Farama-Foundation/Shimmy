@@ -23,11 +23,11 @@ def _register_dm_control_envs():
     except ImportError:
         return
 
-    from shimmy.dm_control_compatibility import DmControlCompatibility
+    from shimmy.dm_control_compatibility import DmControlCompatibilityV0
 
     # Add generic environment support
     def _make_dm_control_generic_env(env, **render_kwargs):
-        return DmControlCompatibility(env, **render_kwargs)
+        return DmControlCompatibilityV0(env, **render_kwargs)
 
     register("dm_control/compatibility-env-v0", _make_dm_control_generic_env)
 
@@ -50,7 +50,7 @@ def _register_dm_control_envs():
             environment_kwargs=environment_kwargs,
             visualize_reward=visualize_reward,
         )
-        return DmControlCompatibility(env, **render_kwargs)
+        return DmControlCompatibilityV0(env, **render_kwargs)
 
     for _domain_name, _task_name in DM_CONTROL_SUITE_ENVS:
         register(
@@ -72,7 +72,7 @@ def _register_dm_control_envs():
         random_state: np.random.RandomState | None = None,
         **render_kwargs,
     ):
-        return DmControlCompatibility(env_fn(random_state), **render_kwargs)
+        return DmControlCompatibilityV0(env_fn(random_state), **render_kwargs)
 
     for locomotion_env, nondeterministic in (
         (basic_cmu_2019.cmu_humanoid_run_walls, False),
@@ -97,7 +97,7 @@ def _register_dm_control_envs():
 
     def _make_dm_control_manipulation_env(env_name: str, **render_kwargs):
         env = dm_control.manipulation.load(env_name)
-        return DmControlCompatibility(env, **render_kwargs)
+        return DmControlCompatibilityV0(env, **render_kwargs)
 
     for env_name in DM_CONTROL_MANIPULATION_ENVS:
         register(

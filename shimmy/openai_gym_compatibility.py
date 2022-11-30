@@ -39,7 +39,7 @@ else:
     GYM_IMPORT_ERROR = None
 
 
-class GymV26Compatibility(gymnasium.Env[ObsType, ActType]):
+class GymV26CompatibilityV0(gymnasium.Env[ObsType, ActType]):
     """Converts a gym v26 environment to a gymnasium environment."""
 
     def __init__(
@@ -151,7 +151,7 @@ class LegacyV22Env(Protocol):
         ...
 
 
-class GymV22Compatibility(gymnasium.Env[ObsType, ActType]):
+class GymV22CompatibilityV0(gymnasium.Env[ObsType, ActType]):
     r"""A wrapper which can transform an environment from the old API to the new API.
 
     Old step API refers to step() method returning (observation, reward, done, info), and reset() only retuning the observation.
