@@ -4,13 +4,20 @@ __version__ = "0.1.0"
 
 
 try:
-    from shimmy.dm_control_compatibility import (
-        DmControlCompatibility as DmControlCompatibilityV0,
-    )
+    from shimmy.dm_control_compatibility import DmControlCompatibility
 except ImportError:
     pass
 
 try:
-    from shimmy.openspiel_wrapper import OpenspielWrapper as OpenspielWrapperV0
+    from shimmy.openspiel_wrapper import OpenspielWrapperV0
 except ImportError:
     pass
+
+from shimmy.openai_gym_compatibility import GymV22Compatibility, GymV26Compatibility
+
+__all__ = [
+    "DmControlCompatibility",
+    "OpenspielWrapperV0",
+    "GymV22Compatibility",
+    "GymV26Compatibility",
+]
