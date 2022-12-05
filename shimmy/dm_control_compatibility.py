@@ -27,7 +27,7 @@ class EnvType(Enum):
     RL_CONTROL = 1
 
 
-class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
+class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
     """A compatibility wrapper that converts a dm-control environment into a gymnasium environment.
 
     Dm-control actually has two Environments classes, `dm_control.composer.Environment` and

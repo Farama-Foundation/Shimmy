@@ -61,7 +61,7 @@ def _unravel_ma_timestep(
     )
 
 
-class DmControlMultiAgentCompatibility(ParallelEnv):
+class DmControlMultiAgentCompatibilityV0(ParallelEnv):
     """Compatibility environment for multi-agent dm-control environments, primarily soccer."""
 
     metadata = {"render_modes": ["human"]}

@@ -6,7 +6,9 @@ from dm_control.locomotion import soccer as dm_soccer
 from gymnasium.utils.env_checker import data_equivalence
 from pettingzoo.test import parallel_api_test
 
-from shimmy.dm_control_multiagent_compatibility import DmControlMultiAgentCompatibility
+from shimmy.dm_control_multiagent_compatibility import (
+    DmControlMultiAgentCompatibilityV0,
+)
 
 WALKER_TYPES = [
     dm_soccer.WalkerType.BOXHEAD,
@@ -27,7 +29,7 @@ def test_check_env(walker_type):
         walker_type=walker_type,
     )
 
-    env = DmControlMultiAgentCompatibility(env)
+    env = DmControlMultiAgentCompatibilityV0(env)
 
     parallel_api_test(env)
 

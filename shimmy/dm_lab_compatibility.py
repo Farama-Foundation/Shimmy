@@ -10,7 +10,7 @@ from gymnasium.core import ObsType
 from shimmy.utils.dm_lab import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
 
 
-class DmLabCompatibility(gymnasium.Env[ObsType, np.ndarray]):
+class DmLabCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
     """A compatibility wrapper that converts a dm_lab-control environment into a gymnasium environment."""
 
     metadata = {"render_modes": [], "render_fps": 10}

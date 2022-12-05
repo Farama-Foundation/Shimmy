@@ -18,7 +18,7 @@ from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
-from shimmy.dm_control_compatibility import DmControlCompatibility
+from shimmy.dm_control_compatibility import DmControlCompatibilityV0
 from shimmy.registration import DM_CONTROL_SUITE_ENVS
 
 DM_CONTROL_ENV_IDS = [
@@ -155,7 +155,7 @@ def test_dm_control_wrappers(
     ):
         return
     wrapped_env = wrapper_fn(dm_control_env)
-    env = DmControlCompatibility(wrapped_env)
+    env = DmControlCompatibilityV0(wrapped_env)
 
     with warnings.catch_warnings(record=True) as caught_warnings:
         check_env(env)
