@@ -36,7 +36,7 @@ extras = {
     "gym": ["gym>=0.26"],
     "atari": ["ale-py~=0.8.0"],
     # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
-    "dm-control": ["dm-control>=1.0.8", "imageio"],
+    "dm-control": ["dm-control>=1.0.8", "imageio", "h5py>=3.7.0"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})

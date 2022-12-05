@@ -4,7 +4,7 @@ import numpy as np
 import pyspiel
 import pytest
 
-from shimmy import OpenspielWrapperV0
+from shimmy.openspiel_compatibility import OpenspielCompatibility
 
 # todo add api_test however chess causes a OOM error
 # from pettingzoo.test import api_test
@@ -116,7 +116,7 @@ def test_passing_games(game):
     """Tests the conversion of all openspiel envs."""
     for _ in range(5):
         env = pyspiel.load_game(game)
-        env = OpenspielWrapperV0(game=env, render_mode=None)
+        env = OpenspielCompatibility(game=env, render_mode=None)
 
         # api test the env
         # api_test(env)
@@ -143,8 +143,8 @@ def test_seeding(game):
     env2 = pyspiel.load_game(game)
 
     # convert the environment
-    env1 = OpenspielWrapperV0(env1, render_mode=None)
-    env2 = OpenspielWrapperV0(env2, render_mode=None)
+    env1 = OpenspielCompatibility(env1, render_mode=None)
+    env2 = OpenspielCompatibility(env2, render_mode=None)
     env1.reset(seed=42)
     env2.reset(seed=42)
 
