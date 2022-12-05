@@ -34,23 +34,23 @@ def _unravel_ma_timestep(
 
     # expand the observations
     list_observations = [dm_obs2gym_obs(obs) for obs in timestep.observation]
-    observations : dict[str, Any] = dict(zip(agents, list_observations))
+    observations: dict[str, Any] = dict(zip(agents, list_observations))
 
     # sometimes deepmind decides not to reward people
-    rewards : dict[str, float] = dict(zip(agents, repeat(0.0)))
+    rewards: dict[str, float] = dict(zip(agents, repeat(0.0)))
     if timestep.reward:
         rewards = dict(zip(agents, timestep.reward))
 
     # expand everything else
-    terminations : dict[str, bool] = dict(zip(agents, repeat(term)))
-    truncations : dict[str, bool] = dict(zip(agents, repeat(trunc)))
+    terminations: dict[str, bool] = dict(zip(agents, repeat(term)))
+    truncations: dict[str, bool] = dict(zip(agents, repeat(trunc)))
 
     # duplicate infos
     info = {
         "timestep.discount": timestep.discount,
         "timestep.step_type": timestep.step_type,
     }
-    info : dict[str, Any] = dict(zip(agents, repeat(info)))
+    info: dict[str, Any] = dict(zip(agents, repeat(info)))
 
     return (
         observations,
