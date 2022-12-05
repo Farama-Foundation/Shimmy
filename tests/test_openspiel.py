@@ -4,7 +4,7 @@ import numpy as np
 import pyspiel
 import pytest
 
-from shimmy import OpenspielWrapperV0
+from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
 
 # todo add api_test however chess causes a OOM error
 # from pettingzoo.test import api_test
@@ -116,7 +116,7 @@ def test_passing_games(game):
     """Tests the conversion of all openspiel envs."""
     for _ in range(5):
         env = pyspiel.load_game(game)
-        env = OpenspielWrapperV0(game=env, render_mode=None)
+        env = OpenspielCompatibilityV0(game=env, render_mode=None)
 
         # api test the env
         # api_test(env)
@@ -131,19 +131,20 @@ def test_passing_games(game):
 @pytest.mark.parametrize("game", _FAILING_GAMES)
 def test_failing_games(game):
     """Ensures that failing games are still failing."""
-    with pytest.raises((pyspiel.SpielError, NotImplementedError)):
+    with pytest.raises(pyspiel.SpielError):
         test_passing_games(game)
 
 
-def test_seeding():
+@pytest.mark.parametrize("game", _PASSING_GAMES)
+def test_seeding(game):
     """Tests the seeding of the openspiel conversion wrapper."""
     # load envs
-    env1 = pyspiel.load_game("2048")
-    env2 = pyspiel.load_game("2048")
+    env1 = pyspiel.load_game(game)
+    env2 = pyspiel.load_game(game)
 
     # convert the environment
-    env1 = OpenspielWrapperV0(env1, render_mode=None)
-    env2 = OpenspielWrapperV0(env2, render_mode=None)
+    env1 = OpenspielCompatibilityV0(env1, render_mode=None)
+    env2 = OpenspielCompatibilityV0(env2, render_mode=None)
     env1.reset(seed=42)
     env2.reset(seed=42)
 
@@ -173,3 +174,5 @@ def test_seeding():
                 assert stuff1 == stuff2, "Incorrect returns on iteration."
             elif isinstance(stuff1, np.ndarray):
                 assert (stuff1 == stuff2).all(), "Incorrect returns on iteration."
+            elif isinstance(stuff1, str):
+                assert stuff1 == stuff2, "Incorrect returns on iteration."

@@ -17,7 +17,7 @@ from dm_control.rl import control
 from gymnasium.core import ObsType
 from gymnasium.envs.mujoco.mujoco_rendering import Viewer
 
-from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_control_step2gym_step, dm_spec2gym_space
 
 
 class EnvType(Enum):
@@ -27,7 +27,7 @@ class EnvType(Enum):
     RL_CONTROL = 1
 
 
-class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
+class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
     """A compatibility wrapper that converts a dm-control environment into a gymnasium environment.
 
     Dm-control actually has two Environments classes, `dm_control.composer.Environment` and
@@ -81,36 +81,18 @@ class DmControlCompatibility(gymnasium.Env[ObsType, np.ndarray]):
             self.np_random = np.random.RandomState(seed=seed)
 
         timestep = self._env.reset()
-        obs = dm_obs2gym_obs(timestep.observation)
-        info = {
-            "timestep.discount": timestep.discount,
-            "timestep.step_type": timestep.step_type,
-        }
+
+        obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
+
         return obs, info  # pyright: ignore[reportGeneralTypeIssues]
 
     def step(
         self, action: np.ndarray
     ) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
         """Steps through the dm-control environment."""
-        # Step through the dm-control environment
         timestep = self._env.step(action)
 
-        # open up the timestep and process reward and observation
-        obs = dm_obs2gym_obs(timestep.observation)
-        reward = timestep.reward or 0
-
-        # set terminated and truncated
-        terminated, truncated = False, False
-        if timestep.last():
-            if timestep.discount == 0:
-                truncated = True
-            else:
-                terminated = True
-
-        info = {
-            "timestep.discount": timestep.discount,
-            "timestep.step_type": timestep.step_type,
-        }
+        obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
 
         if self.render_mode == "human":
             self.viewer.render()
