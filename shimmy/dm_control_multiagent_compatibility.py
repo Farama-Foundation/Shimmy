@@ -72,7 +72,9 @@ class DmControlMultiAgentCompatibility(ParallelEnv):
         render_mode: str | None = None,
     ):
         """Wrapper that converts a dm control multi-agent environment into a pettingzoo environment.
+
         Due to how the underlying environment is setup, this environment is nondeterministic, so seeding doesn't work.
+
         Args:
             env (dm_env.Environment): dm control multi-agent environment
             render_mode (Optional[str]): render_mode
@@ -143,9 +145,7 @@ class DmControlMultiAgentCompatibility(ParallelEnv):
             return observations, infos
 
     def step(self, actions):
-        """Steps through all agents with the actions.
-        The ``info`` looks like {agent_1: item_1, agent_2: item_2}
-        """
+        """Steps through all agents with the actions."""
         # assert that the actions _must_ have actions for all agents
         assert len(actions) == len(
             self.agents
