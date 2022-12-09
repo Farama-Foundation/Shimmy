@@ -84,7 +84,7 @@ env = DmControlMultiAgentCompatibilityV0(env)
 ```python
 import gymnasium as gym
 
-env = gym.make("dm_control/acrobot/swingup_sparse-v0")
+env = gym.make("dm_control/acrobot_swingup_sparse-v0")
 ```
 
 ### OpenSpiel
