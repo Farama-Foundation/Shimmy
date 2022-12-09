@@ -2,11 +2,13 @@
 
 import deepmind_lab
 import gymnasium
+import pytest
 from gymnasium.utils.env_checker import check_env
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 
 
+@pytest.mark.skip(reason="no way of currently testing this")
 def test_check_env():
     """Check that environment pass the gym check_env."""
     observations = ["RGBD"]
