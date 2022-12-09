@@ -21,8 +21,8 @@ To install Shimmy from PyPI:
 pip install shimmy
 ```
 Out of the box, Shimmy doesn't install any of the dependencies required for the environments it supports.
-To install them, you'll have to install the optional dependencies.
-The list of dependencies are as follows:
+To install them, you'll have to install the optional extras.
+The list of extras are as follows:
 
 ### OpenAI Gym
 ```
