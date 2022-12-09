@@ -2,7 +2,7 @@
 
 An API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
 
-upported APIs for Gymnasium
+Supported APIs for Gymnasium
 * OpenAI Gym
 * Atari Environments
 * DMControl
