@@ -14,7 +14,7 @@ Supported APIs for PettingZoo
 
 We are open to supporting more external APIs, please create an issue or ideally, a pull request implementing the new API.
 
-## Installation
+## Installation and Usage
 
 To install Shimmy from PyPI:
 ```
@@ -22,61 +22,44 @@ pip install shimmy
 ```
 Out of the box, Shimmy doesn't install any of the dependencies required for the environments it supports.
 To install them, you'll have to install the optional extras.
-The list of extras are as follows:
+All single agent environments have registration under the Gymnasium API, while all multiagent environments must be wrapped using the corresponding compatibility wrappers.
 
 ### OpenAI Gym
+
+#### Installation
 ```
 pip install shimmy[gym]
 ```
 
+#### Usage
+```python
+import gymnasium as gym
+
+env = gym.make("GymV22CompatibilityV0", env_name="...")
+```
+
 ### Atari Environments
+
+#### Installation
 ```
 pip install shimmy[atari]
 ```
 
+#### Usage
+```python
+import gymnasium as gym
+
+env = gym.make("ALE/Pong-v5")
+```
+
 ### DM Control (both single and multiagent environments)
+
+#### Installation
 ```
 pip install shimmy[dm-control]
 ```
 
-### OpenSpiel
-```
-pip install shimmy[pettingzoo]
-```
-
-### For Developers and Testing Only
-```
-pip install shimmy[testing]
-```
-
-### To just install everything
-```
-pip install shimmy[all, testing]
-```
-
-## Usage
-
-All single agent environments have registration under the Gymnasium API, while all multiagent environments must be wrapped using the corresponding compatibility wrappers.
-
-###  OpenAI Gym
-
-Mark to do
-
-### Atari Environments
-```python
-import gymnasium as gym
-
-env = gym.make("adventure")
-```
-
-### DM Control (Single Agent)
-```python
-import gymnasium as gym
-
-env = gym.make("dm_control/acrobot/swingup_sparse-v0")
-```
-
-### DM Control (Multiagent)
+#### Usage (Multi agent)
 ```python
 from dm_control.locomotion import soccer as dm_soccer
 from shimmy.dm_control_multiagent_compatibility import (
@@ -97,13 +80,37 @@ env = dm_soccer.load(
 env = DmControlMultiAgentCompatibilityV0(env)
 ```
 
+#### Usage (Single agent)
+```python
+import gymnasium as gym
+
+env = gym.make("dm_control/acrobot/swingup_sparse-v0")
+```
+
 ### OpenSpiel
+
+#### Installation
+```
+pip install shimmy[pettingzoo]
+```
+
+#### Usage
 ```python
 import pyspiel
 from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
 
 env = pyspiel.load_game("2048")
 env = OpenspielCompatibilityV0(game=env, render_mode=None)
+```
+
+### For Developers and Testing Only
+```
+pip install shimmy[testing]
+```
+
+### To just install everything
+```
+pip install shimmy[all, testing]
 ```
 
 ## Citation
