@@ -34,7 +34,7 @@ def test_gym_conversion_by_id(env_id):
     env = gymnasium.make("GymV26Environment-v0", env_id=env_id).unwrapped
 
     with warnings.catch_warnings(record=True) as caught_warnings:
-        check_env(env)
+        check_env(env, skip_render_check=True)
 
     for warning in caught_warnings:
         if (
@@ -55,7 +55,7 @@ def test_gym_conversion_instantiated(env_id):
     env = gymnasium.make("GymV26Environment-v0", env=env).unwrapped
 
     with warnings.catch_warnings(record=True) as caught_warnings:
-        check_env(env)
+        check_env(env, skip_render_check=True)
 
     for warning in caught_warnings:
         if (

@@ -26,8 +26,10 @@ except ImportError:
     pass
 
 __all__ = [
-    "DmControlCompatibility",
-    "OpenspielWrapperV0",
-    "GymV22Compatibility",
-    "GymV26Compatibility",
+    "DmControlCompatibilityV0",
+    "DmControlMultiAgentCompatibilityV0",
+    "OpenspielCompatibilityV0",
+    "DmLabCompatibilityV0",
+    "GymV22CompatibilityV0",
+    "GymV26CompatibilityV0",
 ]
