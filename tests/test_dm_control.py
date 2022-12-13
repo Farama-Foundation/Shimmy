@@ -170,5 +170,5 @@ def test_dm_control_wrappers(
             raise Error(f"Unexpected warning: {warning_message.message}")
 
     env = gym.make("dm_control/compatibility-env-v0", env=wrapped_env)
-    check_env(env)
+    check_env(env, skip_render_check=True)
     env.close()
