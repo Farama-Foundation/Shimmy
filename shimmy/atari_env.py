@@ -1,4 +1,13 @@
-"""ALE-py interface for atari."""
+"""ALE-py interface for atari.
+
+This file was originally copied from https://github.com/mgbellemare/Arcade-Learning-Environment/blob/master/src/python/env/gym.py
+Under the GNU General Public License v2.0
+
+Copyright is held by the authors
+
+Changes
+* Added `self.render_mode` which is identical to `self._render_mode`
+"""
 from __future__ import annotations
 
 import sys
@@ -29,7 +38,7 @@ class AtariEnvStepMetadata(TypedDict):
     seeds: NotRequired[Sequence[int]]
 
 
-class AtariEnv(gymnasium.Env[np.ndarray, int], EzPickle):
+class AtariEnv(gymnasium.Env[np.ndarray, np.int64], EzPickle):
     """(A)rcade (L)earning (Gymnasium) (Env)ironment.
 
     A Gymnasium wrapper around the Arcade Learning Environment (ALE).

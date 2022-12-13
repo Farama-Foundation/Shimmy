@@ -159,7 +159,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
         )
 
         if self.render_mode == "human":
-            self.viewer.render()
+            self.viewer.render(self.render_mode)
 
         if any(terminations.values()) or any(truncations.values()):
             self.agents = []

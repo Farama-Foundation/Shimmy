@@ -1,16 +1,16 @@
 """Wrapper to convert a dm_lab environment into a gymnasium compatible environment."""
 from __future__ import annotations
 
-from typing import Any, TypeVar
+from typing import Any, Dict
 
-import gymnasium
+import gymnasium as gym
 import numpy as np
 from gymnasium.core import ObsType
 
 from shimmy.utils.dm_lab import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
 
 
-class DmLabCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
+class DmLabCompatibilityV0(gym.Env[ObsType, Dict[str, np.ndarray]]):
     """A compatibility wrapper that converts a dm_lab-control environment into a gymnasium environment."""
 
     metadata = {"render_modes": [], "render_fps": 10}
@@ -45,22 +45,22 @@ class DmLabCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         return (
             self._env.observations(),
             info,
-        )  # pyright: ignore[reportGeneralTypeIssues]
+        )
 
     def step(
         self, action: dict[str, np.ndarray]
     ) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
         """Steps through the dm-lab environment."""
         # there's some funky quantization happening here, dm_lab only accepts ints as actions
-        action = np.array([a[0] for a in action.values()], dtype=np.intc)
-        reward = self._env.step(action)
+        action_array = np.array([a[0] for a in action.values()], dtype=np.intc)
+        reward = self._env.step(action_array)
 
         obs = self._env.observations()
         terminated = not self._env.is_running()
         truncated = False
         info = {}
 
-        return (  # pyright: ignore[reportGeneralTypeIssues]
+        return (
             obs,
             reward,
             terminated,
