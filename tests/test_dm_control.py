@@ -162,7 +162,7 @@ def test_dm_control_wrappers(
     env = DmControlCompatibilityV0(wrapped_env)
 
     with warnings.catch_warnings(record=True) as caught_warnings:
-        check_env(env)
+        check_env(env, skip_render_check=True)
 
     for warning_message in caught_warnings:
         assert isinstance(warning_message.message, Warning)

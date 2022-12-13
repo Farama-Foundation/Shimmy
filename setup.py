@@ -59,7 +59,7 @@ setup(
     keywords=["Reinforcement Learning", "game", "RL", "AI"],
     python_requires=">=3.7",
     packages=find_packages(),
-    install_requires=["numpy>=1.18.0", "gymnasium>=0.26.0"],
+    install_requires=["numpy>=1.18.0", "gymnasium>=0.27.0"],
     tests_require=extras["testing"],
     extras_require=extras,
     classifiers=[
