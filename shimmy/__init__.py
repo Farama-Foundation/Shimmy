@@ -1,29 +1,52 @@
 """API for converting popular non-gymnasium environments to a gymnasium compatible environment."""
+from __future__ import annotations
+
+from typing import Any
+
+from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
+from shimmy.openai_gym_compatibility import GymV22CompatibilityV0, GymV26CompatibilityV0
 
 __version__ = "0.2.0"
 
 
+class NotInstallClass:
+    """Rather than an attribute error, this raises a more helpful import error with install instructions for shimmy."""
+
+    def __init__(self, install_message: str, import_exception: ImportError):
+        self.install_message = install_message
+        self.import_exception = import_exception
+
+    def __call__(self, *args: list[Any], **kwargs: Any):
+        """Acts like the `__init__` for the class."""
+        raise ImportError(self.install_message) from self.import_exception
+
+
 try:
     from shimmy.dm_control_compatibility import DmControlCompatibilityV0
-except ImportError:
-    pass
+except ImportError as e:
+    DmControlCompatibilityV0 = NotInstallClass(
+        "Dm-control is not installed, run `pip install 'shimmy[dm-control]'`", e
+    )
+
 
 try:
     from shimmy.dm_control_multiagent_compatibility import (
         DmControlMultiAgentCompatibilityV0,
     )
-except ImportError:
-    pass
+except ImportError as e:
+    DmControlMultiAgentCompatibilityV0 = NotInstallClass(
+        "Dm-control or Pettingzoo is not installed, run `pip install 'shimmy[dm-control-multi-agent]'`",
+        e,
+    )
 
 try:
     from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
-except ImportError:
-    pass
+except ImportError as e:
+    OpenspielCompatibilityV0 = NotInstallClass(
+        "Openspiel or Pettingzoo is not installed, run `pip install 'shimmy[openspiel]'`",
+        e,
+    )
 
-try:
-    from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
-except ImportError:
-    pass
 
 __all__ = [
     "DmControlCompatibilityV0",

@@ -227,14 +227,32 @@ def _register_atari_envs():
     )
 
 
+def _register_dm_lab():
+    try:
+        import deepmind_lab
+    except ImportError:
+        return
+
+    from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
+
+    def _make_dm_lab_env(
+        env_id: str, observations, config: dict[str, Any], renderer: str
+    ):
+        env = deepmind_lab.Lab(env_id, observations, config=config, renderer=renderer)
+        return DmLabCompatibilityV0(env)
+
+    register("DmLabCompatibility-v0", _make_dm_lab_env)
+
+
 def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
+    register(
+        "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
+    )
+    register(
+        "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
+    )
+
     _register_dm_control_envs()
     _register_atari_envs()
-
-    register(
-        "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26Compatibility"
-    )
-    register(
-        "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22Compatibility"
-    )
+    _register_dm_lab()

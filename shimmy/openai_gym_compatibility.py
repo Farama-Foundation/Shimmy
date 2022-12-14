@@ -39,8 +39,8 @@ else:
     GYM_IMPORT_ERROR = None
 
 
-class GymV26Compatibility(gymnasium.Env[ObsType, ActType]):
-    """Converts a gym v26 environment to a gymnasium environment."""
+class GymV26CompatibilityV0(gymnasium.Env[ObsType, ActType]):
+    """Converts a Gym v26 environment to a Gymnasium environment."""
 
     def __init__(
         self,
@@ -82,6 +82,10 @@ class GymV26Compatibility(gymnasium.Env[ObsType, ActType]):
         self.render_mode = self.gym_env.render_mode
         self.reward_range = getattr(self.gym_env, "reward_range", None)
         self.spec = getattr(self.gym_env, "spec", None)
+
+    def __getattr__(self, item: str):
+        """Gets an attribute that only exists in the base environments."""
+        return getattr(self.gym_env, item)
 
     def reset(
         self, seed: int | None = None, options: dict | None = None
@@ -151,7 +155,7 @@ class LegacyV22Env(Protocol):
         ...
 
 
-class GymV22Compatibility(gymnasium.Env[ObsType, ActType]):
+class GymV22CompatibilityV0(gymnasium.Env[ObsType, ActType]):
     r"""A wrapper which can transform an environment from the old API to the new API.
 
     Old step API refers to step() method returning (observation, reward, done, info), and reset() only retuning the observation.
@@ -201,6 +205,10 @@ class GymV22Compatibility(gymnasium.Env[ObsType, ActType]):
 
         self.gym_env: LegacyV22Env = gym_env
 
+    def __getattr__(self, item: str):
+        """Gets an attribute that only exists in the base environments."""
+        return getattr(self.gym_env, item)
+
     def reset(
         self, seed: int | None = None, options: dict | None = None
     ) -> tuple[ObsType, dict]:
@@ -236,9 +244,7 @@ class GymV22Compatibility(gymnasium.Env[ObsType, ActType]):
         if self.render_mode == "human":
             self.render()
 
-        return convert_to_terminated_truncated_step_api(
-            (obs, reward, done, info)
-        )  # pyright: ignore[reportGeneralTypeIssues]
+        return convert_to_terminated_truncated_step_api((obs, reward, done, info))
 
     def render(self) -> Any:
         """Renders the environment.
