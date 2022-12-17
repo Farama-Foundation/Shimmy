@@ -53,8 +53,12 @@ CHECK_ENV_IGNORE_WARNINGS = [
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 5)",
         "It seems a Box observation space is an image but the `dtype` is not `np.uint8`, actual type: float64. If the Box observation space is not an image, we recommend flattening the observation to have only a 1D vector.",
         "It seems a Box observation space is an image but the upper and lower bounds are not in [0, 255]. Generally, CNN policies assume observations are within that range, so you may encounter an issue if the observation values are not.",
+        "arrays to stack must be passed as a 'sequence' type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.",
     ]
 ]
+CHECK_ENV_IGNORE_WARNINGS.append(
+    'arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.',
+)
 
 
 @pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS)
@@ -158,7 +162,7 @@ def test_dm_control_wrappers(
     env = DmControlCompatibilityV0(wrapped_env)
 
     with warnings.catch_warnings(record=True) as caught_warnings:
-        check_env(env)
+        check_env(env, skip_render_check=True)
 
     for warning_message in caught_warnings:
         assert isinstance(warning_message.message, Warning)
@@ -166,5 +170,5 @@ def test_dm_control_wrappers(
             raise Error(f"Unexpected warning: {warning_message.message}")
 
     env = gym.make("dm_control/compatibility-env-v0", env=wrapped_env)
-    check_env(env)
+    check_env(env, skip_render_check=True)
     env.close()

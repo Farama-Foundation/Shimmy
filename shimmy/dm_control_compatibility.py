@@ -15,7 +15,7 @@ import numpy as np
 from dm_control import composer
 from dm_control.rl import control
 from gymnasium.core import ObsType
-from gymnasium.envs.mujoco.mujoco_rendering import Viewer
+from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 
 from shimmy.utils.dm_env import dm_control_step2gym_step, dm_spec2gym_space
 
@@ -68,7 +68,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
 
         if self.render_mode == "human":
             # We use the gymnasium mujoco rendering, dm-control provides more complex rendering options.
-            self.viewer = Viewer(
+            self.viewer = MujocoRenderer(
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
 
@@ -84,7 +84,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
 
         obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
 
-        return obs, info  # pyright: ignore[reportGeneralTypeIssues]
+        return obs, info
 
     def step(
         self, action: np.ndarray
@@ -95,9 +95,9 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
 
         if self.render_mode == "human":
-            self.viewer.render()
+            self.viewer.render(self.render_mode)
 
-        return (  # pyright: ignore[reportGeneralTypeIssues]
+        return (
             obs,
             reward,
             terminated,

@@ -8,7 +8,7 @@ from typing import Any
 import dm_control.composer
 import dm_env
 import gymnasium
-from gymnasium.envs.mujoco.mujoco_rendering import Viewer
+from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 from pettingzoo import ParallelEnv
 
 from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
@@ -100,7 +100,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
         self.act_spaces = dict(zip(self.possible_agents, all_act_spaces))
 
         if self.render_mode == "human":
-            self.viewer = Viewer(
+            self.viewer = MujocoRenderer(
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
 
@@ -159,7 +159,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
         )
 
         if self.render_mode == "human":
-            self.viewer.render()
+            self.viewer.render(self.render_mode)
 
         if any(terminations.values()) or any(truncations.values()):
             self.agents = []
