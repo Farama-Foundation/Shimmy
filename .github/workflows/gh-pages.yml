@@ -17,8 +17,11 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install dependencies
+      - name: Install dependencies for doc
         run: pip install -r docs/requirements.txt
+
+      - name: Install dependencies for shimmy
+        run: pip install pettingzoo ale-py dm_control dm_env
 
       - name: Install package
         run: pip install .
