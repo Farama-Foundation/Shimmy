@@ -21,7 +21,7 @@ jobs:
         run: pip install -r docs/requirements.txt
 
       - name: Install dependencies for shimmy
-        run: pip install pettingzoo ale-py dm_control dm_env
+        run: pip install pettingzoo ale-py dm_control dm_env pyspiel
 
       - name: Install package
         run: pip install .
