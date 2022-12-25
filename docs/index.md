@@ -70,6 +70,6 @@ contents/index
 ```{toctree}
 :hidden:
 :caption: Development
-Github <https://github.com/Farama-Foundation/magent2>
+Github <https://github.com/Farama-Foundation/shimmy>
 ```
 

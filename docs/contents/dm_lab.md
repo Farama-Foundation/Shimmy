@@ -47,9 +47,9 @@ env = deepmind_lab.Lab("lt_chasm", observations, config=config, renderer=rendere
 env = DmLabCompatibilityV0(env)
 ```
 
+### Class Description
 ```{eval-rst}
 .. autoclass:: shimmy.dm_lab_compatibility.DmLabCompatibilityV0
     :members:
     :undoc-members:
-    :show-inheritance:
 ```
