@@ -11,7 +11,9 @@ from shimmy.utils.dm_lab import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
 
 
 class DmLabCompatibilityV0(gym.Env[ObsType, Dict[str, np.ndarray]]):
-    """DeepMind Lab is a 3D learning environment based on id Software's Quake III Arena via ioquake3 and other open source software. DeepMind Lab provides a suite of challenging 3D navigation and puzzle-solving tasks for learning agents. Its primary purpose is to act as a testbed for research in artificial intelligence, especially deep reinforcement learning. This compatibility wrapper converts a dm_lab-control environment into a gymnasium environment."""
+    """This compatibility wrapper converts a dm_lab-control environment into a gymnasium environment.
+
+    DeepMind Lab is a 3D learning environment based on id Software's Quake III Arena via ioquake3 and other open source software. DeepMind Lab provides a suite of challenging 3D navigation and puzzle-solving tasks for learning agents. Its primary purpose is to act as a testbed for research in artificial intelligence, especially deep reinforcement learning."""
 
     metadata = {"render_modes": [], "render_fps": 10}
 
