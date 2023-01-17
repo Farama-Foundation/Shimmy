@@ -28,7 +28,7 @@ class EnvType(Enum):
 
 
 class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
-    """A compatibility wrapper that converts a dm-control environment into a gymnasium environment.
+    """Dm-control is DeepMind's software stack for physics-based simulation and Reinforcement Learning environments, using MuJoCo physics. This compatibility wrapper converts a dm-control environment into a gymnasium environment.
 
     Dm-control actually has two Environments classes, `dm_control.composer.Environment` and
     `dm_control.rl.control.Environment` that while both inherit from `dm_env.Environment`, they differ
