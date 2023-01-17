@@ -84,7 +84,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
 
         obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
 
-        return obs, info  # pyright: ignore[reportGeneralTypeIssues]
+        return obs, info
 
     def step(
         self, action: np.ndarray
@@ -95,9 +95,9 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
 
         if self.render_mode == "human":
-            self.viewer.render()
+            self.viewer.render(self.render_mode)
 
-        return (  # pyright: ignore[reportGeneralTypeIssues]
+        return (
             obs,
             reward,
             terminated,

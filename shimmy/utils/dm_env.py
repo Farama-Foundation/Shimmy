@@ -8,7 +8,6 @@ from typing import Any
 import numpy as np
 from dm_env.specs import Array, BoundedArray, DiscreteArray
 from gymnasium import spaces
-from gymnasium.core import ObsType
 
 
 def dm_spec2gym_space(spec) -> spaces.Space[Any]:
@@ -54,7 +53,7 @@ def dm_obs2gym_obs(obs) -> np.ndarray | dict[str, Any]:
 
 def dm_control_step2gym_step(
     timestep,
-) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
+) -> tuple[Any, float, bool, bool, dict[str, Any]]:
     """Opens up the timestep to return obs, reward, terminated, truncated, info."""
     obs = dm_obs2gym_obs(timestep.observation)
     reward = timestep.reward or 0
@@ -72,7 +71,7 @@ def dm_control_step2gym_step(
         "timestep.step_type": timestep.step_type,
     }
 
-    return (  # pyright: ignore[reportGeneralTypeIssues]
+    return (
         obs,
         reward,
         terminated,

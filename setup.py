@@ -37,6 +37,7 @@ extras = {
     "atari": ["ale-py~=0.8.0"],
     # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
     "dm-control": ["dm-control>=1.0.8", "imageio", "h5py>=3.7.0"],
+    "dm-control-multi-agent": ["dm-control>=1.0.8", "pettingzoo>=1.22"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
@@ -63,10 +64,11 @@ setup(
     tests_require=extras["testing"],
     extras_require=extras,
     classifiers=[
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
