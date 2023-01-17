@@ -215,7 +215,7 @@ If you use this in your research, please cite:
   author = {Jordan Terry, Mark Towers, Jun Jet Tai},
   title = {Shimmy: Gymnasium and Pettingzoo Wrappers for Commonly Used Environments},
   url = {http://github.com/Farama-Foundation/Shimmy},
-  version = {0.0.1},
+  version = {0.2.0},
   year = {2022},
 }```
 
