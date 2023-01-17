@@ -211,13 +211,11 @@ env = OpenspielCompatibilityV0(game=env, render_mode=None)
 
 If you use this in your research, please cite:
 ```
-@misc{shimmy2022,
+@software{shimmy2022github,
   author = {Jordan Terry, Mark Towers, Jun Jet Tai},
   title = {Shimmy: Gymnasium and Pettingzoo Wrappers for Commonly Used Environments},
+  url = {http://github.com/Farama-Foundation/Shimmy},
+  version = {0.0.1},
   year = {2022},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/Farama-Foundation/Shimmy}}
-}
-```
+}```
 
