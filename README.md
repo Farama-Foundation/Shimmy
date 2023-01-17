@@ -8,7 +8,7 @@ An API conversion tool for popular external reinforcement learning environments 
 - Bindings to convert OpenAI Gym environments to Gymnasium Environments.
 
 ### Atari Environments for OpenAI Gym
-- (Mark to-do)
+- Bindings to ALE-py to provide Atari environments in Gymnasium.
 
 ### [DeepMind Control](https://github.com/deepmind/dm_control)
 - Gymnasium bindings for single agent environments.
