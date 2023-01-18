@@ -4,12 +4,13 @@ firstpage:
 lastpage:
 ---
 
+
+# Shimmy is an API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
+
 ```{figure} _static/img/shimmy-white.svg
    :alt: Shimmy Logo
    :width: 200
 ```
-
-# Shimmy is an API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
 
 ## Supported APIs
 
