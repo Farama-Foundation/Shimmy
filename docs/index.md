@@ -4,19 +4,56 @@ firstpage:
 lastpage:
 ---
 
+```{figure} _static/img/shimmy.svg
+   :alt: Shimmy Logo
+   :width: 500
+```
+
 # Shimmy is an API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
 
-Supported APIs for Gymnasium
-* OpenAI Gym
-* Atari Environments
-* DMControl
+## Supported APIs
 
-Supported APIs for PettingZoo
-* OpenSpiel
-* DmControl Multiagent Soccer
-* DMLab Environments
+### OpenAI Gym
+- Bindings to convert OpenAI Gym environments to Gymnasium Environments.
 
-We are open to supporting more external APIs, please create an issue or ideally, a pull request implementing the new API.
+### Atari Environments for OpenAI Gym
+- Bindings to ALE-py to provide Atari environments in Gymnasium.
+
+### [DeepMind Control](https://github.com/deepmind/dm_control)
+- Gymnasium bindings for single agent environments.
+- Pettingzoo bindings for multiagent soccer environments.
+
+### [DMLab](https://github.com/deepmind/lab)
+- Pettingzoo bindings for all environments.
+
+### [OpenSpiel](https://github.com/deepmind/open_spiel)
+- Pettingzoo bindings for all environments.
+
+### Incoming Projects
+
+The following are a list of existing environment suites that we are looking into bringing into Shimmy.
+We are actively looking for developers to contribute to this project, if you are interested in helping, please reach out to us.
+
+- [The DeepMing Env API](https://github.com/deepmind/dm_env)
+- [Behaviour Suite](https://github.com/deepmind/bsuite)
+- [Melting Pot](https://github.com/deepmind/meltingpot)
+
+## Installation and Usage
+
+To install Shimmy from PyPI:
+```
+pip install shimmy
+```
+Out of the box, Shimmy doesn't install any of the dependencies required for the environments it supports.
+To install them, you'll have to install the optional extras.
+All single agent environments have registration under the Gymnasium API, while all multiagent environments must be wrapped using the corresponding compatibility wrappers.
+
+### OpenAI Gym
+
+#### Installation
+```
+pip install shimmy[gym]
+```
 
 ## At a glance
 
@@ -53,12 +90,6 @@ For most usage, we recommend applying the `gym.wrappers.FlattenObservation(env)`
 If you use this in your research, please cite:
 ```
 TBD
-```
-
-```{toctree}
-:hidden:
-:caption: Introduction
-installation
 ```
 
 ```{toctree}
