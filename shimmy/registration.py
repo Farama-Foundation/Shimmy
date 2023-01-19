@@ -30,7 +30,7 @@ def _register_dm_control_envs():
     def _make_dm_control_generic_env(env, **render_kwargs):
         return DmControlCompatibilityV0(env, **render_kwargs)
 
-    register("dm_control/compatibility-env-v0", _make_dm_control_generic_env)
+    register(id="dm_control/compatibility-env-v0", entry_point=_make_dm_control_generic_env)
 
     # Register all suite environments
     import dm_control.suite
@@ -55,8 +55,8 @@ def _register_dm_control_envs():
 
     for _domain_name, _task_name in DM_CONTROL_SUITE_ENVS:
         register(
-            f"dm_control/{_domain_name}-{_task_name}-v0",
-            partial(
+            id=f"dm_control/{_domain_name}-{_task_name}-v0",
+            entry_point=partial(
                 _make_dm_control_suite_env,
                 domain_name=_domain_name,
                 task_name=_task_name,
@@ -88,8 +88,8 @@ def _register_dm_control_envs():
         # (cmu_2020_tracking.cmu_humanoid_tracking, False),
     ):
         register(
-            f"dm_control/{locomotion_env.__name__.title().replace('_', '')}-v0",
-            partial(_make_dm_control_example_locomotion_env, env_fn=locomotion_env),
+            id=f"dm_control/{locomotion_env.__name__.title().replace('_', '')}-v0",
+            entry_point=partial(_make_dm_control_example_locomotion_env, env_fn=locomotion_env),
             nondeterministic=nondeterministic,
         )
 
@@ -102,8 +102,8 @@ def _register_dm_control_envs():
 
     for env_name in DM_CONTROL_MANIPULATION_ENVS:
         register(
-            f"dm_control/{env_name}-v0",
-            partial(_make_dm_control_manipulation_env, env_name=env_name),
+            id=f"dm_control/{env_name}-v0",
+            entry_point=partial(_make_dm_control_manipulation_env, env_name=env_name),
             nondeterministic=env_name.startswith("reassemble_5_bricks_random_order"),
         )
 
@@ -242,7 +242,7 @@ def _register_dm_lab():
         env = deepmind_lab.Lab(env_id, observations, config=config, renderer=renderer)
         return DmLabCompatibilityV0(env)
 
-    register("DmLabCompatibility-v0", _make_dm_lab_env)
+    register(id="DmLabCompatibility-v0", entry_point=_make_dm_lab_env)
 
 
 def register_gymnasium_envs():
@@ -250,12 +250,12 @@ def register_gymnasium_envs():
     if "GymV26Environment-v0" in gymnasium.registry:
         gymnasium.registry.pop("GymV26Environment-v0")
     register(
-        "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
+        id="GymV26Environment-v0", entry_point="shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
     )
     if "GymV22Environment-v0" in gymnasium.registry:
         gymnasium.registry.pop("GymV22Environment-v0")
     register(
-        "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
+        id="GymV22Environment-v0", entry_point="shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
     )
 
     _register_dm_control_envs()
