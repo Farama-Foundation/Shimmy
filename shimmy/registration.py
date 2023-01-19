@@ -5,6 +5,7 @@ from collections import defaultdict
 from functools import partial
 from typing import Any, Callable, Mapping, NamedTuple, Sequence
 
+import gymnasium
 import numpy as np
 from gymnasium.envs.registration import register
 
@@ -246,9 +247,13 @@ def _register_dm_lab():
 
 def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
+    if "GymV26Environment-v0" in gymnasium.registry:
+        gymnasium.registry.pop("GymV26Environment-v0")
     register(
         "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
     )
+    if "GymV22Environment-v0" in gymnasium.registry:
+        gymnasium.registry.pop("GymV22Environment-v0")
     register(
         "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
     )
