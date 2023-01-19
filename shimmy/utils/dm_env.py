@@ -61,7 +61,7 @@ def dm_control_step2gym_step(
     # set terminated and truncated
     terminated, truncated = False, False
     if timestep.last():
-        if timestep.discount == 0:
+        if timestep.discount == 1.0:
             truncated = True
         else:
             terminated = True
