@@ -247,12 +247,12 @@ def _register_dm_lab():
 
 def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
-    if "GymV26Environment-v0" in gymnasium.registry:
+    if "GymV26Environment-v0" in gymnasium.envs.registration.registry:
         gymnasium.registry.pop("GymV26Environment-v0")
     register(
         id="GymV26Environment-v0", entry_point="shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
     )
-    if "GymV22Environment-v0" in gymnasium.registry:
+    if "GymV22Environment-v0" in gymnasium.envs.registration.registry:
         gymnasium.registry.pop("GymV22Environment-v0")
     register(
         id="GymV22Environment-v0", entry_point="shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
