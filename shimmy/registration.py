@@ -30,7 +30,9 @@ def _register_dm_control_envs():
     def _make_dm_control_generic_env(env, **render_kwargs):
         return DmControlCompatibilityV0(env, **render_kwargs)
 
-    register(id="dm_control/compatibility-env-v0", entry_point=_make_dm_control_generic_env)
+    register(
+        id="dm_control/compatibility-env-v0", entry_point=_make_dm_control_generic_env
+    )
 
     # Register all suite environments
     import dm_control.suite
@@ -89,7 +91,9 @@ def _register_dm_control_envs():
     ):
         register(
             id=f"dm_control/{locomotion_env.__name__.title().replace('_', '')}-v0",
-            entry_point=partial(_make_dm_control_example_locomotion_env, env_fn=locomotion_env),
+            entry_point=partial(
+                _make_dm_control_example_locomotion_env, env_fn=locomotion_env
+            ),
             nondeterministic=nondeterministic,
         )
 
@@ -247,15 +251,17 @@ def _register_dm_lab():
 
 def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
-    if "GymV26Environment-v0" in gymnasium.envs.registration.registry:
+    if "GymV26Environment-v0" in gymnasium.registry:
         gymnasium.registry.pop("GymV26Environment-v0")
     register(
-        id="GymV26Environment-v0", entry_point="shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
+        id="GymV26Environment-v0",
+        entry_point="shimmy.openai_gym_compatibility:GymV26CompatibilityV0",
     )
-    if "GymV22Environment-v0" in gymnasium.envs.registration.registry:
-        gymnasium.registry.pop("GymV22Environment-v0")
+    if "GymV21Environment-v0" in gymnasium.registry:
+        gymnasium.registry.pop("GymV21Environment-v0")
     register(
-        id="GymV22Environment-v0", entry_point="shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
+        id="GymV21Environment-v0",
+        entry_point="shimmy.openai_gym_compatibility:GymV21CompatibilityV0",
     )
 
     _register_dm_control_envs()

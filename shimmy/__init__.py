@@ -4,9 +4,9 @@ from __future__ import annotations
 from typing import Any
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
-from shimmy.openai_gym_compatibility import GymV22CompatibilityV0, GymV26CompatibilityV0
+from shimmy.openai_gym_compatibility import GymV21CompatibilityV0, GymV26CompatibilityV0
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 
 class NotInstallClass:
@@ -53,6 +53,6 @@ __all__ = [
     "DmControlMultiAgentCompatibilityV0",
     "OpenspielCompatibilityV0",
     "DmLabCompatibilityV0",
-    "GymV22CompatibilityV0",
+    "GymV21CompatibilityV0",
     "GymV26CompatibilityV0",
 ]
