@@ -19,7 +19,7 @@ CHECK_ENV_IGNORE_WARNINGS = [
         "A Box observation space maximum value is -infinity. This is probably too high.",
         "For Box action spaces, we recommend using a symmetric and normalized space (range=[-1, 1] or [0, 1]). See https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html for more information.",
     ]
-]
+] + ["`np.bool8` is a deprecated alias for `np.bool_`.  (Deprecated NumPy 1.24)"]
 
 # We do not test Atari environment's here because we check all variants of Pong in test_envs.py (There are too many Atari environments)
 CLASSIC_CONTROL_ENVS = [
@@ -40,10 +40,8 @@ def test_gym_conversion_by_id(env_id):
         check_env(env, skip_render_check=True)
 
     for warning in caught_warnings:
-        if (
-            isinstance(warning.message, Warning)
-            and warning.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS
-        ):
+        assert isinstance(warning.message, Warning)
+        if warning.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS:
             raise Error(f"Unexpected warning: {warning.message}")
 
     env.close()
@@ -63,10 +61,9 @@ def test_gym_conversion_instantiated(env_id):
         check_env(env, skip_render_check=True)
 
     for warning in caught_warnings:
-        if (
-            isinstance(warning.message, Warning)
-            and warning.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS
-        ):
+        assert isinstance(warning.message, Warning)
+
+        if warning.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS:
             raise Error(f"Unexpected warning: {warning.message}")
 
     env.close()
