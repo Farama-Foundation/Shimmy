@@ -62,7 +62,11 @@ def _unravel_ma_timestep(
 
 
 class DmControlMultiAgentCompatibilityV0(ParallelEnv):
-    """Compatibility environment for multi-agent dm-control environments, primarily soccer."""
+    """This compatibility wrapper converts multi-agent dm-control environments, primarily soccer, into a Pettingzoo environment.
+
+    Dm-control is DeepMind's software stack for physics-based simulation and Reinforcement Learning environments,
+    using MuJoCo physics. This compatibility wrapper converts a dm-control environment into a gymnasium environment.
+    """
 
     metadata = {"render_modes": ["human"]}
 

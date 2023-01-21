@@ -2,17 +2,32 @@
 
 An API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
 
-Supported APIs for Gymnasium
-* OpenAI Gym
-* Atari Environments
-* DMControl
+## Supported APIs
 
-Supported APIs for PettingZoo
-* OpenSpiel
-* DmControl Multiagent Soccer
-* DMLab Environments
+### OpenAI Gym
+- Bindings to convert OpenAI Gym environments to Gymnasium Environments.
 
-We are open to supporting more external APIs, please create an issue or ideally, a pull request implementing the new API.
+### Atari Environments for OpenAI Gym
+- Bindings to ALE-py to provide Atari environments in Gymnasium.
+
+### [DeepMind Control](https://github.com/deepmind/dm_control)
+- Gymnasium bindings for single agent environments.
+- Pettingzoo bindings for multiagent soccer environments.
+
+### [DMLab](https://github.com/deepmind/lab)
+- Pettingzoo bindings for all environments.
+
+### [OpenSpiel](https://github.com/deepmind/open_spiel)
+- Pettingzoo bindings for all environments.
+
+### Incoming Projects
+
+The following are a list of existing environment suites that we are looking into bringing into Shimmy.
+We are actively looking for developers to contribute to this project, if you are interested in helping, please reach out to us.
+
+- [The DeepMing Env API](https://github.com/deepmind/dm_env)
+- [Behaviour Suite](https://github.com/deepmind/bsuite)
+- [Melting Pot](https://github.com/deepmind/meltingpot)
 
 ## At a glance
 
@@ -82,7 +97,7 @@ import gymnasium as gym
 env = gym.make("ALE/Pong-v5")
 ```
 
-### DM Control (both single and multiagent environments)
+### DM Control
 
 #### Installation
 ```
@@ -115,22 +130,6 @@ env = DmControlMultiAgentCompatibilityV0(env)
 import gymnasium as gym
 
 env = gym.make("dm_control/acrobot_swingup_sparse-v0")
-```
-
-### OpenSpiel
-
-#### Installation
-```
-pip install shimmy[pettingzoo]
-```
-
-#### Usage
-```python
-import pyspiel
-from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
-
-env = pyspiel.load_game("2048")
-env = OpenspielCompatibilityV0(game=env, render_mode=None)
 ```
 
 ### DM Lab
@@ -192,10 +191,30 @@ pip install shimmy[testing]
 pip install shimmy[all, testing]
 ```
 
+### OpenSpiel
+
+#### Installation
+```
+pip install shimmy[pettingzoo]
+```
+
+#### Usage
+```python
+import pyspiel
+from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
+
+env = pyspiel.load_game("2048")
+env = OpenspielCompatibilityV0(game=env, render_mode=None)
+```
+
 ## Citation
 
 If you use this in your research, please cite:
 ```
-TBD
-```
-
+@software{shimmy2022github,
+  author = {Jordan Terry, Mark Towers, Jun Jet Tai},
+  title = {Shimmy: Gymnasium and Pettingzoo Wrappers for Commonly Used Environments},
+  url = {http://github.com/Farama-Foundation/Shimmy},
+  version = {0.2.0},
+  year = {2022},
+}```
