@@ -61,7 +61,8 @@ def dm_control_step2gym_step(
     # set terminated and truncated
     terminated, truncated = False, False
     if timestep.last():
-        if timestep.discount == 0:
+        # https://github.com/deepmind/dm_env/blob/master/docs/index.md#example-sequences
+        if timestep.discount > 0:
             truncated = True
         else:
             terminated = True
