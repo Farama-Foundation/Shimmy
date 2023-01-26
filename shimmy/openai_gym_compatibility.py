@@ -40,7 +40,14 @@ else:
 
 
 class GymV26CompatibilityV0(gymnasium.Env[ObsType, ActType]):
-    """Converts a Gym v26 environment to a Gymnasium environment."""
+    """This compatibility layer converts a Gym v26 environment to a Gymnasium environment.
+
+    Gym is the original open source Python library for developing and comparing reinforcement learning algorithms
+    by providing a standard API to communicate between learning algorithms and environments, as well as a
+    standard set of environments compliant with that API.
+    Since its release, Gym's API has become the field standard for doing this.
+    In 2022, the team that has been maintaining Gym has moved all future development to Gymnasium.
+    """
 
     def __init__(
         self,

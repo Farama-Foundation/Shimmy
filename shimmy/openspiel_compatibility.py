@@ -13,7 +13,14 @@ from pettingzoo.utils.env import AgentID
 
 
 class OpenspielCompatibilityV0(pz.AECEnv):
-    """Wrapper that converts an openspiel environment into a pettingzoo environment."""
+    """This compatibility wrapper that converts an openspiel environment into a pettingzoo environment.
+
+    OpenSpiel is a collection of environments and algorithms for research in general reinforcement learning
+    and search/planning in games. OpenSpiel supports n-player (single- and multi- agent) zero-sum,
+    cooperative and general-sum, one-shot and sequential, strictly turn-taking and simultaneous-move,
+    perfect and imperfect information games, as well as traditional multiagent environments such as
+    (partially- and fully- observable) grid worlds and social dilemmas.
+    """
 
     metadata = {"render_modes": []}
 
