@@ -228,7 +228,8 @@ If you use this in your research, please cite:
   url = {http://github.com/Farama-Foundation/Shimmy},
   version = {0.2.0},
   year = {2022},
-}```
+}
+```
 
 ```{toctree}
 :hidden:
