@@ -1,5 +1,17 @@
 ## OpenAI Gym
 
+### Installation
+```
+pip install shimmy[gym]
+```
+
+### Usage
+```python
+import gymnasium as gym
+
+env = gym.make("GymV22CompatibilityV0", env_name="...")
+```
+
 ### Class Description
 ```{eval-rst}
 .. autoclass:: shimmy.openai_gym_compatibility.GymV26CompatibilityV0
