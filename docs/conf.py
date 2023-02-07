@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 
 # -- General configuration ---------------------------------------------------
 
+# organize functions by source order
 autodoc_member_order = "bysource"
 
 # Add any Sphinx extension module names here, as strings. They can be
