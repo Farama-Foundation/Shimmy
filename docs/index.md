@@ -49,7 +49,17 @@ Out of the box, Shimmy doesn't install any of the dependencies required for the 
 To install them, you'll have to install the optional extras.
 All single agent environments have registration under the Gymnasium API, while all multiagent environments must be wrapped using the corresponding compatibility wrappers.
 
-penAI Gym
+### For Developers and Testing Only
+```
+pip install shimmy[testing]
+```
+
+### To just install everything
+```
+pip install shimmy[all, testing]
+```
+
+### OpenAI Gym
 
 #### Installation
 ```
@@ -84,6 +94,13 @@ env = gym.make("ALE/Pong-v5")
 pip install shimmy[dm-control]
 ```
 
+#### Usage (Single agent)
+```python
+import gymnasium as gym
+
+env = gym.make("dm_control/acrobot_swingup_sparse-v0")
+```
+
 #### Usage (Multi agent)
 ```python
 from dm_control.locomotion import soccer as dm_soccer
@@ -103,13 +120,6 @@ env = dm_soccer.load(
 )
 
 env = DmControlMultiAgentCompatibilityV0(env)
-```
-
-#### Usage (Single agent)
-```python
-import gymnasium as gym
-
-env = gym.make("dm_control/acrobot_swingup_sparse-v0")
 ```
 
 ### DM Lab
@@ -159,16 +169,6 @@ renderer = "hardware"
 
 env = deepmind_lab.Lab("lt_chasm", observations, config=config, renderer=renderer)
 env = DmLabCompatibilityV0(env)
-```
-
-### For Developers and Testing Only
-```
-pip install shimmy[testing]
-```
-
-### To just install everything
-```
-pip install shimmy[all, testing]
 ```
 
 ### OpenSpiel

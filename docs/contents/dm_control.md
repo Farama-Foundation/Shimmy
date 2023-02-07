@@ -1,4 +1,17 @@
-## DM Control (both single and multiagent environments)
+## dm-control (single agent)
+
+
+### Installation
+```
+pip install shimmy[dm-control]
+```
+
+### Usage (Single agent)
+```python
+import gymnasium as gym
+
+env = gym.make("dm_control/acrobot_swingup_sparse-v0")
+```
 
 ### Class Description
 
