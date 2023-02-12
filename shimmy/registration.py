@@ -249,7 +249,7 @@ def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
     with warnings.catch_warnings():
         # Suppress the warning for gymnasium 0.27.1
-        warnings.filterwarnings("ignore", message=".* Overriding environment .* already in registry.")
+        warnings.filterwarnings("ignore", message=".* Overriding environment Gym.* already in registry.")
         register(
             "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
         )
