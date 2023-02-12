@@ -15,6 +15,7 @@ from shimmy.utils.envs_configs import (
     LEGACY_ATARI_GAMES,
 )
 
+import warnings
 
 def _register_dm_control_envs():
     """Registers all dm-control environments in gymnasium."""
@@ -246,12 +247,15 @@ def _register_dm_lab():
 
 def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
-    register(
-        "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
-    )
-    register(
-        "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
-    )
+    with warnings.catch_warnings():
+        # Suppress the warning for gymnasium 0.27.1
+        warnings.filterwarnings("ignore", message=".* Overriding environment .* already in registry.")
+        register(
+            "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
+        )
+        register(
+            "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
+        )
 
     _register_dm_control_envs()
     _register_atari_envs()
