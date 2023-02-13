@@ -1,6 +1,7 @@
 """Registers environments within gymnasium for optional modules."""
 from __future__ import annotations
 
+import warnings
 from collections import defaultdict
 from functools import partial
 from typing import Any, Callable, Mapping, NamedTuple, Sequence
@@ -15,7 +16,6 @@ from shimmy.utils.envs_configs import (
     LEGACY_ATARI_GAMES,
 )
 
-import warnings
 
 def _register_dm_control_envs():
     """Registers all dm-control environments in gymnasium."""
@@ -249,12 +249,16 @@ def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
     with warnings.catch_warnings():
         # Suppress the warning for gymnasium 0.27.1
-        warnings.filterwarnings("ignore", message=".* Overriding environment Gym.* already in registry.")
-        register(
-            "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
+        warnings.filterwarnings(
+            "ignore", message=".* Overriding environment Gym.* already in registry."
         )
         register(
-            "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
+            "GymV26Environment-v0",
+            "shimmy.openai_gym_compatibility:GymV26CompatibilityV0",
+        )
+        register(
+            "GymV22Environment-v0",
+            "shimmy.openai_gym_compatibility:GymV22CompatibilityV0",
         )
 
     _register_dm_control_envs()
