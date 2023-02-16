@@ -168,6 +168,8 @@ def test_dm_control_wrappers(
         if warning_message.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS:
             raise Error(f"Unexpected warning: {warning_message.message}")
 
-    env = gym.make("dm_control/compatibility-env-v0", env=wrapped_env, disable_env_checker=True)
+    env = gym.make(
+        "dm_control/compatibility-env-v0", env=wrapped_env, disable_env_checker=True
+    )
     check_env(env.unwrapped, skip_render_check=True)
     env.close()
