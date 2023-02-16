@@ -7,7 +7,6 @@ import gymnasium as gym
 import numpy as np
 import pytest
 from dm_control import composer
-from dm_control.locomotion.examples.basic_cmu_2019 import cmu_humanoid_run_walls
 from dm_control.suite.wrappers import (
     action_noise,
     action_scale,
@@ -64,7 +63,7 @@ CHECK_ENV_IGNORE_WARNINGS.append(
 @pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS)
 def test_check_env(env_id):
     """Check that environment pass the gymnasium check_env."""
-    env = gym.make(env_id)
+    env = gym.make(env_id, disable_env_checker=True)
 
     with warnings.catch_warnings(record=True) as caught_warnings:
         check_env(env.unwrapped)
@@ -169,6 +168,8 @@ def test_dm_control_wrappers(
         if warning_message.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS:
             raise Error(f"Unexpected warning: {warning_message.message}")
 
-    env = gym.make("dm_control/compatibility-env-v0", env=wrapped_env)
-    check_env(env, skip_render_check=True)
+    env = gym.make(
+        "dm_control/compatibility-env-v0", env=wrapped_env, disable_env_checker=True
+    )
+    check_env(env.unwrapped, skip_render_check=True)
     env.close()

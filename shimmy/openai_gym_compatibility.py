@@ -9,6 +9,7 @@ import gymnasium
 from gymnasium import error
 from gymnasium.core import ActType, ObsType
 from gymnasium.error import MissingArgument
+from gymnasium.logger import warn
 from gymnasium.spaces import (
     Box,
     Dict,
@@ -135,8 +136,8 @@ class GymV26CompatibilityV0(gymnasium.Env[ObsType, ActType]):
 
 
 @runtime_checkable
-class LegacyV22Env(Protocol):
-    """A protocol for openai gym v22 environment."""
+class LegacyV21Env(Protocol):
+    """A protocol for OpenAI Gym v0.21 environment."""
 
     observation_space: gym.Space
     action_space: gym.Space
@@ -162,7 +163,7 @@ class LegacyV22Env(Protocol):
         ...
 
 
-class GymV22CompatibilityV0(gymnasium.Env[ObsType, ActType]):
+class GymV21CompatibilityV0(gymnasium.Env[ObsType, ActType]):
     r"""A wrapper which can transform an environment from the old API to the new API.
 
     Old step API refers to step() method returning (observation, reward, done, info), and reset() only retuning the observation.
@@ -210,7 +211,7 @@ class GymV22CompatibilityV0(gymnasium.Env[ObsType, ActType]):
         self.reward_range = getattr(gym_env, "reward_range", None)
         self.spec = getattr(gym_env, "spec", None)
 
-        self.gym_env: LegacyV22Env = gym_env
+        self.gym_env: LegacyV21Env = gym_env
 
     def __getattr__(self, item: str):
         """Gets an attribute that only exists in the base environments."""
@@ -230,7 +231,12 @@ class GymV22CompatibilityV0(gymnasium.Env[ObsType, ActType]):
         """
         if seed is not None:
             self.gym_env.seed(seed)
-        # Options are ignored
+
+        # Options are ignored - https://github.com/openai/gym/blob/c755d5c35a25ab118746e2ba885894ff66fb8c43/gym/core.py
+        if options is not None:
+            warn(
+                f"Gym v21 environment do not accept options as a reset parameter, options={options}"
+            )
 
         if self.render_mode == "human":
             self.render()
@@ -248,7 +254,7 @@ class GymV22CompatibilityV0(gymnasium.Env[ObsType, ActType]):
         """
         obs, reward, done, info = self.gym_env.step(action)
 
-        if self.render_mode == "human":
+        if self.render_mode is not None:
             self.render()
 
         return convert_to_terminated_truncated_step_api((obs, reward, done, info))
