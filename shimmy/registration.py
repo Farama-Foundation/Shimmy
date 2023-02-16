@@ -7,7 +7,7 @@ from typing import Any, Callable, Mapping, NamedTuple, Sequence
 
 import gymnasium
 import numpy as np
-from gymnasium.envs.registration import register
+from gymnasium.envs.registration import register, registry
 
 from shimmy.utils.envs_configs import (
     ALL_ATARI_GAMES,
@@ -247,14 +247,14 @@ def _register_dm_lab():
 
 def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
-    if "GymV26Environment-v0" in gymnasium.envs.registration.registry:
-        gymnasium.envs.registration.registry.pop("GymV26Environment-v0")
+    if "GymV26Environment-v0" in registry:
+        registry.pop("GymV26Environment-v0")
     register(
         id="GymV26Environment-v0",
         entry_point="shimmy.openai_gym_compatibility:GymV26CompatibilityV0",
     )
-    if "GymV21Environment-v0" in gymnasium.envs.registration.registry:
-        gymnasium.envs.registration.registry.pop("GymV21Environment-v0")
+    if "GymV21Environment-v0" not in registry:
+        registry.pop("GymV21Environment-v0")
     register(
         id="GymV21Environment-v0",
         entry_point="shimmy.openai_gym_compatibility:GymV21CompatibilityV0",
