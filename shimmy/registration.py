@@ -253,7 +253,7 @@ def register_gymnasium_envs():
         id="GymV26Environment-v0",
         entry_point="shimmy.openai_gym_compatibility:GymV26CompatibilityV0",
     )
-    if "GymV21Environment-v0" not in registry:
+    if "GymV21Environment-v0" in registry:
         registry.pop("GymV21Environment-v0")
     register(
         id="GymV21Environment-v0",
