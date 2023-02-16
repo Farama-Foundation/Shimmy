@@ -8,7 +8,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/open_spiel.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Lab" href="../dm_lab/" /><link rel="prev" title="DM Control (both single and multiagent environments)" href="../dm_control/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Lab" href="../dm_lab/" /><link rel="prev" title="dm-control soccer (multi-agent)" href="../dm_multi/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/open_spiel.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><meta name="generator" content="sphinx-5.2.3, furo 2022.09.15.dev1"/>
@@ -226,7 +226,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control (both single and multiagent environments)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_control/">dm-control (single agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_multi/">dm-control soccer (multi-agent)</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">OpenSpiel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
 </ul>
@@ -321,46 +322,14 @@ and search/planning in games. OpenSpiel supports n-player (single- and multi- ag
 cooperative and general-sum, one-shot and sequential, strictly turn-taking and simultaneous-move,
 perfect and imperfect information games, as well as traditional multiagent environments such as
 (partially- and fully- observable) grid worlds and social dilemmas.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_space">
-<span class="sig-name descname"><span class="pre">action_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
-<dd><p>action_space.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>AgentID</em>) – agent</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_spaces">
-<span class="sig-name descname"><span class="pre">action_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_spaces" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agent_selection">
-<span class="sig-name descname"><span class="pre">agent_selection</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AgentID</span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agent_selection" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agents">
-<span class="sig-name descname"><span class="pre">agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agents" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.close" title="Permalink to this definition">#</a></dt>
-<dd><p>close.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.infos">
-<span class="sig-name descname"><span class="pre">infos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.infos" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.metadata">
 <span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_modes':</span> <span class="pre">[]}</span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.possible_agents">
+<span class="sig-name descname"><span class="pre">possible_agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.possible_agents" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -385,10 +354,22 @@ This wrapper chooses which one to use depending on the following precedence:</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observation_spaces">
-<span class="sig-name descname"><span class="pre">observation_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observation_spaces" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_space">
+<span class="sig-name descname"><span class="pre">action_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
+<dd><p>action_space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agent</strong> (<em>AgentID</em>) – agent</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
+<dd><p>render.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observe">
@@ -401,15 +382,10 @@ This wrapper chooses which one to use depending on the following precedence:</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.possible_agents">
-<span class="sig-name descname"><span class="pre">possible_agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.possible_agents" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
-<dd><p>render.</p>
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.close" title="Permalink to this definition">#</a></dt>
+<dd><p>close.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -427,11 +403,6 @@ This wrapper chooses which one to use depending on the following precedence:</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.rewards">
-<span class="sig-name descname"><span class="pre">rewards</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.rewards" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.step">
 <span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.step" title="Permalink to this definition">#</a></dt>
@@ -444,6 +415,21 @@ This wrapper chooses which one to use depending on the following precedence:</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agents">
+<span class="sig-name descname"><span class="pre">agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agents" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observation_spaces">
+<span class="sig-name descname"><span class="pre">observation_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observation_spaces" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_spaces">
+<span class="sig-name descname"><span class="pre">action_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_spaces" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.terminations">
 <span class="sig-name descname"><span class="pre">terminations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.terminations" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -451,6 +437,21 @@ This wrapper chooses which one to use depending on the following precedence:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.truncations">
 <span class="sig-name descname"><span class="pre">truncations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.truncations" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.rewards">
+<span class="sig-name descname"><span class="pre">rewards</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.rewards" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.infos">
+<span class="sig-name descname"><span class="pre">infos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.infos" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agent_selection">
+<span class="sig-name descname"><span class="pre">agent_selection</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AgentID</span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agent_selection" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -474,7 +475,7 @@ This wrapper chooses which one to use depending on the following precedence:</p>
                 <use href="#svg-arrow-right"></use>
               </svg>
             </a>
-            <a class="prev-page" href="../dm_control/">
+            <a class="prev-page" href="../dm_multi/">
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
               </svg>
@@ -483,7 +484,7 @@ This wrapper chooses which one to use depending on the following precedence:</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">DM Control (both single and multiagent environments)</div>
+                <div class="title">dm-control soccer (multi-agent)</div>
                 
               </div>
             </a>
@@ -532,23 +533,23 @@ This wrapper chooses which one to use depending on the following precedence:</p>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>
 <li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0</span></code></a><ul>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.action_space()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_spaces"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.action_spaces</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agent_selection"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.agent_selection</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agents"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.agents</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.close()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.infos"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.infos</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.metadata</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.observation_space()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observation_spaces"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.observation_spaces</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observe"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.observe()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.possible_agents"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.possible_agents</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.observation_space()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.action_space()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.render()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observe"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.observe()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.close()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.reset"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.reset()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.rewards"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.rewards</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.step"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.step()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agents"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.agents</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.observation_spaces"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.observation_spaces</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.action_spaces"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.action_spaces</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.terminations"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.terminations</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.truncations"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.truncations</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.rewards"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.rewards</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.infos"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.infos</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenspielCompatibilityV0.agent_selection"><code class="docutils literal notranslate"><span class="pre">OpenspielCompatibilityV0.agent_selection</span></code></a></li>
 </ul>
 </li>
 </ul>

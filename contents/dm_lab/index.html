@@ -226,7 +226,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control (both single and multiagent environments)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_control/">dm-control (single agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_multi/">dm-control soccer (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">DM Lab</a></li>
 </ul>
@@ -353,17 +354,6 @@ other open source software. DeepMind Lab provides a suite of challenging 3D navi
 puzzle-solving tasks for learning agents.
 Its primary purpose is to act as a testbed for research in artificial intelligence, especially deep reinforcement learning.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.action_space">
-<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.close" title="Permalink to this definition">#</a></dt>
-<dd><p>Closes the environment.</p>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.metadata">
 <span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_fps':</span> <span class="pre">10,</span> <span class="pre">'render_modes':</span> <span class="pre">[]}</span></em><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -373,11 +363,10 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
 <span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.observation_space" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
-<dd><p>Renders the dm_lab env.</p>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.action_space">
+<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.reset">
@@ -389,6 +378,18 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
 <dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.step">
 <span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.step" title="Permalink to this definition">#</a></dt>
 <dd><p>Steps through the dm-lab environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
+<dd><p>Renders the dm_lab env.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.close" title="Permalink to this definition">#</a></dt>
+<dd><p>Closes the environment.</p>
 </dd></dl>
 
 </dd></dl>
@@ -448,13 +449,13 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>
 <li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0</span></code></a><ul>
-<li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.action_space</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.close()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.metadata</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.observation_space</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.render()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.action_space</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.reset"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.reset()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.step"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.step()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.render()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.close()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -8,7 +8,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/atari.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Control (both single and multiagent environments)" href="../dm_control/" /><link rel="prev" title="OpenAI Gym" href="../gym/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="dm-control (single agent)" href="../dm_control/" /><link rel="prev" title="OpenAI Gym" href="../gym/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/atari.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><meta name="generator" content="sphinx-5.2.3, furo 2022.09.15.dev1"/>
@@ -226,7 +226,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Atari Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control (both single and multiagent environments)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_control/">dm-control (single agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_multi/">dm-control soccer (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
 </ul>
@@ -316,57 +317,13 @@
 <dd><p>(A)rcade (L)earning (Gymnasium) (Env)ironment.</p>
 <p>A Gymnasium wrapper around the Arcade Learning Environment (ALE).</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.action_space">
-<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.atari_env.AtariEnv.action_space" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.clone_full_state">
-<span class="sig-name descname"><span class="pre">clone_full_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ALEState</span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.clone_full_state" title="Permalink to this definition">#</a></dt>
-<dd><p>Deprecated method which would clone the emulator and system state.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.clone_state">
-<span class="sig-name descname"><span class="pre">clone_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ALEState</span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.clone_state" title="Permalink to this definition">#</a></dt>
-<dd><p>Clone emulator state w/o system state.</p>
-<p>Restoring this state will <em>not</em> give an identical environment.
-For complete cloning and restoring of the full state, see <cite>{clone,restore}_full_state()</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>include_rng</strong> – If to include the rng in the cloned state</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>The cloned state</strong></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.get_action_meanings">
-<span class="sig-name descname"><span class="pre">get_action_meanings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.get_action_meanings" title="Permalink to this definition">#</a></dt>
-<dd><p>Return the meaning of each integer action.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>A list of action meaning</strong></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.get_keys_to_action">
-<span class="sig-name descname"><span class="pre">get_keys_to_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ale_py.Action</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.get_keys_to_action" title="Permalink to this definition">#</a></dt>
-<dd><p>Return keymapping -&gt; actions for human play.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>A dictionary of keys to actions.</strong></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.metadata">
 <span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'obs_types':</span> <span class="pre">{'grayscale',</span> <span class="pre">'ram',</span> <span class="pre">'rgb'},</span> <span class="pre">'render_modes':</span> <span class="pre">['human',</span> <span class="pre">'rgb_array']}</span></em><a class="headerlink" href="#shimmy.atari_env.AtariEnv.metadata" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.action_space">
+<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.atari_env.AtariEnv.action_space" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -375,12 +332,18 @@ For complete cloning and restoring of the full state, see <cite>{clone,restore}_
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.render" title="Permalink to this definition">#</a></dt>
-<dd><p>Renders the ALE environment.</p>
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.seed" title="Permalink to this definition">#</a></dt>
+<dd><p>Seeds both the internal numpy rng for stochastic frame skip and the ALE RNG.</p>
+<p>This function must also initialize the ROM and set the corresponding
+mode and difficulty. <cite>seed</cite> may be called to initialize the environment
+during deserialization by Gymnasium so these side-effects must reside here.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>If render_mode is “rgb_array”, returns the screen RGB view.</strong></p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> – int =&gt; Manually set the seed for RNG.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>tuple[int, int] =&gt;</strong> (<em>np seed, ALE seed</em>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -403,9 +366,67 @@ For complete cloning and restoring of the full state, see <cite>{clone,restore}_
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.restore_full_state">
-<span class="sig-name descname"><span class="pre">restore_full_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ALEState</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.restore_full_state" title="Permalink to this definition">#</a></dt>
-<dd><p>Restore emulator state w/ system state including pseudo-randomness.</p>
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_ind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AtariEnvStepMetadata</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.step" title="Permalink to this definition">#</a></dt>
+<dd><p>Perform one agent step, i.e., repeats <cite>action</cite> frameskip # of steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>action_ind</strong> – int =&gt; Action index to execute</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Tuple[np.ndarray, float, bool, Dict[str, Any]] =&gt; observation, reward, terminal, metadata</strong></p>
+</dd>
+</dl>
+<p>Note: <cite>metadata</cite> contains the keys “lives” and “rgb” if render_mode == ‘rgb_array’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.render" title="Permalink to this definition">#</a></dt>
+<dd><p>Renders the ALE environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>If render_mode is “rgb_array”, returns the screen RGB view.</strong></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.get_keys_to_action">
+<span class="sig-name descname"><span class="pre">get_keys_to_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ale_py.Action</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.get_keys_to_action" title="Permalink to this definition">#</a></dt>
+<dd><p>Return keymapping -&gt; actions for human play.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>A dictionary of keys to actions.</strong></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.get_action_meanings">
+<span class="sig-name descname"><span class="pre">get_action_meanings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.get_action_meanings" title="Permalink to this definition">#</a></dt>
+<dd><p>Return the meaning of each integer action.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>A list of action meaning</strong></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.clone_state">
+<span class="sig-name descname"><span class="pre">clone_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ALEState</span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.clone_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Clone emulator state w/o system state.</p>
+<p>Restoring this state will <em>not</em> give an identical environment.
+For complete cloning and restoring of the full state, see <cite>{clone,restore}_full_state()</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>include_rng</strong> – If to include the rng in the cloned state</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>The cloned state</strong></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -420,35 +441,15 @@ For complete cloning and restoring of the full state, see <cite>{clone,restore}_
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.seed">
-<span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.seed" title="Permalink to this definition">#</a></dt>
-<dd><p>Seeds both the internal numpy rng for stochastic frame skip and the ALE RNG.</p>
-<p>This function must also initialize the ROM and set the corresponding
-mode and difficulty. <cite>seed</cite> may be called to initialize the environment
-during deserialization by Gymnasium so these side-effects must reside here.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>seed</strong> – int =&gt; Manually set the seed for RNG.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>tuple[int, int] =&gt;</strong> (<em>np seed, ALE seed</em>)</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.clone_full_state">
+<span class="sig-name descname"><span class="pre">clone_full_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ALEState</span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.clone_full_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Deprecated method which would clone the emulator and system state.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_ind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">AtariEnvStepMetadata</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.step" title="Permalink to this definition">#</a></dt>
-<dd><p>Perform one agent step, i.e., repeats <cite>action</cite> frameskip # of steps.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>action_ind</strong> – int =&gt; Action index to execute</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>Tuple[np.ndarray, float, bool, Dict[str, Any]] =&gt; observation, reward, terminal, metadata</strong></p>
-</dd>
-</dl>
-<p>Note: <cite>metadata</cite> contains the keys “lives” and “rgb” if render_mode == ‘rgb_array’.</p>
+<dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.restore_full_state">
+<span class="sig-name descname"><span class="pre">restore_full_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ALEState</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.atari_env.AtariEnv.restore_full_state" title="Permalink to this definition">#</a></dt>
+<dd><p>Restore emulator state w/ system state including pseudo-randomness.</p>
 </dd></dl>
 
 </dd></dl>
@@ -466,7 +467,7 @@ during deserialization by Gymnasium so these side-effects must reside here.</p>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">DM Control (both single and multiagent environments)</div>
+                <div class="title">dm-control (single agent)</div>
               </div>
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
@@ -530,19 +531,19 @@ during deserialization by Gymnasium so these side-effects must reside here.</p>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>
 <li><a class="reference internal" href="#shimmy.atari_env.AtariEnv"><code class="docutils literal notranslate"><span class="pre">AtariEnv</span></code></a><ul>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.action_space"><code class="docutils literal notranslate"><span class="pre">AtariEnv.action_space</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.clone_full_state"><code class="docutils literal notranslate"><span class="pre">AtariEnv.clone_full_state()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.clone_state"><code class="docutils literal notranslate"><span class="pre">AtariEnv.clone_state()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.get_action_meanings"><code class="docutils literal notranslate"><span class="pre">AtariEnv.get_action_meanings()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.get_keys_to_action"><code class="docutils literal notranslate"><span class="pre">AtariEnv.get_keys_to_action()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.metadata"><code class="docutils literal notranslate"><span class="pre">AtariEnv.metadata</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.action_space"><code class="docutils literal notranslate"><span class="pre">AtariEnv.action_space</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.observation_space"><code class="docutils literal notranslate"><span class="pre">AtariEnv.observation_space</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.render"><code class="docutils literal notranslate"><span class="pre">AtariEnv.render()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.reset"><code class="docutils literal notranslate"><span class="pre">AtariEnv.reset()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.restore_full_state"><code class="docutils literal notranslate"><span class="pre">AtariEnv.restore_full_state()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.restore_state"><code class="docutils literal notranslate"><span class="pre">AtariEnv.restore_state()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.seed"><code class="docutils literal notranslate"><span class="pre">AtariEnv.seed()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.reset"><code class="docutils literal notranslate"><span class="pre">AtariEnv.reset()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.step"><code class="docutils literal notranslate"><span class="pre">AtariEnv.step()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.render"><code class="docutils literal notranslate"><span class="pre">AtariEnv.render()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.get_keys_to_action"><code class="docutils literal notranslate"><span class="pre">AtariEnv.get_keys_to_action()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.get_action_meanings"><code class="docutils literal notranslate"><span class="pre">AtariEnv.get_action_meanings()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.clone_state"><code class="docutils literal notranslate"><span class="pre">AtariEnv.clone_state()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.restore_state"><code class="docutils literal notranslate"><span class="pre">AtariEnv.restore_state()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.clone_full_state"><code class="docutils literal notranslate"><span class="pre">AtariEnv.clone_full_state()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.atari_env.AtariEnv.restore_full_state"><code class="docutils literal notranslate"><span class="pre">AtariEnv.restore_full_state()</span></code></a></li>
 </ul>
 </li>
 </ul>

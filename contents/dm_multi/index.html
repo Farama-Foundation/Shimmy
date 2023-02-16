@@ -7,12 +7,12 @@
     <meta property="og:title" content="Shimmy Documentation" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
-    <meta property="og:url" content="https://shimmy.farama.org/contents/gym.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Atari Environments" href="../atari/" /><link rel="prev" title="&lt;no title&gt;" href="../" />
-        <link rel="canonical" href="https://shimmy.farama.org/contents/gym.html" />
+    <meta property="og:url" content="https://shimmy.farama.org/contents/dm_multi.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="OpenSpiel" href="../open_spiel/" /><link rel="prev" title="dm-control (single agent)" href="../dm_control/" />
+        <link rel="canonical" href="https://shimmy.farama.org/contents/dm_multi.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><meta name="generator" content="sphinx-5.2.3, furo 2022.09.15.dev1"/>
-        <title>OpenAI Gym - Shimmy Documentation</title>
+        <title>dm-control soccer (multi-agent) - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=c36209c3579494d5f9512671edd8cd731f7c406c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=57f753f2a36df4cd87bf0e4232aabc9b3cc73912" />
@@ -224,10 +224,10 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">OpenAI Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_control/">dm-control (single agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_multi/">dm-control soccer (multi-agent)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">dm-control soccer (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
 </ul>
@@ -262,7 +262,7 @@
             
     
     <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Farama-Foundation/Shimmy/edit/main/docs/contents/gym.md" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Farama-Foundation/Shimmy/edit/main/docs/contents/dm_multi.md" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -293,119 +293,105 @@
           </div>
           <article role="main">
             
-            <section id="openai-gym">
-<h1>OpenAI Gym<a class="headerlink" href="#openai-gym" title="Permalink to this heading">#</a></h1>
+            <section id="dm-control-soccer-multi-agent">
+<h1>dm-control soccer (multi-agent)<a class="headerlink" href="#dm-control-soccer-multi-agent" title="Permalink to this heading">#</a></h1>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">gym</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">dm</span><span class="o">-</span><span class="n">control</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
-<section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
+<section id="usage-multi-agent">
+<h2>Usage (Multi agent)<a class="headerlink" href="#usage-multi-agent" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dm_control.locomotion</span> <span class="kn">import</span> <span class="n">soccer</span> <span class="k">as</span> <span class="n">dm_soccer</span>
+<span class="kn">from</span> <span class="nn">shimmy.dm_control_multiagent_compatibility</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DmControlMultiAgentCompatibilityV0</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;GymV22CompatibilityV0&quot;</span><span class="p">,</span> <span class="n">env_name</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="n">walker_type</span> <span class="o">=</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">WalkerType</span><span class="o">.</span><span class="n">BOXHEAD</span><span class="p">,</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+    <span class="n">team_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">time_limit</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">disable_walker_contacts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">enable_field_box</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">terminate_on_goal</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">walker_type</span><span class="o">=</span><span class="n">walker_type</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">DmControlMultiAgentCompatibilityV0</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="class-description">
 <h2>Class Description<a class="headerlink" href="#class-description" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV26CompatibilityV0">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.openai_gym_compatibility.</span></span><span class="sig-name descname"><span class="pre">GymV26CompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gym.Env</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0" title="Permalink to this definition">#</a></dt>
-<dd><p>This compatibility layer converts a Gym v26 environment to a Gymnasium environment.</p>
-<p>Gym is the original open source Python library for developing and comparing reinforcement learning algorithms
-by providing a standard API to communicate between learning algorithms and environments, as well as a
-standard set of environments compliant with that API.
-Since its release, Gym’s API has become the field standard for doing this.
-In 2022, the team that has been maintaining Gym has moved all future development to Gymnasium.</p>
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.dm_control_multiagent_compatibility.</span></span><span class="sig-name descname"><span class="pre">DmControlMultiAgentCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dm_control.composer.Environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0" title="Permalink to this definition">#</a></dt>
+<dd><p>This compatibility wrapper converts multi-agent dm-control environments, primarily soccer, into a Pettingzoo environment.</p>
+<p>Dm-control is DeepMind’s software stack for physics-based simulation and Reinforcement Learning environments,
+using MuJoCo physics. This compatibility wrapper converts a dm-control environment into a gymnasium environment.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV26CompatibilityV0.observation_space">
-<span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.observation_space" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_modes':</span> <span class="pre">['human']}</span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV26CompatibilityV0.action_space">
-<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.possible_agents">
+<span class="sig-name descname"><span class="pre">possible_agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.possible_agents" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV26CompatibilityV0.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.reset" title="Permalink to this definition">#</a></dt>
-<dd><p>Resets the environment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>seed</strong> – the seed to reset the environment with</p></li>
-<li><p><strong>options</strong> – the options to reset the environment with</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>(observation, info)</strong></p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_space">
+<span class="sig-name descname"><span class="pre">observation_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_space" title="Permalink to this definition">#</a></dt>
+<dd><p>The observation space for agent.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV26CompatibilityV0.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ActType</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.step" title="Permalink to this definition">#</a></dt>
-<dd><p>Steps through the environment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>action</strong> – action to step through the environment with</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>(observation, reward, terminated, truncated, info)</strong></p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_space">
+<span class="sig-name descname"><span class="pre">action_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
+<dd><p>The action space for agent.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV26CompatibilityV0.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.render" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
 <dd><p>Renders the environment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>The rendering of the environment, depending on the render mode</strong></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV26CompatibilityV0.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.close" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.close" title="Permalink to this definition">#</a></dt>
 <dd><p>Closes the environment.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.reset" title="Permalink to this definition">#</a></dt>
+<dd><p>Resets the dm-control environment.</p>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility._strip_default_wrappers">
-<span class="sig-prename descclassname"><span class="pre">shimmy.openai_gym_compatibility.</span></span><span class="sig-name descname"><span class="pre">_strip_default_wrappers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gym.Env</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">gym.Env</span></span></span><a class="headerlink" href="#shimmy.openai_gym_compatibility._strip_default_wrappers" title="Permalink to this definition">#</a></dt>
-<dd><p>Strips builtin wrappers from the environment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>env</strong> – the environment to strip builtin wrappers from</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>The environment without builtin wrappers</strong></p>
-</dd>
-</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step" title="Permalink to this definition">#</a></dt>
+<dd><p>Steps through all agents with the actions.</p>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="shimmy.openai_gym_compatibility._convert_space">
-<span class="sig-prename descclassname"><span class="pre">shimmy.openai_gym_compatibility.</span></span><span class="sig-name descname"><span class="pre">_convert_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gym.Space</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">gymnasium.Space</span></span></span><a class="headerlink" href="#shimmy.openai_gym_compatibility._convert_space" title="Permalink to this definition">#</a></dt>
-<dd><p>Converts a gym space to a gymnasium space.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>space</strong> – the space to convert</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>The converted space</strong></p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.agents">
+<span class="sig-name descname"><span class="pre">agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.agents" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_spaces">
+<span class="sig-name descname"><span class="pre">observation_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_spaces" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_spaces">
+<span class="sig-name descname"><span class="pre">action_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_spaces" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -416,18 +402,18 @@ In 2022, the team that has been maintaining Gym has moved all future development
         <footer>
           
           <div class="related-pages">
-            <a class="next-page" href="../atari/">
+            <a class="next-page" href="../open_spiel/">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Atari Environments</div>
+                <div class="title">OpenSpiel</div>
               </div>
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
               </svg>
             </a>
-            <a class="prev-page" href="../">
+            <a class="prev-page" href="../dm_control/">
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
               </svg>
@@ -436,7 +422,7 @@ In 2022, the team that has been maintaining Gym has moved all future development
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">&lt;no title&gt;</div>
+                <div class="title">dm-control (single agent)</div>
                 
               </div>
             </a>
@@ -480,21 +466,24 @@ In 2022, the team that has been maintaining Gym has moved all future development
           <div class="toc-tree-container">
             <div class="toc-tree">
               <ul>
-<li><a class="reference internal" href="#">OpenAI Gym</a><ul>
+<li><a class="reference internal" href="#">dm-control soccer (multi-agent)</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#usage-multi-agent">Usage (Multi agent)</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0"><code class="docutils literal notranslate"><span class="pre">GymV26CompatibilityV0</span></code></a><ul>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">GymV26CompatibilityV0.observation_space</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">GymV26CompatibilityV0.action_space</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.reset"><code class="docutils literal notranslate"><span class="pre">GymV26CompatibilityV0.reset()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.step"><code class="docutils literal notranslate"><span class="pre">GymV26CompatibilityV0.step()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">GymV26CompatibilityV0.render()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">GymV26CompatibilityV0.close()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0</span></code></a><ul>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.metadata</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.possible_agents"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.possible_agents</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.observation_space()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.action_space()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.render()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.close()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.reset"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.reset()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.step()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.agents"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.agents</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_spaces"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.observation_spaces</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_spaces"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.action_spaces</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility._strip_default_wrappers"><code class="docutils literal notranslate"><span class="pre">_strip_default_wrappers()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openai_gym_compatibility._convert_space"><code class="docutils literal notranslate"><span class="pre">_convert_space()</span></code></a></li>
 </ul>
 </li>
 </ul>
