@@ -28,6 +28,7 @@ DM_CONTROL_SUITE_ENVS = (
     ("humanoid", "run"),
     ("humanoid", "run_pure_state"),
     ("humanoid_CMU", "stand"),
+    ('humanoid_CMU', 'walk'),
     ("humanoid_CMU", "run"),
     ("lqr", "lqr_2_1"),
     ("lqr", "lqr_6_2"),
