@@ -5,7 +5,6 @@ from collections import defaultdict
 from functools import partial
 from typing import Any, Callable, Mapping, NamedTuple, Sequence
 
-import gymnasium
 import numpy as np
 from gymnasium.envs.registration import register, registry
 

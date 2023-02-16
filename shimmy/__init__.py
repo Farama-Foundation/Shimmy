@@ -6,7 +6,7 @@ from typing import Any
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 from shimmy.openai_gym_compatibility import GymV21CompatibilityV0, GymV26CompatibilityV0
 
-__version__ = "0.3.0"
+__version__ = "0.2.1"
 
 
 class NotInstallClass:
