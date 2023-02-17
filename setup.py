@@ -33,7 +33,7 @@ version = get_version()
 header_count, long_description = get_description()
 
 extras = {
-    "gym": ["gym>=0.26"],
+    "gym": ["gym>=0.21"],
     "atari": ["ale-py~=0.8.1"],
     # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
     "dm-control": ["dm-control>=1.0.10", "imageio", "h5py>=3.7.0"],

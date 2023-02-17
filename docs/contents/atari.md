@@ -1,5 +1,6 @@
 ## Atari Environments
 
+
 ### Installation
 ```
 pip install shimmy[atari]

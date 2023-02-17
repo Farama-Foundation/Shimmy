@@ -6,7 +6,7 @@ from functools import partial
 from typing import Any, Callable, Mapping, NamedTuple, Sequence
 
 import numpy as np
-from gymnasium.envs.registration import register
+from gymnasium.envs.registration import register, registry
 
 from shimmy.utils.envs_configs import (
     ALL_ATARI_GAMES,
@@ -241,16 +241,22 @@ def _register_dm_lab():
         env = deepmind_lab.Lab(env_id, observations, config=config, renderer=renderer)
         return DmLabCompatibilityV0(env)
 
-    register("DmLabCompatibility-v0", _make_dm_lab_env)
+    register(id="DmLabCompatibility-v0", entry_point=_make_dm_lab_env)
 
 
 def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
+    if "GymV26Environment-v0" in registry:
+        registry.pop("GymV26Environment-v0")
     register(
-        "GymV26Environment-v0", "shimmy.openai_gym_compatibility:GymV26CompatibilityV0"
+        id="GymV26Environment-v0",
+        entry_point="shimmy.openai_gym_compatibility:GymV26CompatibilityV0",
     )
+    if "GymV21Environment-v0" in registry:
+        registry.pop("GymV21Environment-v0")
     register(
-        "GymV22Environment-v0", "shimmy.openai_gym_compatibility:GymV22CompatibilityV0"
+        id="GymV21Environment-v0",
+        entry_point="shimmy.openai_gym_compatibility:GymV21CompatibilityV0",
     )
 
     _register_dm_control_envs()

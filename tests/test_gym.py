@@ -9,7 +9,7 @@ from gym.spaces import Box as openai_Box
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env
 
-from shimmy import GymV22CompatibilityV0, GymV26CompatibilityV0
+from shimmy import GymV21CompatibilityV0, GymV26CompatibilityV0
 
 CHECK_ENV_IGNORE_WARNINGS = [
     f"\x1b[33mWARN: {message}\x1b[0m"
@@ -89,7 +89,7 @@ class EnvWithData(openai_gym.Env):
 
 def test_compatibility_get_attr():
     """Tests that the compatibility environment works with `__getattr__` for those attributes."""
-    env = GymV22CompatibilityV0(env=EnvWithData())
+    env = GymV21CompatibilityV0(env=EnvWithData())
     assert env.data == 123
     assert env.get_env_data() == 123
     env.close()
