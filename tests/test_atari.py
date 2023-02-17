@@ -35,14 +35,13 @@ CHECK_ENV_IGNORE_WARNINGS = [
     ],
 )
 def test_atari_envs(env_id):
-    """Tests the atari envs, as there are 1000 possible environment, we only test the Pong variants.
-
-    Known environments that fail this test - ALE/TicTacToe3D-v5, ALE/VideoChess-v5, ALE/Videocube-v5 + ram variants.
-    """
+    """Tests the atari envs, as there are 1000 possible environment, we only test the Pong variants."""
     env = gym.make(env_id)
 
     with warnings.catch_warnings(record=True) as caught_warnings:
         check_env(env.unwrapped)
+
+    env.close()
 
     for warning_message in caught_warnings:
         assert isinstance(warning_message.message, Warning)
