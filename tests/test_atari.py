@@ -44,6 +44,8 @@ def test_atari_envs(env_id):
     with warnings.catch_warnings(record=True) as caught_warnings:
         check_env(env.unwrapped)
 
+    env.close()
+
     for warning_message in caught_warnings:
         assert isinstance(warning_message.message, Warning)
         if warning_message.message.args[0] not in CHECK_ENV_IGNORE_WARNINGS:
