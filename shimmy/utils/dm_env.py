@@ -51,7 +51,7 @@ def dm_obs2gym_obs(obs) -> np.ndarray | dict[str, Any]:
         return np.asarray(obs)
 
 
-def dm_control_step2gym_step(
+def dm_env_step2gym_step(
     timestep,
 ) -> tuple[Any, float, bool, bool, dict[str, Any]]:
     """Opens up the timestep to return obs, reward, terminated, truncated, info."""

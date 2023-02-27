@@ -8,7 +8,7 @@ import gymnasium
 import numpy as np
 from gymnasium.core import ObsType
 
-from shimmy.utils.dm_env import dm_control_step2gym_step, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 
 from bsuite.environments import Environment
 
@@ -39,7 +39,7 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
     def reset(
         self, *, seed: int | None = None, options: dict[str, Any] | None = None
     ) -> tuple[ObsType, dict[str, Any]]:
-        """Resets the dm-control environment."""
+        """Resets the bsuite environment."""
         super().reset(seed=seed)
         if seed is not None:
             self.np_random = np.random.RandomState(seed=seed)
@@ -47,17 +47,17 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
 
         timestep = self._env.reset()
 
-        obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
+        obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
         return obs, info  # pyright: ignore[reportGeneralTypeIssues]
 
     def step(
         self, action: int
     ) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
-        """Steps through the dm-control environment."""
+        """Steps through the bsuite environment."""
         timestep = self._env.step(action)
 
-        obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
+        obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
         return (  # pyright: ignore[reportGeneralTypeIssues]
             obs,
@@ -68,7 +68,7 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         )
 
     def render(self) -> np.ndarray | None:
-        """Renders the dm-control env."""
+        """Renders the bsuite env."""
         raise AssertionError("Rendering is not built into BSuite, print the observation instead.")
 
     def close(self):
@@ -81,7 +81,7 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
 
     @property
     def np_random(self) -> np.random.RandomState:
-        """This should be np.random.Generator but dm-control uses np.random.RandomState."""
+        """This should be np.random.Generator but bsuite uses np.random.RandomState."""
         return self._env._rng # pyright: ignore[reportGeneralTypeIssues]
 
     @np_random.setter
@@ -89,5 +89,5 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         self._env._rng = value # pyright: ignore[reportGeneralTypeIssues]
 
     def __getattr__(self, item: str):
-        """If the attribute is missing, try getting the attribute from dm_control env."""
+        """If the attribute is missing, try getting the attribute from bsuite env."""
         return getattr(self._env, item)
