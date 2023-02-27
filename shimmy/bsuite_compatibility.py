@@ -4,10 +4,10 @@ from __future__ import annotations
 from typing import Any
 
 import gymnasium
-from gymnasium.error import UnsupportedMode
 import numpy as np
 from bsuite.environments import Environment
 from gymnasium.core import ObsType
+from gymnasium.error import UnsupportedMode
 
 from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 

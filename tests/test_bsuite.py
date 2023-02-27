@@ -2,12 +2,11 @@
 import warnings
 
 import bsuite
-import pytest
 import gymnasium as gym
+import pytest
+from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
-
-from gymnasium.envs.registration import registry
 
 BSUITE_ENV_IDS = [
     env_id
@@ -15,15 +14,21 @@ BSUITE_ENV_IDS = [
     if env_id.startswith("bsuite") and env_id != "bsuite/compatibility-env-v0"
 ]
 
+
 def test_bsuite_suite_envs():
     """Tests that all BSUITE_ENVS are equal to the known bsuite tasks."""
     env_ids = [env_id.split("/")[-1].split("-")[0] for env_id in BSUITE_ENV_IDS]
     assert list(bsuite._bsuite.EXPERIMENT_NAME_TO_ENVIRONMENT.keys()) == env_ids
 
+
 BSUITE_ENV_SETTINGS = dict()
 BSUITE_ENV_SETTINGS["bsuite/bandit-v0"] = dict()
-BSUITE_ENV_SETTINGS["bsuite/bandit_noise-v0"] = dict(noise_scale=1, seed=42, mapping_seed=42)
-BSUITE_ENV_SETTINGS["bsuite/bandit_scale-v0"] = dict(reward_scale=1, seed=42, mapping_seed=42)
+BSUITE_ENV_SETTINGS["bsuite/bandit_noise-v0"] = dict(
+    noise_scale=1, seed=42, mapping_seed=42
+)
+BSUITE_ENV_SETTINGS["bsuite/bandit_scale-v0"] = dict(
+    reward_scale=1, seed=42, mapping_seed=42
+)
 BSUITE_ENV_SETTINGS["bsuite/cartpole-v0"] = dict()
 BSUITE_ENV_SETTINGS["bsuite/cartpole_noise-v0"] = dict(noise_scale=1, seed=42)
 BSUITE_ENV_SETTINGS["bsuite/cartpole_scale-v0"] = dict(reward_scale=1, seed=42)
