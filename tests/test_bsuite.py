@@ -3,36 +3,47 @@ import warnings
 
 import bsuite
 import pytest
+import gymnasium as gym
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
-from shimmy.bsuite_compatibility import BSuiteCompatibilityV0
+from gymnasium.envs.registration import registry
 
-BSUITE_NAME_TO_LOADERS = bsuite._bsuite.EXPERIMENT_NAME_TO_ENVIRONMENT
+BSUITE_ENV_IDS = [
+    env_id
+    for env_id in registry
+    if env_id.startswith("bsuite") and env_id != "bsuite/compatibility-env-v0"
+]
+
+def test_bsuite_suite_envs():
+    """Tests that all BSUITE_ENVS are equal to the known bsuite tasks."""
+    env_ids = [env_id.split("/")[-1].split("-")[0] for env_id in BSUITE_ENV_IDS]
+    assert list(bsuite._bsuite.EXPERIMENT_NAME_TO_ENVIRONMENT.keys()) == env_ids
+
 BSUITE_ENV_SETTINGS = dict()
-BSUITE_ENV_SETTINGS["bandit"] = dict()
-BSUITE_ENV_SETTINGS["bandit_noise"] = dict(noise_scale=1, seed=42, mapping_seed=42)
-BSUITE_ENV_SETTINGS["bandit_scale"] = dict(reward_scale=1, seed=42, mapping_seed=42)
-BSUITE_ENV_SETTINGS["cartpole"] = dict()
-BSUITE_ENV_SETTINGS["cartpole_noise"] = dict(noise_scale=1, seed=42)
-BSUITE_ENV_SETTINGS["cartpole_scale"] = dict(reward_scale=1, seed=42)
-BSUITE_ENV_SETTINGS["cartpole_swingup"] = dict()
-BSUITE_ENV_SETTINGS["catch"] = dict()
-BSUITE_ENV_SETTINGS["catch_noise"] = dict(noise_scale=1, seed=42)
-BSUITE_ENV_SETTINGS["catch_scale"] = dict(reward_scale=1, seed=42)
-BSUITE_ENV_SETTINGS["deep_sea"] = dict(size=42)
-BSUITE_ENV_SETTINGS["deep_sea_stochastic"] = dict(size=42)
-BSUITE_ENV_SETTINGS["discounting_chain"] = dict()
-BSUITE_ENV_SETTINGS["memory_len"] = dict(memory_length=8)
-BSUITE_ENV_SETTINGS["memory_size"] = dict(num_bits=8)
-BSUITE_ENV_SETTINGS["mnist"] = dict()
-BSUITE_ENV_SETTINGS["mnist_noise"] = dict(noise_scale=1, seed=42)
-BSUITE_ENV_SETTINGS["mnist_scale"] = dict(reward_scale=1, seed=42)
-BSUITE_ENV_SETTINGS["mountain_car"] = dict()
-BSUITE_ENV_SETTINGS["mountain_car_noise"] = dict(noise_scale=1, seed=42)
-BSUITE_ENV_SETTINGS["mountain_car_scale"] = dict(reward_scale=1, seed=42)
-BSUITE_ENV_SETTINGS["umbrella_distract"] = dict(n_distractor=3)
-BSUITE_ENV_SETTINGS["umbrella_length"] = dict(chain_length=3)
+BSUITE_ENV_SETTINGS["bsuite/bandit-v0"] = dict()
+BSUITE_ENV_SETTINGS["bsuite/bandit_noise-v0"] = dict(noise_scale=1, seed=42, mapping_seed=42)
+BSUITE_ENV_SETTINGS["bsuite/bandit_scale-v0"] = dict(reward_scale=1, seed=42, mapping_seed=42)
+BSUITE_ENV_SETTINGS["bsuite/cartpole-v0"] = dict()
+BSUITE_ENV_SETTINGS["bsuite/cartpole_noise-v0"] = dict(noise_scale=1, seed=42)
+BSUITE_ENV_SETTINGS["bsuite/cartpole_scale-v0"] = dict(reward_scale=1, seed=42)
+BSUITE_ENV_SETTINGS["bsuite/cartpole_swingup-v0"] = dict()
+BSUITE_ENV_SETTINGS["bsuite/catch-v0"] = dict()
+BSUITE_ENV_SETTINGS["bsuite/catch_noise-v0"] = dict(noise_scale=1, seed=42)
+BSUITE_ENV_SETTINGS["bsuite/catch_scale-v0"] = dict(reward_scale=1, seed=42)
+BSUITE_ENV_SETTINGS["bsuite/deep_sea-v0"] = dict(size=42)
+BSUITE_ENV_SETTINGS["bsuite/deep_sea_stochastic-v0"] = dict(size=42)
+BSUITE_ENV_SETTINGS["bsuite/discounting_chain-v0"] = dict()
+BSUITE_ENV_SETTINGS["bsuite/memory_len-v0"] = dict(memory_length=8)
+BSUITE_ENV_SETTINGS["bsuite/memory_size-v0"] = dict(num_bits=8)
+BSUITE_ENV_SETTINGS["bsuite/mnist-v0"] = dict()
+BSUITE_ENV_SETTINGS["bsuite/mnist_noise-v0"] = dict(noise_scale=1, seed=42)
+BSUITE_ENV_SETTINGS["bsuite/mnist_scale-v0"] = dict(reward_scale=1, seed=42)
+BSUITE_ENV_SETTINGS["bsuite/mountain_car-v0"] = dict()
+BSUITE_ENV_SETTINGS["bsuite/mountain_car_noise-v0"] = dict(noise_scale=1, seed=42)
+BSUITE_ENV_SETTINGS["bsuite/mountain_car_scale-v0"] = dict(reward_scale=1, seed=42)
+BSUITE_ENV_SETTINGS["bsuite/umbrella_distract-v0"] = dict(n_distractor=3)
+BSUITE_ENV_SETTINGS["bsuite/umbrella_length-v0"] = dict(chain_length=3)
 
 # todo - gymnasium v27 should remove the need for some of these warnings
 CHECK_ENV_IGNORE_WARNINGS = [
@@ -47,11 +58,10 @@ CHECK_ENV_IGNORE_WARNINGS = [
 ]
 
 
-@pytest.mark.parametrize("env_id", BSUITE_NAME_TO_LOADERS)
+@pytest.mark.parametrize("env_id", BSUITE_ENV_IDS)
 def test_check_env(env_id):
     """Check that environment pass the gymnasium check_env."""
-    env = bsuite.load(env_id, BSUITE_ENV_SETTINGS[env_id])
-    env = BSuiteCompatibilityV0(env)
+    env = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])
 
     with warnings.catch_warnings(record=True) as caught_warnings:
         check_env(env.unwrapped)
@@ -64,17 +74,15 @@ def test_check_env(env_id):
     env.close()
 
 
-@pytest.mark.parametrize("env_id", BSUITE_NAME_TO_LOADERS)
+@pytest.mark.parametrize("env_id", BSUITE_ENV_IDS)
 def test_seeding(env_id):
     """Test that dm-control seeding works."""
     # bandit and deep_sea and SOMETIMES discounting_chain fail this test
     if env_id in ["bandit", "deep_sea", "discounting_chain"]:
         return
 
-    env_1 = bsuite.load(env_id, BSUITE_ENV_SETTINGS[env_id])
-    env_1 = BSuiteCompatibilityV0(env_1)
-    env_2 = bsuite.load(env_id, BSUITE_ENV_SETTINGS[env_id])
-    env_2 = BSuiteCompatibilityV0(env_2)
+    env_1 = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])
+    env_2 = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])
 
     obs_1, info_1 = env_1.reset(seed=42)
     obs_2, info_2 = env_2.reset(seed=42)
