@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 import gymnasium
+from gymnasium.error import UnsupportedMode
 import numpy as np
 from bsuite.environments import Environment
 from gymnasium.core import ObsType
@@ -65,7 +66,7 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
 
     def render(self) -> np.ndarray | None:
         """Renders the bsuite env."""
-        raise AssertionError(
+        raise UnsupportedMode(
             "Rendering is not built into BSuite, print the observation instead."
         )
 
