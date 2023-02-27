@@ -1,11 +1,11 @@
 """Tests the functionality of the BSuiteCompatibilityV0 on bsuite envs."""
 import warnings
 
+import bsuite
 import pytest
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
-import bsuite
 from shimmy.bsuite_compatibility import BSuiteCompatibilityV0
 
 BSUITE_NAME_TO_LOADERS = bsuite._bsuite.EXPERIMENT_NAME_TO_ENVIRONMENT
@@ -67,7 +67,6 @@ def test_check_env(env_id):
 @pytest.mark.parametrize("env_id", BSUITE_NAME_TO_LOADERS)
 def test_seeding(env_id):
     """Test that dm-control seeding works."""
-
     # bandit and deep_sea and SOMETIMES discounting_chain fail this test
     if env_id in ["bandit", "deep_sea", "discounting_chain"]:
         return
