@@ -6,8 +6,6 @@ from typing import Any
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 from shimmy.openai_gym_compatibility import GymV21CompatibilityV0, GymV26CompatibilityV0
 
-__version__ = "0.2.1"
-
 
 class NotInstallClass:
     """Rather than an attribute error, this raises a more helpful import error with install instructions for shimmy."""
@@ -63,3 +61,16 @@ __all__ = [
     "GymV21CompatibilityV0",
     "GymV26CompatibilityV0",
 ]
+
+
+__version__ = "0.2.1"
+
+
+try:
+    import sys
+    from farama_notifications import notifications
+
+    if "shimmy" in notifications and __version__ in notifications["shimmy"]:
+        print(notifications["shimmy"][__version__], file=sys.stderr)
+except Exception:  # nosec
+    pass
