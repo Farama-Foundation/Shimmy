@@ -47,6 +47,13 @@ except ImportError as e:
         e,
     )
 
+try:
+    from shimmy.bsuite_compatibility import BSuiteCompatibilityV0
+except ImportError as e:
+    BSuiteCompatibilityV0 = NotInstallClass(
+        "BSuite is not installed, run `pip install 'shimmy[bsuite]'`",
+        e,
+    )
 
 __all__ = [
     "DmControlCompatibilityV0",
