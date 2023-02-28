@@ -59,6 +59,12 @@ CHECK_ENV_IGNORE_WARNINGS = [
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (28, 28)",
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (42, 42)",
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (10, 5)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 1)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 2)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 3)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 6)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 8)",
+        "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (1, 10)",
     ]
 ]
 
@@ -82,8 +88,8 @@ def test_check_env(env_id):
 @pytest.mark.parametrize("env_id", BSUITE_ENV_IDS)
 def test_seeding(env_id):
     """Test that dm-control seeding works."""
-    # bandit and deep_sea and SOMETIMES discounting_chain fail this test
-    if env_id in ["bandit", "deep_sea", "discounting_chain"]:
+    # bandit and deep_sea fail this test
+    if env_id in ["bsuite/deep_sea-v0", "bsuite/bandit-v0"]:
         return
 
     env_1 = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])

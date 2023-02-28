@@ -39,10 +39,14 @@ def _register_bsuite_envs():
         env = bsuite.load(env_id, env_kwargs)
         return BSuiteCompatibilityV0(env)
 
+    # non deterministic envs
+    nondeterministic = ["deep_sea", "bandit"]
+
     for env_id in BSUITE_ENVS:
         register(
             f"bsuite/{env_id}-v0",
             partial(_make_bsuite_env, env_id=env_id),
+            nondeterministic=env_id in nondeterministic,
         )
 
 

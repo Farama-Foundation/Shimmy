@@ -43,6 +43,8 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         if seed is not None:
             self.np_random = np.random.RandomState(seed=seed)
             self._env._rng = self.np_random  # pyright: ignore[reportGeneralTypeIssues]
+            if hasattr(self._env, "raw_env"):
+                self._env.raw_env._rng = self.np_random
 
         timestep = self._env.reset()
 
