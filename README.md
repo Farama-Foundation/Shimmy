@@ -20,6 +20,10 @@ An API conversion tool for popular external reinforcement learning environments 
 ### [OpenSpiel](https://github.com/deepmind/open_spiel)
 - Pettingzoo bindings for all environments.
 
+### [Melting Pot](https://github.com/deepmind/meltingpot)
+- Pettingzoo bindings for all environments
+- Requires manual [installation](https://github.com/deepmind/meltingpot#installation)
+
 ### Incoming Projects
 
 The following are a list of existing environment suites that we are looking into bringing into Shimmy.

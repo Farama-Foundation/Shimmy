@@ -1,4 +1,4 @@
-"""Tests the functionality of the DMEnvWrapper on dm_control envs."""
+"""Tests the functionality of the DmControlCompatibility Wrapper on dm_control envs."""
 import warnings
 from typing import Callable
 

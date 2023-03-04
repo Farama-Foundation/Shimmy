@@ -75,7 +75,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
         env: dm_control.composer.Environment,
         render_mode: str | None = None,
     ):
-        """Wrapper that converts a dm control multi-agent environment into a pettingzoo environment.
+        """Wrapper to convert a dm control multi-agent environment into a pettingzoo environment.
 
         Due to how the underlying environment is setup, this environment is nondeterministic, so seeding doesn't work.
 

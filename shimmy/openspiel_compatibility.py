@@ -1,4 +1,4 @@
-"""Wrapper to convert a openspiel environment into a pettingzoo compatible environment."""
+"""Wrapper to convert an openspiel environment into a pettingzoo compatible environment."""
 from __future__ import annotations
 
 import functools
@@ -9,11 +9,11 @@ import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
 from gymnasium.utils import seeding
-from pettingzoo.utils.env import AgentID
+from pettingzoo.utils.env import ActionType, AgentID
 
 
 class OpenspielCompatibilityV0(pz.AECEnv):
-    """This compatibility wrapper that converts an openspiel environment into a pettingzoo environment.
+    """This compatibility wrapper converts an openspiel environment into a pettingzoo environment.
 
     OpenSpiel is a collection of environments and algorithms for research in general reinforcement learning
     and search/planning in games. OpenSpiel supports n-player (single- and multi- agent) zero-sum,
@@ -29,7 +29,7 @@ class OpenspielCompatibilityV0(pz.AECEnv):
         game: pyspiel.Game,
         render_mode: str | None,
     ):
-        """Wrapper that converts a openspiel environment into a pettingzoo environment.
+        """Wrapper to convert a openspiel environment into a pettingzoo environment.
 
         Args:
             game (pyspiel.Game): game
@@ -343,7 +343,7 @@ class OpenspielCompatibilityV0(pz.AECEnv):
 
         return False
 
-    def step(self, action: int):
+    def step(self, action: ActionType):
         """Steps the environment.
 
         Args:
