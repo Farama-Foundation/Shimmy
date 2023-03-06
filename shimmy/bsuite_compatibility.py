@@ -16,6 +16,7 @@ from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 # This needs to exist...
 np.int = int
 
+
 class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
     """A compatibility wrapper that converts a BSuite environment into a gymnasium environment.
 

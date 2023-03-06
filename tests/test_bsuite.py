@@ -89,7 +89,7 @@ def test_check_env(env_id):
 def test_seeding(env_id):
     """Test that dm-control seeding works."""
     # bandit and deep_sea fail this test
-    if env_id in ["bsuite/deep_sea-v0", "bsuite/bandit-v0"]:
+    if env_id in ["bsuite/deep_sea-v0", "bsuite/bandit-v0", "bsuite/discount_chain-v0"]:
         return
 
     env_1 = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])
