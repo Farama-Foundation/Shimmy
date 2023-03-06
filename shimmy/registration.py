@@ -40,7 +40,7 @@ def _register_bsuite_envs():
         return BSuiteCompatibilityV0(env)
 
     # non deterministic envs
-    nondeterministic = ["deep_sea", "bandit"]
+    nondeterministic = ["deep_sea", "bandit", "discounting_chain"]
 
     for env_id in BSUITE_ENVS:
         register(
