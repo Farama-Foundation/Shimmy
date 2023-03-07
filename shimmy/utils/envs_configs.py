@@ -1,5 +1,31 @@
 """Environment configures."""
 
+BSUITE_ENVS = (
+    "bandit",
+    "bandit_noise",
+    "bandit_scale",
+    "cartpole",
+    "cartpole_noise",
+    "cartpole_scale",
+    "cartpole_swingup",
+    "catch",
+    "catch_noise",
+    "catch_scale",
+    "deep_sea",
+    "deep_sea_stochastic",
+    "discounting_chain",
+    "memory_len",
+    "memory_size",
+    "mnist",
+    "mnist_noise",
+    "mnist_scale",
+    "mountain_car",
+    "mountain_car_noise",
+    "mountain_car_scale",
+    "umbrella_distract",
+    "umbrella_length",
+)
+
 DM_CONTROL_SUITE_ENVS = (
     ("acrobot", "swingup"),
     ("acrobot", "swingup_sparse"),
