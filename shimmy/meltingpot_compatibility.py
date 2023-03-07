@@ -1,24 +1,26 @@
-"""Wrapper to convert a meltingpot substrate into a pettingzoo compatible environment
+"""Wrapper to convert a meltingpot substrate into a pettingzoo compatible environment.
 
 Taken from
 https://github.com/deepmind/meltingpot/blob/main/examples/pettingzoo/utils.py
 and modified to modern pettingzoo API
 """
+# pyright: reportOptionalSubscript=false
+
 from __future__ import annotations
 
 import functools
-from typing import Tuple, Dict, Optional
+from typing import Dict, Optional, Tuple
 
 import gymnasium
-import numpy as np
-from gymnasium.utils import EzPickle
 import matplotlib.pyplot as plt
+import numpy as np
+import pygame
+from gymnasium.utils.ezpickle import EzPickle
+from meltingpot.python import substrate
 from ml_collections import config_dict
-from pettingzoo.utils.env import ParallelEnv, AgentID
-from pettingzoo.utils.env import ObsDict, ActionDict
+from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
 import shimmy.utils.meltingpot as utils
-from meltingpot.python import substrate
 
 
 class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
@@ -32,16 +34,13 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     on which to train agents, and over 256 unique test scenarios on which to evaluate these trained agents.
     """
 
-    metadata = {'render_modes': ['human', 'rgb_array']}
+    metadata = {"render_modes": ["human", "rgb_array"]}
 
-    PLAYER_STR_FORMAT = 'player_{index}'
+    PLAYER_STR_FORMAT = "player_{index}"
     MAX_CYCLES = 1000
 
     def __init__(
-            self,
-            substrate_name: str,
-            render_mode: str | None,
-            max_cycles: int = MAX_CYCLES
+        self, substrate_name: str, render_mode: str | None, max_cycles: int = MAX_CYCLES
     ):
         """Wrapper that converts a openspiel environment into a pettingzoo environment.
 
@@ -50,20 +49,25 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             render_mode (Optional[str]): render_mode
             max_cycles (Optional[int]): maximum number of cycles (steps) before termination
         """
-        # Load substrate from pickle
+        # Create env config
         self.substrate_name = substrate_name
-        self.render_mode = render_mode
-        self.player_roles = substrate.get_config(self.substrate_name).default_player_roles
-        self.max_cycles = max_cycles
+        self.player_roles = substrate.get_config(
+            self.substrate_name
+        ).default_player_roles
         self.env_config = {"substrate": self.substrate_name, "roles": self.player_roles}
+        self.render_mode = render_mode
+        self.max_cycles = max_cycles
         EzPickle.__init__(self, self.render_mode, self.env_config, self.max_cycles)
 
-        # Build substrate
+        # Build substrate from pickle
         self.env_config = config_dict.ConfigDict(self.env_config)
-        self._env = substrate.build(self.env_config['substrate'], roles=self.env_config['roles'])
+        self._env = substrate.build(
+            self.env_config["substrate"], roles=self.env_config["roles"]
+        )
 
-        self.state_space = utils.spec_to_space(
-            self._env.observation_spec()[0]['WORLD.RGB'])  # type: ignore
+        self.state_space = utils.dm_spec2gym_space(
+            self._env.observation_spec()[0]["WORLD.RGB"]
+        )
 
         # Set agents
         self._num_players = len(self._env.observation_spec())
@@ -73,18 +77,21 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         ]
         self.agents = [agent for agent in self.possible_agents]
 
-    def state_space(self) -> gymnasium.spaces.Space:
-        """observation_space.
+        # Set up pygame rendering
+        if self.render_mode == "human":
+            self.display_scale = 4
+            self.display_fps = 5
 
-        Get the state space from the underlying meltingpot substrate.
-
-        Returns:
-            state_space: spaces.Space
-        """
-
-        state_space = utils.spec_to_space(
-            self._env.observation_spec()[0]['WORLD.RGB'])
-        return state_space
+            pygame.init()
+            self.clock = pygame.time.Clock()
+            pygame.display.set_caption("Melting Pot")
+            shape = self.state_space.shape
+            self.game_display = pygame.display.set_mode(
+                (
+                    int(shape[1] * self.display_scale),
+                    int(shape[0] * self.display_scale),
+                )
+            )
 
     @functools.lru_cache(maxsize=None)
     def observation_space(self, agent: AgentID) -> gymnasium.spaces.Space:
@@ -99,7 +106,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             observation_space: spaces.Space
         """
         observation_space = utils.remove_world_observations_from_space(
-            utils.spec_to_space(self._env.observation_spec()[0])  # type: ignore
+            utils.dm_spec2gym_space(self._env.observation_spec()[0])  # type: ignore
         )
         return observation_space
 
@@ -115,17 +122,24 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         Returns:
             action_space: spaces.Space
         """
-        action_space = utils.spec_to_space(self._env.action_spec()[0])
+        action_space = utils.dm_spec2gym_space(self._env.action_spec()[0])
         return action_space
 
     def state(self) -> np.ndarray:
+        """State.
+
+        Get an observation of the current environment's state. Used in rendering.
+
+        Returns:
+            observation
+        """
         return self._env.observation()
 
     def reset(
-            self,
-            seed: Optional[int] = None,
-            return_info: bool = False,
-            options: Optional[dict] = None,
+        self,
+        seed: int | None = None,
+        return_info: bool = False,
+        options: dict | None = None,
     ) -> ObsDict:
         """reset.
 
@@ -144,13 +158,13 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         return utils.timestep_to_observations(timestep)
 
     def step(
-            self, actions: ActionDict
-    ) -> Tuple[
-        ObsDict, Dict[str, float], Dict[str, bool], Dict[str, bool], Dict[str, dict]
+        self, actions: ActionDict
+    ) -> tuple[
+        ObsDict, dict[str, float], dict[str, bool], dict[str, bool], dict[str, dict]
     ]:
         """step.
 
-        Steps through the environment.
+        Updates the environment with an action.
 
         Args:
             action: action to step through the environment with
@@ -176,18 +190,37 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         return observations, rewards, terminations, truncations, infos
 
     def close(self):
+        """close.
+
+        Closes the environment.
+        """
         self._env.close()
 
     def render(self) -> None | np.ndarray:
-        """Renders the environment.
+        """render.
+
+        Renders the environment.
 
         Returns:
             The rendering of the environment, depending on the render mode
         """
-        rgb_arr = self.state()[0]['WORLD.RGB']
-        if self.render_mode == 'human':
+        rgb_arr = self.state()[0]["WORLD.RGB"]
+        if self.render_mode == "human":
+            rgb_arr = np.transpose(rgb_arr, (1, 0, 2))
+            surface = pygame.surfarray.make_surface(rgb_arr)
+            rect = surface.get_rect()
+            surf = pygame.transform.scale(
+                surface,
+                (int(rect[2] * self.display_scale), int(rect[3] * self.display_scale)),
+            )
+
+            self.game_display.blit(surf, dest=(0, 0))
+            pygame.display.update()
+            self.clock.tick(self.display_fps)
+            return None
+        elif self.render_mode == "pyplot":
             plt.cla()
-            plt.imshow(rgb_arr, interpolation='nearest')
+            plt.imshow(rgb_arr, interpolation="nearest")
             plt.show(block=False)
             return None
         return rgb_arr
