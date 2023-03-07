@@ -12,7 +12,6 @@ import functools
 from typing import Dict, Optional, Tuple
 
 import gymnasium
-import matplotlib.pyplot as plt
 import numpy as np
 import pygame
 from gymnasium.utils.ezpickle import EzPickle
