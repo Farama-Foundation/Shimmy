@@ -1,8 +1,8 @@
 """Tests the functionality of the OpenspielWrapper on openspiel envs."""
-import gymnasium.utils.env_checker
 import numpy as np
 import pyspiel
 import pytest
+from gymnasium.utils.env_checker import data_equivalence
 
 from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
 
@@ -149,7 +149,7 @@ def test_seeding(game):
     env2.reset(seed=42)
 
     agent1 = env1.agents[0]
-    agent2 = env1.agents[0]
+    agent2 = env2.agents[0]
 
     a_space1 = env1.action_space(agent1)
     a_space1.seed(42)
@@ -163,6 +163,6 @@ def test_seeding(game):
         act1 = a_space1.sample(mask=info1["action_mask"])
         act2 = a_space2.sample(mask=info2["action_mask"])
 
-        assert gymnasium.utils.env_checker.data_equivalence(
+        assert data_equivalence(
             env1.step(act1), env2.step(act2)
         ), "Incorrect returns on iteration."

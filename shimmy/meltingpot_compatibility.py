@@ -12,10 +12,10 @@ import functools
 from typing import Dict, Optional, Tuple
 
 import gymnasium
+import meltingpot.python
 import numpy as np
 import pygame
 from gymnasium.utils.ezpickle import EzPickle
-from meltingpot.python import substrate
 from ml_collections import config_dict
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
@@ -39,7 +39,11 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     MAX_CYCLES = 1000
 
     def __init__(
-        self, substrate_name: str, render_mode: str | None, max_cycles: int = MAX_CYCLES
+        self,
+        substrate_name: str,
+        render_mode: str | None,
+        max_cycles: int = MAX_CYCLES,
+        seed: int | None = 1,
     ):
         """Wrapper that converts a openspiel environment into a pettingzoo environment.
 
@@ -47,28 +51,32 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             substrate_name (str): name of meltingpot substrate to load
             render_mode (Optional[str]): render_mode
             max_cycles (Optional[int]): maximum number of cycles (steps) before termination
+            seed (Optional[int]): random seed for the environment
         """
+        EzPickle.__init__(self, substrate_name, render_mode, max_cycles, seed)
+
         # Create env config
         self.substrate_name = substrate_name
-        self.player_roles = substrate.get_config(
+        self.player_roles = meltingpot.python.substrate.get_config(
             self.substrate_name
         ).default_player_roles
-        self.env_config = {"substrate": self.substrate_name, "roles": self.player_roles}
-        self.render_mode = render_mode
         self.max_cycles = max_cycles
-        EzPickle.__init__(self, self.render_mode, self.env_config, self.max_cycles)
+        self.env_config = {"substrate": self.substrate_name, "roles": self.player_roles}
 
         # Build substrate from pickle
         self.env_config = config_dict.ConfigDict(self.env_config)
-        self._env = substrate.build(
+        self._env = meltingpot.python.substrate.build(
             self.env_config["substrate"], roles=self.env_config["roles"]
         )
+        self._rng = np.random.RandomState(
+            seed=seed
+        )  # TODO: get seeding to work with underlying env & action space
 
+        # Set up PettingZoo variables
+        self.render_mode = render_mode
         self.state_space = utils.dm_spec2gym_space(
             self._env.observation_spec()[0]["WORLD.RGB"]
         )
-
-        # Set agents
         self._num_players = len(self._env.observation_spec())
         self.possible_agents = [
             self.PLAYER_STR_FORMAT.format(index=index)
@@ -151,6 +159,10 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         Returns:
             (observation, info)
         """
+        self._rng = np.random.RandomState(
+            seed=seed
+        )  # TODO: get seeding to work with underlying env & action space
+        print("np test: ", np.random.randint(0, 100))
         timestep = self._env.reset()
         self.agents = self.possible_agents[:]
         self.num_cycles = 0
@@ -216,10 +228,5 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             self.game_display.blit(surf, dest=(0, 0))
             pygame.display.update()
             self.clock.tick(self.display_fps)
-            return None
-        elif self.render_mode == "pyplot":
-            plt.cla()
-            plt.imshow(rgb_arr, interpolation="nearest")
-            plt.show(block=False)
             return None
         return rgb_arr
