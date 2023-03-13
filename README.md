@@ -31,7 +31,6 @@ We are actively looking for developers to contribute to this project, if you are
 
 - [The DeepMing Env API](https://github.com/deepmind/dm_env)
 - [Behaviour Suite](https://github.com/deepmind/bsuite)
-- [Melting Pot](https://github.com/deepmind/meltingpot)
 
 ## At a glance
 

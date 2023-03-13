@@ -2,8 +2,17 @@
 import numpy as np
 import pytest
 from gymnasium.utils.env_checker import data_equivalence
-from meltingpot.python.configs.substrates import SUBSTRATES
 from pettingzoo.test import parallel_api_test
+
+try:
+    import meltingpot
+except ImportError:
+    pytest.skip(
+        "Meltingpot not available (requires manual installation)",
+        allow_module_level=True,
+    )
+
+from meltingpot.python.configs.substrates import SUBSTRATES
 
 from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 

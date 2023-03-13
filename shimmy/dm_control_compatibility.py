@@ -17,7 +17,7 @@ from dm_control.rl import control
 from gymnasium.core import ObsType
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 
-from shimmy.utils.dm_env import dm_control_step2gym_step, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 
 
 class EnvType(Enum):
@@ -84,7 +84,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
 
         timestep = self._env.reset()
 
-        obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
+        obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
         return obs, info
 
@@ -94,7 +94,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         """Steps through the dm-control environment."""
         timestep = self._env.step(action)
 
-        obs, reward, terminated, truncated, info = dm_control_step2gym_step(timestep)
+        obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
         if self.render_mode == "human":
             self.viewer.render(self.render_mode)

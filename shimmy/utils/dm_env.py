@@ -49,39 +49,6 @@ def dm_spec2gym_space(spec: tree.Structure[dm_env.specs.Array]) -> spaces.Space:
         raise ValueError(f"Unexpected spec of type {type(spec)}: {spec}")
 
 
-# def dm_spec2gym_space(spec) -> spaces.Space[Any]:
-#     """Converts a dm_env spec to a gymnasium space."""
-#     if isinstance(spec, (OrderedDict, dict)):
-#         return spaces.Dict(
-#             {key: dm_spec2gym_space(value) for key, value in copy.copy(spec).items()}
-#         )
-#     # not possible to use isinstance due to inheritance
-#     elif type(spec) is BoundedArray:
-#         low = np.broadcast_to(spec.minimum, spec.shape)
-#         high = np.broadcast_to(spec.maximum, spec.shape)
-#         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
-#     elif type(spec) is Array:
-#         if np.issubdtype(spec.dtype, np.integer):
-#             low = np.iinfo(spec.dtype).min
-#             high = np.iinfo(spec.dtype).max
-#         elif np.issubdtype(spec.dtype, np.inexact):
-#             low = float("-inf")
-#             high = float("inf")
-#         elif spec.dtype == "bool":
-#             low = int(0)
-#             high = int(1)
-#         else:
-#             raise ValueError(f"Unknown dtype {spec.dtype} for spec {spec}.")
-#
-#         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
-#     elif type(spec) is DiscreteArray:
-#         return spaces.Discrete(spec.num_values)
-#     else:
-#         raise NotImplementedError(
-#             f"Cannot convert dm_spec to gymnasium space, unknown spec: {spec}, please report."
-#         )
-
-
 def dm_obs2gym_obs(obs: dm_env.TimeStep.observation) -> np.ndarray | dict[str, Any]:
     """Converts a dm_env observation to a gymnasium observation.
 
@@ -99,7 +66,7 @@ def dm_obs2gym_obs(obs: dm_env.TimeStep.observation) -> np.ndarray | dict[str, A
         return np.asarray(obs)
 
 
-def dm_control_step2gym_step(
+def dm_env_step2gym_step(
     timestep: dm_env.TimeStep,
 ) -> tuple[Any, float, bool, bool, dict[str, Any]]:
     """Converts a dm_env timestep to the required return info from Gymnasium step() function.
