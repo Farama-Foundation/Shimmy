@@ -216,7 +216,7 @@ env = OpenspielCompatibilityV0(game=env, render_mode=None)
 If you use this in your research, please cite:
 ```
 @software{shimmy2022github,
-  author = {Jordan Terry, Mark Towers, Jun Jet Tai},
+  author = {{Jun Jet Tai, Mark Towers} and Elliot Tower and Jordan Terry},
   title = {Shimmy: Gymnasium and Pettingzoo Wrappers for Commonly Used Environments},
   url = {http://github.com/Farama-Foundation/Shimmy},
   version = {0.2.0},
