@@ -3,15 +3,15 @@
 # pyright:  reportGeneralTypeIssues=false
 from typing import Any, Mapping, OrderedDict
 
+import dm_env
 import numpy as np
 import tree
-import dm_env
 from gymnasium import spaces
 from pettingzoo.utils.env import ObsDict
 
-
 PLAYER_STR_FORMAT = "player_{index}"
 _WORLD_PREFIX = "WORLD."
+
 
 def dm_spec2gym_space(spec: tree.Structure[dm_env.specs.Array]) -> spaces.Space:
     """Converts a dm_env nested structure of specs to a Gymnasium Space.
@@ -45,6 +45,7 @@ def dm_spec2gym_space(spec: tree.Structure[dm_env.specs.Array]) -> spaces.Space:
         return spaces.Dict({key: dm_spec2gym_space(s) for key, s in spec.items()})
     else:
         raise ValueError(f"Unexpected spec of type {type(spec)}: {spec}")
+
 
 def timestep_to_observations(timestep: dm_env.TimeStep) -> ObsDict:
     """Extracts Gymnasium-compatible observations from a melting pot timestep.
