@@ -77,7 +77,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
     ):
         """Wrapper to convert a dm control multi-agent environment into a pettingzoo environment.
 
-        Due to how the underlying environment is setup, this environment is nondeterministic, so seeding doesn't work.
+        Due to how the underlying environment is set up, this environment is nondeterministic, so seeding doesn't work.
 
         Args:
             env (dm_env.Environment): dm control multi-agent environment
@@ -134,7 +134,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
         if hasattr(self, "viewer"):
             self.viewer.close()
 
-    def reset(self, seed=None, return_info=False, options=None):
+    def reset(self, seed=None, options=None):
         """Resets the dm-control environment."""
         self.agents = self.possible_agents[:]
         self.num_moves = 0
@@ -143,10 +143,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
 
         observations, _, _, _, infos = _unravel_ma_timestep(timestep, self.agents)
 
-        if not return_info:
-            return observations
-        else:
-            return observations, infos
+        return observations, infos
 
     def step(self, actions):
         """Steps through all agents with the actions."""

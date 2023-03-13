@@ -123,14 +123,12 @@ class OpenspielCompatibilityV0(pz.AECEnv):
     def reset(
         self,
         seed: int | None = None,
-        return_info: bool | None = False,
         options: dict | None = None,
     ):
         """reset.
 
         Args:
             seed (Optional[int]): seed
-            return_info (Optional[bool]): return_info
             options (Optional[Dict]): options
         """
         # initialize the seed

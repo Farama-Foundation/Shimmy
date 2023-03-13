@@ -8,6 +8,9 @@ from pettingzoo.test import parallel_api_test
 from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 
 
+@pytest.mark.skip(
+    reason="Melting Pot environments are stochastic and do not currently support seeding."
+)
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_seeding(substrate_name):
     """Tests the seeding of the melting pot conversion wrapper."""
@@ -47,7 +50,7 @@ def test_passing_substrates(substrate_name):
     # api test the env
     parallel_api_test(env)
 
-    env.reset()
+    env.reset(seed=0)
     while env.agents:
         actions = {agent: env.action_space(agent).sample() for agent in env.agents}
         observations, rewards, terminations, truncations, infos = env.step(actions)

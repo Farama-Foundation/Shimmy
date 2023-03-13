@@ -25,6 +25,8 @@ import shimmy.utils.meltingpot as utils
 class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     """This compatibility wrapper converts a meltingpot substrate into a pettingzoo environment.
 
+    Due to how the underlying environment is set up, this environment is nondeterministic, so seeding doesn't work.
+
     Melting Pot is a research tool developed to facilitate work on multi-agent artificial intelligence.
     It assesses generalization to novel social situations involving both familiar and unfamiliar individuals,
     and has been designed to test a broad range of social interactions such as: cooperation, competition,
@@ -43,7 +45,6 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         substrate_name: str,
         render_mode: str | None,
         max_cycles: int = MAX_CYCLES,
-        seed: int | None = 1,
     ):
         """Wrapper that converts a openspiel environment into a pettingzoo environment.
 
@@ -51,9 +52,8 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             substrate_name (str): name of meltingpot substrate to load
             render_mode (Optional[str]): render_mode
             max_cycles (Optional[int]): maximum number of cycles (steps) before termination
-            seed (Optional[int]): random seed for the environment
         """
-        EzPickle.__init__(self, substrate_name, render_mode, max_cycles, seed)
+        EzPickle.__init__(self, substrate_name, render_mode, max_cycles)
 
         # Create env config
         self.substrate_name = substrate_name
@@ -68,9 +68,6 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         self._env = meltingpot.python.substrate.build(
             self.env_config["substrate"], roles=self.env_config["roles"]
         )
-        self._rng = np.random.RandomState(
-            seed=seed
-        )  # TODO: get seeding to work with underlying env & action space
 
         # Set up PettingZoo variables
         self.render_mode = render_mode
@@ -145,7 +142,6 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     def reset(
         self,
         seed: int | None = None,
-        return_info: bool = False,
         options: dict | None = None,
     ) -> ObsDict:
         """reset.
@@ -153,20 +149,19 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         Resets the environment.
 
         Args:
-            seed: the seed to reset the environment with
+            seed: the seed to reset the environment with (not used, due to nondeterministic underlying environment)
             options: the options to reset the environment with
 
         Returns:
-            (observation, info)
+            observations
         """
-        self._rng = np.random.RandomState(
-            seed=seed
-        )  # TODO: get seeding to work with underlying env & action space
-        print("np test: ", np.random.randint(0, 100))
         timestep = self._env.reset()
         self.agents = self.possible_agents[:]
         self.num_cycles = 0
-        return utils.timestep_to_observations(timestep)
+
+        observations = utils.timestep_to_observations(timestep)
+
+        return observations
 
     def step(
         self, actions: ActionDict
@@ -175,13 +170,13 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     ]:
         """step.
 
-        Updates the environment with an action.
+        Updates the environment with a set of actions.
 
         Args:
-            action: action to step through the environment with
+            actions: actions to step through the environment with
 
         Returns:
-            (observation, reward, terminated, truncated, info)
+            (observations, rewards, terminations, truncations, infos)
         """
         actions = [actions[agent] for agent in self.agents]
         timestep = self._env.step(actions)
