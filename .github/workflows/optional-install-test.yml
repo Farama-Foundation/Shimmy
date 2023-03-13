@@ -34,4 +34,13 @@ jobs:
       - name: Run openspiel tests
         run: docker run shimmy-openspiel-docker pytest tests/test_openspiel.py
 
+        # melting pot
+      - run: |
+          docker build -f bin/meltingpot.Dockerfile \
+            --build-arg PYTHON_VERSION='3.9' \
+            --tag shimmy-meltingpot-docker .
+      - name: Run meltingpot tests
+        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py
+
+
         # add more options

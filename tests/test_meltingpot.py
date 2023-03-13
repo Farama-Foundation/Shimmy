@@ -7,10 +7,7 @@ from pettingzoo.test import parallel_api_test
 try:
     import meltingpot
 except ImportError:
-    pytest.skip(
-        "Meltingpot not available (requires manual installation)",
-        allow_module_level=True,
-    )
+    pytest.skip("Meltingpot not installed", allow_module_level=True)
 
 from meltingpot.python.configs.substrates import SUBSTRATES
 
@@ -59,7 +56,7 @@ def test_passing_substrates(substrate_name):
     # api test the env
     parallel_api_test(env)
 
-    env.reset(seed=0)
+    env.reset()
     while env.agents:
         actions = {agent: env.action_space(agent).sample() for agent in env.agents}
         observations, rewards, terminations, truncations, infos = env.step(actions)
