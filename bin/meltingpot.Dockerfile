@@ -49,7 +49,7 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot && \
 # Set Python path
 ENV PYTHONPATH="/workspaces/meltingpot"
 
-# Set path for shimmy
+# Set path and install Shimmy
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
 
