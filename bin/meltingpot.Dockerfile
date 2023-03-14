@@ -1,3 +1,4 @@
+# from https://github.com/deepmind/meltingpot/blob/main/.devcontainer/Dockerfile
 # Use Nvidia Ubuntu 20 base (includes CUDA if a supported GPU is present)
 # https://hub.docker.com/r/nvidia/cuda
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04@sha256:b754c43fe9d62e88862d168c4ab9282618a376dbc54871467870366cacfa456e
@@ -47,3 +48,11 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot && \
 
 # Set Python path
 ENV PYTHONPATH="/workspaces/meltingpot"
+
+# Set path for shimmy
+COPY . /usr/local/shimmy/
+WORKDIR /usr/local/shimmy/
+
+RUN pip install ".[openspiel, testing]" --no-cache-dir
+
+ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
