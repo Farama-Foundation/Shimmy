@@ -44,7 +44,7 @@ def dm_spec2gym_space(spec) -> spaces.Space[Any]:
         )
 
 
-def dm_obs2gym_obs(obs: dm_env.TimeStep.observation) -> np.ndarray | dict[str, Any]:
+def dm_obs2gym_obs(obs) -> np.ndarray | dict[str, Any]:
     """Converts a dm_env observation to a gymnasium observation.
 
     Array observations are converted to numpy arrays. Dict observations are converted recursively per key.
@@ -61,9 +61,7 @@ def dm_obs2gym_obs(obs: dm_env.TimeStep.observation) -> np.ndarray | dict[str, A
         return np.asarray(obs)
 
 
-def dm_env_step2gym_step(
-    timestep: dm_env.TimeStep,
-) -> tuple[Any, float, bool, bool, dict[str, Any]]:
+def dm_env_step2gym_step(timestep) -> tuple[Any, float, bool, bool, dict[str, Any]]:
     """Converts a dm_env timestep to the required return info from Gymnasium step() function.
 
     Args:
