@@ -45,7 +45,6 @@ extras["all"] = list({lib for libs in extras.values() for lib in libs})
 extras["testing"] = [
     "pytest==7.1.3",
     "pillow>=9.3.0",
-    "autorom[accept-rom-license]~=0.4.2",
 ]
 
 setup(
