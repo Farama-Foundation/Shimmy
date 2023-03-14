@@ -13,7 +13,8 @@ RUN apt-get update && \
   python3.9 \
   python3.9-dev \
   python3.9-distutils \
-  rsync
+  rsync \
+  xvfb \
 
 # Install pip (we need the latest version not the standard Ubuntu version, to
 # support modern wheels)
