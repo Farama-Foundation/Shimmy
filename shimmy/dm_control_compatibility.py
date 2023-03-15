@@ -86,7 +86,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
 
         obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
-        return obs, info
+        return obs
 
     def step(
         self, action: np.ndarray
