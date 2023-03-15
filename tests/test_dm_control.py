@@ -86,10 +86,9 @@ def test_seeding(env_id):
         # LQR fails this test currently.
         return
 
-    obs_1, info_1 = env_1.reset(seed=42)
-    obs_2, info_2 = env_2.reset(seed=42)
+    obs_1 = env_1.reset(seed=42)
+    obs_2 = env_2.reset(seed=42)
     assert data_equivalence(obs_1, obs_2)
-    assert data_equivalence(info_1, info_2)
     for _ in range(100):
         actions = env_1.action_space.sample()
         obs_1, reward_1, term_1, trunc_1, info_1 = env_1.step(actions)

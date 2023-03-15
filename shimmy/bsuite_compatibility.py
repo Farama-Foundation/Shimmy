@@ -14,7 +14,7 @@ from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 # Until the BSuite authors fix
 # https://github.com/deepmind/bsuite/pull/48
 # This needs to exist...
-np.int = int
+np.int = int  # pyright: ignore[reportGeneralTypeIssues]
 
 
 class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
