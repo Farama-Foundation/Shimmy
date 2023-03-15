@@ -275,7 +275,7 @@ def _register_dm_lab():
         env = deepmind_lab.Lab(env_id, observations, config=config, renderer=renderer)
         return DmLabCompatibilityV0(env)
 
-    register(id="DmLabCompatibility-v0", entry_point=_make_dm_lab_env)  # type: ignore
+    register(id="DmLabCompatibility-v0", entry_point=_make_dm_lab_env)
 
 
 def register_gymnasium_envs():

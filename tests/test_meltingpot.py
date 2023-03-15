@@ -4,14 +4,11 @@ import pytest
 from gymnasium.utils.env_checker import data_equivalence
 from pettingzoo.test import parallel_api_test
 
-try:
-    import meltingpot
-except ImportError:
-    pytest.skip("Meltingpot not installed", allow_module_level=True)
+pytest.importorskip("meltingpot")
 
-from meltingpot.python.configs.substrates import SUBSTRATES
+from meltingpot.python.configs.substrates import SUBSTRATES  # noqa: E402
 
-from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
+from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0  # noqa: E402
 
 
 @pytest.mark.skip(
