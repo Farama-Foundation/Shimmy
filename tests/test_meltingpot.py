@@ -4,7 +4,7 @@ from gymnasium.utils.env_checker import data_equivalence
 from pettingzoo.test import parallel_api_test
 
 pytest.importorskip("meltingpot")
-pytest.importorskip("meltingpot.python")
+
 import meltingpot  # noqa: E402
 import meltingpot.python  # noqa: E402
 from meltingpot.python.configs.substrates import SUBSTRATES  # noqa: E402
