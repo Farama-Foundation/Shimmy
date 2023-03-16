@@ -9,7 +9,7 @@ and modified to modern pettingzoo API
 from __future__ import annotations
 
 import functools
-from typing import Dict, Optional, Tuple
+from typing import Optional
 
 import gymnasium
 import meltingpot.python

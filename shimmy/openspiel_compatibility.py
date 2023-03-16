@@ -2,14 +2,14 @@
 from __future__ import annotations
 
 import functools
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 import numpy as np
 import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
 from gymnasium.utils import seeding
-from pettingzoo.utils.env import AgentID, ObsType
+from pettingzoo.utils.env import ActionType, AgentID, ObsType
 
 
 class OpenspielCompatibilityV0(pz.AECEnv):
@@ -183,7 +183,7 @@ class OpenspielCompatibilityV0(pz.AECEnv):
             action = self.np_random.choice(action_list, p=prob_list)
             self.game_state.apply_action(action)
 
-    def _execute_action_node(self, action: int):
+    def _execute_action_node(self, action: int | np.integer[Any]):
         """_execute_action_node.
 
         Advances the game state.
@@ -349,7 +349,7 @@ class OpenspielCompatibilityV0(pz.AECEnv):
 
         return False
 
-    def step(self, action: int):
+    def step(self, action: int | np.integer[Any]):
         """Steps.
 
         Steps the agent with an action.

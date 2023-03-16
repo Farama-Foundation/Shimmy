@@ -42,6 +42,7 @@ extras = {
     "dm-control": ["dm-control>=1.0.10", "imageio", "h5py>=3.7.0"],
     "dm-control-multi-agent": ["dm-control>=1.0.10", "pettingzoo>=1.22"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
+    "meltingpot": ["pettingzoo>=1.22", "pygame>=2.3.0"],
     "bsuite": ["bsuite>=0.3.5"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})

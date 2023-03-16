@@ -54,6 +54,6 @@ ENV PYTHONPATH="/workspaces/meltingpot"
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
 
-RUN pip install ".[openspiel, testing]" --no-cache-dir
+RUN pip install ".[pettingzoo, testing]" --no-cache-dir
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
