@@ -45,6 +45,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         substrate_name: str,
         render_mode: str | None,
         max_cycles: int = MAX_CYCLES,
+        env: meltingpot.python.utils.substrates.substrate.Substrate | None = None,
     ):
         """Wrapper that converts a openspiel environment into a pettingzoo environment.
 
@@ -52,22 +53,30 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             substrate_name (str): name of meltingpot substrate to load
             render_mode (Optional[str]): render_mode
             max_cycles (Optional[int]): maximum number of cycles (steps) before termination
+            env (Optional[meltingpot.python.utils.substrates.substrate.Substrate]): existing meltingpot env to use
+
         """
-        EzPickle.__init__(self, substrate_name, render_mode, max_cycles)
+        EzPickle.__init__(self, substrate_name, render_mode, max_cycles, env)
 
-        # Create env config
-        self.substrate_name = substrate_name
-        self.player_roles = meltingpot.python.substrate.get_config(
-            self.substrate_name
-        ).default_player_roles
         self.max_cycles = max_cycles
-        self.env_config = {"substrate": self.substrate_name, "roles": self.player_roles}
+        if env is not None:
+            self._env = env
+        else:
+            # Create env config
+            self.substrate_name = substrate_name
+            self.player_roles = meltingpot.python.substrate.get_config(
+                self.substrate_name
+            ).default_player_roles
+            self.env_config = {
+                "substrate": self.substrate_name,
+                "roles": self.player_roles,
+            }
 
-        # Build substrate from pickle
-        self.env_config = config_dict.ConfigDict(self.env_config)
-        self._env = meltingpot.python.substrate.build(
-            self.env_config["substrate"], roles=self.env_config["roles"]
-        )
+            # Build substrate from pickle
+            self.env_config = config_dict.ConfigDict(self.env_config)
+            self._env = meltingpot.python.substrate.build(
+                self.env_config["substrate"], roles=self.env_config["roles"]
+            )
 
         # Set up PettingZoo variables
         self.render_mode = render_mode
@@ -170,7 +179,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     ]:
         """step.
 
-        Updates the environment with a set of actions.
+        Steps through all agents with one action
 
         Args:
             actions: actions to step through the environment with

@@ -6,7 +6,9 @@ from pettingzoo.test import parallel_api_test
 
 pytest.importorskip("meltingpot")
 
+import meltingpot.python  # noqa: E402
 from meltingpot.python.configs.substrates import SUBSTRATES  # noqa: E402
+from ml_collections import config_dict  # noqa: E402
 
 from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0  # noqa: E402
 
@@ -46,8 +48,8 @@ def test_seeding(substrate_name):
 
 
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
-def test_passing_substrates(substrate_name):
-    """Tests the conversion of all melting pot envs."""
+def test_substrate(substrate_name):
+    """Tests the conversion of all melting pot envs, loaded from substrate name."""
     env = MeltingPotCompatibilityV0(substrate_name=substrate_name, render_mode=None)
 
     # api test the env
@@ -57,6 +59,36 @@ def test_passing_substrates(substrate_name):
     while env.agents:
         actions = {agent: env.action_space(agent).sample() for agent in env.agents}
         observations, rewards, terminations, truncations, infos = env.step(actions)
+
+
+def test_custom_substrate():
+    """Tests the conversion of melting pot substrates which have already been loaded (supporting custom envs)."""
+    # Take the first element of the frozen set of substrate names
+    CUSTOM_SUBSTRATE, *_ = SUBSTRATES
+
+    # Create env config
+    player_roles = meltingpot.python.substrate.get_config(
+        CUSTOM_SUBSTRATE
+    ).default_player_roles
+    env_config = {
+        "substrate": CUSTOM_SUBSTRATE,
+        "roles": player_roles,
+    }
+
+    # Build substrate from pickle
+    env_config = config_dict.ConfigDict(env_config)
+    env = meltingpot.python.substrate.build(
+        env_config["substrate"], roles=env_config["roles"]
+    )
+
+    # Test that the already created environment can be converted to pettingzoo
+    env = MeltingPotCompatibilityV0(substrate_name="", render_mode="None", env=env)
+
+    env.reset()
+    for _ in range(10):
+        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
+        env.step(actions)
+        env.render()
 
 
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)

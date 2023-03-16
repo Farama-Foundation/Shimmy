@@ -9,7 +9,7 @@ import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
 from gymnasium.utils import seeding
-from pettingzoo.utils.env import ActionType, AgentID
+from pettingzoo.utils.env import AgentID, ObsType
 
 
 class OpenspielCompatibilityV0(pz.AECEnv):
@@ -94,8 +94,13 @@ class OpenspielCompatibilityV0(pz.AECEnv):
     def action_space(self, agent: AgentID):
         """action_space.
 
+        Get the action space from the underlying OpenSpiel game.
+
         Args:
             agent (AgentID): agent
+
+        Returns:
+            space
         """
         try:
             return spaces.Discrete(self.game.num_distinct_actions())
@@ -108,11 +113,14 @@ class OpenspielCompatibilityV0(pz.AECEnv):
         """render."""
         raise NotImplementedError("No render available for openspiel.")
 
-    def observe(self, agent: AgentID):
+    def observe(self, agent: AgentID) -> ObsType:
         """observe.
 
         Args:
             agent (AgentID): agent
+
+        Returns:
+            observation
         """
         return self.observations[agent]
 
@@ -341,8 +349,10 @@ class OpenspielCompatibilityV0(pz.AECEnv):
 
         return False
 
-    def step(self, action: ActionType):
-        """Steps the environment.
+    def step(self, action: int):
+        """Steps.
+
+        Steps the agent with an action.
 
         Args:
             action (int): action

@@ -91,7 +91,16 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
     def step(
         self, action: np.ndarray
     ) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
-        """Steps through the dm-control environment."""
+        """step.
+
+        Steps through the dm-control environment with a single action.
+
+        Args:
+            action: an action to step the agent with
+
+        Returns:
+            (observation, reward, termination, truncation, info)
+        """
         timestep = self._env.step(action)
 
         obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
@@ -108,7 +117,13 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         )
 
     def render(self) -> np.ndarray | None:
-        """Renders the dm-control env."""
+        """render.
+
+        Renders the dm-control environment.
+
+        Returns:
+            The rendering of the environment, depending on the render mode
+        """
         if self.render_mode == "rgb_array":
             return self._env.physics.render(
                 height=self.render_height,
@@ -117,7 +132,10 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
             )
 
     def close(self):
-        """Closes the environment."""
+        """close.
+
+        Closes the environment.
+        """
         self._env.physics.free()
         self._env.close()
 
