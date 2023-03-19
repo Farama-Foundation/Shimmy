@@ -9,7 +9,7 @@ import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
 from gymnasium.utils import seeding
-from pettingzoo.utils.env import ActionType, AgentID, ObsType
+from pettingzoo.utils.env import AgentID, ObsType
 
 
 class OpenspielCompatibilityV0(pz.AECEnv):
@@ -22,7 +22,7 @@ class OpenspielCompatibilityV0(pz.AECEnv):
     (partially- and fully- observable) grid worlds and social dilemmas.
     """
 
-    metadata = {"render_modes": []}
+    metadata = {"render_modes": ["human"]}
 
     def __init__(
         self,
@@ -110,8 +110,11 @@ class OpenspielCompatibilityV0(pz.AECEnv):
             )
 
     def render(self):
-        """render."""
-        raise NotImplementedError("No render available for openspiel.")
+        """render.
+
+        Print the current game state.
+        """
+        print(self.game_state)
 
     def observe(self, agent: AgentID) -> ObsType:
         """observe.
