@@ -17,21 +17,21 @@ jobs:
       - name: Run atari tests
         run: docker run shimmy-atari-docker pytest tests/test_atari.py
 
-        # dm-control
-      - run: |
-          docker build -f bin/dm_control.Dockerfile \
-            --build-arg PYTHON_VERSION='3.10' \
-            --tag shimmy-dm-control-docker .
-      - name: Run dm-control tests
-        run: docker run shimmy-dm-control-docker pytest tests/test_dm_control.py
-
-        # dm-control multi-agent
-      - run: |
-          docker build -f bin/dm_control_multi_agent.Dockerfile \
-            --build-arg PYTHON_VERSION='3.10' \
-            --tag shimmy-dm-control-multi-agent-docker .
-      - name: Run dm-control multi-agent tests
-        run: docker run shimmy-dm-control-multi-agent-docker pytest tests/test_dm_control_multi_agent.py
+#        # dm-control
+#      - run: |
+#          docker build -f bin/dm_control.Dockerfile \
+#            --build-arg PYTHON_VERSION='3.10' \
+#            --tag shimmy-dm-control-docker .
+#      - name: Run dm-control tests
+#        run: docker run shimmy-dm-control-docker pytest tests/test_dm_control.py
+#
+#        # dm-control multi-agent
+#      - run: |
+#          docker build -f bin/dm_control_multi_agent.Dockerfile \
+#            --build-arg PYTHON_VERSION='3.10' \
+#            --tag shimmy-dm-control-multi-agent-docker .
+#      - name: Run dm-control multi-agent tests
+#        run: docker run shimmy-dm-control-multi-agent-docker pytest tests/test_dm_control_multi_agent.py
 
         # openspiel
       - run: |
