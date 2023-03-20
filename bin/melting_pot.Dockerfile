@@ -31,8 +31,8 @@ RUN apt-get install apt-transport-https curl gnupg -y \
 # Install meltingpot (requires manual installation)
 RUN git clone https://github.com/deepmind/meltingpot.git
 WORKDIR meltingpot/
-RUN install-dmlab2d.sh
-RUN install-meltingpot.sh
-RUN install-extras.sh
+RUN ./install-dmlab2d.sh
+RUN ./install-meltingpot.sh
+RUN ./install-extras.sh
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
