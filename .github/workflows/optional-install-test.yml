@@ -9,35 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        # melting pot
-      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit == 'true' }}
-        name: Load melting pot Docker image (if it has been archived)
-        run: docker load --input bin/melting_pot_docker_image.tar
-      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit != 'true' }}
-        name: Build melting pot from Dockerfile
-        run: |
-          docker build -f bin/melting_pot.Dockerfile \
-            --build-arg PYTHON_VERSION='3.9' \
-            --tag shimmy-melting-pot-docker .
-      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit != 'true ' }}
-        name: Export melting pot docker image
-        run: docker export shimmy-melting-pot-docker:latest > bin/melting_pot_docker_image.tar
-      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit != 'true' }}
-        name: Cache melting pot Docker image
-        id: cache-melting-pot-docker
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-melting-pot-docker
-        with:
-          path: bin/melting_pot_docker_image.tar
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('bin/melting_pot_docker_image.tar') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Run melting pot tests
-        run: docker run shimmy-melting-pot-docker pytest tests/test_melting_pot.py
-
         # Atari
       - run: |
            docker build -f bin/atari.Dockerfile \
@@ -69,5 +40,3 @@ jobs:
             --tag shimmy-openspiel-docker .
       - name: Run openspiel tests
         run: docker run shimmy-openspiel-docker pytest tests/test_openspiel.py
-
-        # TODO: add dm lab and bsuite (?)

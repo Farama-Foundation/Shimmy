@@ -1,5 +1,14 @@
 ## OpenAI Gym
 
+### [OpenAI Gym](https://github.com/openai/gym)
+
+Shimmy provides Gymnasium compatibility wrappers for Gym V26 and V21.
+
+```{figure} /_static/img/openai_gym.png
+    :width: 80%
+    :name: openai gym
+```
+
 ### Installation
 ```
 pip install shimmy[gym]
@@ -9,7 +18,7 @@ pip install shimmy[gym]
 ```python
 import gymnasium as gym
 
-env = gym.make("GymV22CompatibilityV0", env_name="...")
+env = gym.make("GymV21CompatibilityV0", env_name="...")
 ```
 
 ### Class Description
@@ -17,10 +26,10 @@ env = gym.make("GymV22CompatibilityV0", env_name="...")
 .. autoclass:: shimmy.openai_gym_compatibility.GymV26CompatibilityV0
     :members:
     :undoc-members:
-.. autoclass:: shimmy.openai_gym_compatibility.LegacyV22Env
+.. autoclass:: shimmy.openai_gym_compatibility.LegacyV21Env
     :members:
     :undoc-members:
-.. autoclass:: shimmy.openai_gym_compatibility.GymV22CompatibilityV0
+.. autoclass:: shimmy.openai_gym_compatibility.GymV21CompatibilityV0
     :members:
     :undoc-members:
 .. autofunction:: shimmy.openai_gym_compatibility._strip_default_wrappers

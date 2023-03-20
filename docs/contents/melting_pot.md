@@ -1,13 +1,12 @@
 ## Melting Pot (multi-agent)
 
 ### [DeepMind Melting Pot](https://github.com/deepmind/meltingpot) 
-Melting Pot is a suite of test scenarios for multi-agent reinforcement learning.
-* Assesses generalization to novel social situations:
-  * familiar and unfamiliar individuals
-  * social interactions: cooperation, competition, deception, reciprocation, trust, stubbornness
-* 50+ substrates and 250+ test scenarios
+Melting Pot is a suite of test scenarios for multi-agent reinforcement learning, using 2D game environments.
 
-```{figure} https://github.com/deepmind/meltingpot/raw/main/docs/images/meltingpot_montage.gif
+It assesses generalization to novel social situations (familiar and unfamiliar individuals),
+and requires social reasoning such as cooperation, competition, deception, reciprocation, trust, and stubbornness. 
+
+```{figure} /_static/img/meltingpot.gif
     :name: melting pot
 ```
 

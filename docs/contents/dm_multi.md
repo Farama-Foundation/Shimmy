@@ -1,10 +1,12 @@
-## dm-control soccer (multi-agent)
+## DM Control (multi-agent)
 
 ### [DeepMind Control: Soccer](https://shimmy.farama.org/contents/dm_multi/)
 Multi-agent robotics environment where teams of agents compete in soccer. It extends the single-agent [DM Control Locomotion](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md) library, powered by the [MuJoCo](https://github.com/deepmind/mujoco#) physics engine.
 
-```{figure} https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/soccer.png?raw=true
-    :name: soccer
+```{figure} /_static/img/dm_soccer.png
+    :name: DM soccer
+    :alt: DeepMind Soccer
+    :width: 60%
 ```
 
 ### Installation

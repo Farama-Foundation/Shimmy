@@ -3,15 +3,22 @@
 
 ### [DeepMind OpenSpiel](https://github.com/deepmind/open_spiel)
 
-Collection of environments and algorithms for research in general reinforcement learning and search/planning in games. 
+OpenSpiel is a collection of 70+ environments for common board games, card games, as well as simple grid worlds and social dilemmas.
 
-Supports:
-* n-player (single- and multi- agent) zero-sum, cooperative and general-sum games.
-* one-shot and sequential, strictly turn-taking and simultaneous-move games.
-* perfect and imperfect information games.
-* traditional multiagent environments such as (partially- and fully- observable) grid worlds and social dilemmas.
+It supports n-player (single- and multi- agent) zero-sum, cooperative and general-sum, one-shot and sequential, strictly turn-taking and simultaneous-move, perfect and imperfect information games.
 
-```{figure} https://github.com/deepmind/open_spiel/blob/master/docs/_static/OpenSpielB.png?raw=true
+
+[//]: # (Supports:)
+
+[//]: # (* n-player &#40;single- and multi- agent&#41; zero-sum, cooperative and general-sum games.)
+
+[//]: # (* one-shot and sequential, strictly turn-taking and simultaneous-move games.)
+
+[//]: # (* perfect and imperfect information games.)
+
+[//]: # (* traditional multiagent environments such as &#40;partially- and fully- observable&#41; grid worlds and social dilemmas.)
+
+```{figure} /_static/img/openspiel.png
     :name: open spiel
 ```
 

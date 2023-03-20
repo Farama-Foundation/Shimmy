@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.8
+ARG PYTHON_VERSION
 FROM python:$PYTHON_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -19,7 +19,7 @@ RUN apt-get -y update \
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
 
-#RUN pip install ".[meltingpot, testing]" --no-cache-dir
+RUN pip install ".[meltingpot, testing]" --no-cache-dir
 
 # Install bazel (used for dmlab2d install)
 RUN apt-get install apt-transport-https curl gnupg -y \

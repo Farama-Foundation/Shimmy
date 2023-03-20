@@ -4,7 +4,6 @@ from __future__ import annotations
 from typing import Any
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
-from shimmy.melting_pot_compatibility import MeltingPotCompatibilityV0
 from shimmy.openai_gym_compatibility import GymV21CompatibilityV0, GymV26CompatibilityV0
 
 
@@ -37,14 +36,13 @@ except ImportError as e:
 
 
 try:
-    from shimmy.dm_control_multiagent_compatibility import (
-        DmControlMultiAgentCompatibilityV0,
-    )
+    from shimmy.melting_pot_compatibility import MeltingPotCompatibilityV0
 except ImportError as e:
-    DmControlMultiAgentCompatibilityV0 = NotInstallClass(
-        "Dm-control or Pettingzoo is not installed, run `pip install 'shimmy[dm-control-multi-agent]'`",
+    MeltingPotCompatibilityV0 = NotInstallClass(
+        "Melting Pot Pettingzoo is not installed, run `pip install 'shimmy[melting-pot]' and install melting pot via https://github.com/deepmind/meltingpot#installation`",
         e,
     )
+
 
 try:
     from shimmy.openspiel_compatibility import OpenspielCompatibilityV0

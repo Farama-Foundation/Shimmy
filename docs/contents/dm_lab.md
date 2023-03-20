@@ -7,9 +7,10 @@ Suite of challenging 3D navigation and puzzle-solving tasks for learning agents,
 [ioquake3](https://github.com/ioquake/ioq3) and
 [other open source software](#upstream-sources).
 
-```{figure} https://assets-global.website-files.com/621e749a546b7592125f38ed/622679ec36bc1bb2eb6b021a_Tasks.gif
-    :width: 80%
+```{figure} /_static/img/dm_lab.gif
     :name: DM lab
+    :alt: DeepMind Lab
+    :width: 60%
 ```
 
 

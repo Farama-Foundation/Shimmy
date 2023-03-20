@@ -58,10 +58,10 @@ class OpenspielCompatibilityV0(pz.AECEnv):
         We get the observation space from the underlying game.
         OpenSpiel possibly provides information and observation in several forms.
         This wrapper chooses which one to use depending on the following precedence:
-            1. Observation Tensor
-            2. Information Tensor
-            3. Observation String
-            4. Information String
+        1. Observation Tensor
+        2. Information Tensor
+        3. Observation String
+        4. Information String
 
         Args:
             agent (AgentID): agent

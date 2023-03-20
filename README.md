@@ -83,7 +83,7 @@ pip install shimmy[gym]
 ```python
 import gymnasium as gym
 
-env = gym.make("GymV22CompatibilityV0", env_name="...")
+env = gym.make("GymV21CompatibilityV0", env_name="...")
 ```
 
 ### Atari Environments

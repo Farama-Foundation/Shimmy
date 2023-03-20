@@ -1,18 +1,13 @@
-## dm-control (single agent)
+## DM Control
+### [DeepMind Control](https://github.com/deepmind/dm_control/)
+DM Control is a framework for physics-based simulation and reinforcement learning environments using the [MuJoCo](https://github.com/deepmind/mujoco#) physics engine. 
 
-### [DeepMind Control: Control Suite](https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md)
+Shimmy provides compatibility wrappers for the base environments in [Control Suite](https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md), as well as custom environments using [Locomotion](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md).
 
-A set of Python Reinforcement Learning environments powered by the [MuJoCo](https://github.com/deepmind/mujoco#) physics engine.
-
-```{figure} https://github.com/deepmind/dm_control/blob/main/dm_control/suite/all_domains.png?raw=true
-    :name: control suite
-```
-
-### [DeepMind Control: Locomotion](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md) 
-Package containing reusable components for defining control tasks that are related to locomotion. 
-
-```{figure} https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/gaps.png?raw=true
+```{figure} /_static/img/dm_locomotion.png
     :name: locomotion
+    :alt: DeepMind Locomotion
+    :width: 80%
 ```
 
 ### Installation
