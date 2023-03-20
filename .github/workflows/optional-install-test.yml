@@ -19,9 +19,11 @@ jobs:
           docker build -f bin/melting_pot.Dockerfile \
             --build-arg PYTHON_VERSION='3.9' \
             --tag shimmy-melting-pot-docker .
-      - name: Export docker melting pot image
-        run docker export shimmy-melting-pot-docker > bin/melting_pot_docker_image.tar
-      - name: Cache melting pot Docker image
+      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit == 'false' }}
+        name: Export melting pot docker image
+        run: docker export shimmy-melting-pot-docker > bin/melting_pot_docker_image.tar
+      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit == 'false' }}
+        name: Cache melting pot Docker image
         id: cache-melting-pot-docker
         uses: actions/cache@v3
         env:
