@@ -12,11 +12,11 @@ jobs:
 
         # melting pot
       - run: |
-          docker build -f bin/meltingpot.Dockerfile \
+          docker build -f bin/meltin_gpot.Dockerfile \
             --build-arg PYTHON_VERSION='3.9' \
-            --tag shimmy-meltingpot-docker .
-      - name: Run meltingpot tests
-        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py
+            --tag shimmy-melting-pot-docker .
+      - name: Run melting pot tests
+        run: docker run shimmy-melting-pot-docker pytest tests/test_melting_pot.py
 
         # Atari
       - run: |
@@ -34,6 +34,14 @@ jobs:
       - name: Run dm-control tests
         run: docker run shimmy-dm-control-docker pytest tests/test_dm_control.py
 
+        # dm-control multi-agent
+      - run: |
+          docker build -f bin/dm_control_multi_agent.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-dm-control-multi-agent-docker .
+      - name: Run dm-control multi-agent tests
+        run: docker run shimmy-dm-control-multi-agent-docker pytest tests/test_dm_control_multi_agent.py
+
         # openspiel
       - run: |
           docker build -f bin/openspiel.Dockerfile \
@@ -42,4 +50,4 @@ jobs:
       - name: Run openspiel tests
         run: docker run shimmy-openspiel-docker pytest tests/test_openspiel.py
 
-        # add more options
+        # TODO: add dm lab and bsuite (?)

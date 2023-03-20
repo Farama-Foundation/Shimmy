@@ -12,13 +12,13 @@ import functools
 from typing import Optional
 
 import gymnasium
-import meltingpot.python
 import numpy as np
 import pygame
 from gymnasium.utils.ezpickle import EzPickle
 from ml_collections import config_dict
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
+import meltingpot.python
 import shimmy.utils.meltingpot as utils
 
 
@@ -43,7 +43,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     def __init__(
         self,
         substrate_name: str,
-        render_mode: str | None,
+        render_mode: str | None = None,
         max_cycles: int = MAX_CYCLES,
         env: meltingpot.python.utils.substrates.substrate.Substrate | None = None,
     ):
@@ -202,6 +202,10 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             self.agents = []
 
         observations = utils.timestep_to_observations(timestep)
+
+        if self.render_mode == "human":
+            self.render()
+
         return observations, rewards, terminations, truncations, infos
 
     def close(self):
@@ -220,7 +224,13 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             The rendering of the environment, depending on the render mode
         """
         rgb_arr = self.state()[0]["WORLD.RGB"]
-        if self.render_mode == "human":
+
+        if self.render_mode is None:
+            gymnasium.logger.warn(
+                "You are calling render method without specifying any render mode."
+            )
+            return
+        elif self.render_mode == "human":
             rgb_arr = np.transpose(rgb_arr, (1, 0, 2))
             surface = pygame.surfarray.make_surface(rgb_arr)
             rect = surface.get_rect()
@@ -233,4 +243,5 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             pygame.display.update()
             self.clock.tick(self.display_fps)
             return None
-        return rgb_arr
+        elif self.render_mode == "rgb_array":
+            return rgb_arr

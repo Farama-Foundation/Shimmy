@@ -1,6 +1,23 @@
 ## DM Lab
 
+### [DeepMind Lab](https://github.com/deepmind/lab)
+
+Suite of challenging 3D navigation and puzzle-solving tasks for learning agents, based on id Software's
+[Quake III Arena](https://github.com/id-Software/Quake-III-Arena) via
+[ioquake3](https://github.com/ioquake/ioq3) and
+[other open source software](#upstream-sources).
+
+```{figure} https://assets-global.website-files.com/621e749a546b7592125f38ed/622679ec36bc1bb2eb6b021a_Tasks.gif
+    :width: 80%
+    :name: DM lab
+```
+
+
 ### Installation
+
+```
+pip install shimmy
+```
 
 Courtesy to [Danijar Hafner](https://github.com/deepmind/lab/issues/242) for providing this install script.
 ```bash
