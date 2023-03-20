@@ -12,7 +12,7 @@ jobs:
 
         # melting pot
       - run: |
-          docker build -f bin/meltin_gpot.Dockerfile \
+          docker build -f bin/melting_pot.Dockerfile \
             --build-arg PYTHON_VERSION='3.9' \
             --tag shimmy-melting-pot-docker .
       - name: Run melting pot tests
