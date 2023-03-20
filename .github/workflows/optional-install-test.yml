@@ -13,16 +13,16 @@ jobs:
       - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit == 'true' }}
         name: Load melting pot Docker image (if it has been archived)
         run: docker load --input bin/melting_pot_docker_image.tar
-      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit == 'false' }}
+      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit != 'true' }}
         name: Build melting pot from Dockerfile
         run: |
           docker build -f bin/melting_pot.Dockerfile \
             --build-arg PYTHON_VERSION='3.9' \
             --tag shimmy-melting-pot-docker .
-      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit == 'false' }}
+      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit != 'true ' }}
         name: Export melting pot docker image
         run: docker export shimmy-melting-pot-docker > bin/melting_pot_docker_image.tar
-      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit == 'false' }}
+      - if: ${{ steps.cache-melting-pot-docker.outputs.cache-hit != 'true' }}
         name: Cache melting pot Docker image
         id: cache-melting-pot-docker
         uses: actions/cache@v3
