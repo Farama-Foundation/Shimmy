@@ -226,9 +226,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contents/gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents/atari/">Atari Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/dm_control/">dm-control (single agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/dm_multi/">dm-control soccer (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/open_spiel/">OpenSpiel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/dm_control/">DM Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/dm_multi/">DM Control (multi-agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents/dm_lab/">DM Lab</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -284,7 +284,7 @@
             
             <section id="shimmy-is-an-api-conversion-tool-for-popular-external-reinforcement-learning-environments-to-gymnasium-and-pettingzoo-apis">
 <h1>Shimmy is an API conversion tool for popular external reinforcement learning environments to <a class="reference external" href="https://github.com/farama-Foundation/gymnasium">Gymnasium</a> and <a class="reference external" href="https://github.com/farama-Foundation/pettingZoo/">PettingZoo</a> APIs.<a class="headerlink" href="#shimmy-is-an-api-conversion-tool-for-popular-external-reinforcement-learning-environments-to-gymnasium-and-pettingzoo-apis" title="Permalink to this heading">#</a></h1>
-<figure class="align-default">
+<figure class="align-default" id="shimmy-logo">
 <a class="reference internal image-reference" href="_images/shimmy-white.svg"><img alt="Shimmy Logo" src="_images/shimmy-white.svg" width="200" /></a>
 </figure>
 <section id="supported-apis">
@@ -364,7 +364,7 @@ All single agent environments have registration under the Gymnasium API, while a
 <h4>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;GymV22CompatibilityV0&quot;</span><span class="p">,</span> <span class="n">env_name</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;GymV21CompatibilityV0&quot;</span><span class="p">,</span> <span class="n">env_name</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

@@ -8,7 +8,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/dm_lab.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="prev" title="OpenSpiel" href="../open_spiel/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="prev" title="OpenSpiel (multi-agent)" href="../open_spiel/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/dm_lab.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 5.2.3 and Furo 2022.12.07.dev1 -->
@@ -226,9 +226,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_control/">dm-control (single agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_multi/">dm-control soccer (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">DM Lab</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -284,8 +284,21 @@
             
             <section id="dm-lab">
 <h1>DM Lab<a class="headerlink" href="#dm-lab" title="Permalink to this heading">#</a></h1>
+<section id="deepmind-lab">
+<h2><a class="reference external" href="https://github.com/deepmind/lab">DeepMind Lab</a><a class="headerlink" href="#deepmind-lab" title="Permalink to this heading">#</a></h2>
+<p>Suite of challenging 3D navigation and puzzle-solving tasks for learning agents, based on id Software’s
+<a class="reference external" href="https://github.com/id-Software/Quake-III-Arena">Quake III Arena</a> via
+<a class="reference external" href="https://github.com/ioquake/ioq3">ioquake3</a> and
+<a class="reference internal" href="#upstream-sources"><span class="xref myst">other open source software</span></a>.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../../_images/dm_lab.gif"><img alt="DeepMind Lab" src="../../_images/dm_lab.gif" style="width: 60%;" /></a>
+</figure>
+</section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span>
+</pre></div>
+</div>
 <p>Courtesy to <a class="reference external" href="https://github.com/deepmind/lab/issues/242">Danijar Hafner</a> for providing this install script.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
 <span class="nb">set</span><span class="w"> </span>-eu
@@ -434,6 +447,7 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
             <div class="toc-tree">
               <ul>
 <li><a class="reference internal" href="#">DM Lab</a><ul>
+<li><a class="reference internal" href="#deepmind-lab">DeepMind Lab</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>

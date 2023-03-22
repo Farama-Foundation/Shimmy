@@ -8,7 +8,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/atari.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="dm-control (single agent)" href="../dm_control/" /><link rel="prev" title="OpenAI Gym" href="../gym/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Control" href="../dm_control/" /><link rel="prev" title="OpenAI Gym" href="../gym/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/atari.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 5.2.3 and Furo 2022.12.07.dev1 -->
@@ -226,9 +226,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Atari Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_control/">dm-control (single agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_multi/">dm-control soccer (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -284,6 +284,13 @@
             
             <section id="atari-environments">
 <h1>Atari Environments<a class="headerlink" href="#atari-environments" title="Permalink to this heading">#</a></h1>
+<section id="arcade-learning-environment-ale">
+<h2><a class="reference external" href="https://github.com/mgbellemare/Arcade-Learning-Environment">Arcade Learning Environment (ALE)</a><a class="headerlink" href="#arcade-learning-environment-ale" title="Permalink to this heading">#</a></h2>
+<p>A collection of 50+ Atari 2600 games powered by the <a class="reference external" href="https://stella-emu.github.io/">Stella</a> emulator.</p>
+<figure class="align-default" id="ale">
+<a class="reference internal image-reference" href="../../_images/ALE.png"><img alt="Arcade Learning Environment" src="../../_images/ALE.png" style="width: 60%;" /></a>
+</figure>
+</section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">atari</span><span class="p">]</span>
@@ -456,7 +463,7 @@ For complete cloning and restoring of the full state, see <cite>{clone,restore}_
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">dm-control (single agent)</div>
+                <div class="title">DM Control</div>
               </div>
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
@@ -516,6 +523,7 @@ For complete cloning and restoring of the full state, see <cite>{clone,restore}_
             <div class="toc-tree">
               <ul>
 <li><a class="reference internal" href="#">Atari Environments</a><ul>
+<li><a class="reference internal" href="#arcade-learning-environment-ale">Arcade Learning Environment (ALE)</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>

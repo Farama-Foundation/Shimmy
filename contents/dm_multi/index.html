@@ -8,11 +8,11 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/dm_multi.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="OpenSpiel" href="../open_spiel/" /><link rel="prev" title="dm-control (single agent)" href="../dm_control/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="OpenSpiel (multi-agent)" href="../open_spiel/" /><link rel="prev" title="DM Control" href="../dm_control/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/dm_multi.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 5.2.3 and Furo 2022.12.07.dev1 -->
-        <title>dm-control soccer (multi-agent) - Shimmy Documentation</title>
+        <title>DM Control (multi-agent) - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=721f65a87c37740baa8d605b09db5bec3a2987a8" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=b0c92cd440df7c18a0306b0433406327ff2c572f" />
@@ -226,9 +226,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_control/">dm-control (single agent)</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">dm-control soccer (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">DM Control (multi-agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -282,11 +282,18 @@
           </div>
           <article role="main">
             
-            <section id="dm-control-soccer-multi-agent">
-<h1>dm-control soccer (multi-agent)<a class="headerlink" href="#dm-control-soccer-multi-agent" title="Permalink to this heading">#</a></h1>
+            <section id="dm-control-multi-agent">
+<h1>DM Control (multi-agent)<a class="headerlink" href="#dm-control-multi-agent" title="Permalink to this heading">#</a></h1>
+<section id="deepmind-control-soccer">
+<h2><a class="reference external" href="https://shimmy.farama.org/contents/dm_multi/">DeepMind Control: Soccer</a><a class="headerlink" href="#deepmind-control-soccer" title="Permalink to this heading">#</a></h2>
+<p>Multi-agent robotics environment where teams of agents compete in soccer. It extends the single-agent <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md">DM Control Locomotion</a> library, powered by the <a class="reference external" href="https://github.com/deepmind/mujoco#">MuJoCo</a> physics engine.</p>
+<figure class="align-default" id="dm-soccer">
+<a class="reference internal image-reference" href="../../_images/dm_soccer.png"><img alt="DeepMind Soccer" src="../../_images/dm_soccer.png" style="width: 60%;" /></a>
+</figure>
+</section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">dm</span><span class="o">-</span><span class="n">control</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">dm</span><span class="o">-</span><span class="n">control</span><span class="o">-</span><span class="n">multi</span><span class="o">-</span><span class="n">agent</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
@@ -309,6 +316,12 @@
 <span class="p">)</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">DmControlMultiAgentCompatibilityV0</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+
+<span class="n">observations</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span><span class="n">agent</span><span class="p">:</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>  <span class="c1"># this is where you would insert your policy</span>
+    <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -396,7 +409,7 @@ using MuJoCo physics. This compatibility wrapper converts a dm-control environme
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">OpenSpiel</div>
+                <div class="title">OpenSpiel (multi-agent)</div>
               </div>
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
@@ -411,7 +424,7 @@ using MuJoCo physics. This compatibility wrapper converts a dm-control environme
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">dm-control (single agent)</div>
+                <div class="title">DM Control</div>
                 
               </div>
             </a>
@@ -455,7 +468,8 @@ using MuJoCo physics. This compatibility wrapper converts a dm-control environme
           <div class="toc-tree-container">
             <div class="toc-tree">
               <ul>
-<li><a class="reference internal" href="#">dm-control soccer (multi-agent)</a><ul>
+<li><a class="reference internal" href="#">DM Control (multi-agent)</a><ul>
+<li><a class="reference internal" href="#deepmind-control-soccer">DeepMind Control: Soccer</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage-multi-agent">Usage (Multi agent)</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>
