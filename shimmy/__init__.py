@@ -20,12 +20,19 @@ class NotInstallClass:
 
 
 try:
+    from shimmy.bsuite_compatibility import BSuiteCompatibilityV0
+except ImportError as e:
+    BSuiteCompatibilityV0 = NotInstallClass(
+        "BSuite is not installed, run `pip install 'shimmy[bsuite]'`",
+        e,
+    )
+
+try:
     from shimmy.dm_control_compatibility import DmControlCompatibilityV0
 except ImportError as e:
     DmControlCompatibilityV0 = NotInstallClass(
         "Dm-control is not installed, run `pip install 'shimmy[dm-control]'`", e
     )
-
 
 try:
     from shimmy.dm_control_multiagent_compatibility import (
@@ -33,9 +40,19 @@ try:
     )
 except ImportError as e:
     DmControlMultiAgentCompatibilityV0 = NotInstallClass(
-        "Dm-control or Pettingzoo is not installed, run `pip install 'shimmy[dm-control-multi-agent]'`",
+        "Dm-control or PettingZoo is not installed, run `pip install 'shimmy[dm-control]'`",
         e,
     )
+
+
+try:
+    from shimmy.melting_pot_compatibility import MeltingPotCompatibilityV0
+except ImportError as e:
+    MeltingPotCompatibilityV0 = NotInstallClass(
+        "Melting Pot or PettingZoo is not installed, run `pip install 'shimmy[melting-pot]' and install melting pot via https://github.com/deepmind/meltingpot#installation`",
+        e,
+    )
+
 
 try:
     from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
@@ -45,22 +62,16 @@ except ImportError as e:
         e,
     )
 
-try:
-    from shimmy.bsuite_compatibility import BSuiteCompatibilityV0
-except ImportError as e:
-    BSuiteCompatibilityV0 = NotInstallClass(
-        "BSuite is not installed, run `pip install 'shimmy[bsuite]'`",
-        e,
-    )
 
 __all__ = [
     "BSuiteCompatibilityV0",
-    "DmControlCompatibilityV0",
-    "DmControlMultiAgentCompatibilityV0",
-    "OpenspielCompatibilityV0",
-    "DmLabCompatibilityV0",
     "GymV21CompatibilityV0",
     "GymV26CompatibilityV0",
+    "DmControlCompatibilityV0",
+    "DmControlMultiAgentCompatibilityV0",
+    "DmLabCompatibilityV0",
+    "OpenspielCompatibilityV0",
+    "MeltingPotCompatibilityV0",
 ]
 
 
