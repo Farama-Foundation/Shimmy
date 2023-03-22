@@ -1,19 +1,19 @@
-"""Wrapper to convert a openspiel environment into a pettingzoo compatible environment."""
+"""Wrapper to convert an openspiel environment into a pettingzoo compatible environment."""
 from __future__ import annotations
 
 import functools
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 import numpy as np
 import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
 from gymnasium.utils import seeding
-from pettingzoo.utils.env import AgentID
+from pettingzoo.utils.env import AgentID, ObsType
 
 
 class OpenspielCompatibilityV0(pz.AECEnv):
-    """This compatibility wrapper that converts an openspiel environment into a pettingzoo environment.
+    """This compatibility wrapper converts an openspiel environment into a pettingzoo environment.
 
     OpenSpiel is a collection of environments and algorithms for research in general reinforcement learning
     and search/planning in games. OpenSpiel supports n-player (single- and multi- agent) zero-sum,
@@ -22,14 +22,14 @@ class OpenspielCompatibilityV0(pz.AECEnv):
     (partially- and fully- observable) grid worlds and social dilemmas.
     """
 
-    metadata = {"render_modes": []}
+    metadata = {"render_modes": ["human"]}
 
     def __init__(
         self,
         game: pyspiel.Game,
         render_mode: str | None,
     ):
-        """Wrapper that converts a openspiel environment into a pettingzoo environment.
+        """Wrapper to convert a openspiel environment into a pettingzoo environment.
 
         Args:
             game (pyspiel.Game): game
@@ -58,10 +58,10 @@ class OpenspielCompatibilityV0(pz.AECEnv):
         We get the observation space from the underlying game.
         OpenSpiel possibly provides information and observation in several forms.
         This wrapper chooses which one to use depending on the following precedence:
-            1. Observation Tensor
-            2. Information Tensor
-            3. Observation String
-            4. Information String
+        1. Observation Tensor
+        2. Information Tensor
+        3. Observation String
+        4. Information String
 
         Args:
             agent (AgentID): agent
@@ -94,8 +94,13 @@ class OpenspielCompatibilityV0(pz.AECEnv):
     def action_space(self, agent: AgentID):
         """action_space.
 
+        Get the action space from the underlying OpenSpiel game.
+
         Args:
             agent (AgentID): agent
+
+        Returns:
+            space
         """
         try:
             return spaces.Discrete(self.game.num_distinct_actions())
@@ -105,14 +110,20 @@ class OpenspielCompatibilityV0(pz.AECEnv):
             )
 
     def render(self):
-        """render."""
-        raise NotImplementedError("No render available for openspiel.")
+        """render.
 
-    def observe(self, agent: AgentID):
+        Print the current game state.
+        """
+        print(self.game_state)
+
+    def observe(self, agent: AgentID) -> ObsType:
         """observe.
 
         Args:
             agent (AgentID): agent
+
+        Returns:
+            observation
         """
         return self.observations[agent]
 
@@ -123,14 +134,12 @@ class OpenspielCompatibilityV0(pz.AECEnv):
     def reset(
         self,
         seed: int | None = None,
-        return_info: bool | None = False,
         options: dict | None = None,
     ):
         """reset.
 
         Args:
             seed (Optional[int]): seed
-            return_info (Optional[bool]): return_info
             options (Optional[Dict]): options
         """
         # initialize the seed
@@ -177,7 +186,7 @@ class OpenspielCompatibilityV0(pz.AECEnv):
             action = self.np_random.choice(action_list, p=prob_list)
             self.game_state.apply_action(action)
 
-    def _execute_action_node(self, action: int):
+    def _execute_action_node(self, action: int | np.integer[Any]):
         """_execute_action_node.
 
         Advances the game state.
@@ -343,8 +352,10 @@ class OpenspielCompatibilityV0(pz.AECEnv):
 
         return False
 
-    def step(self, action: int):
-        """Steps the environment.
+    def step(self, action: int | np.integer[Any]):
+        """Steps.
+
+        Steps the agent with an action.
 
         Args:
             action (int): action

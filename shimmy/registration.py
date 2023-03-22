@@ -32,7 +32,10 @@ def _register_bsuite_envs():
     def _make_bsuite_generic_env(env: Environment, render_mode: str):
         return BSuiteCompatibilityV0(env, render_mode=render_mode)
 
-    register("bsuite/compatibility-env-v0", _make_bsuite_generic_env)
+    register(
+        "bsuite/compatibility-env-v0",
+        _make_bsuite_generic_env,  # pyright: ignore[reportGeneralTypeIssues]
+    )
 
     # register all prebuilt envs
     def _make_bsuite_env(env_id: str, **env_kwargs: Mapping[str, Any]):
@@ -275,7 +278,10 @@ def _register_dm_lab():
         env = deepmind_lab.Lab(env_id, observations, config=config, renderer=renderer)
         return DmLabCompatibilityV0(env)
 
-    register(id="DmLabCompatibility-v0", entry_point=_make_dm_lab_env)
+    register(
+        id="DmLabCompatibility-v0",
+        entry_point=_make_dm_lab_env,  # pyright: ignore[reportGeneralTypeIssues]
+    )
 
 
 def register_gymnasium_envs():
