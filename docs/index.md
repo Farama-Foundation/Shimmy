@@ -7,7 +7,8 @@ lastpage:
 
 # Shimmy is an API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
 
-```{figure} _static/img/shimmy-white.svg
+```{figure} /_static/img/shimmy-white.svg
+   :name: Shimmy Logo
    :alt: Shimmy Logo
    :width: 200
 ```
@@ -70,7 +71,7 @@ pip install shimmy[gym]
 ```python
 import gymnasium as gym
 
-env = gym.make("GymV22CompatibilityV0", env_name="...")
+env = gym.make("GymV21CompatibilityV0", env_name="...")
 ```
 
 ### Atari Environments
