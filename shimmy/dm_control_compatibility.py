@@ -17,11 +17,7 @@ from dm_control.rl import control
 from gymnasium.core import ObsType
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 
-from shimmy.utils.dm_env_utils import (
-    dm_env_step2gym_step,
-    dm_spec2gym_space,
-    dm_spec2gym_space_old,
-)
+from shimmy.utils.dm_env_utils import dm_env_step2gym_step, dm_spec2gym_space
 
 
 class EnvType(Enum):
@@ -64,7 +60,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         self._env = env
         self.env_type = self._find_env_type(env)
 
-        self.observation_space = dm_spec2gym_space_old(env.observation_spec())
+        self.observation_space = dm_spec2gym_space(env.observation_spec())
         self.action_space = dm_spec2gym_space(env.action_spec())
 
         assert render_mode is None or render_mode in self.metadata["render_modes"]
