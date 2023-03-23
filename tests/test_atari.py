@@ -9,7 +9,7 @@ from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env
 
-from shimmy.utils.envs_configs import ALL_ATARI_GAMES
+from shimmy.utils.envs_configs_utils import ALL_ATARI_GAMES
 
 
 def test_all_atari_roms():

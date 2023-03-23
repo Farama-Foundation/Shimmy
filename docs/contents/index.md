@@ -11,5 +11,5 @@ dm_lab
 dm_control
 dm_multi
 open_spiel
-melting_pot
+meltingpot
 ```

@@ -11,7 +11,7 @@ import gymnasium
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 from pettingzoo import ParallelEnv
 
-from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
+from shimmy.utils.dm_env_utils import dm_obs2gym_obs, dm_spec2gym_space
 
 
 def _unravel_ma_timestep(

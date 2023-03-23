@@ -8,7 +8,7 @@ from typing import Any, Callable, Mapping, NamedTuple, Sequence
 import numpy as np
 from gymnasium.envs.registration import register, registry
 
-from shimmy.utils.envs_configs import (
+from shimmy.utils.envs_configs_utils import (
     ALL_ATARI_GAMES,
     BSUITE_ENVS,
     DM_CONTROL_MANIPULATION_ENVS,
