@@ -1,4 +1,4 @@
-"""Compatibility wrappers for OpenAI gym V22 and V26."""
+"""Compatibility wrappers for OpenAI gym V21 and V26."""
 # pyright: reportGeneralTypeIssues=false, reportPrivateImportUsage=false
 from __future__ import annotations
 

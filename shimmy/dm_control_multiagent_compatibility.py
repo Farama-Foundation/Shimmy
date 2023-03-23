@@ -8,20 +8,21 @@ from typing import Any
 import dm_control.composer
 import dm_env
 import gymnasium
+import numpy as np
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
-from pettingzoo import ParallelEnv
+from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
 from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
 
 
 def _unravel_ma_timestep(
-    timestep: dm_env.TimeStep, agents: list[str]
+    timestep: dm_env.TimeStep, agents: list[AgentID]
 ) -> tuple[
-    dict[str, Any],
-    dict[str, float],
-    dict[str, bool],
-    dict[str, bool],
-    dict[str, Any],
+    dict[AgentID, Any],
+    dict[AgentID, float],
+    dict[AgentID, bool],
+    dict[AgentID, bool],
+    dict[AgentID, Any],
 ]:
     """Opens up the timestep to return obs, reward, terminated, truncated, info."""
     # set terminated and truncated
@@ -34,23 +35,23 @@ def _unravel_ma_timestep(
 
     # expand the observations
     list_observations = [dm_obs2gym_obs(obs) for obs in timestep.observation]
-    observations: dict[str, Any] = dict(zip(agents, list_observations))
+    observations: dict[AgentID, Any] = dict(zip(agents, list_observations))
 
     # sometimes deepmind decides not to reward people
-    rewards: dict[str, float] = dict(zip(agents, repeat(0.0)))
+    rewards: dict[AgentID, float] = dict(zip(agents, repeat(0.0)))
     if timestep.reward:
         rewards = dict(zip(agents, timestep.reward))
 
     # expand everything else
-    terminations: dict[str, bool] = dict(zip(agents, repeat(term)))
-    truncations: dict[str, bool] = dict(zip(agents, repeat(trunc)))
+    terminations: dict[AgentID, bool] = dict(zip(agents, repeat(term)))
+    truncations: dict[AgentID, bool] = dict(zip(agents, repeat(trunc)))
 
     # duplicate infos
     info = {
         "timestep.discount": timestep.discount,
         "timestep.step_type": timestep.step_type,
     }
-    info: dict[str, Any] = dict(zip(agents, repeat(info)))
+    info: dict[AgentID, Any] = dict(zip(agents, repeat(info)))
 
     return (
         observations,
@@ -75,9 +76,9 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
         env: dm_control.composer.Environment,
         render_mode: str | None = None,
     ):
-        """Wrapper that converts a dm control multi-agent environment into a pettingzoo environment.
+        """Wrapper to convert a dm control multi-agent environment into a pettingzoo environment.
 
-        Due to how the underlying environment is setup, this environment is nondeterministic, so seeding doesn't work.
+        Due to how the underlying environment is set up, this environment is nondeterministic, so seeding doesn't work.
 
         Args:
             env (dm_env.Environment): dm control multi-agent environment
@@ -109,17 +110,41 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
             )
 
     @functools.lru_cache(maxsize=None)
-    def observation_space(self, agent):
-        """The observation space for agent."""
+    def observation_space(self, agent: AgentID) -> gymnasium.spaces.Space:
+        """observation_space.
+
+        Get the observation space from the underlying meltingpot substrate.
+
+        Args:
+            agent (AgentID): agent
+
+        Returns:
+            observation_space: spaces.Space
+        """
         return self.obs_spaces[agent]
 
     @functools.lru_cache(maxsize=None)
-    def action_space(self, agent):
-        """The action space for agent."""
+    def action_space(self, agent: AgentID) -> gymnasium.spaces.Space:
+        """action_space.
+
+        Get the action space from the underlying dm-control env.
+
+        Args:
+            agent (AgentID): agent
+
+        Returns:
+            action_space: spaces.Space
+        """
         return self.act_spaces[agent]
 
-    def render(self):
-        """Renders the environment."""
+    def render(self) -> np.ndarray | None:
+        """render.
+
+        Renders the environment.
+
+        Returns:
+            The rendering of the environment, depending on the render mode
+        """
         if self.render_mode is None:
             gymnasium.logger.warn(
                 "You are calling render method without specifying any render mode."
@@ -127,29 +152,58 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
             return
 
     def close(self):
-        """Closes the environment."""
+        """close.
+
+        Closes the environment.
+        """
         self._env.physics.free()
         self._env.close()
 
         if hasattr(self, "viewer"):
             self.viewer.close()
 
-    def reset(self, seed=None, return_info=False, options=None):
-        """Resets the dm-control environment."""
+    def reset(
+        self, seed: int | None = None, options: dict[AgentID, Any] | None = None
+    ) -> ObsDict:
+        """reset.
+
+        Resets the dm-control environment.
+
+        Args:
+            seed: the seed to reset the environment with
+            options: the options to reset the environment with
+
+        Returns:
+            observations
+        """
         self.agents = self.possible_agents[:]
         self.num_moves = 0
 
         timestep = self._env.reset()
 
-        observations, _, _, _, infos = _unravel_ma_timestep(timestep, self.agents)
+        observations, _, _, _, _ = _unravel_ma_timestep(timestep, self.agents)
 
-        if not return_info:
-            return observations
-        else:
-            return observations, infos
+        return observations
 
-    def step(self, actions):
-        """Steps through all agents with the actions."""
+    def step(
+        self, actions: ActionDict
+    ) -> tuple[
+        ObsDict,
+        dict[AgentID, float],
+        dict[AgentID, bool],
+        dict[AgentID, bool],
+        dict[AgentID, Any],
+    ]:
+        """step.
+
+        Steps through all agents with the actions.
+
+        Args:
+            actions: dict of actions to step through the environment with
+
+        Returns:
+            (observations, rewards, terminations, truncations, infos)
+        """
         # assert that the actions _must_ have actions for all agents
         assert len(actions) == len(
             self.agents

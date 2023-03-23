@@ -1,8 +1,8 @@
 """Tests the functionality of the OpenspielWrapper on openspiel envs."""
-
 import numpy as np
 import pyspiel
 import pytest
+from gymnasium.utils.env_checker import data_equivalence
 
 from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
 
@@ -148,8 +148,8 @@ def test_seeding(game):
     env1.reset(seed=42)
     env2.reset(seed=42)
 
-    agent1 = env1.agent_iter()
-    agent2 = env2.agent_iter()
+    agent1 = env1.agents[0]
+    agent2 = env2.agents[0]
 
     a_space1 = env1.action_space(agent1)
     a_space1.seed(42)
@@ -157,22 +157,23 @@ def test_seeding(game):
     a_space2.seed(42)
 
     for agent1, agent2 in zip(env1.agent_iter(), env2.agent_iter()):
+        assert data_equivalence(agent1, agent2), f"Incorrect agent: {agent1} {agent2}"
+
         obs1, rew1, term1, trunc1, info1 = env1.last()
         obs2, rew2, term2, trunc2, info2 = env2.last()
 
-        returns1 = (obs1, rew1, term1, trunc1)
-        returns2 = (obs2, rew2, term2, trunc2)
+        assert data_equivalence(obs1, obs2), f"Incorrect observations: {obs1} {obs2}"
+        assert data_equivalence(rew1, rew2), f"Incorrect rewards: {rew1} {rew2}"
+        assert data_equivalence(term1, term2), f"Incorrect terms: {term1} {term2}"
+        assert data_equivalence(trunc1, trunc2), f"Incorrect truncs: {trunc1} {trunc2}"
+        assert data_equivalence(info1, info2), f"Incorrect info: {info1} {info2}"
 
-        act1 = a_space1.sample(mask=info1["action_mask"])
-        act2 = a_space2.sample(mask=info2["action_mask"])
+        action1 = a_space1.sample(mask=info1["action_mask"])
+        action2 = a_space2.sample(mask=info2["action_mask"])
 
-        env1.step(act1)
-        env2.step(act2)
+        assert data_equivalence(
+            action1, action2
+        ), f"Incorrect actions: {action1} {action2}"
 
-        for stuff1, stuff2 in zip(returns1, returns2):
-            if isinstance(stuff1, bool):
-                assert stuff1 == stuff2, "Incorrect returns on iteration."
-            elif isinstance(stuff1, np.ndarray):
-                assert (stuff1 == stuff2).all(), "Incorrect returns on iteration."
-            elif isinstance(stuff1, str):
-                assert stuff1 == stuff2, "Incorrect returns on iteration."
+        env1.step(action1)
+        env2.step(action2)

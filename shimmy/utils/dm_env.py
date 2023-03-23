@@ -5,6 +5,7 @@ import copy
 from collections import OrderedDict
 from typing import Any
 
+import dm_env
 import numpy as np
 from dm_env.specs import Array, BoundedArray, DiscreteArray
 from gymnasium import spaces
@@ -44,17 +45,31 @@ def dm_spec2gym_space(spec) -> spaces.Space[Any]:
 
 
 def dm_obs2gym_obs(obs) -> np.ndarray | dict[str, Any]:
-    """Converts a dm_env observation to a gymnasium observation."""
+    """Converts a dm_env observation to a gymnasium observation.
+
+    Array observations are converted to numpy arrays. Dict observations are converted recursively per key.
+
+    Args:
+        obs: The dm_env observation
+
+    Returns:
+        The Gymnasium-compatible observation.
+    """
     if isinstance(obs, (OrderedDict, dict)):
         return {key: dm_obs2gym_obs(value) for key, value in copy.copy(obs).items()}
     else:
         return np.asarray(obs)
 
 
-def dm_env_step2gym_step(
-    timestep,
-) -> tuple[Any, float, bool, bool, dict[str, Any]]:
-    """Opens up the timestep to return obs, reward, terminated, truncated, info."""
+def dm_env_step2gym_step(timestep) -> tuple[Any, float, bool, bool, dict[str, Any]]:
+    """Converts a dm_env timestep to the required return info from Gymnasium step() function.
+
+    Args:
+        timestep: The dm_env timestep
+
+    Returns:
+        observation, reward, terminated, truncated, info.
+    """
     obs = dm_obs2gym_obs(timestep.observation)
     reward = timestep.reward or 0
 
