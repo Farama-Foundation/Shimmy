@@ -46,7 +46,7 @@ except ImportError as e:
 
 
 try:
-    from shimmy.melting_pot_compatibility import MeltingPotCompatibilityV0
+    from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 except ImportError as e:
     MeltingPotCompatibilityV0 = NotInstallClass(
         "Melting Pot or PettingZoo is not installed, run `pip install 'shimmy[melting-pot]' and install melting pot via https://github.com/deepmind/meltingpot#installation`",

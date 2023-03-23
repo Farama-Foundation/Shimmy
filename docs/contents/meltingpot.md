@@ -34,7 +34,7 @@ env.close()
 ### Class Description
 
 ```{eval-rst}
-.. autoclass:: shimmy.melting_pot_compatibility.MeltingPotCompatibilityV0
+.. autoclass:: shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0
     :members:
     :undoc-members:
 ```

@@ -10,7 +10,7 @@ import meltingpot.python  # noqa: E402
 from meltingpot.python.configs.substrates import SUBSTRATES  # noqa: E402
 from ml_collections import config_dict  # noqa: E402
 
-from shimmy.melting_pot_compatibility import MeltingPotCompatibilityV0  # noqa: E402
+from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0  # noqa: E402
 
 
 @pytest.mark.skip(
