@@ -11,7 +11,7 @@ import tree
 from gymnasium import spaces
 
 
-def dm_spec2gym_space(spec) -> spaces.Space[Any]:
+def dm_spec2gym_space(spec: tree.Structure[dm_env.specs.Array]) -> spaces.Space[Any]:
     """Converts a dm_env nested structure of specs to a Gymnasium Space.
 
     BoundedArray is converted to Box Gymnasium spaces. DiscreteArray is converted to
