@@ -26,8 +26,6 @@ DM_CONTROL_ENV_IDS = [
     if env_id.startswith("dm_control") and env_id != "dm_control/compatibility-env-v0"
 ]
 
-# DM_CONTROL_ENV_IDS = ["dm_control/CmuHumanoidRunWalls-v0", "dm_control/CmuHumanoidRunGaps-v0"]
-
 
 def test_dm_control_suite_envs():
     """Tests that all DM_CONTROL_ENVS are equal to the known dm-control.suite tasks."""
