@@ -62,13 +62,16 @@ def dm_obs2gym_obs(obs) -> np.ndarray | dict[str, Any]:
     Returns:
         The Gymnasium-compatible observation.
     """
+    """Converts a dm_env observation to a gymnasium observation."""
     if isinstance(obs, (OrderedDict, dict)):
         return {key: dm_obs2gym_obs(value) for key, value in copy.copy(obs).items()}
     else:
         return np.asarray(obs)
 
 
-def dm_env_step2gym_step(timestep) -> tuple[Any, float, bool, bool, dict[str, Any]]:
+def dm_env_step2gym_step(
+    timestep: dm_env.TimeStep,
+) -> tuple[Any, float, bool, bool, dict[str, Any]]:
     """Converts a dm_env timestep to the required return info from Gymnasium step() function.
 
     Args:
