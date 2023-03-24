@@ -17,7 +17,7 @@ from dm_control.rl import control
 from gymnasium.core import ObsType
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 
-from shimmy.utils.dm_env_utils import dm_env_step2gym_step, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 
 
 class EnvType(Enum):

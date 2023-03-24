@@ -9,7 +9,7 @@ from bsuite.environments import Environment
 from gymnasium.core import ObsType
 from gymnasium.error import UnsupportedMode
 
-from shimmy.utils.dm_env_utils import dm_env_step2gym_step, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 
 # Until the BSuite authors fix
 # https://github.com/deepmind/bsuite/pull/48
