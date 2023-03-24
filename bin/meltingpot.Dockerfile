@@ -54,7 +54,7 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot && \
   | tar -xz --directory=/workspaces/meltingpot/meltingpot
 
 # Set Python path
-ENV PYTHONPATH="/workspaces/meltingpot"
+ENV PYTHONPATH="$PYTHONPATH:/workspaces/meltingpot"
 
 
 # Shimmy dependencies
@@ -73,6 +73,9 @@ RUN apt-get -y update \
 
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
+
+# Include Shimmy in Python path
+ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
 
 RUN pip install ".[meltingpot, testing]" --no-cache-dir
 
