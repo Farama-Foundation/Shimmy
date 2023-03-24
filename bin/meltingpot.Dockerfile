@@ -6,7 +6,7 @@ ARG PYTHON_VERSION
 # https://hub.docker.com/r/nvidia/cuda
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04@sha256:b754c43fe9d62e88862d168c4ab9282618a376dbc54871467870366cacfa456e
 
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get update --fix-missing
 
@@ -53,9 +53,17 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot && \
   curl -SL https://storage.googleapis.com/dm-meltingpot/meltingpot-assets-2.1.0.tar.gz \
   | tar -xz --directory=/workspaces/meltingpot/meltingpot
 
-# Set Python path
-ENV PYTHONPATH="$PYTHONPATH:/workspaces/meltingpot"
+# Clone meltingpot repository
+RUN git clone https://github.com/deepmind/meltingpot.git
+RUN cp -r /meltingpot/ /workspaces/meltingpot/ && rm -R /meltingpot/
 
+# Install meltingpot dependencies
+WORKDIR /workspaces/meltingpot/meltingpot/
+
+RUN pip install .
+
+# Set Python path for meltingpot
+ENV PYTHONPATH=${pwd}
 
 # Shimmy dependencies
 RUN apt-get -y update \
