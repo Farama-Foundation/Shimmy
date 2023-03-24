@@ -1,5 +1,5 @@
 # A Dockerfile that sets up a full shimmy install with test dependencies
-ARG PYTHON_VERSION
+#ARG PYTHON_VERSION
 
 # From https://github.com/deepmind/meltingpot/blob/main/.devcontainer/Dockerfile
 # Use Nvidia Ubuntu 20 base (includes CUDA if a supported GPU is present)
@@ -60,7 +60,7 @@ WORKDIR /workspaces/meltingpot/meltingpot/
 RUN pip install .
 
 # Set Python path for meltingpot
-ENV PYTHONPATH=${pwd}
+ENV PYTHONPATH=/workspaces/meltingpot/meltingpot/
 
 # Shimmy dependencies
 RUN apt-get -y update \
@@ -83,6 +83,9 @@ WORKDIR /usr/local/shimmy/
 ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
 
 RUN pip install ".[meltingpot, testing]" --no-cache-dir
+
+# Test that meltingpot.python works within this dockerfile (correct PYTHONPATH)
+RUN python -c "import meltingpot; import meltingpot.python"
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
 
