@@ -37,8 +37,9 @@ extras = {
     "atari": ["ale-py~=0.8.1"],
     # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
     "dm-control": ["dm-control>=1.0.10", "imageio", "h5py>=3.7.0"],
-    "dm-control-multi-agent": ["dm-control>=1.0.10", "pettingzoo>=1.22"],
-    "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22"],
+    "dm-control-multi-agent": ["dm-control>=1.0.10", "pettingzoo>=1.22.4"],
+    "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22.4"],
+    "meltingpot": ["pettingzoo>=1.22.4"],
     "bsuite": ["bsuite>=0.3.5"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
