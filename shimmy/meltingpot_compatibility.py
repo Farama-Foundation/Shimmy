@@ -19,7 +19,7 @@ from gymnasium.utils.ezpickle import EzPickle
 from ml_collections import config_dict
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
-import shimmy.utils.meltingpot_utils as utils
+import shimmy.utils.meltingpot as utils
 
 
 class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):

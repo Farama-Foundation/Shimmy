@@ -12,7 +12,7 @@ import numpy as np
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
-from shimmy.utils.dm_env_utils import dm_obs2gym_obs, dm_spec2gym_space
+from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
 
 
 def _unravel_ma_timestep(

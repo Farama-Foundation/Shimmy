@@ -7,7 +7,7 @@ import gymnasium as gym
 import numpy as np
 from gymnasium.core import ObsType
 
-from shimmy.utils.dm_lab_utils import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
+from shimmy.utils.dm_lab import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
 
 
 class DmLabCompatibilityV0(gym.Env[ObsType, Dict[str, np.ndarray]]):

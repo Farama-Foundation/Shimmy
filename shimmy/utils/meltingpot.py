@@ -4,7 +4,7 @@ import dm_env
 from gymnasium import spaces
 from pettingzoo.utils.env import ObsDict
 
-from shimmy.utils.dm_env_utils import dm_spec2gym_space
+from shimmy.utils.dm_env import dm_spec2gym_space
 
 PLAYER_STR_FORMAT = "player_{index}"
 _WORLD_PREFIX = "WORLD."
