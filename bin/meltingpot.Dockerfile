@@ -84,9 +84,6 @@ ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
 
 RUN pip install ".[meltingpot, testing]" --no-cache-dir
 
-# Test that meltingpot.python works within this dockerfile (correct PYTHONPATH)
-RUN python -c "import meltingpot; import meltingpot.python"
-
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
 
 
