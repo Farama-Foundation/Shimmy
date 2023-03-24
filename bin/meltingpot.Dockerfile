@@ -71,10 +71,10 @@ RUN apt-get -y update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install ".[meltingpot, testing]" --no-cache-dir
-
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
+
+RUN pip install ".[meltingpot, testing]" --no-cache-dir
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
 
