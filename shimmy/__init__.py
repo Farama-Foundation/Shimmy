@@ -40,7 +40,7 @@ try:
     )
 except ImportError as e:
     DmControlMultiAgentCompatibilityV0 = NotInstallClass(
-        "Dm-control or PettingZoo is not installed, run `pip install 'shimmy[dm-control]'`",
+        "Dm-control or PettingZoo is not installed, run `pip install 'shimmy[dm-control-multi-agent]'`",
         e,
     )
 
