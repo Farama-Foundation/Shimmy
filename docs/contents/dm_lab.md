@@ -10,7 +10,7 @@ Suite of challenging 3D navigation and puzzle-solving tasks for learning agents,
 ```{figure} /_static/img/dm_lab.gif
     :name: DM lab
     :alt: DeepMind Lab
-    :width: 60%
+    :width: 80%
 ```
 
 

@@ -5,8 +5,9 @@
 Shimmy provides Gymnasium compatibility wrappers for Gym V26 and V21.
 
 ```{figure} /_static/img/openai_gym.png
-    :width: 80%
-    :name: openai gym
+    :name: OpenAI Gym
+    :alt: OpenAI Gym
+    :width: 100%
 ```
 
 ### Installation

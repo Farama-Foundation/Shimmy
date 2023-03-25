@@ -5,7 +5,7 @@ DM Control is a framework for physics-based simulation and reinforcement learnin
 Shimmy provides compatibility wrappers for the base environments in [Control Suite](https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md), as well as custom environments using [Locomotion](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md).
 
 ```{figure} /_static/img/dm_locomotion.png
-    :name: locomotion
+    :name: DM Locomotion
     :alt: DeepMind Locomotion
     :width: 80%
 ```

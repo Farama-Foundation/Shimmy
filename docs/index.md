@@ -15,21 +15,29 @@ lastpage:
 
 ## Supported APIs
 
-### OpenAI Gym
+### [OpenAI Gym](http://shimmy.farama.org/contents/gym/)
 - Bindings to convert OpenAI Gym environments to Gymnasium Environments.
 
-### Atari Environments for OpenAI Gym
+### [Atari Environments for OpenAI Gym](http://shimmy.farama.org/contents/atari/)
 - Bindings to ALE-py to provide Atari environments in Gymnasium.
 
-### [DeepMind Control](https://github.com/deepmind/dm_control)
+### [DeepMind Control](http://shimmy.farama.org/contents/dm_control/)
 - Gymnasium bindings for single agent environments.
-- Pettingzoo bindings for multiagent soccer environments.
 
-### [DMLab](https://github.com/deepmind/lab)
+### [DeepMind Control: Multi-Agent](http://shimmy.farama.org/contents/dm_multi/)
+- Pettingzoo bindings for multi-agent soccer environments.
+
+### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
 - Pettingzoo bindings for all environments.
 
-### [OpenSpiel](https://github.com/deepmind/open_spiel)
+### [OpenSpiel](shimmy.farama.org/contents/open_spiel/)
 - Pettingzoo bindings for all environments.
+
+### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
+- Gymnasium bindings for all environments.
+
+### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
+- PettingZoo bindings for all environments
 
 ### Incoming Projects
 
@@ -37,8 +45,6 @@ The following are a list of existing environment suites that we are looking into
 We are actively looking for developers to contribute to this project, if you are interested in helping, please reach out to us.
 
 - [The DeepMing Env API](https://github.com/deepmind/dm_env)
-- [Behaviour Suite](https://github.com/deepmind/bsuite)
-- [Melting Pot](https://github.com/deepmind/meltingpot)
 
 ## Installation and Usage
 
@@ -59,135 +65,6 @@ pip install shimmy[testing]
 ```
 pip install shimmy[all, testing]
 ```
-
-### OpenAI Gym
-
-#### Installation
-```
-pip install shimmy[gym]
-```
-
-#### Usage
-```python
-import gymnasium as gym
-
-env = gym.make("GymV21CompatibilityV0", env_name="...")
-```
-
-### Atari Environments
-
-#### Installation
-```
-pip install shimmy[atari]
-```
-
-#### Usage
-```python
-import gymnasium as gym
-
-env = gym.make("ALE/Pong-v5")
-```
-
-### DM Control
-
-#### Installation
-```
-pip install shimmy[dm-control]
-```
-
-#### Usage (Single agent)
-```python
-import gymnasium as gym
-
-env = gym.make("dm_control/acrobot_swingup_sparse-v0")
-```
-
-#### Usage (Multi agent)
-```python
-from dm_control.locomotion import soccer as dm_soccer
-from shimmy.dm_control_multiagent_compatibility import (
-    DmControlMultiAgentCompatibilityV0,
-)
-
-walker_type = dm_soccer.WalkerType.BOXHEAD,
-
-env = dm_soccer.load(
-    team_size=2,
-    time_limit=10.0,
-    disable_walker_contacts=False,
-    enable_field_box=True,
-    terminate_on_goal=False,
-    walker_type=walker_type,
-)
-
-env = DmControlMultiAgentCompatibilityV0(env)
-```
-
-### DM Lab
-
-#### Installation
-
-Courtesy to [Danijar Hafner](https://github.com/deepmind/lab/issues/242) for providing this install script.
-```bash
-#!/bin/sh
-set -eu
-
-# Dependencies
-apt-get update && apt-get install -y \
-    build-essential curl freeglut3 gettext git libffi-dev libglu1-mesa \
-    libglu1-mesa-dev libjpeg-dev liblua5.1-0-dev libosmesa6-dev \
-    libsdl2-dev lua5.1 pkg-config python-setuptools python3-dev \
-    software-properties-common unzip zip zlib1g-dev g++
-pip3 install numpy
-
-# Bazel
-apt-get install -y apt-transport-https curl gnupg
-curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
-mv bazel.gpg /etc/apt/trusted.gpg.d/
-echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
-apt-get update && apt-get install -y bazel
-
-# Build
-git clone https://github.com/deepmind/lab.git
-cd lab
-echo 'build --cxxopt=-std=c++17' > .bazelrc
-bazel build -c opt //python/pip_package:build_pip_package
-./bazel-bin/python/pip_package/build_pip_package /tmp/dmlab_pkg
-pip3 install --force-reinstall /tmp/dmlab_pkg/deepmind_lab-*.whl
-cd ..
-rm -rf lab
-```
-
-#### Usage
-```python
-import deepmind_lab
-
-from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
-
-observations = ["RGBD"]
-config = {"width": "640", "height": "480", "botCount": "2"}
-renderer = "hardware"
-
-env = deepmind_lab.Lab("lt_chasm", observations, config=config, renderer=renderer)
-env = DmLabCompatibilityV0(env)
-```
-
-### OpenSpiel
-
-#### Installation
-```
-pip install shimmy[pettingzoo]
-```
-
-#### Usage
-```python
-import pyspiel
-from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
-
-env = pyspiel.load_game("2048")
-env = OpenspielCompatibilityV0(game=env, render_mode=None)
-```
-
 
 ## At a glance
 

@@ -7,19 +7,11 @@ OpenSpiel is a collection of 70+ environments for common board games, card games
 
 It supports n-player (single- and multi- agent) zero-sum, cooperative and general-sum, one-shot and sequential, strictly turn-taking and simultaneous-move, perfect and imperfect information games.
 
-
-[//]: # (Supports:)
-
-[//]: # (* n-player &#40;single- and multi- agent&#41; zero-sum, cooperative and general-sum games.)
-
-[//]: # (* one-shot and sequential, strictly turn-taking and simultaneous-move games.)
-
-[//]: # (* perfect and imperfect information games.)
-
-[//]: # (* traditional multiagent environments such as &#40;partially- and fully- observable&#41; grid worlds and social dilemmas.)
-
 ```{figure} /_static/img/openspiel.png
-    :name: open spiel
+    :name: Open Spiel
+    :alt: Open Spiel
+    :width: 100%
+
 ```
 
 

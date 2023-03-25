@@ -6,7 +6,7 @@ A collection of 50+ Atari 2600 games powered by the [Stella](https://stella-emu.
 ```{figure} /_static/img/ALE.png
     :name: ALE
     :alt: Arcade Learning Environment
-    :width: 60%
+    :width: 100%
 ```
 
 ### Installation
