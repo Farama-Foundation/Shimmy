@@ -1,4 +1,5 @@
 """Shared utils for meltingpot."""
+# pyright: reportGeneralTypeIssues=false
 
 import dm_env
 from gymnasium import spaces
