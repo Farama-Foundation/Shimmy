@@ -1,8 +1,8 @@
 ## DM Control
 ### [DeepMind Control](https://github.com/deepmind/dm_control/)
-DM Control is a framework for physics-based simulation and reinforcement learning environments using the [MuJoCo](https://github.com/deepmind/mujoco#) physics engine. 
+[DM Control](https://github.com/deepmind/dm_control/) is a framework for physics-based simulation and reinforcement learning environments using the [MuJoCo](https://github.com/deepmind/mujoco#) physics engine. 
 
-Shimmy provides compatibility wrappers for the base environments in [Control Suite](https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md), as well as custom environments using [Locomotion](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md).
+Shimmy provides compatibility wrappers to convert [Control Suite](https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md) environments and custom [Locomotion](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md) environments to [Gymnasium](https://gymnasium.farama.org/).
 
 ```{figure} /_static/img/dm_locomotion.png
     :name: DM Locomotion
@@ -16,10 +16,15 @@ pip install shimmy[dm-control]
 ```
 
 ### Usage (Single agent)
-To run a `dm_control` environment:
+Load a `dm_control` environment:
 ```python
 import gymnasium as gym
+
 env = gym.make("dm_control/acrobot-swingup_sparse-v0", render_mode="human")
+```
+
+Run the environment:
+```python
 observation, info = env.reset(seed=42)
 for _ in range(1000):
    action = env.action_space.sample()  # this is where you would insert your policy

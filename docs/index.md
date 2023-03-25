@@ -7,37 +7,48 @@ lastpage:
 
 # Shimmy is an API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
 
-```{figure} /_static/img/shimmy-white.svg
-   :name: Shimmy Logo
-   :alt: Shimmy Logo
-   :width: 200
+```{figure} /_static/img/dm_lab.gif
+    :name: DM lab
+    :alt: DeepMind Lab
+    :width: 80%
 ```
+
+
+[//]:# (```{figure} /_static/img/shimmy-white.svg)
+
+[//]: # (   :name: Shimmy Logo)
+
+[//]: # (   :alt: Shimmy Logo)
+
+[//]: # (   :width: 200)
+
+[//]: # (```)
 
 ## Supported APIs
 
 ### [OpenAI Gym](http://shimmy.farama.org/contents/gym/)
-- Bindings to convert OpenAI Gym environments to Gymnasium Environments.
+- Bindings to convert [OpenAI Gym](https://github.com/openai/gym) environments to [Gymnasium](https://gymnasium.farama.org/).
 
 ### [Atari Environments for OpenAI Gym](http://shimmy.farama.org/contents/atari/)
-- Bindings to ALE-py to provide Atari environments in Gymnasium.
+- Bindings to convert [ALE-py](https://github.com/mgbellemare/Arcade-Learning-Environment) Atari environments to [Gymnasium](https://gymnasium.farama.org/).
 
 ### [DeepMind Control](http://shimmy.farama.org/contents/dm_control/)
-- Gymnasium bindings for single agent environments.
+- Bindings to convert [DM Control](https://github.com/deepmind/dm_control/) environments to [Gymnasium](https://gymnasium.farama.org/). 
 
 ### [DeepMind Control: Multi-Agent](http://shimmy.farama.org/contents/dm_multi/)
-- Pettingzoo bindings for multi-agent soccer environments.
+- Bindings to convert [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 ### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
-- Pettingzoo bindings for all environments.
+- Bindings to convert all [DM Lab](https://github.com/deepmind/lab) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 ### [OpenSpiel](shimmy.farama.org/contents/open_spiel/)
-- Pettingzoo bindings for all environments.
+- Bindings to convert all [OpenSpiel](https://github.com/deepmind/open_spiel) enviromnets to [PettingZoo](https://pettingzoo.farama.org/).
 
 ### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
-- Gymnasium bindings for all environments.
+- Bindings to convert all [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
 
 ### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
-- PettingZoo bindings for all environments
+- Bindings to convert all [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 ### Incoming Projects
 
@@ -53,8 +64,9 @@ To install Shimmy from PyPI:
 pip install shimmy
 ```
 Out of the box, Shimmy doesn't install any of the dependencies required for the environments it supports.
-To install them, you'll have to install the optional extras.
-All single agent environments have registration under the Gymnasium API, while all multiagent environments must be wrapped using the corresponding compatibility wrappers.
+To install them, you'll have to install the optional extras (e.g., `pip install shimmy[dm_lab]`).
+
+All single agent environments have registration under the [Gymnasium API](https://gymnasium.farama.org/api/registry/), while all multiagent environments must be wrapped using the corresponding compatibility wrappers.
 
 ### For Developers and Testing Only
 ```

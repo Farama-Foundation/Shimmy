@@ -2,7 +2,9 @@
 
 ### [DeepMind Behavior Suite](https://github.com/deepmind/bsuite)
 
-A collection of carefully-designed experiments that investigate various aspects of agent behavior through shared benchmarks. 
+[Behavior Suite](https://github.com/deepmind/bsuite) is a collection of carefully-designed experiments that investigate various aspects of agent behavior through shared benchmarks. 
+
+Shimmy provides compatibility wrappers to convert [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
 
 ```{figure} /_static/img/bsuite.png
     :name: Behavior Suite
@@ -16,10 +18,15 @@ pip install shimmy[bsuite]
 ```
 
 ### Usage
+Load a `bsuite` environment:
 ```python
 import gymnasium as gym
 
 env = gym.make("bsuite/catch-v0")
+```
+
+Run the environment:
+```python
 observation, info = env.reset(seed=42)
 for _ in range(1000):
    action = env.action_space.sample()  # this is where you would insert your policy
