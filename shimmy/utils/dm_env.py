@@ -33,7 +33,7 @@ def dm_spec2gym_space(spec) -> spaces.Space[Any]:
             low = int(0)
             high = int(1)
         else:
-            raise ValueError(f"Unknown dtype {spec.dtype} for spec {spec}.")
+            raise TypeError(f"Unknown dtype {spec.dtype} for spec {spec}.")
 
         return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
     elif type(spec) is DiscreteArray:
