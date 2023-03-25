@@ -7,7 +7,6 @@ lastpage:
 :hidden:
 gym
 atari
-
 dm_control
 dm_multi
 open_spiel
