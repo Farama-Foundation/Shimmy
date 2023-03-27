@@ -230,6 +230,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -287,9 +288,9 @@
 <h1>DM Control<a class="headerlink" href="#dm-control" title="Permalink to this heading">#</a></h1>
 <section id="deepmind-control">
 <h2><a class="reference external" href="https://github.com/deepmind/dm_control/">DeepMind Control</a><a class="headerlink" href="#deepmind-control" title="Permalink to this heading">#</a></h2>
-<p>DM Control is a framework for physics-based simulation and reinforcement learning environments using the <a class="reference external" href="https://github.com/deepmind/mujoco#">MuJoCo</a> physics engine.</p>
-<p>Shimmy provides compatibility wrappers for the base environments in <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md">Control Suite</a>, as well as custom environments using <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md">Locomotion</a>.</p>
-<figure class="align-default" id="locomotion">
+<p><a class="reference external" href="https://github.com/deepmind/dm_control/">DM Control</a> is a framework for physics-based simulation and reinforcement learning environments using the <a class="reference external" href="https://github.com/deepmind/mujoco#">MuJoCo</a> physics engine.</p>
+<p>Shimmy provides compatibility wrappers to convert <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md">Control Suite</a> environments and custom <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md">Locomotion</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p>
+<figure class="align-default" id="dm-locomotion">
 <a class="reference internal image-reference" href="../../_images/dm_locomotion.png"><img alt="DeepMind Locomotion" src="../../_images/dm_locomotion.png" style="width: 80%;" /></a>
 </figure>
 </section>
@@ -301,10 +302,14 @@
 </section>
 <section id="usage-single-agent">
 <h2>Usage (Single agent)<a class="headerlink" href="#usage-single-agent" title="Permalink to this heading">#</a></h2>
-<p>To run a <code class="docutils literal notranslate"><span class="pre">dm_control</span></code> environment:</p>
+<p>Load a <code class="docutils literal notranslate"><span class="pre">dm_control</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
+
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;dm_control/acrobot-swingup_sparse-v0&quot;</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
-<span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run the environment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
    <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>  <span class="c1"># this is where you would insert your policy</span>
    <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
@@ -327,121 +332,6 @@
 </section>
 <section id="class-description">
 <h2>Class Description<a class="headerlink" href="#class-description" title="Permalink to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.dm_control_multiagent_compatibility.</span></span><span class="sig-name descname"><span class="pre">DmControlMultiAgentCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dm_control.composer.Environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0" title="Permalink to this definition">#</a></dt>
-<dd><p>This compatibility wrapper converts multi-agent dm-control environments, primarily soccer, into a Pettingzoo environment.</p>
-<p>Dm-control is DeepMind’s software stack for physics-based simulation and Reinforcement Learning environments,
-using MuJoCo physics. This compatibility wrapper converts a dm-control environment into a gymnasium environment.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.metadata">
-<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_modes':</span> <span class="pre">['human']}</span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.possible_agents">
-<span class="sig-name descname"><span class="pre">possible_agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.possible_agents" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_space">
-<span class="sig-name descname"><span class="pre">observation_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span></span></span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_space" title="Permalink to this definition">#</a></dt>
-<dd><p>observation_space.</p>
-<p>Get the observation space from the underlying meltingpot substrate.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>AgentID</em>) – agent</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>observation_space</strong> – spaces.Space</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_space">
-<span class="sig-name descname"><span class="pre">action_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span></span></span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
-<dd><p>action_space.</p>
-<p>Get the action space from the underlying dm-control env.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>AgentID</em>) – agent</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>action_space</strong> – spaces.Space</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
-<dd><p>render.</p>
-<p>Renders the environment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>The rendering of the environment, depending on the render mode</strong></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.close" title="Permalink to this definition">#</a></dt>
-<dd><p>close.</p>
-<p>Closes the environment.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ObsDict</span></span></span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.reset" title="Permalink to this definition">#</a></dt>
-<dd><p>reset.</p>
-<p>Resets the dm-control environment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>seed</strong> – the seed to reset the environment with</p></li>
-<li><p><strong>options</strong> – the options to reset the environment with</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>observations</strong></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ActionDict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsDict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step" title="Permalink to this definition">#</a></dt>
-<dd><p>step.</p>
-<p>Steps through all agents with the actions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>actions</strong> – dict of actions to step through the environment with</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>(observations, rewards, terminations, truncations, infos)</strong></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.agents">
-<span class="sig-name descname"><span class="pre">agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.agents" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_spaces">
-<span class="sig-name descname"><span class="pre">observation_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_spaces" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_spaces">
-<span class="sig-name descname"><span class="pre">action_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_spaces" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 <dl class="py class">
 <dt class="sig sig-object py" id="shimmy.dm_control_compatibility.DmControlCompatibilityV0">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.dm_control_compatibility.</span></span><span class="sig-name descname"><span class="pre">DmControlCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">composer.Environment</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">control.Environment</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dm_env.Environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">84</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">84</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0" title="Permalink to this definition">#</a></dt>
@@ -582,20 +472,6 @@ uses <cite>np.random.Generator</cite>, therefore the return type of <cite>np_ran
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage-single-agent">Usage (Single agent)</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0</span></code></a><ul>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.metadata</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.possible_agents"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.possible_agents</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.observation_space()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.action_space()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.render()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.close()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.reset"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.reset()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.step()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.agents"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.agents</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_spaces"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.observation_spaces</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_spaces"><code class="docutils literal notranslate"><span class="pre">DmControlMultiAgentCompatibilityV0.action_spaces</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0</span></code></a><ul>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.metadata</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.observation_space</span></code></a></li>

@@ -230,6 +230,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contents/dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents/open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents/dm_lab/">DM Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents/meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -285,50 +286,57 @@
             
             <section id="shimmy-is-an-api-conversion-tool-for-popular-external-reinforcement-learning-environments-to-gymnasium-and-pettingzoo-apis">
 <h1>Shimmy is an API conversion tool for popular external reinforcement learning environments to <a class="reference external" href="https://github.com/farama-Foundation/gymnasium">Gymnasium</a> and <a class="reference external" href="https://github.com/farama-Foundation/pettingZoo/">PettingZoo</a> APIs.<a class="headerlink" href="#shimmy-is-an-api-conversion-tool-for-popular-external-reinforcement-learning-environments-to-gymnasium-and-pettingzoo-apis" title="Permalink to this heading">#</a></h1>
-<figure class="align-default" id="shimmy-logo">
-<a class="reference internal image-reference" href="_images/shimmy-white.svg"><img alt="Shimmy Logo" src="_images/shimmy-white.svg" width="200" /></a>
+<figure class="align-default" id="dm-lab">
+<a class="reference internal image-reference" href="_images/dm_lab.gif"><img alt="DeepMind Lab" src="_images/dm_lab.gif" style="width: 80%;" /></a>
 </figure>
 <section id="supported-apis">
 <h2>Supported APIs<a class="headerlink" href="#supported-apis" title="Permalink to this heading">#</a></h2>
 <section id="openai-gym">
-<h3>OpenAI Gym<a class="headerlink" href="#openai-gym" title="Permalink to this heading">#</a></h3>
+<h3><a class="reference external" href="http://shimmy.farama.org/contents/gym/">OpenAI Gym</a><a class="headerlink" href="#openai-gym" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Bindings to convert OpenAI Gym environments to Gymnasium Environments.</p></li>
+<li><p>Bindings to convert <a class="reference external" href="https://github.com/openai/gym">OpenAI Gym</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
 </ul>
 </section>
 <section id="atari-environments-for-openai-gym">
-<h3>Atari Environments for OpenAI Gym<a class="headerlink" href="#atari-environments-for-openai-gym" title="Permalink to this heading">#</a></h3>
+<h3><a class="reference external" href="http://shimmy.farama.org/contents/atari/">Atari Environments for OpenAI Gym</a><a class="headerlink" href="#atari-environments-for-openai-gym" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Bindings to ALE-py to provide Atari environments in Gymnasium.</p></li>
+<li><p>Bindings to convert <a class="reference external" href="https://github.com/mgbellemare/Arcade-Learning-Environment">ALE-py</a> Atari environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
 </ul>
 </section>
 <section id="deepmind-control">
-<h3><a class="reference external" href="https://github.com/deepmind/dm_control">DeepMind Control</a><a class="headerlink" href="#deepmind-control" title="Permalink to this heading">#</a></h3>
+<h3><a class="reference external" href="http://shimmy.farama.org/contents/dm_control/">DeepMind Control</a><a class="headerlink" href="#deepmind-control" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Gymnasium bindings for single agent environments.</p></li>
-<li><p>Pettingzoo bindings for multiagent soccer environments.</p></li>
+<li><p>Bindings to convert <a class="reference external" href="https://github.com/deepmind/dm_control/">DM Control</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
+</ul>
+</section>
+<section id="deepmind-control-multi-agent">
+<h3><a class="reference external" href="http://shimmy.farama.org/contents/dm_multi/">DeepMind Control: Multi-Agent</a><a class="headerlink" href="#deepmind-control-multi-agent" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Bindings to convert <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md">DM Control Soccer</a> environments to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p></li>
 </ul>
 </section>
 <section id="dmlab">
-<h3><a class="reference external" href="https://github.com/deepmind/lab">DMLab</a><a class="headerlink" href="#dmlab" title="Permalink to this heading">#</a></h3>
+<h3><a class="reference external" href="http://shimmy.farama.org/contents/dm_lab/">DMLab</a><a class="headerlink" href="#dmlab" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Pettingzoo bindings for all environments.</p></li>
+<li><p>Bindings to convert all <a class="reference external" href="https://github.com/deepmind/lab">DM Lab</a> environments to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p></li>
 </ul>
 </section>
 <section id="openspiel">
-<h3><a class="reference external" href="https://github.com/deepmind/open_spiel">OpenSpiel</a><a class="headerlink" href="#openspiel" title="Permalink to this heading">#</a></h3>
+<h3><a class="reference internal" href="#shimmy.farama.org/contents/open_spiel/"><span class="xref myst">OpenSpiel</span></a><a class="headerlink" href="#openspiel" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Pettingzoo bindings for all environments.</p></li>
+<li><p>Bindings to convert all <a class="reference external" href="https://github.com/deepmind/open_spiel">OpenSpiel</a> enviromnets to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p></li>
 </ul>
 </section>
-<section id="incoming-projects">
-<h3>Incoming Projects<a class="headerlink" href="#incoming-projects" title="Permalink to this heading">#</a></h3>
-<p>The following are a list of existing environment suites that we are looking into bringing into Shimmy.
-We are actively looking for developers to contribute to this project, if you are interested in helping, please reach out to us.</p>
+<section id="behavior-suite">
+<h3><a class="reference external" href="http://shimmy.farama.org/contents/bsuite/">Behavior Suite</a><a class="headerlink" href="#behavior-suite" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/deepmind/dm_env">The DeepMing Env API</a></p></li>
-<li><p><a class="reference external" href="https://github.com/deepmind/bsuite">Behaviour Suite</a></p></li>
-<li><p><a class="reference external" href="https://github.com/deepmind/meltingpot">Melting Pot</a></p></li>
+<li><p>Bindings to convert all <a class="reference external" href="https://github.com/deepmind/bsuite">Behavior Suite</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
+</ul>
+</section>
+<section id="melting-pot">
+<h3><a class="reference external" href="http://shimmy.farama.org/contents/meltingpot/">Melting Pot</a><a class="headerlink" href="#melting-pot" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Bindings to convert all <a class="reference external" href="https://github.com/deepmind/meltingpot">Melting Pot</a> environments to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p></li>
 </ul>
 </section>
 </section>
@@ -339,8 +347,8 @@ We are actively looking for developers to contribute to this project, if you are
 </pre></div>
 </div>
 <p>Out of the box, Shimmy doesn’t install any of the dependencies required for the environments it supports.
-To install them, you’ll have to install the optional extras.
-All single agent environments have registration under the Gymnasium API, while all multiagent environments must be wrapped using the corresponding compatibility wrappers.</p>
+To install them, you’ll have to install the optional extras (e.g., <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">shimmy[dm_lab]</span></code>).</p>
+<p>All single agent environments have registration under the <a class="reference external" href="https://gymnasium.farama.org/api/registry/">Gymnasium API</a>, while all multiagent environments must be wrapped using the corresponding compatibility wrappers.</p>
 <section id="for-developers-and-testing-only">
 <h3>For Developers and Testing Only<a class="headerlink" href="#for-developers-and-testing-only" title="Permalink to this heading">#</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">testing</span><span class="p">]</span>
@@ -352,149 +360,6 @@ All single agent environments have registration under the Gymnasium API, while a
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="nb">all</span><span class="p">,</span> <span class="n">testing</span><span class="p">]</span>
 </pre></div>
 </div>
-</section>
-<section id="id1">
-<h3>OpenAI Gym<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
-<section id="installation">
-<h4>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">gym</span><span class="p">]</span>
-</pre></div>
-</div>
-</section>
-<section id="usage">
-<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;GymV21CompatibilityV0&quot;</span><span class="p">,</span> <span class="n">env_name</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="atari-environments">
-<h3>Atari Environments<a class="headerlink" href="#atari-environments" title="Permalink to this heading">#</a></h3>
-<section id="id2">
-<h4>Installation<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">atari</span><span class="p">]</span>
-</pre></div>
-</div>
-</section>
-<section id="id3">
-<h4>Usage<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;ALE/Pong-v5&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="dm-control">
-<h3>DM Control<a class="headerlink" href="#dm-control" title="Permalink to this heading">#</a></h3>
-<section id="id4">
-<h4>Installation<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">dm</span><span class="o">-</span><span class="n">control</span><span class="p">]</span>
-</pre></div>
-</div>
-</section>
-<section id="usage-single-agent">
-<h4>Usage (Single agent)<a class="headerlink" href="#usage-single-agent" title="Permalink to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;dm_control/acrobot_swingup_sparse-v0&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="usage-multi-agent">
-<h4>Usage (Multi agent)<a class="headerlink" href="#usage-multi-agent" title="Permalink to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dm_control.locomotion</span> <span class="kn">import</span> <span class="n">soccer</span> <span class="k">as</span> <span class="n">dm_soccer</span>
-<span class="kn">from</span> <span class="nn">shimmy.dm_control_multiagent_compatibility</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">DmControlMultiAgentCompatibilityV0</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">walker_type</span> <span class="o">=</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">WalkerType</span><span class="o">.</span><span class="n">BOXHEAD</span><span class="p">,</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-    <span class="n">team_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">time_limit</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
-    <span class="n">disable_walker_contacts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">enable_field_box</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">terminate_on_goal</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">walker_type</span><span class="o">=</span><span class="n">walker_type</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">DmControlMultiAgentCompatibilityV0</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="dm-lab">
-<h3>DM Lab<a class="headerlink" href="#dm-lab" title="Permalink to this heading">#</a></h3>
-<section id="id5">
-<h4>Installation<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
-<p>Courtesy to <a class="reference external" href="https://github.com/deepmind/lab/issues/242">Danijar Hafner</a> for providing this install script.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="nb">set</span><span class="w"> </span>-eu
-
-<span class="c1"># Dependencies</span>
-apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>build-essential<span class="w"> </span>curl<span class="w"> </span>freeglut3<span class="w"> </span>gettext<span class="w"> </span>git<span class="w"> </span>libffi-dev<span class="w"> </span>libglu1-mesa<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>libglu1-mesa-dev<span class="w"> </span>libjpeg-dev<span class="w"> </span>liblua5.1-0-dev<span class="w"> </span>libosmesa6-dev<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>libsdl2-dev<span class="w"> </span>lua5.1<span class="w"> </span>pkg-config<span class="w"> </span>python-setuptools<span class="w"> </span>python3-dev<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>software-properties-common<span class="w"> </span>unzip<span class="w"> </span>zip<span class="w"> </span>zlib1g-dev<span class="w"> </span>g++
-pip3<span class="w"> </span>install<span class="w"> </span>numpy
-
-<span class="c1"># Bazel</span>
-apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>apt-transport-https<span class="w"> </span>curl<span class="w"> </span>gnupg
-curl<span class="w"> </span>-fsSL<span class="w"> </span>https://bazel.build/bazel-release.pub.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>&gt;<span class="w"> </span>bazel.gpg
-mv<span class="w"> </span>bazel.gpg<span class="w"> </span>/etc/apt/trusted.gpg.d/
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/bazel.list
-apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>bazel
-
-<span class="c1"># Build</span>
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/deepmind/lab.git
-<span class="nb">cd</span><span class="w"> </span>lab
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;build --cxxopt=-std=c++17&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>.bazelrc
-bazel<span class="w"> </span>build<span class="w"> </span>-c<span class="w"> </span>opt<span class="w"> </span>//python/pip_package:build_pip_package
-./bazel-bin/python/pip_package/build_pip_package<span class="w"> </span>/tmp/dmlab_pkg
-pip3<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>/tmp/dmlab_pkg/deepmind_lab-*.whl
-<span class="nb">cd</span><span class="w"> </span>..
-rm<span class="w"> </span>-rf<span class="w"> </span>lab
-</pre></div>
-</div>
-</section>
-<section id="id6">
-<h4>Usage<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">deepmind_lab</span>
-
-<span class="kn">from</span> <span class="nn">shimmy.dm_lab_compatibility</span> <span class="kn">import</span> <span class="n">DmLabCompatibilityV0</span>
-
-<span class="n">observations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;RGBD&quot;</span><span class="p">]</span>
-<span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;640&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;480&quot;</span><span class="p">,</span> <span class="s2">&quot;botCount&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">}</span>
-<span class="n">renderer</span> <span class="o">=</span> <span class="s2">&quot;hardware&quot;</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">deepmind_lab</span><span class="o">.</span><span class="n">Lab</span><span class="p">(</span><span class="s2">&quot;lt_chasm&quot;</span><span class="p">,</span> <span class="n">observations</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="n">renderer</span><span class="p">)</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">DmLabCompatibilityV0</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="id7">
-<h3>OpenSpiel<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
-<section id="id8">
-<h4>Installation<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">pettingzoo</span><span class="p">]</span>
-</pre></div>
-</div>
-</section>
-<section id="id9">
-<h4>Usage<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyspiel</span>
-<span class="kn">from</span> <span class="nn">shimmy.openspiel_compatibility</span> <span class="kn">import</span> <span class="n">OpenspielCompatibilityV0</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="s2">&quot;2048&quot;</span><span class="p">)</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">OpenspielCompatibilityV0</span><span class="p">(</span><span class="n">game</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 </section>
 </section>
 <section id="at-a-glance">

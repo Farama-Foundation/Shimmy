@@ -230,6 +230,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -287,9 +288,10 @@
 <h1>OpenAI Gym<a class="headerlink" href="#openai-gym" title="Permalink to this heading">#</a></h1>
 <section id="id1">
 <h2><a class="reference external" href="https://github.com/openai/gym">OpenAI Gym</a><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
-<p>Shimmy provides Gymnasium compatibility wrappers for Gym V26 and V21.</p>
+<p><a class="reference external" href="https://github.com/openai/gym">OpenAI Gym</a> is a widely-used standard API for developing reinforcement learning environments and algorithms. OpenAI stopped maintaining Gym in late 2020, leading to the <a class="reference external" href="https://farama.org/">Farama Foundation</a>’s creation of <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a> a maintained fork and drop-in replacement for Gym (see <a class="reference external" href="https://farama.org/Announcing-The-Farama-Foundation">blog post</a>).</p>
+<p>Shimmy provides compatibility wrappers to convert Gym <a class="reference external" href="https://github.com/openai/gym/releases/tag/0.26.0">V26</a> and <a class="reference external" href="https://github.com/openai/gym/releases/tag/v0.21.0">V21</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p>
 <figure class="align-default" id="id2">
-<a class="reference internal image-reference" href="../../_images/openai_gym.png"><img alt="../../_images/openai_gym.png" src="../../_images/openai_gym.png" style="width: 80%;" /></a>
+<a class="reference internal image-reference" href="../../_images/openai_gym.png"><img alt="OpenAI Gym" src="../../_images/openai_gym.png" style="width: 100%;" /></a>
 </figure>
 </section>
 <section id="installation">
@@ -300,6 +302,7 @@
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
+<p>Load a <code class="docutils literal notranslate"><span class="pre">gym</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;GymV21CompatibilityV0&quot;</span><span class="p">,</span> <span class="n">env_name</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
