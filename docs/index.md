@@ -13,17 +13,6 @@ lastpage:
     :width: 80%
 ```
 
-
-[//]:# (```{figure} /_static/img/shimmy-white.svg)
-
-[//]: # (   :name: Shimmy Logo)
-
-[//]: # (   :alt: Shimmy Logo)
-
-[//]: # (   :width: 200)
-
-[//]: # (```)
-
 ## Supported APIs
 
 ### [OpenAI Gym](http://shimmy.farama.org/contents/gym/)
@@ -50,12 +39,6 @@ lastpage:
 ### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
 - Bindings to convert all [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
-### Incoming Projects
-
-The following are a list of existing environment suites that we are looking into bringing into Shimmy.
-We are actively looking for developers to contribute to this project, if you are interested in helping, please reach out to us.
-
-- [The DeepMing Env API](https://github.com/deepmind/dm_env)
 
 ## Installation and Usage
 
