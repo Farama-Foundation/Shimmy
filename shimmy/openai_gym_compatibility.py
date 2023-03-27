@@ -21,6 +21,7 @@ from gymnasium.spaces import (
     Text,
     Tuple,
 )
+from gymnasium.utils import EzPickle
 from gymnasium.utils.step_api_compatibility import (
     convert_to_terminated_truncated_step_api,
 )
@@ -40,7 +41,7 @@ else:
     GYM_IMPORT_ERROR = None
 
 
-class GymV26CompatibilityV0(gymnasium.Env[ObsType, ActType]):
+class GymV26CompatibilityV0(gymnasium.Env[ObsType, ActType], EzPickle):
     """This compatibility layer converts a Gym v26 environment to a Gymnasium environment.
 
     Gym is the original open source Python library for developing and comparing reinforcement learning algorithms
@@ -65,6 +66,7 @@ class GymV26CompatibilityV0(gymnasium.Env[ObsType, ActType]):
             make_kwargs: Additional keyword arguments for make
             env: An gym environment to wrap.
         """
+        EzPickle.__init__(self, env_id, make_kwargs, env)
         if GYM_IMPORT_ERROR is not None:
             raise error.DependencyNotInstalled(
                 f"{GYM_IMPORT_ERROR} (Hint: You need to install gym with `pip install gym` to use gym environments"

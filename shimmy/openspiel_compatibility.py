@@ -5,14 +5,14 @@ import functools
 from typing import Any, Dict, Optional
 
 import numpy as np
-import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
-from gymnasium.utils import seeding
+from gymnasium.utils import EzPickle, seeding
+from pettingzoo import AECEnv
 from pettingzoo.utils.env import AgentID, ObsType
 
 
-class OpenspielCompatibilityV0(pz.AECEnv):
+class OpenspielCompatibilityV0(AECEnv, EzPickle):
     """This compatibility wrapper converts an openspiel environment into a pettingzoo environment.
 
     OpenSpiel is a collection of environments and algorithms for research in general reinforcement learning
@@ -35,6 +35,7 @@ class OpenspielCompatibilityV0(pz.AECEnv):
             game (pyspiel.Game): game
             render_mode (Optional[str]): render_mode
         """
+        EzPickle.__init__(self, game, render_mode)
         super().__init__()
         self.game = game
         self.possible_agents = [

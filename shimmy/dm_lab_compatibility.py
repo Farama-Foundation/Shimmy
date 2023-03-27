@@ -6,11 +6,12 @@ from typing import Any, Dict
 import gymnasium as gym
 import numpy as np
 from gymnasium.core import ObsType
+from gymnasium.utils import EzPickle
 
 from shimmy.utils.dm_lab import dm_lab_obs2gym_obs_space, dm_lab_spec2gym_space
 
 
-class DmLabCompatibilityV0(gym.Env[ObsType, Dict[str, np.ndarray]]):
+class DmLabCompatibilityV0(gym.Env[ObsType, Dict[str, np.ndarray]], EzPickle):
     """This compatibility wrapper converts a dm_lab-control environment into a gymnasium environment.
 
     DeepMind Lab is a 3D learning environment based on id Software's Quake III Arena via ioquake3 and
@@ -27,6 +28,7 @@ class DmLabCompatibilityV0(gym.Env[ObsType, Dict[str, np.ndarray]]):
         render_mode: None = None,
     ):
         """Initialises the environment with a render mode along with render information."""
+        EzPickle.__init__(self, env, render_mode)
         self._env = env
 
         # need to do this to figure out what observation spec the user used

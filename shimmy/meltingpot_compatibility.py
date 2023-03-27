@@ -15,7 +15,7 @@ import gymnasium
 import meltingpot.python
 import numpy as np
 import pygame
-from gymnasium.utils.ezpickle import EzPickle
+from gymnasium.utils import EzPickle
 from ml_collections import config_dict
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 

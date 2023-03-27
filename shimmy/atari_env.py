@@ -21,7 +21,7 @@ import gymnasium.logger as logger
 import numpy as np
 from gymnasium.error import Error
 from gymnasium.spaces import Box, Discrete
-from gymnasium.utils.ezpickle import EzPickle
+from gymnasium.utils import EzPickle
 
 if sys.version_info < (3, 11):
     from typing_extensions import NotRequired, TypedDict
