@@ -2,15 +2,17 @@
 
 ### [DeepMind Lab](https://github.com/deepmind/lab)
 
-Suite of challenging 3D navigation and puzzle-solving tasks for learning agents, based on id Software's
+[DM Lab](https://github.com/deepmind/lab) is a suite of challenging 3D navigation and puzzle-solving tasks for learning agents, based on id Software's
 [Quake III Arena](https://github.com/id-Software/Quake-III-Arena) via
 [ioquake3](https://github.com/ioquake/ioq3) and
 [other open source software](#upstream-sources).
 
+Shimmy provides compatibility wrappers to convert all DM Lab environments to [Gymnasium](https://gymnasium.farama.org/).
+
 ```{figure} /_static/img/dm_lab.gif
     :name: DM lab
     :alt: DeepMind Lab
-    :width: 60%
+    :width: 80%
 ```
 
 
@@ -52,9 +54,9 @@ rm -rf lab
 ```
 
 ### Usage
+Load a `deepmind_lab` environment:
 ```python
 import deepmind_lab
-
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 
 observations = ["RGBD"]
@@ -64,6 +66,14 @@ renderer = "hardware"
 env = deepmind_lab.Lab("lt_chasm", observations, config=config, renderer=renderer)
 env = DmLabCompatibilityV0(env)
 ```
+
+[//]: # (Run the environment:)
+
+[//]: # (```python)
+
+[//]: # ()
+[//]: # (```)
+[//]: # (TODO: add full usage)
 
 ### Class Description
 ```{eval-rst}
