@@ -12,7 +12,7 @@ jobs:
 
         # dm-control
       - run: |
-          docker build -f bin/dm_control.Dockerfile \
+          docker build -f bin/dm_control_multiagent.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
             --tag shimmy-dm-control-multi-agent-docker .
       - name: Run dm-control-multi-agent tests
