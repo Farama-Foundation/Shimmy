@@ -53,6 +53,14 @@ except ImportError as e:
         e,
     )
 
+try:
+    from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
+except ImportError as e:
+    MeltingPotCompatibilityV0 = NotInstallClass(
+        "Melting Pot or PettingZoo is not installed, run `pip install 'shimmy[melting-pot]' and install melting pot via https://github.com/deepmind/meltingpot#installation`",
+        e,
+    )
+
 __all__ = [
     "BSuiteCompatibilityV0",
     "DmControlCompatibilityV0",
@@ -61,6 +69,7 @@ __all__ = [
     "DmLabCompatibilityV0",
     "GymV21CompatibilityV0",
     "GymV26CompatibilityV0",
+    "MeltingPotCompatibilityV0",
 ]
 
 
