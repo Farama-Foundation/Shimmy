@@ -12,4 +12,5 @@ dm_multi
 open_spiel
 dm_lab
 bsuite
+meltingpot
 ```
