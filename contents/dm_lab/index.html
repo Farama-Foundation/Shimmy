@@ -8,7 +8,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/dm_lab.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Behavior Suite" href="../bsuite/" /><link rel="prev" title="OpenSpiel (multi-agent)" href="../open_spiel/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Melting Pot (multi-agent)" href="../meltingpot/" /><link rel="prev" title="OpenSpiel (multi-agent)" href="../open_spiel/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/dm_lab.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 5.2.3 and Furo 2022.12.07.dev1 -->
@@ -230,7 +230,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -288,13 +287,12 @@
 <h1>DM Lab<a class="headerlink" href="#dm-lab" title="Permalink to this heading">#</a></h1>
 <section id="deepmind-lab">
 <h2><a class="reference external" href="https://github.com/deepmind/lab">DeepMind Lab</a><a class="headerlink" href="#deepmind-lab" title="Permalink to this heading">#</a></h2>
-<p><a class="reference external" href="https://github.com/deepmind/lab">DM Lab</a> is a suite of challenging 3D navigation and puzzle-solving tasks for learning agents, based on id Software’s
+<p>Suite of challenging 3D navigation and puzzle-solving tasks for learning agents, based on id Software’s
 <a class="reference external" href="https://github.com/id-Software/Quake-III-Arena">Quake III Arena</a> via
 <a class="reference external" href="https://github.com/ioquake/ioq3">ioquake3</a> and
 <a class="reference internal" href="#upstream-sources"><span class="xref myst">other open source software</span></a>.</p>
-<p>Shimmy provides compatibility wrappers to convert all DM Lab environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p>
 <figure class="align-default" id="id1">
-<a class="reference internal image-reference" href="../../_images/dm_lab.gif"><img alt="DeepMind Lab" src="../../_images/dm_lab.gif" style="width: 80%;" /></a>
+<a class="reference internal image-reference" href="../../_images/dm_lab.gif"><img alt="DeepMind Lab" src="../../_images/dm_lab.gif" style="width: 60%;" /></a>
 </figure>
 </section>
 <section id="installation">
@@ -335,8 +333,8 @@ rm<span class="w"> </span>-rf<span class="w"> </span>lab
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
-<p>Load a <code class="docutils literal notranslate"><span class="pre">deepmind_lab</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">deepmind_lab</span>
+
 <span class="kn">from</span> <span class="nn">shimmy.dm_lab_compatibility</span> <span class="kn">import</span> <span class="n">DmLabCompatibilityV0</span>
 
 <span class="n">observations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;RGBD&quot;</span><span class="p">]</span>
@@ -407,12 +405,12 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
         <footer>
           
           <div class="related-pages">
-            <a class="next-page" href="../bsuite/">
+            <a class="next-page" href="../meltingpot/">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Behavior Suite</div>
+                <div class="title">Melting Pot (multi-agent)</div>
               </div>
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>

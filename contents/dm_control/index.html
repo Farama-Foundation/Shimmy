@@ -230,7 +230,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -288,9 +287,9 @@
 <h1>DM Control<a class="headerlink" href="#dm-control" title="Permalink to this heading">#</a></h1>
 <section id="deepmind-control">
 <h2><a class="reference external" href="https://github.com/deepmind/dm_control/">DeepMind Control</a><a class="headerlink" href="#deepmind-control" title="Permalink to this heading">#</a></h2>
-<p><a class="reference external" href="https://github.com/deepmind/dm_control/">DM Control</a> is a framework for physics-based simulation and reinforcement learning environments using the <a class="reference external" href="https://github.com/deepmind/mujoco#">MuJoCo</a> physics engine.</p>
-<p>Shimmy provides compatibility wrappers to convert <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md">Control Suite</a> environments and custom <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md">Locomotion</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p>
-<figure class="align-default" id="dm-locomotion">
+<p>DM Control is a framework for physics-based simulation and reinforcement learning environments using the <a class="reference external" href="https://github.com/deepmind/mujoco#">MuJoCo</a> physics engine.</p>
+<p>Shimmy provides compatibility wrappers for the base environments in <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md">Control Suite</a>, as well as custom environments using <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md">Locomotion</a>.</p>
+<figure class="align-default" id="locomotion">
 <a class="reference internal image-reference" href="../../_images/dm_locomotion.png"><img alt="DeepMind Locomotion" src="../../_images/dm_locomotion.png" style="width: 80%;" /></a>
 </figure>
 </section>
@@ -302,14 +301,10 @@
 </section>
 <section id="usage-single-agent">
 <h2>Usage (Single agent)<a class="headerlink" href="#usage-single-agent" title="Permalink to this heading">#</a></h2>
-<p>Load a <code class="docutils literal notranslate"><span class="pre">dm_control</span></code> environment:</p>
+<p>To run a <code class="docutils literal notranslate"><span class="pre">dm_control</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
-
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;dm_control/acrobot-swingup_sparse-v0&quot;</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Run the environment:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
    <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>  <span class="c1"># this is where you would insert your policy</span>
    <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
