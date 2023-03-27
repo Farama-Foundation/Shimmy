@@ -230,6 +230,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -286,9 +288,14 @@
 <h1>Atari Environments<a class="headerlink" href="#atari-environments" title="Permalink to this heading">#</a></h1>
 <section id="arcade-learning-environment-ale">
 <h2><a class="reference external" href="https://github.com/mgbellemare/Arcade-Learning-Environment">Arcade Learning Environment (ALE)</a><a class="headerlink" href="#arcade-learning-environment-ale" title="Permalink to this heading">#</a></h2>
-<p>A collection of 50+ Atari 2600 games powered by the <a class="reference external" href="https://stella-emu.github.io/">Stella</a> emulator.</p>
+<p><a class="reference external" href="https://github.com/mgbellemare/Arcade-Learning-Environment">ALE</a> is a collection of 50+ Atari 2600 games powered by the <a class="reference external" href="https://stella-emu.github.io/">Stella</a> emulator.</p>
+<p>Shimmy provides compatibility wrappers to convert all <a class="reference external" href="https://github.com/mgbellemare/Arcade-Learning-Environment">ALE</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p>
 <figure class="align-default" id="ale">
-<a class="reference internal image-reference" href="../../_images/ALE.png"><img alt="Arcade Learning Environment" src="../../_images/ALE.png" style="width: 60%;" /></a>
+<a class="reference internal image-reference" href="../../_images/ALE.png"><img alt="Arcade Learning Environment" src="../../_images/ALE.png" style="width: 100%;" /></a>
+</figure>
+<p>Note: <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a> also provides 20+ multi-agent Atari environments: <a class="reference external" href="https://pettingzoo.farama.org/environments/atari/">PettingZoo Atari</a></p>
+<figure class="align-default" id="pettingzoo-atari">
+<a class="reference internal image-reference" href="https://pettingzoo.farama.org/_images/atari_double_dunk.gif"><img alt="PettingZoo Atari" src="https://pettingzoo.farama.org/_images/atari_double_dunk.gif" style="width: 40%;" /></a>
 </figure>
 </section>
 <section id="installation">
@@ -299,9 +306,21 @@
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
+<p>Load an <code class="docutils literal notranslate"><span class="pre">ALE</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;ALE/Pong-v5&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run the environment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+   <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>  <span class="c1"># this is where you would insert your policy</span>
+   <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+   <span class="k">if</span> <span class="n">terminated</span> <span class="ow">or</span> <span class="n">truncated</span><span class="p">:</span>
+      <span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>

@@ -230,6 +230,8 @@
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -285,10 +287,11 @@
             <section id="dm-control-multi-agent">
 <h1>DM Control (multi-agent)<a class="headerlink" href="#dm-control-multi-agent" title="Permalink to this heading">#</a></h1>
 <section id="deepmind-control-soccer">
-<h2><a class="reference external" href="https://shimmy.farama.org/contents/dm_multi/">DeepMind Control: Soccer</a><a class="headerlink" href="#deepmind-control-soccer" title="Permalink to this heading">#</a></h2>
-<p>Multi-agent robotics environment where teams of agents compete in soccer. It extends the single-agent <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md">DM Control Locomotion</a> library, powered by the <a class="reference external" href="https://github.com/deepmind/mujoco#">MuJoCo</a> physics engine.</p>
+<h2><a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md">DeepMind Control: Soccer</a><a class="headerlink" href="#deepmind-control-soccer" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md">DM Control Soccer</a> is a multi-agent robotics environment where teams of agents compete in soccer. It extends the single-agent <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md">DM Control Locomotion</a> library, powered by the <a class="reference external" href="https://github.com/deepmind/mujoco#">MuJoCo</a> physics engine.</p>
+<p>Shimmy provides compatibility wrappers to convert all <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md">DM Control Soccer</a> environments to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p>
 <figure class="align-default" id="dm-soccer">
-<a class="reference internal image-reference" href="../../_images/dm_soccer.png"><img alt="DeepMind Soccer" src="../../_images/dm_soccer.png" style="width: 60%;" /></a>
+<a class="reference internal image-reference" href="../../_images/dm_soccer.png"><img alt="DeepMind Soccer" src="../../_images/dm_soccer.png" style="width: 80%;" /></a>
 </figure>
 </section>
 <section id="installation">
@@ -299,25 +302,16 @@
 </section>
 <section id="usage-multi-agent">
 <h2>Usage (Multi agent)<a class="headerlink" href="#usage-multi-agent" title="Permalink to this heading">#</a></h2>
+<p>Load a <code class="docutils literal notranslate"><span class="pre">dm_control.locomotion.soccer</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dm_control.locomotion</span> <span class="kn">import</span> <span class="n">soccer</span> <span class="k">as</span> <span class="n">dm_soccer</span>
-<span class="kn">from</span> <span class="nn">shimmy.dm_control_multiagent_compatibility</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">DmControlMultiAgentCompatibilityV0</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">shimmy.dm_control_multiagent_compatibility</span> <span class="kn">import</span> <span class="n">DmControlMultiAgentCompatibilityV0</span><span class="p">)</span>
 
-<span class="n">walker_type</span> <span class="o">=</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">WalkerType</span><span class="o">.</span><span class="n">BOXHEAD</span><span class="p">,</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-    <span class="n">team_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">time_limit</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
-    <span class="n">disable_walker_contacts</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">enable_field_box</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">terminate_on_goal</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">walker_type</span><span class="o">=</span><span class="n">walker_type</span><span class="p">,</span>
-<span class="p">)</span>
-
+<span class="n">env</span> <span class="o">=</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">team_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">DmControlMultiAgentCompatibilityV0</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
-
-<span class="n">observations</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Run the environment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">observations</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 <span class="k">while</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
     <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span><span class="n">agent</span><span class="p">:</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>  <span class="c1"># this is where you would insert your policy</span>
     <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>

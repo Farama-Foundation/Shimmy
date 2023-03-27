@@ -230,6 +230,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">OpenSpiel (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -286,10 +288,11 @@
 <h1>OpenSpiel (multi-agent)<a class="headerlink" href="#openspiel-multi-agent" title="Permalink to this heading">#</a></h1>
 <section id="deepmind-openspiel">
 <h2><a class="reference external" href="https://github.com/deepmind/open_spiel">DeepMind OpenSpiel</a><a class="headerlink" href="#deepmind-openspiel" title="Permalink to this heading">#</a></h2>
-<p>OpenSpiel is a collection of 70+ environments for common board games, card games, as well as simple grid worlds and social dilemmas.</p>
+<p><a class="reference external" href="https://github.com/deepmind/open_spiel">OpenSpiel</a> is a collection of 70+ environments for common board games, card games, as well as simple grid worlds and social dilemmas.</p>
 <p>It supports n-player (single- and multi- agent) zero-sum, cooperative and general-sum, one-shot and sequential, strictly turn-taking and simultaneous-move, perfect and imperfect information games.</p>
+<p>Shimmy provides compatibility wrappers to convert all <a class="reference external" href="https://github.com/deepmind/open_spiel">OpenSpiel</a> environments to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p>
 <figure class="align-default" id="open-spiel">
-<img alt="../../_images/openspiel.png" src="../../_images/openspiel.png" />
+<a class="reference internal image-reference" href="../../_images/openspiel.png"><img alt="Open Spiel" src="../../_images/openspiel.png" style="width: 100%;" /></a>
 </figure>
 </section>
 <section id="installation">
@@ -300,11 +303,55 @@
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
+<p>Load an <code class="docutils literal notranslate"><span class="pre">openspiel</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyspiel</span>
 <span class="kn">from</span> <span class="nn">shimmy.openspiel_compatibility</span> <span class="kn">import</span> <span class="n">OpenspielCompatibilityV0</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="s2">&quot;2048&quot;</span><span class="p">)</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">OpenspielCompatibilityV0</span><span class="p">(</span><span class="n">game</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">OpenspielCompatibilityV0</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run the environment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">agent_iter</span><span class="p">():</span>
+    <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">termination</span><span class="p">,</span> <span class="n">truncation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">termination</span> <span class="ow">or</span> <span class="n">truncation</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;action_mask&quot;</span><span class="p">])</span>  <span class="c1"># this is where you would insert your policy</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note: OpenSpiel does not provide rendering for all environments.</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">env.render()</span></code> will return different results depending on the environment.</p>
+<ul class="simple">
+<li><p>ASCII text visualization (Backgammon):</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+------|------+</span>
+<span class="o">|</span><span class="n">o</span><span class="o">...</span><span class="n">x</span><span class="o">.|</span><span class="n">x</span><span class="o">....</span><span class="n">o</span><span class="o">|</span>
+<span class="o">|</span><span class="n">o</span><span class="o">...</span><span class="n">x</span><span class="o">.|</span><span class="n">x</span><span class="o">....</span><span class="n">o</span><span class="o">|</span>
+<span class="o">|</span><span class="n">o</span><span class="o">...</span><span class="n">x</span><span class="o">.|</span><span class="n">x</span><span class="o">.....|</span>
+<span class="o">|</span><span class="n">o</span><span class="o">.....|</span><span class="n">x</span><span class="o">.....|</span>
+<span class="o">|</span><span class="n">o</span><span class="o">.....|</span><span class="n">x</span><span class="o">.....|</span>
+<span class="o">|</span>      <span class="o">|</span>      <span class="o">|</span>
+<span class="o">|</span><span class="n">x</span><span class="o">.....|</span><span class="n">o</span><span class="o">.....|</span>
+<span class="o">|</span><span class="n">x</span><span class="o">.....|</span><span class="n">o</span><span class="o">.....|</span>
+<span class="o">|</span><span class="n">x</span><span class="o">...</span><span class="n">o</span><span class="o">.|</span><span class="n">o</span><span class="o">.....|</span>
+<span class="o">|</span><span class="n">x</span><span class="o">...</span><span class="n">o</span><span class="o">.|</span><span class="n">o</span><span class="o">....</span><span class="n">x</span><span class="o">|</span>
+<span class="o">|</span><span class="n">x</span><span class="o">...</span><span class="n">o</span><span class="o">.|</span><span class="n">o</span><span class="o">....</span><span class="n">x</span><span class="o">|</span>
+<span class="o">+------|------+</span>
+<span class="n">Turn</span><span class="p">:</span> <span class="n">o</span>
+<span class="n">Dice</span><span class="p">:</span> <span class="mi">16</span>
+<span class="n">Bar</span><span class="p">:</span>
+<span class="n">Scores</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">O</span><span class="p">:</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Internal state representation (Chess):</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">rnbqkbnr</span><span class="o">/</span><span class="n">pppppppp</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="n">PPPPPPPP</span><span class="o">/</span><span class="n">RNBQKBNR</span> <span class="n">w</span> <span class="n">KQkq</span> <span class="o">-</span> <span class="mi">0</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </section>
