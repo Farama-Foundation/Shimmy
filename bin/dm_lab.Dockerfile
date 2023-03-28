@@ -1,5 +1,5 @@
 # A Dockerfile that sets up a full shimmy install with test dependencies
-ARG PYTHON_VERSION=3.9
+ARG PYTHON_VERSION
 FROM python:$PYTHON_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
