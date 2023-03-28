@@ -89,6 +89,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             for index in range(self._num_players)
         ]
         self.agents = [agent for agent in self.possible_agents]
+        self.num_cycles = 0
 
         # Set up pygame rendering
         if self.render_mode == "human":

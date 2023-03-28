@@ -1,4 +1,5 @@
 """Tests the functionality of the BSuiteCompatibilityV0 on bsuite envs."""
+import pickle
 import warnings
 
 import bsuite
@@ -109,3 +110,17 @@ def test_seeding(env_id):
 
     env_1.close()
     env_2.close()
+
+
+@pytest.mark.parametrize("env_id", BSUITE_ENV_IDS)
+def test_pickle(env_id):
+    """Test that pickling works."""
+    env = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])
+
+    pickled_env = pickle.loads(pickle.dumps(env))
+    data_equivalence(env.reset(seed=42), pickled_env.reset(seed=42))
+
+    action = env.action_space.sample()
+    data_equivalence(env.step(action), pickled_env.step(action))
+    env.close()
+    pickled_env.close()
