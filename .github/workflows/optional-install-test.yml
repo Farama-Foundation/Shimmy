@@ -10,7 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-        # dm-control
+        # dm-lab
+      - run: |
+          docker build -f bin/dm_lab.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-dm_lab-docker .
+      - name: Run dm-lab tests
+        run: docker run shimmy-dm_lab-docker pytest tests/test_dm_lab.py
+
+        # dm-control-multi-agent
       - run: |
           docker build -f bin/dm_control_multiagent.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
