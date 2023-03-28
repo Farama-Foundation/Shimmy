@@ -1,0 +1,25 @@
+# A Dockerfile that sets up a full shimmy install with test dependencies
+ARG PYTHON_VERSION=3.9
+FROM python:$PYTHON_VERSION
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apt-get -y update \
+    && apt-get install --no-install-recommends -y \
+    unzip \
+    libglu1-mesa-dev \
+    libgl1-mesa-dev \
+    libosmesa6-dev \
+    xvfb \
+    patchelf \
+    ffmpeg cmake \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . /usr/local/shimmy/
+WORKDIR /usr/local/shimmy/
+
+RUN pip install ".[bsuite, testing]" --no-cache-dir
+
+ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]

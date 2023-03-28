@@ -10,13 +10,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-        # meltingpot
+        # dm-control
       - run: |
-          docker build -f bin/meltingpot.Dockerfile \
-            --build-arg PYTHON_VERSION='3.19' \
-            --tag shimmy-meltingpot-docker .
-      - name: Run meltingpot tests
-        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py
+          docker build -f bin/dm_control_multiagent.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-dm-control-multi-agent-docker .
+      - name: Run dm-control-multi-agent tests
+        run: docker run shimmy-dm-control-multi-agent-docker pytest tests/test_dm_control_multi_agent.py
+
+        # bsuite
+      - run: |
+          docker build -f bin/bsuite.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-bsuite-docker .
+      - name: Run bsuite tests
+        run: docker run shimmy-bsuite-docker pytest tests/test_bsuite.py
 
 
         # Atari
@@ -43,4 +51,11 @@ jobs:
       - name: Run openspiel tests
         run: docker run shimmy-openspiel-docker pytest tests/test_openspiel.py
 
-        # add more options
+        # meltingpot
+      - run: |
+          docker build -f bin/meltingpot.Dockerfile \
+            --build-arg PYTHON_VERSION='3.19' \
+            --tag shimmy-meltingpot-docker .
+      - name: Run meltingpot tests
+        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py
+
