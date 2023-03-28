@@ -18,6 +18,15 @@ jobs:
       - name: Run dm-control-multi-agent tests
         run: docker run shimmy-dm-control-multi-agent-docker pytest tests/test_dm_control_multi_agent.py
 
+        # bsuite
+      - run: |
+          docker build -f bin/bsuite.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-bsuite-docker .
+      - name: Run bsuite tests
+        run: docker run shimmy-bsuite-docker pytest tests/test_bsuite.py
+
+
         # Atari
       - run: |
            docker build -f bin/atari.Dockerfile \
