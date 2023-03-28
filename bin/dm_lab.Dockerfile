@@ -24,7 +24,7 @@ WORKDIR /usr/local/shimmy/
 # Include Shimmy in Python path
 ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
 
-RUN pip install ".[testing]" --no-cache-dir
+RUN pip install ".[dm-lab, testing]" --no-cache-dir
 
 # Install DM lab requirements
 RUN apt-get -y update \
