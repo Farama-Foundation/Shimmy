@@ -6,14 +6,13 @@ from gymnasium.utils.env_checker import check_env, data_equivalence
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 
-pytest.importorskip("deepmind_lab")
-import deepmind_lab  # noqa: E402
-
 
 # TODO: check for warnings
 # @pytest.mark.skip(reason="no way of currently testing this")
 def test_check_env():
     """Check that environment pass the gym check_env."""
+    import deepmind_lab  # noqa: E402
+
     observations = ["RGBD"]
     config = {"width": "640", "height": "480", "botCount": "2"}
     renderer = "hardware"
