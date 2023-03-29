@@ -1,11 +1,13 @@
 """Tests the multi-agent dm-control soccer environment."""
 
-import deepmind_lab
 import gymnasium
 import pytest
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
+
+pytest.importorskip("deepmind_lab")
+import deepmind_lab  # noqa: E402
 
 
 # TODO: check for warnings

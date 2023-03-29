@@ -43,4 +43,4 @@ bazel build -c opt //python/pip_package:build_pip_package
 ./bazel-bin/python/pip_package/build_pip_package /tmp/dmlab_pkg
 pip3 install --force-reinstall /tmp/dmlab_pkg/deepmind_lab-*.whl
 cd ..
-rm -rf lab
+#rm -rf lab

@@ -1,5 +1,5 @@
 # A Dockerfile that sets up a full shimmy install with test dependencies
-ARG PYTHON_VERSION
+ARG PYTHON_VERSION=3.10
 FROM python:$PYTHON_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -52,3 +52,5 @@ RUN git clone https://github.com/deepmind/lab.git \
     && rm -rf lab
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
+
+RUN ls
