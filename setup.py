@@ -43,6 +43,7 @@ extras = {
         "h5py>=3.7.0",
         "pettingzoo>=1.22.4",
     ],
+    "dm-lab": [],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22.4"],
     "meltingpot": ["pettingzoo>=1.22.4"],
     "bsuite": ["bsuite>=0.3.5"],
