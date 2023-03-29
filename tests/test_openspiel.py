@@ -179,6 +179,8 @@ def test_seeding(game):
 
         env1.step(action1)
         env2.step(action2)
+    env1.close()
+    env2.close()
 
 
 @pytest.mark.parametrize("game", _PASSING_GAMES)

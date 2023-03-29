@@ -16,6 +16,7 @@ from dm_control import composer
 from dm_control.rl import control
 from gymnasium.core import ObsType
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
+from gymnasium.utils import EzPickle
 
 from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 
@@ -27,7 +28,7 @@ class EnvType(Enum):
     RL_CONTROL = 1
 
 
-class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
+class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
     """This compatibility wrapper converts a dm-control environment into a gymnasium environment.
 
     Dm-control is DeepMind's software stack for physics-based simulation and Reinforcement Learning environments, using MuJoCo physics.
@@ -57,6 +58,9 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray]):
         camera_id: int = 0,
     ):
         """Initialises the environment with a render mode along with render information."""
+        EzPickle.__init__(
+            self, env, render_mode, render_height, render_width, camera_id
+        )
         self._env = env
         self.env_type = self._find_env_type(env)
 

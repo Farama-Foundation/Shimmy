@@ -28,10 +28,9 @@ def test_seeding(substrate_name):
     env1.reset(seed=42)
     env2.reset(seed=42)
 
-    a_space1 = env1.action_space(env1.agents[0])
-    a_space1.seed(42)
-    a_space2 = env2.action_space(env2.agents[0])
-    a_space2.seed(42)
+    for agent in env1.possible_agents:
+        env1.action_space(agent).seed(42)
+        env2.action_space(agent).seed(42)
 
     while env1.agents:
         actions1 = {agent: env1.action_space(agent).sample() for agent in env1.agents}
@@ -47,6 +46,8 @@ def test_seeding(substrate_name):
         assert data_equivalence(terminations1, terminations2), "Incorrect terminations."
         assert data_equivalence(truncations1, truncations2), "Incorrect truncations"
         assert data_equivalence(infos1, infos2), "Incorrect infos"
+    env1.close()
+    env2.close()
 
 
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
@@ -61,6 +62,7 @@ def test_substrate(substrate_name):
     while env.agents:
         actions = {agent: env.action_space(agent).sample() for agent in env.agents}
         observations, rewards, terminations, truncations, infos = env.step(actions)
+    env.close()
 
 
 def test_custom_substrate():
@@ -91,6 +93,7 @@ def test_custom_substrate():
         actions = {agent: env.action_space(agent).sample() for agent in env.agents}
         env.step(actions)
         env.render()
+    env.close()
 
 
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
@@ -118,10 +121,9 @@ def test_pickle(substrate_name):
     env1.reset(seed=42)
     env2.reset(seed=42)
 
-    a_space1 = env1.action_space(env1.agents[0])
-    a_space1.seed(42)
-    a_space2 = env2.action_space(env2.agents[0])
-    a_space2.seed(42)
+    for agent in env1.possible_agents:
+        env1.action_space(agent).seed(42)
+        env2.action_space(agent).seed(42)
 
     while env1.agents:
         actions1 = {agent: env1.action_space(agent).sample() for agent in env1.agents}
@@ -137,3 +139,5 @@ def test_pickle(substrate_name):
         assert data_equivalence(terminations1, terminations2), "Incorrect terminations."
         assert data_equivalence(truncations1, truncations2), "Incorrect truncations"
         assert data_equivalence(infos1, infos2), "Incorrect infos"
+    env1.close()
+    env2.close()

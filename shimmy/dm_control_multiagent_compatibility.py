@@ -10,6 +10,7 @@ import dm_env
 import gymnasium
 import numpy as np
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
+from gymnasium.utils import EzPickle
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
 from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
@@ -62,7 +63,7 @@ def _unravel_ma_timestep(
     )
 
 
-class DmControlMultiAgentCompatibilityV0(ParallelEnv):
+class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
     """This compatibility wrapper converts multi-agent dm-control environments, primarily soccer, into a Pettingzoo environment.
 
     Dm-control is DeepMind's software stack for physics-based simulation and Reinforcement Learning environments,
@@ -84,6 +85,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv):
             env (dm_env.Environment): dm control multi-agent environment
             render_mode (Optional[str]): render_mode
         """
+        EzPickle.__init__(self, env=env, render_mode=render_mode)
         super().__init__()
         self._env = env
         self.render_mode = render_mode
