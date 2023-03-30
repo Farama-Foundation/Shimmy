@@ -26,6 +26,7 @@ LEVEL_NAMES = [
 ]
 
 
+@pytest.mark.skip("DM lab tests are not currently possible.")
 @pytest.mark.parametrize("leval_name", LEVEL_NAMES)
 def test_check_env(leval_name):
     """Check that environment pass the gym check_env."""
@@ -41,6 +42,7 @@ def test_check_env(leval_name):
     env.close()
 
 
+@pytest.mark.skip("DM lab tests are not currently possible.")
 @pytest.mark.parametrize("leval_name", LEVEL_NAMES)
 def test_seeding(leval_name):
     """Checks that the environment can be properly seeded."""
@@ -71,6 +73,7 @@ def test_seeding(leval_name):
     env_2.close()
 
 
+@pytest.mark.skip("DM lab tests are not currently possible.")
 @pytest.mark.parametrize("leval_name", LEVEL_NAMES)
 def test_pickle(leval_name):
     """Checks that the environment can be saved and loaded by pickling."""
