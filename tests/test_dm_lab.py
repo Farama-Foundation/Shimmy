@@ -41,7 +41,6 @@ def test_check_env(leval_name):
     env.close()
 
 
-@pytest.mark.skip(reason="DM-lab environment")
 @pytest.mark.parametrize("leval_name", LEVEL_NAMES)
 def test_seeding(leval_name):
     """Checks that the environment can be properly seeded."""
