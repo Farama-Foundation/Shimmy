@@ -3,7 +3,7 @@ import pickle
 
 import pytest
 from dm_control.locomotion import soccer as dm_soccer
-from gym.utils.env_checker import data_equivalence
+from gymnasium.utils.env_checker import data_equivalence
 from pettingzoo.test import parallel_api_test
 
 from shimmy.dm_control_multiagent_compatibility import (
