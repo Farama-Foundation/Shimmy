@@ -88,7 +88,7 @@ def test_seeding(walker_type):
     env2.close()
 
 
-@pytest.mark.skip(reason="Cannot pickle weakdef objects used in dm_soccer envs.")
+@pytest.mark.skip(reason="Cannot pickle weakref objects used in dm_soccer envs.")
 @pytest.mark.parametrize("walker_type", WALKER_TYPES)
 def test_pickle(walker_type):
     """Tests the seeding of the openspiel conversion wrapper."""
