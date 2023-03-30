@@ -45,7 +45,7 @@ def test_check_env(leval_name):
 def test_seeding(leval_name):
     """Checks that the environment can be properly seeded."""
     observations = ["RGBD"]
-    config = {"width": "640", "height": "480", "botCount": "2", "random_seed": 42}
+    config = {"width": "640", "height": "480", "botCount": "2", "random_seed": "42"}
     renderer = "hardware"
 
     env_1 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
@@ -75,7 +75,7 @@ def test_seeding(leval_name):
 def test_pickle(leval_name):
     """Checks that the environment can be saved and loaded by pickling."""
     observations = ["RGBD"]
-    config = {"width": "640", "height": "480", "botCount": "2", "random_seed": 42}
+    config = {"width": "640", "height": "480", "botCount": "2", "random_seed": "42"}
     renderer = "hardware"
 
     env_1 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
