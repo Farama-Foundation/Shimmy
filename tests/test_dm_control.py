@@ -105,7 +105,7 @@ def test_seeding(env_id):
 
 
 @pytest.mark.skip(
-    reason="Fatal Python error: Segmentation fault (with or without EzPickle"
+    reason="Fatal Python error: Segmentation fault (with or without EzPickle)"
 )
 @pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS[0])
 def test_pickle(env_id):
