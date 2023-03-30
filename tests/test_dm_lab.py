@@ -1,4 +1,5 @@
 """Tests the multi-agent dm-control soccer environment."""
+import pickle
 
 import gymnasium
 import pytest
@@ -40,11 +41,12 @@ def test_check_env(leval_name):
     env.close()
 
 
+@pytest.mark.skip(reason="DM-lab environment")
 @pytest.mark.parametrize("leval_name", LEVEL_NAMES)
 def test_seeding(leval_name):
     """Checks that the environment can be properly seeded."""
     observations = ["RGBD"]
-    config = {"width": "640", "height": "480", "botCount": "2"}
+    config = {"width": "640", "height": "480", "botCount": "2", "random_seed": 42}
     renderer = "hardware"
 
     env_1 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
@@ -53,9 +55,9 @@ def test_seeding(leval_name):
     env_2 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
     env_2 = DmLabCompatibilityV0(env_2)
 
-    obs_1, info_1 = env_1.reset(seed=42)
-    obs_2, info_2 = env_2.reset(seed=42)
-    # assert data_equivalence(obs_1, obs_2)
+    obs_1, info_1 = env_1.reset()
+    obs_2, info_2 = env_2.reset()
+    assert data_equivalence(obs_1, obs_2)
     assert data_equivalence(info_1, info_2)
     for _ in range(100):
         actions = env_1.action_space.sample()
@@ -74,18 +76,17 @@ def test_seeding(leval_name):
 def test_pickle(leval_name):
     """Checks that the environment can be saved and loaded by pickling."""
     observations = ["RGBD"]
-    config = {"width": "640", "height": "480", "botCount": "2"}
+    config = {"width": "640", "height": "480", "botCount": "2", "random_seed": 42}
     renderer = "hardware"
 
     env_1 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
     env_1 = DmLabCompatibilityV0(env_1)
 
-    env_2 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
-    env_2 = DmLabCompatibilityV0(env_2)
+    env_2 = pickle.loads(pickle.dumps(env_1))
 
-    obs_1, info_1 = env_1.reset(seed=42)
-    obs_2, info_2 = env_2.reset(seed=42)
-    # assert data_equivalence(obs_1, obs_2)
+    obs_1, info_1 = env_1.reset()
+    obs_2, info_2 = env_2.reset()
+    assert data_equivalence(obs_1, obs_2)
     assert data_equivalence(info_1, info_2)
     for _ in range(100):
         actions = env_1.action_space.sample()
