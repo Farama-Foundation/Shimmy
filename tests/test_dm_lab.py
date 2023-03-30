@@ -26,14 +26,15 @@ LEVEL_NAMES = [
 ]
 
 
-@pytest.mark.parametrize("leval_name", LEVEL_NAMES[0])
-def test_check_env(leval_name):
+@pytest.mark.skip("DM lab tests are not currently possible.")
+@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+def test_check_env(level_name):
     """Check that environment pass the gym check_env."""
     observations = ["RGBD"]
     config = {"width": "640", "height": "480", "botCount": "2"}
     renderer = "hardware"
 
-    env = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
+    env = deepmind_lab.Lab(level_name, observations, config=config, renderer=renderer)
     env = DmLabCompatibilityV0(env)
 
     check_env(env)
@@ -42,17 +43,17 @@ def test_check_env(leval_name):
 
 
 @pytest.mark.skip("DM lab seed tests are not currently possible.")
-@pytest.mark.parametrize("leval_name", LEVEL_NAMES[0])
-def test_seeding(leval_name):
+@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+def test_seeding(level_name):
     """Checks that the environment can be properly seeded."""
     observations = ["RGBD"]
     config = {"width": "640", "height": "480", "botCount": "2", "random_seed": "42"}
     renderer = "hardware"
 
-    env_1 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
+    env_1 = deepmind_lab.Lab(level_name, observations, config=config, renderer=renderer)
     env_1 = DmLabCompatibilityV0(env_1)
 
-    env_2 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
+    env_2 = deepmind_lab.Lab(level_name, observations, config=config, renderer=renderer)
     env_2 = DmLabCompatibilityV0(env_2)
 
     obs_1, info_1 = env_1.reset()
@@ -73,14 +74,14 @@ def test_seeding(leval_name):
 
 
 @pytest.mark.skip("DM lab pickle tests are not currently possible.")
-@pytest.mark.parametrize("leval_name", LEVEL_NAMES[0])
-def test_pickle(leval_name):
+@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+def test_pickle(level_name):
     """Checks that the environment can be saved and loaded by pickling."""
     observations = ["RGBD"]
     config = {"width": "640", "height": "480", "botCount": "2", "random_seed": "42"}
     renderer = "hardware"
 
-    env_1 = deepmind_lab.Lab(leval_name, observations, config=config, renderer=renderer)
+    env_1 = deepmind_lab.Lab(level_name, observations, config=config, renderer=renderer)
     env_1 = DmLabCompatibilityV0(env_1)
 
     env_2 = pickle.loads(pickle.dumps(env_1))
