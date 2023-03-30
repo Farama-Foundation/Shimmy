@@ -86,7 +86,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
             render_mode (Optional[str]): render_mode
         """
         EzPickle.__init__(self, env=env, render_mode=render_mode)
-        super().__init__()
+        ParallelEnv.__init__(self)
         self._env = env
         self.render_mode = render_mode
 
