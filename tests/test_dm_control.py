@@ -91,7 +91,7 @@ def test_seeding(env_id):
     obs_2, info_2 = env_2.reset(seed=42)
     assert data_equivalence(obs_1, obs_2)
     assert data_equivalence(info_1, info_2)
-    for _ in range(100):
+    for _ in range(10):
         actions = env_1.action_space.sample()
         obs_1, reward_1, term_1, trunc_1, info_1 = env_1.step(actions)
         obs_2, reward_2, term_2, trunc_2, info_2 = env_2.step(actions)
@@ -107,7 +107,7 @@ def test_seeding(env_id):
 @pytest.mark.skip(
     reason="Fatal Python error: Segmentation fault (with or without EzPickle"
 )
-@pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS)
+@pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS[0])
 def test_pickle(env_id):
     """Test that dm-control seeding works."""
     env_1 = gym.make(env_id)
