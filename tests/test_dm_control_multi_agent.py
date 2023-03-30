@@ -88,9 +88,7 @@ def test_seeding(walker_type):
     env2.close()
 
 
-@pytest.mark.skip(
-    reason="TypeError: __init__() missing 1 required positional argument: 'env'"
-)
+@pytest.mark.skip(reason="Cannot pickle weakref objects used in dm_soccer envs.")
 @pytest.mark.parametrize("walker_type", WALKER_TYPES)
 def test_pickle(walker_type):
     """Tests the seeding of the openspiel conversion wrapper."""
