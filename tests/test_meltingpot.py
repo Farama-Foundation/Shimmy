@@ -1,5 +1,4 @@
 """Tests the functionality of the MeltingPotCompatibility wrapper on meltingpot substrates."""
-# isort: skip_file
 import pickle
 
 import pytest
