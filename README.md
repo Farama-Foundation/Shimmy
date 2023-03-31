@@ -206,6 +206,19 @@ env = pyspiel.load_game("2048")
 env = OpenspielCompatibilityV0(game=env, render_mode=None)
 ```
 
+## Development Team
+<h1 style="text-align: center;width: 60%">
+    <a href="https://github.com/pseudo-rnd-thoughts">
+        <img src="docs/_static/img/people/mark.png" width="240px" alt="Mark Towers">
+    </a>
+    <a href="https://github.com/jjshoots">
+        <img src="docs/_static/img/people/jet.png" width="240px" alt="Jet Tai">
+    </a>
+    <a href="https://github.com/elliottower/">
+        <img src="docs/_static/img/people/elliot.png" width="240px" alt="Elliot Tower">
+    </a>
+</h1>
+
 ## Citation
 
 If you use this in your research, please cite:
