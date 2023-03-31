@@ -9,10 +9,10 @@ from pettingzoo.test import parallel_api_test
 
 pytest.importorskip("meltingpot")
 
-from ml_collections import config_dict
-
 import meltingpot.python
 from meltingpot.python.configs.substrates import SUBSTRATES
+from ml_collections import config_dict
+
 from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 
 
