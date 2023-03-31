@@ -83,23 +83,9 @@ dm_control/acrobot-swingup-v0
 For most usage, we recommend applying the `gym.wrappers.FlattenObservation(env)` wrapper to reduce the `Dict` observation space to a `Box` observation space.
 
 ## Project Maintainers
-<h3 style="text-align: center;width: 60%">
-    <a href="https://github.com/pseudo-rnd-thoughts">
-        <img src="docs/_static/img/people/mark.png" height="300" alt="Mark Towers">
-    </a>
-    <a href="https://github.com/jjshoots">
-        <img src="docs/_static/img/people/jet.png" height="300" alt="Jet Tai">
-    </a>
-    <a href="https://github.com/elliottower/">
-        <img src="docs/_static/img/people/elliot.png" height="300" alt="Elliot Tower">
-    </a>
-</h3>
+Contributors: [Jet Tai](https://github.com/jjshoots), [Mark Towers](https://github.com/pseudo-rnd-thoughts), [Elliot Tower](https://github.com/elliottower/) 
 
-| <div align="center"><a href="https://github.com/pseudo-rnd-thoughts"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/mark.jpg"></a><h3>Mark Towers</h3><h5>Project Manager</span></div> | <div align="center"><a href="https://github.com/jjshoots"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/jet.jpg"></a><h3>Jet Tai</h3><h5>Project Manager</span></div> | <div align="center"><a href="https://github.com/elliottower"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/elliot.jpg"></a><h3>Elliot Tower</h3><h5>Contributor</span></div> |
-| - | - | - |
-
-| <div align="center"><a href="https://github.com/pseudo-rnd-thoughts"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/mark.jpg"></a><h3>Mark Towers</h3><h5>Shimmy Project Manager</span></div> | <div align="center"><a href="https://github.com/jjshoots"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/jet.jpg"></a><h3>Jet Tai</h3><h5>Shimmy Project Manager</span></div> | <div align="center"><a href="https://github.com/elliottower"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/elliot.jpg"></a><h3>Elliot Tower</h3><h5>Shimmy Contributor</span></div> |
-| - | - | - |
+Maintenance for this project is also contributed by the broader Farama team: [farama.org/team](https://farama.org/team).
 
 ## Citation
 
