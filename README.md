@@ -80,7 +80,7 @@ dm_control/acrobot-swingup-v0
 
 For most usage, we recommend applying the `gym.wrappers.FlattenObservation(env)` wrapper to reduce the `Dict` observation space to a `Box` observation space.
 
-## Development Team
+## Project Maintainers
 <h3 style="text-align: center;width: 60%">
     <a href="https://github.com/pseudo-rnd-thoughts">
         <img src="docs/_static/img/people/mark.png" height="300" alt="Mark Towers">
