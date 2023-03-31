@@ -96,6 +96,9 @@ For most usage, we recommend applying the `gym.wrappers.FlattenObservation(env)`
 | <div align="center"><a href="https://github.com/pseudo-rnd-thoughts"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/mark.jpg"></a><h3>Mark Towers</h3><h5>Project Manager</span></div> | <div align="center"><a href="https://github.com/jjshoots"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/jet.jpg"></a><h3>Jet Tai</h3><h5>Project Manager</span></div> | <div align="center"><a href="https://github.com/elliottower"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/elliot.jpg"></a><h3>Elliot Tower</h3><h5>Contributor</span></div> |
 | - | - | - |
 
+| <div align="center"><a href="https://github.com/pseudo-rnd-thoughts"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/mark.jpg"></a><h3>Mark Towers</h3><h5>Shimmy Project Manager</span></div> | <div align="center"><a href="https://github.com/jjshoots"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/jet.jpg"></a><h3>Jet Tai</h3><h5>Shimmy Project Manager</span></div> | <div align="center"><a href="https://github.com/elliottower"><img style="width: 100px; border-radius: 50%" src="https://farama.org/assets/people/elliot.jpg"></a><h3>Elliot Tower</h3><h5>Shimmy Contributor</span></div> |
+| - | - | - |
+
 ## Citation
 
 If you use this in your research, please cite:
