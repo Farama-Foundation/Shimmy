@@ -2,6 +2,8 @@
 
 An API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
 
+The documentation website is at [shimmy.farama.org](https://shimmy.farama.org/) and we have a public discord server (which we also use to coordinate development work) that you can join here: https://discord.gg/nhvKkYa6qX
+
 ## Supported APIs
 
 ### [OpenAI Gym](http://shimmy.farama.org/contents/gym/)
