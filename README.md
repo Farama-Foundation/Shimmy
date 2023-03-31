@@ -209,13 +209,13 @@ env = OpenspielCompatibilityV0(game=env, render_mode=None)
 ## Development Team
 <h1 style="text-align: center;width: 60%">
     <a href="https://github.com/pseudo-rnd-thoughts">
-        <img src="docs/_static/img/people/mark.png" width="240px" alt="Mark Towers">
+        <img src="docs/_static/img/people/mark.png" height="300" alt="Mark Towers">
     </a>
     <a href="https://github.com/jjshoots">
-        <img src="docs/_static/img/people/jet.png" width="240px" alt="Jet Tai">
+        <img src="docs/_static/img/people/jet.png" height="300" alt="Jet Tai">
     </a>
     <a href="https://github.com/elliottower/">
-        <img src="docs/_static/img/people/elliot.png" width="240px" alt="Elliot Tower">
+        <img src="docs/_static/img/people/elliot.png" height="300" alt="Elliot Tower">
     </a>
 </h1>
 
