@@ -5,20 +5,20 @@ https://github.com/deepmind/meltingpot/blob/main/examples/pettingzoo/utils.py
 and modified to modern pettingzoo API
 """
 # pyright: reportOptionalSubscript=false
-
+# isort: skip_file
 from __future__ import annotations
 
 import functools
 from typing import Optional
 
 import gymnasium
-import meltingpot.python
 import numpy as np
 import pygame
 from gymnasium.utils.ezpickle import EzPickle
 from ml_collections import config_dict
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
+import meltingpot.python
 import shimmy.utils.meltingpot as utils
 
 
@@ -89,6 +89,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
             for index in range(self._num_players)
         ]
         self.agents = [agent for agent in self.possible_agents]
+        self.num_cycles = 0
 
         # Set up pygame rendering
         if self.render_mode == "human":

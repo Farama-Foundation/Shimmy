@@ -48,6 +48,10 @@ class DmLabCompatibilityV0(gym.Env[ObsType, Dict[str, np.ndarray]]):
         self._env.reset(seed=seed)
         info = {}
 
+        if seed is not None:
+            print(
+                "Warning: DM-lab environments must be seeded in initialization, rather than with reset(seed)."
+            )
         return (
             self._env.observations(),
             info,

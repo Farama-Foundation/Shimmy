@@ -1,4 +1,5 @@
 """Tests the functionality of the BSuiteCompatibilityV0 on bsuite envs."""
+import pickle
 import warnings
 
 import bsuite
@@ -93,6 +94,61 @@ def test_seeding(env_id):
 
     env_1 = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])
     env_2 = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])
+
+    obs_1, info_1 = env_1.reset(seed=42)
+    obs_2, info_2 = env_2.reset(seed=42)
+    assert data_equivalence(obs_1, obs_2)
+    assert data_equivalence(info_1, info_2)
+    for _ in range(100):
+        actions = int(env_1.action_space.sample())
+        obs_1, reward_1, term_1, trunc_1, info_1 = env_1.step(actions)
+        obs_2, reward_2, term_2, trunc_2, info_2 = env_2.step(actions)
+        assert data_equivalence(obs_1, obs_2)
+        assert reward_1 == reward_2
+        assert term_1 == term_2 and trunc_1 == trunc_2
+        assert data_equivalence(info_1, info_2)
+
+    env_1.close()
+    env_2.close()
+
+
+# Without EzPickle:_register_bsuite_envs.<locals>._make_bsuite_env cannot be pickled
+# With EzPickle: maximum recursion limit reached
+FAILING_PICKLE_ENVS = [
+    "bsuite/bandit_noise-v0",
+    "bsuite/bandit_scale-v0",
+    "bsuite/cartpole-v0",
+    "bsuite/cartpole_noise-v0",
+    "bsuite/cartpole_scale-v0",
+    "bsuite/cartpole_swingup-v0",
+    "bsuite/catch_noise-v0",
+    "bsuite/catch_scale-v0",
+    "bsuite/mnist_noise-v0",
+    "bsuite/mnist_scale-v0",
+    "bsuite/mountain_car_noise-v0",
+    "bsuite/mountain_car_scale-v0",
+]
+
+PASSING_PICKLE_ENVS = [
+    "bsuite/mnist-v0",
+    "bsuite/umbrella_length-v0",
+    "bsuite/discounting_chain-v0",
+    "bsuite/deep_sea-v0",
+    "bsuite/umbrella_distract-v0",
+    "bsuite/catch-v0",
+    "bsuite/memory_len-v0",
+    "bsuite/mountain_car-v0",
+    "bsuite/memory_size-v0",
+    "bsuite/deep_sea_stochastic-v0",
+    "bsuite/bandit-v0",
+]
+
+
+@pytest.mark.parametrize("env_id", PASSING_PICKLE_ENVS)
+def test_pickle(env_id):
+    """Test that pickling works."""
+    env_1 = gym.make(env_id, **BSUITE_ENV_SETTINGS[env_id])
+    env_2 = pickle.loads(pickle.dumps(env_1))
 
     obs_1, info_1 = env_1.reset(seed=42)
     obs_2, info_2 = env_2.reset(seed=42)

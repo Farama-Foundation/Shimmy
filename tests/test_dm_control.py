@@ -1,4 +1,5 @@
 """Tests the functionality of the DmControlCompatibility Wrapper on dm_control envs."""
+import pickle
 import warnings
 from typing import Callable
 
@@ -81,6 +82,36 @@ def test_seeding(env_id):
     """Test that dm-control seeding works."""
     env_1 = gym.make(env_id)
     env_2 = gym.make(env_id)
+
+    if "lqr" in env_id or (env_1.spec is not None and env_1.spec.nondeterministic):
+        # LQR fails this test currently.
+        return
+
+    obs_1, info_1 = env_1.reset(seed=42)
+    obs_2, info_2 = env_2.reset(seed=42)
+    assert data_equivalence(obs_1, obs_2)
+    assert data_equivalence(info_1, info_2)
+    for _ in range(10):
+        actions = env_1.action_space.sample()
+        obs_1, reward_1, term_1, trunc_1, info_1 = env_1.step(actions)
+        obs_2, reward_2, term_2, trunc_2, info_2 = env_2.step(actions)
+        assert data_equivalence(obs_1, obs_2)
+        assert reward_1 == reward_2
+        assert term_1 == term_2 and trunc_1 == trunc_2
+        assert data_equivalence(info_1, info_2)
+
+    env_1.close()
+    env_2.close()
+
+
+@pytest.mark.skip(
+    reason="Fatal Python error: Segmentation fault (with or without EzPickle)"
+)
+@pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS[0])
+def test_pickle(env_id):
+    """Test that dm-control seeding works."""
+    env_1 = gym.make(env_id)
+    env_2 = pickle.loads(pickle.dumps(env_1))
 
     if "lqr" in env_id or (env_1.spec is not None and env_1.spec.nondeterministic):
         # LQR fails this test currently.

@@ -1,4 +1,6 @@
 """Tests the functionality of the OpenspielWrapper on openspiel envs."""
+import pickle
+
 import numpy as np
 import pyspiel
 import pytest
@@ -177,3 +179,51 @@ def test_seeding(game):
 
         env1.step(action1)
         env2.step(action2)
+    env1.close()
+    env2.close()
+
+
+@pytest.mark.parametrize("game", _PASSING_GAMES)
+def test_pickle(game):
+    """Tests the seeding of the openspiel conversion wrapper."""
+    env1 = pyspiel.load_game(game)
+    env1 = OpenspielCompatibilityV0(env1, render_mode=None)
+
+    env2 = pickle.loads(pickle.dumps(env1))
+
+    assert data_equivalence(
+        env1.reset(seed=42), env2.reset(seed=42)
+    ), "Incorrect return on reset()"
+
+    agent1 = env1.agent_selection
+    agent2 = env2.agent_selection
+    assert data_equivalence(agent1, agent2), f"Incorrect agent: {agent1} {agent2}"
+
+    a_space1 = env1.action_space(agent1)
+    a_space1.seed(42)
+    a_space2 = env2.action_space(agent2)
+    a_space2.seed(42)
+
+    for agent1, agent2 in zip(env1.agent_iter(), env2.agent_iter()):
+        assert data_equivalence(agent1, agent2), f"Incorrect agent: {agent1} {agent2}"
+
+        obs1, rew1, term1, trunc1, info1 = env1.last()
+        obs2, rew2, term2, trunc2, info2 = env2.last()
+
+        assert data_equivalence(obs1, obs2), f"Incorrect observations: {obs1} {obs2}"
+        assert data_equivalence(rew1, rew2), f"Incorrect rewards: {rew1} {rew2}"
+        assert data_equivalence(term1, term2), f"Incorrect terms: {term1} {term2}"
+        assert data_equivalence(trunc1, trunc2), f"Incorrect truncs: {trunc1} {trunc2}"
+        assert data_equivalence(info1, info2), f"Incorrect info: {info1} {info2}"
+
+        action1 = a_space1.sample(mask=info1["action_mask"])
+        action2 = a_space2.sample(mask=info2["action_mask"])
+
+        assert data_equivalence(
+            action1, action2
+        ), f"Incorrect actions: {action1} {action2}"
+
+        env1.step(action1)
+        env2.step(action2)
+    env1.close()
+    env2.close()

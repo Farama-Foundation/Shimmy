@@ -32,9 +32,11 @@ fi
 
 pip3 install numpy
 
+# TODO: fix installation issues on MacOS
 # Build
 if [ ! -d "lab" ]; then
   git clone https://github.com/deepmind/lab.git
+fi
 cd lab
 echo 'build --cxxopt=-std=c++17' > .bazelrc
 bazel build -c opt //python/pip_package:build_pip_package
