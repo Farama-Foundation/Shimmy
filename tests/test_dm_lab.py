@@ -1,14 +1,14 @@
 """Tests the multi-agent dm-control soccer environment."""
+# pyright: reportUndefinedVariable=false
+# flake8: noqa F821
 import pickle
 
-import gymnasium
 import pytest
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 
 pytest.importorskip("deepmind_lab")
-import deepmind_lab  # noqa: E402
 
 LEVEL_NAMES = [
     "lt_chasm",
