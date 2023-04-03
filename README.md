@@ -83,7 +83,7 @@ dm_control/acrobot-swingup-v0
 For most usage, we recommend applying the `gym.wrappers.FlattenObservation(env)` wrapper to reduce the `Dict` observation space to a `Box` observation space.
 
 ## Project Maintainers
-Contributors: [Jet Tai](https://github.com/jjshoots), [Mark Towers](https://github.com/pseudo-rnd-thoughts), [Elliot Tower](https://github.com/elliottower/) 
+Main Contributors: [Jet Tai](https://github.com/jjshoots), [Mark Towers](https://github.com/pseudo-rnd-thoughts), [Elliot Tower](https://github.com/elliottower/) 
 
 Maintenance for this project is also contributed by the broader Farama team: [farama.org/team](https://farama.org/team).
 
