@@ -29,7 +29,7 @@ Load an `ALE` environment:
 ```python
 import gymnasium as gym
 
-env = gym.make("ALE/Pong-v5")
+env = gym.make("ALE/Pong-v5", render_mode="human")
 ```
 
 Run the environment:
