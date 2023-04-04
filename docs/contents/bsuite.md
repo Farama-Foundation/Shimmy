@@ -22,7 +22,7 @@ Load a `bsuite` environment:
 ```python
 import gymnasium as gym
 
-env = gym.make("bsuite/catch-v0")
+env = gym.make("bsuite/catch-v0", render_mode="human")
 ```
 
 Run the environment:
