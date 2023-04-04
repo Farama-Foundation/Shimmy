@@ -21,23 +21,23 @@ lastpage:
 ### [Atari Environments for OpenAI Gym](http://shimmy.farama.org/contents/atari/)
 - Bindings to convert [ALE-py](https://github.com/mgbellemare/Arcade-Learning-Environment) Atari environments to [Gymnasium](https://gymnasium.farama.org/).
 
+### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
+- Bindings to convert [DM Lab](https://github.com/deepmind/lab) environments to [Gymnasium](https://gymnasium.farama.org/).
+
+### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
+- Bindings to convert [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
+
 ### [DeepMind Control](http://shimmy.farama.org/contents/dm_control/)
 - Bindings to convert [DM Control](https://github.com/deepmind/dm_control/) environments to [Gymnasium](https://gymnasium.farama.org/). 
 
 ### [DeepMind Control: Multi-Agent](http://shimmy.farama.org/contents/dm_multi/)
 - Bindings to convert [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
-### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
-- Bindings to convert all [DM Lab](https://github.com/deepmind/lab) environments to [PettingZoo](https://pettingzoo.farama.org/).
-
 ### [OpenSpiel](shimmy.farama.org/contents/open_spiel/)
-- Bindings to convert all [OpenSpiel](https://github.com/deepmind/open_spiel) enviromnets to [PettingZoo](https://pettingzoo.farama.org/).
-
-### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
-- Bindings to convert all [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
+- Bindings to convert [OpenSpiel](https://github.com/deepmind/open_spiel) enviromnets to [PettingZoo](https://pettingzoo.farama.org/).
 
 ### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
-- Bindings to convert all [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
+- Bindings to convert [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 
 ## Installation and Usage
