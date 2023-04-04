@@ -238,10 +238,12 @@ class GymV21CompatibilityV0(gymnasium.Env[ObsType, ActType]):
                 f"Gym v21 environment do not accept options as a reset parameter, options={options}"
             )
 
+        obs = self.gym_env.reset()
+
         if self.render_mode == "human":
             self.render()
 
-        return self.gym_env.reset(), {}
+        return obs, {}
 
     def step(self, action: ActType) -> tuple[Any, float, bool, bool, dict]:
         """Steps through the environment.
