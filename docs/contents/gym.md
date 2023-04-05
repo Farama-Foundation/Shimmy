@@ -13,25 +13,47 @@ Shimmy provides compatibility wrappers to convert Gym [V26](https://github.com/o
 ```
 
 ### Installation
+First, install shimmy:
 ```
 pip install shimmy[gym]
 ```
 
+Then, install the corresponding version of Gym. 
+
+Gym V21:
+
+```
+pip install gym==0.21.0
+```
+
+Gym V26:
+```
+pip install gym==0.26.1
+```
+
 ### Usage
 
-Load a `gym` environment:
+Note: the following code requires gym V21 installed: )
+
+Load a `gym` V21 environment: 
 ```python
 import gymnasium as gym
 
-env = gym.make("GymV21CompatibilityV0", env_name="...")
+env = gym.make("GymV21Environment-v0", env_id="CartPole-v1", render_mode="human")
 ```
 
-[//]: # (Run the environment:)
-[//]: # (```python)
+Run the environment:
+```python
+observation, info = env.reset(seed=42)
+for _ in range(1000):
+   action = env.action_space.sample()  # this is where you would insert your policy
+   observation, reward, terminated, truncated, info = env.step(action)
 
-[//]: # ()
-[//]: # (```)
-[//]: # (TODO: make this a full example)
+   if terminated or truncated:
+      observation, info = env.reset()
+env.close()
+```
+
 
 ### Class Description
 ```{eval-rst}
