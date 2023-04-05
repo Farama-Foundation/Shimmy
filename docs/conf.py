@@ -80,14 +80,10 @@ html_theme_options = {
     "light_logo": "img/shimmy.svg",
     "dark_logo": "img/shimmy-white.svg",
     "gtag": "G-07SGW5KKJF",
+    "source_repository": "https://github.com/Farama-Foundation/Shimmy/",
+    "source_branch": "main",
+    "source_directory": "docs/",
 }
-html_context: Dict[str, Any] = {}
-html_context["conf_py_path"] = "/docs/"
-html_context["display_github"] = True
-html_context["github_user"] = "Farama-Foundation"
-html_context["github_repo"] = "Shimmy"
-html_context["github_version"] = "main"
-html_context["slug"] = "shimmy"
 
 html_static_path = ["_static"]
 html_css_files = []
