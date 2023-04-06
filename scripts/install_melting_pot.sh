@@ -30,7 +30,7 @@ else
 fi
 cd meltingpot
 chmod +x *.sh
-#echo "Installing dmlab2d..."
+echo "Installing dmlab2d..."
 ./install-dmlab2d.sh
 echo "Installing melting pot..."
 ./install-meltingpot.sh

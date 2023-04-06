@@ -24,7 +24,10 @@ Melting Pot must be installed manually, see [installation](https://github.com/de
 Load a `meltingpot` environment:
 ```python
 from shimmy import MeltingPotCompatibilityV0
-env = MeltingPotCompatibilityV0(substrate_name="prisoners_dilemma_in_the_matrix__arena", render_mode="human")
+from shimmy.utils.meltingpot import load_substrate
+
+env = load_substrate("prisoners_dilemma_in_the_matrix__arena")
+env = MeltingPotCompatibilityV0(env, render_mode=None)
 ```
 
 Run the environment:

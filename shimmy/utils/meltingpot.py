@@ -1,6 +1,6 @@
 """Shared utils for meltingpot."""
 # pyright: reportGeneralTypeIssues=false
-
+# flake8: noqa F821
 import dm_env
 from gymnasium import spaces
 from pettingzoo.utils.env import ObsDict
@@ -9,6 +9,37 @@ from shimmy.utils.dm_env import dm_spec2gym_space
 
 PLAYER_STR_FORMAT = "player_{index}"
 _WORLD_PREFIX = "WORLD."
+
+
+def load_substrate(substrate_name: str):
+    """Helper utility to load melting pot substrates.
+
+    Args:
+        substrate_name: str
+
+    Returns:
+        env: meltingpot.python.utils.substrates.substrate.Substrate
+    """
+    from ml_collections import config_dict
+
+    import meltingpot.python
+
+    # Create env config
+    substrate_name = substrate_name
+    player_roles = meltingpot.python.substrate.get_config(
+        substrate_name
+    ).default_player_roles
+    env_config = {
+        "substrate": substrate_name,
+        "roles": player_roles,
+    }
+
+    # Build substrate from pickle
+    env_config = config_dict.ConfigDict(env_config)
+    env = meltingpot.python.substrate.build(
+        env_config["substrate"], roles=env_config["roles"]
+    )
+    return env
 
 
 def timestep_to_observations(timestep: dm_env.TimeStep) -> ObsDict:

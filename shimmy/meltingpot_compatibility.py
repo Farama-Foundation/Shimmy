@@ -5,7 +5,6 @@ https://github.com/deepmind/meltingpot/blob/main/examples/pettingzoo/utils.py
 and modified to modern pettingzoo API
 """
 # pyright: reportOptionalSubscript=false
-# isort: skip_file
 from __future__ import annotations
 
 import functools
@@ -15,10 +14,8 @@ import gymnasium
 import numpy as np
 import pygame
 from gymnasium.utils.ezpickle import EzPickle
-from ml_collections import config_dict
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
-import meltingpot.python
 import shimmy.utils.meltingpot as utils
 
 
@@ -42,41 +39,22 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
     def __init__(
         self,
-        substrate_name: str,
+        env,
         render_mode: str | None = None,
         max_cycles: int = MAX_CYCLES,
-        env: meltingpot.python.utils.substrates.substrate.Substrate | None = None,
     ):
         """Wrapper that converts a openspiel environment into a pettingzoo environment.
 
         Args:
-            substrate_name (str): name of meltingpot substrate to load
+            env (meltingpot.python.utils.substrates.substrate.Substrate): existing meltingpot env to use
             render_mode (Optional[str]): render_mode
             max_cycles (Optional[int]): maximum number of cycles (steps) before termination
-            env (Optional[meltingpot.python.utils.substrates.substrate.Substrate]): existing meltingpot env to use
 
         """
-        EzPickle.__init__(self, substrate_name, render_mode, max_cycles, env)
+        EzPickle.__init__(self, env, render_mode, max_cycles)
 
         self.max_cycles = max_cycles
-        if env is not None:
-            self._env = env
-        else:
-            # Create env config
-            self.substrate_name = substrate_name
-            self.player_roles = meltingpot.python.substrate.get_config(
-                self.substrate_name
-            ).default_player_roles
-            self.env_config = {
-                "substrate": self.substrate_name,
-                "roles": self.player_roles,
-            }
-
-            # Build substrate from pickle
-            self.env_config = config_dict.ConfigDict(self.env_config)
-            self._env = meltingpot.python.substrate.build(
-                self.env_config["substrate"], roles=self.env_config["roles"]
-            )
+        self._env = env
 
         # Set up PettingZoo variables
         self.render_mode = render_mode
