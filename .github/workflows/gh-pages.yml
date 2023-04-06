@@ -41,4 +41,3 @@ jobs:
           folder: _build
           clean-exclude: |
             *.*.*/
-
