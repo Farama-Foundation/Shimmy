@@ -416,12 +416,12 @@ In 2022, the team that has been maintaining Gym has moved all future development
 <dd><p>A protocol for OpenAI Gym v0.21 environment.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.LegacyV21Env.observation_space">
-<span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gym.Space</span></em><a class="headerlink" href="#shimmy.openai_gym_compatibility.LegacyV21Env.observation_space" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Space</span></em><a class="headerlink" href="#shimmy.openai_gym_compatibility.LegacyV21Env.observation_space" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.LegacyV21Env.action_space">
-<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gym.Space</span></em><a class="headerlink" href="#shimmy.openai_gym_compatibility.LegacyV21Env.action_space" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Space</span></em><a class="headerlink" href="#shimmy.openai_gym_compatibility.LegacyV21Env.action_space" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -527,7 +527,7 @@ New step API refers to step() method returning (observation, reward, terminated,
 
 <dl class="py function">
 <dt class="sig sig-object py" id="shimmy.openai_gym_compatibility._strip_default_wrappers">
-<span class="sig-prename descclassname"><span class="pre">shimmy.openai_gym_compatibility.</span></span><span class="sig-name descname"><span class="pre">_strip_default_wrappers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gym.Env</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">gym.Env</span></span></span><a class="headerlink" href="#shimmy.openai_gym_compatibility._strip_default_wrappers" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">shimmy.openai_gym_compatibility.</span></span><span class="sig-name descname"><span class="pre">_strip_default_wrappers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Env</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Env</span></span></span><a class="headerlink" href="#shimmy.openai_gym_compatibility._strip_default_wrappers" title="Permalink to this definition">#</a></dt>
 <dd><p>Strips builtin wrappers from the environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -541,7 +541,7 @@ New step API refers to step() method returning (observation, reward, terminated,
 
 <dl class="py function">
 <dt class="sig sig-object py" id="shimmy.openai_gym_compatibility._convert_space">
-<span class="sig-prename descclassname"><span class="pre">shimmy.openai_gym_compatibility.</span></span><span class="sig-name descname"><span class="pre">_convert_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">gym.Space</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">gymnasium.Space</span></span></span><a class="headerlink" href="#shimmy.openai_gym_compatibility._convert_space" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">shimmy.openai_gym_compatibility.</span></span><span class="sig-name descname"><span class="pre">_convert_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Space</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span></span></span><a class="headerlink" href="#shimmy.openai_gym_compatibility._convert_space" title="Permalink to this definition">#</a></dt>
 <dd><p>Converts a gym space to a gymnasium space.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

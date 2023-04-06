@@ -330,6 +330,62 @@
 </section>
 <section id="class-description">
 <h2>Class Description<a class="headerlink" href="#class-description" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.bsuite_compatibility.</span></span><span class="sig-name descname"><span class="pre">BSuiteCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0" title="Permalink to this definition">#</a></dt>
+<dd><p>A compatibility wrapper that converts a BSuite environment into a gymnasium environment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bsuite uses <cite>np.random.RandomState</cite>, a legacy random number generator while gymnasium
+uses <cite>np.random.Generator</cite>, therefore the return type of <cite>np_random</cite> is different from expected.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_modes':</span> <span class="pre">[]}</span></em><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0.observation_space">
+<span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.observation_space" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0.action_space">
+<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.reset" title="Permalink to this definition">#</a></dt>
+<dd><p>Resets the bsuite environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.step" title="Permalink to this definition">#</a></dt>
+<dd><p>Steps through the bsuite environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
+<dd><p>Renders the bsuite env.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.close" title="Permalink to this definition">#</a></dt>
+<dd><p>Closes the environment.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="shimmy.bsuite_compatibility.BSuiteCompatibilityV0.np_random">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">np_random</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">RandomState</span></em><a class="headerlink" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.np_random" title="Permalink to this definition">#</a></dt>
+<dd><p>This should be np.random.Generator but bsuite uses np.random.RandomState.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -399,7 +455,20 @@
 <li><a class="reference internal" href="#deepmind-behavior-suite">DeepMind Behavior Suite</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
-<li><a class="reference internal" href="#class-description">Class Description</a></li>
+<li><a class="reference internal" href="#class-description">Class Description</a><ul>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0</span></code></a><ul>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0.metadata</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0.observation_space</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0.action_space</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.reset"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0.reset()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.step"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0.step()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0.render()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0.close()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.bsuite_compatibility.BSuiteCompatibilityV0.np_random"><code class="docutils literal notranslate"><span class="pre">BSuiteCompatibilityV0.np_random</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
