@@ -20,9 +20,8 @@ def load_substrate(substrate_name: str):
     Returns:
         env: meltingpot.python.utils.substrates.substrate.Substrate
     """
-    from ml_collections import config_dict
-
     import meltingpot.python
+    from ml_collections import config_dict
 
     # Create env config
     substrate_name = substrate_name

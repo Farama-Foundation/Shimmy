@@ -9,7 +9,7 @@ and modified to modern pettingzoo API
 from __future__ import annotations
 
 import functools
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 import gymnasium
 import numpy as np
@@ -18,6 +18,9 @@ from gymnasium.utils.ezpickle import EzPickle
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
 import shimmy.utils.meltingpot as utils
+
+if TYPE_CHECKING:
+    import meltingpot.python
 
 
 class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
@@ -40,22 +43,28 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
     def __init__(
         self,
-        env,
+        env: meltingpot.python.utils.substrates.substrate.Substrate,
+        substrate_name: str | None = None,
         render_mode: str | None = None,
         max_cycles: int = MAX_CYCLES,
     ):
         """Wrapper that converts a openspiel environment into a pettingzoo environment.
 
         Args:
-            env (meltingpot.python.utils.substrates.substrate.Substrate): existing meltingpot env to use
+            env (meltingpot.python.utils.substrates.substrate.Substrate): already initialized melting pot env to wrap
+            substrate_name (Optional[str]): name of melting pot substrate to load (instead of already initialized env)
             render_mode (Optional[str]): render_mode
             max_cycles (Optional[int]): maximum number of cycles (steps) before termination
 
         """
-        EzPickle.__init__(self, env, render_mode, max_cycles)
+        EzPickle.__init__(self, env, substrate_name, render_mode, max_cycles)
+
+        if substrate_name is not None:
+            self._env = utils.load_substrate(substrate_name)
+        else:
+            self._env = env
 
         self.max_cycles = max_cycles
-        self._env = env
 
         # Set up PettingZoo variables
         self.render_mode = render_mode
