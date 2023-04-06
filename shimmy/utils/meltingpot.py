@@ -1,6 +1,7 @@
 """Shared utils for meltingpot."""
 # pyright: reportGeneralTypeIssues=false
 # flake8: noqa F821
+# isort: skip_file
 import dm_env
 from gymnasium import spaces
 from pettingzoo.utils.env import ObsDict
