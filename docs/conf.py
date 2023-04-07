@@ -17,24 +17,22 @@
 
 # -- Project information -----------------------------------------------------
 
-import os
-import sys
-from typing import Any, Dict
+import shimmy
+
 
 project = "Shimmy"
-copyright = "2022"
+copyright = "2023"
 author = "Farama Foundation"
 
 # The full version, including alpha/beta/rc tags
-# TODO: change to shimmy version
-release = "0.2.0"
-
-sys.path.insert(0, os.path.abspath("../.."))
+release = shimmy.__version__
 
 # -- General configuration ---------------------------------------------------
 
 # organize functions by source order
 autodoc_member_order = "bysource"
+autoclass_content = "both"
+autodoc_preserve_defaults = True
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
