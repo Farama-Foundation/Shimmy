@@ -1,7 +1,6 @@
 """Tests the functionality of the MeltingPotCompatibility wrapper on meltingpot substrates."""
 # pyright: reportUndefinedVariable=false
-# flake8: noqa F821 E402
-# isort: skip_file
+# flake8: noqa E402
 import pickle
 
 import pytest
@@ -10,8 +9,8 @@ from pettingzoo.test import parallel_api_test
 
 pytest.importorskip("meltingpot")
 
-import meltingpot.python
 from meltingpot.python.configs.substrates import SUBSTRATES
+
 from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 from shimmy.utils.meltingpot import load_substrate
 

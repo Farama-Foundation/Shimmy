@@ -5,7 +5,6 @@ https://github.com/deepmind/meltingpot/blob/main/examples/pettingzoo/utils.py
 and modified to modern pettingzoo API
 """
 # pyright: reportOptionalSubscript=false
-# isort: skip_file
 from __future__ import annotations
 
 import functools
