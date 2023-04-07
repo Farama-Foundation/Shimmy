@@ -16,9 +16,7 @@
 # sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
-
 import shimmy
-
 
 project = "Shimmy"
 copyright = "2023"
