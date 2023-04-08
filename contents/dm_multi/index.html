@@ -11,7 +11,7 @@
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="OpenSpiel (multi-agent)" href="../open_spiel/" /><link rel="prev" title="DM Control" href="../dm_control/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/dm_multi.html" />
 
-    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 5.2.3 and Furo 2022.12.07.dev1 -->
+    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07.dev1 -->
         <title>DM Control (multi-agent) - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=721f65a87c37740baa8d605b09db5bec3a2987a8" />
@@ -335,6 +335,16 @@
 <dd><p>This compatibility wrapper converts multi-agent dm-control environments, primarily soccer, into a Pettingzoo environment.</p>
 <p>Dm-control is DeepMind’s software stack for physics-based simulation and Reinforcement Learning environments,
 using MuJoCo physics. This compatibility wrapper converts a dm-control environment into a gymnasium environment.</p>
+<p>Wrapper to convert a dm control multi-agent environment into a pettingzoo environment.</p>
+<p>Due to how the underlying environment is set up, this environment is nondeterministic, so seeding doesn’t work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> (<em>dm_env.Environment</em>) – dm control multi-agent environment</p></li>
+<li><p><strong>render_mode</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – render_mode</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.metadata">
 <span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_modes':</span> <span class="pre">['human']}</span></em><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
@@ -480,7 +490,7 @@ using MuJoCo physics. This compatibility wrapper converts a dm-control environme
           <div class="bottom-of-page">
             <div class="left-details">
               <div class="copyright">
-                Copyright &#169; 2022
+                Copyright &#169; 2023
               </div>
               <!--
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
@@ -597,9 +607,6 @@ using MuJoCo physics. This compatibility wrapper converts a dm-control environme
       </script>
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>

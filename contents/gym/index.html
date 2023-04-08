@@ -11,7 +11,7 @@
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Atari Environments" href="../atari/" /><link rel="prev" title="&lt;no title&gt;" href="../" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/gym.html" />
 
-    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 5.2.3 and Furo 2022.12.07.dev1 -->
+    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07.dev1 -->
         <title>OpenAI Gym - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=721f65a87c37740baa8d605b09db5bec3a2987a8" />
@@ -350,6 +350,17 @@ by providing a standard API to communicate between learning algorithms and envir
 standard set of environments compliant with that API.
 Since its release, Gym’s API has become the field standard for doing this.
 In 2022, the team that has been maintaining Gym has moved all future development to Gymnasium.</p>
+<p>Converts a gym v26 environment to a gymnasium environment.</p>
+<p>Either <cite>env_id</cite> or <cite>env</cite> must be passed as arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env_id</strong> – The environment id to use in <cite>gym.make</cite></p></li>
+<li><p><strong>make_kwargs</strong> – Additional keyword arguments for make</p></li>
+<li><p><strong>env</strong> – An gym environment to wrap.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV26CompatibilityV0.observation_space">
 <span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.observation_space" title="Permalink to this definition">#</a></dt>
@@ -465,6 +476,8 @@ New step API refers to step() method returning (observation, reward, terminated,
 (Refer to docs for details on the API change)</p>
 <p>Known limitations:
 - Environments that use <cite>self.np_random</cite> might not work as expected.</p>
+<p>A wrapper which converts old-style envs to valid modern envs.</p>
+<p>Some information may be lost in the conversion, so we recommend updating your environment.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.openai_gym_compatibility.GymV21CompatibilityV0.observation_space">
 <span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.observation_space" title="Permalink to this definition">#</a></dt>
@@ -589,7 +602,7 @@ New step API refers to step() method returning (observation, reward, terminated,
           <div class="bottom-of-page">
             <div class="left-details">
               <div class="copyright">
-                Copyright &#169; 2022
+                Copyright &#169; 2023
               </div>
               <!--
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
@@ -722,9 +735,6 @@ New step API refers to step() method returning (observation, reward, terminated,
       </script>
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>

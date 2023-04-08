@@ -11,7 +11,7 @@
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Control" href="../dm_control/" /><link rel="prev" title="OpenAI Gym" href="../gym/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/atari.html" />
 
-    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 5.2.3 and Furo 2022.12.07.dev1 -->
+    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07.dev1 -->
         <title>Atari Environments - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=721f65a87c37740baa8d605b09db5bec3a2987a8" />
@@ -339,6 +339,47 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.atari_env.</span></span><span class="sig-name descname"><span class="pre">AtariEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pong'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">difficulty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rgb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frameskip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeat_action_probability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_action_space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_num_frames_per_episode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.atari_env.AtariEnv" title="Permalink to this definition">#</a></dt>
 <dd><p>(A)rcade (L)earning (Gymnasium) (Env)ironment.</p>
 <p>A Gymnasium wrapper around the Arcade Learning Environment (ALE).</p>
+<p>Initialize the ALE interface for Gymnasium.</p>
+<p>Default parameters are taken from Machado et al., 2018.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>game</strong> – str =&gt; Game to initialize env with.</p></li>
+<li><p><strong>mode</strong> – Optional[int] =&gt; Game mode, see Machado et al., 2018</p></li>
+<li><p><strong>difficulty</strong> – Optional[int] =&gt; Game difficulty,see Machado et al., 2018</p></li>
+<li><p><strong>obs_type</strong> – str =&gt; Observation type in { ‘rgb’, ‘grayscale’, ‘ram’ }</p></li>
+<li><p><strong>frameskip</strong> – Union[Tuple[int, int], int] =&gt;
+Stochastic frameskip as tuple or fixed.</p></li>
+<li><p><strong>repeat_action_probability</strong> – int =&gt;
+Probability to repeat actions, see Machado et al., 2018</p></li>
+<li><p><strong>full_action_space</strong> – bool =&gt; Use full action space?</p></li>
+<li><p><strong>max_num_frames_per_episode</strong> – int =&gt; Max number of frame per episode.
+Once <cite>max_num_frames_per_episode</cite> is reached the episode is
+truncated.</p></li>
+<li><p><strong>render_mode</strong> – str =&gt; One of { ‘human’, ‘rgb_array’ }.
+If <cite>human</cite> we’ll interactively display the screen and enable
+game sounds. This will lock emulation to the ROMs specified FPS
+If <cite>rgb_array</cite> we’ll return the <cite>rgb</cite> key in step metadata with
+the current environment RGB frame.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The game must be installed, see ale-import-roms, or ale-py-roms.</p></li>
+<li><p>Frameskip values of (low, high) will enable stochastic frame skip
+which will sample a random frameskip uniformly each action.</p></li>
+<li><p>It is recommended to enable full action space.
+See Machado et al., 2018 for more details.</p></li>
+</ul>
+</div>
+<div class="admonition-references admonition">
+<p class="admonition-title">References</p>
+<p><cite>Revisiting the Arcade Learning Environment: Evaluation Protocols
+and Open Problems for General Agents</cite>, Machado et al., 2018, JAIR
+URL: <a class="reference external" href="https://jair.org/index.php/jair/article/view/11182">https://jair.org/index.php/jair/article/view/11182</a></p>
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.atari_env.AtariEnv.metadata">
 <span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'obs_types':</span> <span class="pre">{'grayscale',</span> <span class="pre">'ram',</span> <span class="pre">'rgb'},</span> <span class="pre">'render_modes':</span> <span class="pre">['human',</span> <span class="pre">'rgb_array']}</span></em><a class="headerlink" href="#shimmy.atari_env.AtariEnv.metadata" title="Permalink to this definition">#</a></dt>
@@ -513,7 +554,7 @@ For complete cloning and restoring of the full state, see <cite>{clone,restore}_
           <div class="bottom-of-page">
             <div class="left-details">
               <div class="copyright">
-                Copyright &#169; 2022
+                Copyright &#169; 2023
               </div>
               <!--
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
@@ -632,9 +673,6 @@ For complete cloning and restoring of the full state, see <cite>{clone,restore}_
       </script>
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
