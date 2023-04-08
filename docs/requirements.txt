@@ -1,5 +1,4 @@
-sphinx==5.2.3
-sphinx-notfound-page
+sphinx
 myst-parser
 git+https://github.com/Farama-Foundation/Celshast#egg=furo
 moviepy
