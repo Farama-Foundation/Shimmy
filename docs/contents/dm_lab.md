@@ -19,39 +19,10 @@ Shimmy provides compatibility wrappers to convert all DM Lab environments to [Gy
 ### Installation
 
 ```
-pip install shimmy
+pip install shimmy[dm-lab]
 ```
 
-Courtesy to [Danijar Hafner](https://github.com/deepmind/lab/issues/242) for providing this install script.
-```bash
-#!/bin/sh
-set -eu
-
-# Dependencies
-apt-get update && apt-get install -y \
-    build-essential curl freeglut3 gettext git libffi-dev libglu1-mesa \
-    libglu1-mesa-dev libjpeg-dev liblua5.1-0-dev libosmesa6-dev \
-    libsdl2-dev lua5.1 pkg-config python-setuptools python3-dev \
-    software-properties-common unzip zip zlib1g-dev g++
-pip3 install numpy
-
-# Bazel
-apt-get install -y apt-transport-https curl gnupg
-curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
-mv bazel.gpg /etc/apt/trusted.gpg.d/
-echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
-apt-get update && apt-get install -y bazel
-
-# Build
-git clone https://github.com/deepmind/lab.git
-cd lab
-echo 'build --cxxopt=-std=c++17' > .bazelrc
-bazel build -c opt //python/pip_package:build_pip_package
-./bazel-bin/python/pip_package/build_pip_package /tmp/dmlab_pkg
-pip3 install --force-reinstall /tmp/dmlab_pkg/deepmind_lab-*.whl
-cd ..
-rm -rf lab
-```
+DeepMind Lab is not distributed via [pypi](https://pypi.org/) and must be installed manually. Courtesy to [Danijar Hafner](https://github.com/deepmind/lab/issues/242) for providing an [install script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_dm_lab.sh). For troubleshooting, refer to the official [installation instructions](https://github.com/deepmind/lab#getting-started-on-linux).
 
 ### Usage
 Load a `deepmind_lab` environment:
@@ -67,13 +38,18 @@ env = deepmind_lab.Lab("lt_chasm", observations, config=config, renderer=rendere
 env = DmLabCompatibilityV0(env)
 ```
 
-[//]: # (Run the environment:)
+Run the environment:
+```python
+observation, info = env.reset(seed=42)
+for _ in range(1000):
+   action = env.action_space.sample()  # this is where you would insert your policy
+   observation, reward, terminated, truncated, info = env.step(action)
 
-[//]: # (```python)
+   if terminated or truncated:
+      observation, info = env.reset()
+env.close()
+```
 
-[//]: # ()
-[//]: # (```)
-[//]: # (TODO: add full usage)
 
 ### Class Description
 ```{eval-rst}
