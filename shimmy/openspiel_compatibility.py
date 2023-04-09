@@ -1,4 +1,4 @@
-"""Wrapper to convert an openspiel environment into a pettingzoo compatible environment."""
+"""Wrapper to convert an OpenSpiel environment into a pettingzoo compatible environment."""
 from __future__ import annotations
 
 import functools
@@ -12,8 +12,8 @@ from gymnasium.utils import EzPickle, seeding
 from pettingzoo.utils.env import AgentID, ObsType
 
 
-class OpenspielCompatibilityV0(pz.AECEnv, EzPickle):
-    """This compatibility wrapper converts an openspiel environment into a pettingzoo environment.
+class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
+    """This compatibility wrapper converts an OpenSpiel environment into a PettingZoo environment.
 
     OpenSpiel is a collection of environments and algorithms for research in general reinforcement learning
     and search/planning in games. OpenSpiel supports n-player (single- and multi- agent) zero-sum,
@@ -26,29 +26,45 @@ class OpenspielCompatibilityV0(pz.AECEnv, EzPickle):
 
     def __init__(
         self,
-        game: pyspiel.Game,
-        render_mode: str | None,
+        env: pyspiel.Game,
+        game_name: str | None = None,
+        render_mode: str | None = None,
     ):
-        """Wrapper to convert a openspiel environment into a pettingzoo environment.
+        """Wrapper to convert a OpenSpiel environment into a PettingZoo environment.
 
         Args:
-            game (pyspiel.Game): game
-            render_mode (Optional[str]): render_mode
+            env (pyspiel.Game): existing OpenSpiel environment to wrap
+            game_name (str): name of OpenSpiel game to load
+            render_mode (Optional[str]): rendering mode
         """
-        EzPickle.__init__(self, game, render_mode)
+        EzPickle.__init__(self, env, game_name, render_mode)
         super().__init__()
-        self.game = game
+
+        # Only one of game_name and env can be provided, the other should be None
+        if env is None and game_name is None:
+            raise ValueError(
+                "No environment provided. Use `env` to specify an existing environment, or load an environment with `game_name`."
+            )
+        elif env is not None and game_name is not None:
+            raise ValueError(
+                "Two environments provided. Use `env` to specify an existing environment, or load an environment with `game_name`."
+            )
+        elif game_name is not None:
+            self._env = pyspiel.load_game(game_name)
+        elif env is not None:
+            self._env = env
+
         self.possible_agents = [
-            "player_" + str(r) for r in range(self.game.num_players())
+            "player_" + str(r) for r in range(self._env.num_players())
         ]
         self.agent_id_name_mapping = dict(
-            zip(range(self.game.num_players()), self.possible_agents)
+            zip(range(self._env.num_players()), self.possible_agents)
         )
         self.agent_name_id_mapping = dict(
-            zip(self.possible_agents, range(self.game.num_players()))
+            zip(self.possible_agents, range(self._env.num_players()))
         )
 
-        self.game_type = self.game.get_type()
+        self.game_type = self._env.get_type()
 
         self.render_mode = render_mode
 
@@ -71,14 +87,14 @@ class OpenspielCompatibilityV0(pz.AECEnv, EzPickle):
             return spaces.Box(
                 low=-np.inf,
                 high=np.inf,
-                shape=self.game.observation_tensor_shape(),
+                shape=self._env.observation_tensor_shape(),
                 dtype=np.float64,
             )
         elif self.game_type.provides_information_state_tensor:
             return spaces.Box(
                 low=-np.inf,
                 high=np.inf,
-                shape=self.game.information_state_tensor_shape(),
+                shape=self._env.information_state_tensor_shape(),
                 dtype=np.float64,
             )
         elif (
@@ -88,7 +104,7 @@ class OpenspielCompatibilityV0(pz.AECEnv, EzPickle):
             return spaces.Text(max_length=2**16)
         else:
             raise NotImplementedError(
-                f"No information/observation tensor/string implemented for {self.game}."
+                f"No information/observation tensor/string implemented for {self._env}."
             )
 
     @functools.lru_cache(maxsize=None)
@@ -104,10 +120,10 @@ class OpenspielCompatibilityV0(pz.AECEnv, EzPickle):
             space
         """
         try:
-            return spaces.Discrete(self.game.num_distinct_actions())
+            return spaces.Discrete(self._env.num_distinct_actions())
         except pyspiel.SpielError as e:
             raise NotImplementedError(
-                f"{str(e)[:-1]} for action space for {self.game}."
+                f"{str(e)[:-1]} for action space for {self._env}."
             )
 
     def render(self):
@@ -159,7 +175,7 @@ class OpenspielCompatibilityV0(pz.AECEnv, EzPickle):
 
         # get a new game state, game_length = number of game nodes
         self.game_length = 1
-        self.game_state = self.game.new_initial_state()
+        self.game_state = self._env.new_initial_state()
 
         # holders in case of simultaneous actions
         self.simultaneous_actions = dict()
@@ -318,7 +334,7 @@ class OpenspielCompatibilityV0(pz.AECEnv, EzPickle):
         if self.game_state.current_player() <= -4:
             self.terminations = {a: True for a in self.agents}
 
-        # check for action masks because openspiel doesn't do it themselves
+        # check for action masks because OpenSpiel doesn't do it themselves
         action_mask_sum = 0
         for agent in self.agents:
             action_mask_sum += np.sum(self.infos[agent]["action_mask"])
@@ -329,7 +345,7 @@ class OpenspielCompatibilityV0(pz.AECEnv, EzPickle):
 
         # check for truncation
         self.truncations = {a: self.truncations[a] for a in self.agents}
-        if self.game_length > self.game.max_game_length():
+        if self.game_length > self._env.max_game_length():
             self.truncations = {a: True for a in self.agents}
 
     def _end_routine(self):

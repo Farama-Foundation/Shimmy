@@ -97,7 +97,7 @@ If you use this in your research, please cite:
 ```
 @software{shimmy2022github,
   author = {{Jun Jet Tai, Mark Towers} and Elliot Tower and Jordan Terry},
-  title = {Shimmy: Gymnasium and Pettingzoo Wrappers for Commonly Used Environments},
+  title = {Shimmy: Gymnasium and PettingZoo Wrappers for Commonly Used Environments},
   url = {http://github.com/Farama-Foundation/Shimmy},
   version = {0.2.0},
   year = {2022},

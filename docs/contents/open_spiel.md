@@ -27,10 +27,10 @@ pip install shimmy[openspiel]
 Load an `openspiel` environment:
 ```python
 import pyspiel
-from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
+from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
 
 env = pyspiel.load_game("2048")
-env = OpenspielCompatibilityV0(env)
+env = OpenSpielCompatibilityV0(env)
 ```
 
 Run the environment:
@@ -80,7 +80,7 @@ Scores, X: 0, O: 0
 
 ### Class Description
 ```{eval-rst}
-.. autoclass:: shimmy.openspiel_compatibility.OpenspielCompatibilityV0
+.. autoclass:: shimmy.openspiel_compatibility.OpenSpielCompatibilityV0
     :members:
     :undoc-members:
 ```
