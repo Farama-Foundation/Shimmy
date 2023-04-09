@@ -9,7 +9,7 @@ and requires social reasoning such as cooperation, competition, deception, recip
 Shimmy provides compatibility wrappers to convert all [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 ```{figure} /_static/img/meltingpot.gif
-    :name: melting pot
+    :name: Melting Pot
 ```
 
 ### Installation
