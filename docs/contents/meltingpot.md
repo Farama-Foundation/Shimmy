@@ -18,7 +18,7 @@ Shimmy provides compatibility wrappers to convert all [Melting Pot](https://gith
 pip install shimmy[melting-pot]
 ```
 
-Melting Pot must be installed manually, see [installation](https://github.com/deepmind/meltingpot#installation).
+Melting Pot is not distributed via [pypi](https://pypi.org/) and must be installed manually. We provide an [installation script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_melting_pot.sh) (compatible with macOS and linux) to clone the melting pot repository, install bazel, and run the included installation scripts. For troubleshooting,  refer to the official [installation instructions](https://github.com/deepmind/meltingpot#installation).
 
 ### Usage (Multi agent)
 Load a `meltingpot` environment:
