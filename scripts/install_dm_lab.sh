@@ -25,7 +25,7 @@ elif [[ "$(uname -s)" == 'Darwin' ]]; then
     brew install bazel
   fi
 else
-  echo "Install script does not support windows, melting pot and dmlab2d must be installed manually and are not natively supported"
+  echo "Install script does not support windows, Melting Pot and dmlab2d must be installed manually and are not natively supported"
   exit 1
 fi
 
