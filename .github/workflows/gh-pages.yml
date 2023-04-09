@@ -20,11 +20,8 @@ jobs:
       - name: Install dependencies for doc
         run: pip install -r docs/requirements.txt
 
-      - name: Install dependencies for shimmy
-        run: pip install pettingzoo ale-py dm_control dm_env open_spiel
-
-      - name: Install package
-        run: pip install .
+      - name: Install shimmy and dependencies
+        run: pip install -e .[all]
 
       - name: Build
         run: sphinx-build -b dirhtml -v docs _build
