@@ -26,15 +26,15 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
     def __init__(
         self,
-        env: pyspiel.Game,
+        env: pyspiel.Game | None = None,
         game_name: str | None = None,
         render_mode: str | None = None,
     ):
         """Wrapper to convert a OpenSpiel environment into a PettingZoo environment.
 
         Args:
-            env (pyspiel.Game): existing OpenSpiel environment to wrap
-            game_name (str): name of OpenSpiel game to load
+            env (Optional[pyspiel.Game]): existing OpenSpiel environment to wrap
+            game_name (Optional[str]): name of OpenSpiel game to load
             render_mode (Optional[str]): rendering mode
         """
         EzPickle.__init__(self, env, game_name, render_mode)
@@ -131,6 +131,11 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
         Print the current game state.
         """
+        if not hasattr(self, "game_state"):
+            raise UserWarning(
+                "You must reset the environment using reset() before calling render()."
+            )
+
         print(self.game_state)
 
     def observe(self, agent: AgentID) -> ObsType:

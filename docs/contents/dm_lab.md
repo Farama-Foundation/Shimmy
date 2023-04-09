@@ -81,3 +81,9 @@ env = DmLabCompatibilityV0(env)
     :members:
     :undoc-members:
 ```
+
+### Utils
+```{eval-rst}
+.. automodule:: shimmy.utils.dm_lab
+   :members:
+```

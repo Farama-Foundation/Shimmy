@@ -49,7 +49,6 @@ def test_loading_env(config):
     team_size, time_limit, disable_walker_contacts, enable_field_box, terminate_on_goal, walker_type = config  # fmt: skip
 
     env = DmControlMultiAgentCompatibilityV0(
-        env=None,
         team_size=team_size,
         time_limit=time_limit,
         disable_walker_contacts=disable_walker_contacts,

@@ -17,7 +17,7 @@ def load_dm_control_soccer(
     terminate_on_goal: bool | None = False,
     walker_type: dm_soccer.WalkerType | None = dm_soccer.WalkerType.BOXHEAD,
 ) -> dm_control.composer.Environment:
-    """Loads a DM Control Soccer environment.
+    """Helper function to load a DM Control Soccer environment.
 
     Handles arguments which are None or unspecified (which will throw errors otherwise).
 

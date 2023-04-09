@@ -24,10 +24,23 @@ Melting Pot must be installed manually, see [installation](https://github.com/de
 Load a `meltingpot` environment:
 ```python
 from shimmy import MeltingPotCompatibilityV0
+
+env = MeltingPotCompatibilityV0(env=None, substrate_name="prisoners_dilemma_in_the_matrix__arena", render_mode=None)
+```
+
+Wrap an existing `meltingpot` environment:
+```python
+from shimmy import MeltingPotCompatibilityV0
 from shimmy.utils.meltingpot import load_substrate
 
-env = load_substrate("prisoners_dilemma_in_the_matrix__arena")
+env = load_substrate("prisoners_dilemma_in_the_matrix__arena") 
 env = MeltingPotCompatibilityV0(env, render_mode=None)
+```
+Note: the first argument `env` wraps an existing environment, while `substrate_name` loads a new environment and wraps it.
+```{eval-rst}
+.. warning::
+
+    Using the `env` argument at the same time as the `game_name` argument will result in a ValueError  
 ```
 
 Run the environment:
@@ -48,3 +61,9 @@ env.close()
     :undoc-members:
 ```
 
+
+### Utils
+```{eval-rst}
+.. automodule:: shimmy.utils.meltingpot
+   :members:
+```

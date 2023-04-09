@@ -26,12 +26,32 @@ pip install shimmy[openspiel]
 
 Load an `openspiel` environment:
 ```python
+from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
+
+env = OpenSpielCompatibilityV0(game_name="2048")
+```
+
+Wrap an existing `openspiel` environment:
+```python
 import pyspiel
 from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
 
 env = pyspiel.load_game("2048")
 env = OpenSpielCompatibilityV0(env)
 ```
+
+```{eval-rst}
+.. note::
+
+    The first argument `env` wraps an existing environment, while `game_name` loads a new environment and wraps it.
+```
+
+```{eval-rst}
+.. warning::
+
+    Using the `env` argument at the same time as the `game_name` argument will result in a ValueError  
+```
+
 
 Run the environment:
 ```python
@@ -47,9 +67,8 @@ for agent in env.agent_iter():
 env.close()
 ```
 
-Note: OpenSpiel does not provide rendering for all environments. 
-
-Calling `env.render()` will return different results depending on the environment. 
+### Rendering
+OpenSpiel does not support graphical rendering, and only supports ASCII text rendering for some environments. Calling `env.render()` for environments which do not provide rendering will print the internal game state.
 
 * ASCII text visualization (Backgammon):
 

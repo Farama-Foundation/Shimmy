@@ -78,7 +78,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
     def __init__(
         self,
-        env: dm_control.composer.Environment,
+        env: dm_control.composer.Environment | None = None,
         team_size: int | None = None,
         time_limit: float | None = None,
         disable_walker_contacts: bool | None = None,
@@ -93,7 +93,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
         Note: Arguments marked [DM CONTROL ARG] will be used to load a new environment, and cannot be specified at the same time as `env`.
 
         Args:
-            env (dm_env.Environment): existing dm control multi-agent environment to wrap
+            env (Optional[dm_env.Environment]): existing dm control multi-agent environment to wrap
             team_size (Optional[int]): number of players for each team                                    [DM CONTROL ARG]
             time_limit (Optional[float]): time limit for the game                                         [DM CONTROL ARG]
             disable_walker_contacts (Optional[bool]): flag to disable walker contacts                     [DM CONTROL ARG]

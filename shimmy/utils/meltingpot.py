@@ -13,7 +13,7 @@ _WORLD_PREFIX = "WORLD."
 
 
 def load_substrate(substrate_name: str):
-    """Helper utility to load Melting Pot substrates.
+    """Helper function to load Melting Pot substrates.
 
     Args:
         substrate_name: str

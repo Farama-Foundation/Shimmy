@@ -20,9 +20,7 @@ from shimmy.utils.meltingpot import load_substrate
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_loading_env(substrate_name):
     """Tests the loading of all Melting Pot environments using the MeltingPotCompatibility wrapper."""
-    env = MeltingPotCompatibilityV0(
-        env=None, substrate_name=substrate_name, render_mode=None
-    )
+    env = MeltingPotCompatibilityV0(substrate_name=substrate_name, render_mode=None)
 
     # api test the env
     parallel_api_test(env)

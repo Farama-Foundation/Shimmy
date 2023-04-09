@@ -140,7 +140,7 @@ def test_failing_games(game_name):
 @pytest.mark.parametrize("game_name", _PASSING_GAMES)
 def test_loading_env(game_name):
     """Tests the loading of all OpenSpiel environments using the OpenSpielCompatibility wrapper."""
-    env = OpenSpielCompatibilityV0(env=None, game_name=game_name, render_mode=None)
+    env = OpenSpielCompatibilityV0(game_name=game_name, render_mode=None)
 
     # api test the env
     # api_test(env)

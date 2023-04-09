@@ -20,12 +20,33 @@ pip install shimmy[dm-control-multi-agent]
 
 Load a `dm_control.locomotion.soccer` environment:
 ```python
-from dm_control.locomotion import soccer as dm_soccer
 from shimmy.dm_control_multiagent_compatibility import DmControlMultiAgentCompatibilityV0)
+
+env = DmControlMultiAgentCompatibilityV0(team_size=5)
+```
+
+Load an existing `dm_control.locomotion.soccer` environment:
+```python
+from dm_control.locomotion import soccer as dm_soccer
+from shimmy.dm_control_multiagent_compatibility import DmControlMultiAgentCompatibilityV0
 
 env = dm_soccer.load(team_size=2)
 env = DmControlMultiAgentCompatibilityV0(env)
 ```
+The first argument `env` wraps an existing environment, while specifying any of `team_size`, `time_limit`, `disable_walker_contacts`, `enable_field_box`, `terminate_on_goal` or `walker_type` loads a new environment and wraps it. 
+
+```{eval-rst}
+.. warning::
+
+    Using the `env` argument with any of the following arguments will result in a ValueError:
+     `team_size`, 
+     `time_limit`, 
+     `disable_walker_contacts`, 
+     `enable_field_box` 
+     `terminate_on_goal`, 
+     `walker_type`    
+```
+
 
 Run the environment:
 ```python
@@ -42,4 +63,10 @@ env.close()
 .. autoclass:: shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0
     :members:
     :undoc-members:
+```
+
+### Utils
+```{eval-rst}
+.. automodule:: shimmy.utils.dm_control_multiagent
+   :members:
 ```
