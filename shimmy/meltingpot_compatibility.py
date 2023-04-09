@@ -45,23 +45,27 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         self,
         env: meltingpot.python.utils.substrates.substrate.Substrate,
         substrate_name: str | None = None,
-        render_mode: str | None = None,
         max_cycles: int = MAX_CYCLES,
+        render_mode: str | None = None,
     ):
-        """Wrapper that converts a openspiel environment into a pettingzoo environment.
+        """Wrapper that converts a melting pot environment into a pettingzoo environment.
 
         Args:
-            env (meltingpot.python.utils.substrates.substrate.Substrate): already initialized melting pot env to wrap
+            env (meltingpot.python.utils.substrates.substrate.Substrate): existing melting pot environment
             substrate_name (Optional[str]): name of melting pot substrate to load (instead of already initialized env)
-            render_mode (Optional[str]): render_mode
             max_cycles (Optional[int]): maximum number of cycles (steps) before termination
-
+            render_mode (Optional[str]): rendering mode
         """
-        EzPickle.__init__(self, env, substrate_name, render_mode, max_cycles)
+        EzPickle.__init__(self, env, substrate_name, max_cycles, render_mode,)
 
-        if substrate_name is not None:
+        # Only one of substrate_name and env can be provided, the other should be None
+        if env is None and substrate_name is None:
+            raise ValueError("No environment provided. Use `env` to specify an existing environment, or load an environment with `substrate_name`.")
+        elif env is not None and substrate_name is not None:
+            raise ValueError("Two environments provided. Use `env` to specify an existing environment, or load an environment with `substrate_name`.")
+        elif substrate_name is not None:
             self._env = utils.load_substrate(substrate_name)
-        else:
+        elif env is not None:
             self._env = env
 
         self.max_cycles = max_cycles

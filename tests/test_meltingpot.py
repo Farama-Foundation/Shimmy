@@ -12,6 +12,7 @@ pytest.importorskip("meltingpot")
 
 import meltingpot.python
 from meltingpot.python.configs.substrates import SUBSTRATES
+
 from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 from shimmy.utils.meltingpot import load_substrate
 
