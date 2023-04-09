@@ -307,39 +307,10 @@
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">dm</span><span class="o">-</span><span class="n">lab</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Courtesy to <a class="reference external" href="https://github.com/deepmind/lab/issues/242">Danijar Hafner</a> for providing this install script.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="nb">set</span><span class="w"> </span>-eu
-
-<span class="c1"># Dependencies</span>
-apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>build-essential<span class="w"> </span>curl<span class="w"> </span>freeglut3<span class="w"> </span>gettext<span class="w"> </span>git<span class="w"> </span>libffi-dev<span class="w"> </span>libglu1-mesa<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>libglu1-mesa-dev<span class="w"> </span>libjpeg-dev<span class="w"> </span>liblua5.1-0-dev<span class="w"> </span>libosmesa6-dev<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>libsdl2-dev<span class="w"> </span>lua5.1<span class="w"> </span>pkg-config<span class="w"> </span>python-setuptools<span class="w"> </span>python3-dev<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>software-properties-common<span class="w"> </span>unzip<span class="w"> </span>zip<span class="w"> </span>zlib1g-dev<span class="w"> </span>g++
-pip3<span class="w"> </span>install<span class="w"> </span>numpy
-
-<span class="c1"># Bazel</span>
-apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>apt-transport-https<span class="w"> </span>curl<span class="w"> </span>gnupg
-curl<span class="w"> </span>-fsSL<span class="w"> </span>https://bazel.build/bazel-release.pub.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>&gt;<span class="w"> </span>bazel.gpg
-mv<span class="w"> </span>bazel.gpg<span class="w"> </span>/etc/apt/trusted.gpg.d/
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/bazel.list
-apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>bazel
-
-<span class="c1"># Build</span>
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/deepmind/lab.git
-<span class="nb">cd</span><span class="w"> </span>lab
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;build --cxxopt=-std=c++17&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>.bazelrc
-bazel<span class="w"> </span>build<span class="w"> </span>-c<span class="w"> </span>opt<span class="w"> </span>//python/pip_package:build_pip_package
-./bazel-bin/python/pip_package/build_pip_package<span class="w"> </span>/tmp/dmlab_pkg
-pip3<span class="w"> </span>install<span class="w"> </span>--force-reinstall<span class="w"> </span>/tmp/dmlab_pkg/deepmind_lab-*.whl
-<span class="nb">cd</span><span class="w"> </span>..
-rm<span class="w"> </span>-rf<span class="w"> </span>lab
-</pre></div>
-</div>
+<p>DeepMind Lab is not distributed via <a class="reference external" href="https://pypi.org/">pypi</a> and must be installed manually. Courtesy to <a class="reference external" href="https://github.com/deepmind/lab/issues/242">Danijar Hafner</a> for providing an <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_dm_lab.sh">install script</a>. For troubleshooting, refer to the official <a class="reference external" href="https://github.com/deepmind/lab#getting-started-on-linux">installation instructions</a>.</p>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
@@ -353,6 +324,17 @@ rm<span class="w"> </span>-rf<span class="w"> </span>lab
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">deepmind_lab</span><span class="o">.</span><span class="n">Lab</span><span class="p">(</span><span class="s2">&quot;lt_chasm&quot;</span><span class="p">,</span> <span class="n">observations</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="n">renderer</span><span class="p">)</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">DmLabCompatibilityV0</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run the environment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+   <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>  <span class="c1"># this is where you would insert your policy</span>
+   <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+   <span class="k">if</span> <span class="n">terminated</span> <span class="ow">or</span> <span class="n">truncated</span><span class="p">:</span>
+      <span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
