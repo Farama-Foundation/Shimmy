@@ -1,6 +1,7 @@
-## Melting Pot (multi-agent)
+# Melting Pot (multi-agent)
 
-### [DeepMind Melting Pot](https://github.com/deepmind/meltingpot) 
+## [DeepMind Melting Pot](https://github.com/deepmind/meltingpot) 
+
 [Melting Pot](https://github.com/deepmind/meltingpot) is a suite of test scenarios for multi-agent reinforcement learning, using 2D game environments.
 
 It assesses generalization to novel social situations (familiar and unfamiliar individuals),
@@ -12,7 +13,7 @@ Shimmy provides compatibility wrappers to convert all [Melting Pot](https://gith
     :name: Melting Pot
 ```
 
-### Installation
+## Installation
 
 ```
 pip install shimmy[melting-pot]
@@ -20,7 +21,7 @@ pip install shimmy[melting-pot]
 
 Melting Pot is not distributed via [pypi](https://pypi.org/) and must be installed manually. We provide an [installation script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_melting_pot.sh) (compatible with macOS and linux) to clone the melting pot repository, install bazel, and run the included installation scripts. For troubleshooting,  refer to the official [installation instructions](https://github.com/deepmind/meltingpot#installation).
 
-### Usage (Multi agent)
+## Usage
 Load a `meltingpot` environment:
 ```python
 from shimmy import MeltingPotCompatibilityV0
@@ -53,7 +54,7 @@ while env.agents:
 env.close()
 ```
 
-### Class Description
+## Class Description
 
 ```{eval-rst}
 .. autoclass:: shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0
@@ -62,7 +63,7 @@ env.close()
 ```
 
 
-### Utils
+## Utils
 ```{eval-rst}
 .. automodule:: shimmy.utils.meltingpot
    :members:

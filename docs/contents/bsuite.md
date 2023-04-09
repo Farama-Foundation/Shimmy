@@ -1,6 +1,6 @@
-## Behavior Suite
+# Behavior Suite
 
-### [DeepMind Behavior Suite](https://github.com/deepmind/bsuite)
+## [DeepMind Behavior Suite](https://github.com/deepmind/bsuite)
 
 [Behavior Suite](https://github.com/deepmind/bsuite) is a collection of carefully-designed experiments that investigate various aspects of agent behavior through shared benchmarks. 
 
@@ -12,12 +12,12 @@ Shimmy provides compatibility wrappers to convert [Behavior Suite](https://githu
     :width: 80%
 ```
 
-### Installation
+## Installation
 ```
 pip install shimmy[bsuite]
 ```
 
-### Usage
+## Usage
 Load a `bsuite` environment:
 ```python
 import gymnasium as gym
@@ -37,7 +37,7 @@ for _ in range(1000):
 env.close()
 ```
 
-### Class Description
+## Class Description
 
 ```{eval-rst}
 .. autoclass:: shimmy.bsuite_compatibility.BSuiteCompatibilityV0

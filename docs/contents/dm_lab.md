@@ -1,6 +1,6 @@
-## DM Lab
+# DM Lab
 
-### [DeepMind Lab](https://github.com/deepmind/lab)
+## [DeepMind Lab](https://github.com/deepmind/lab)
 
 [DM Lab](https://github.com/deepmind/lab) is a suite of challenging 3D navigation and puzzle-solving tasks for learning agents, based on id Software's
 [Quake III Arena](https://github.com/id-Software/Quake-III-Arena) via
@@ -16,7 +16,7 @@ Shimmy provides compatibility wrappers to convert all DM Lab environments to [Gy
 ```
 
 
-### Installation
+## Installation
 
 ```
 pip install shimmy[dm-lab]
@@ -24,7 +24,7 @@ pip install shimmy[dm-lab]
 
 DeepMind Lab is not distributed via [pypi](https://pypi.org/) and must be installed manually. Courtesy to [Danijar Hafner](https://github.com/deepmind/lab/issues/242) for providing an [install script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_dm_lab.sh). For troubleshooting, refer to the official [installation instructions](https://github.com/deepmind/lab#getting-started-on-linux).
 
-### Usage
+## Usage
 Load a `deepmind_lab` environment:
 ```python
 import deepmind_lab
@@ -51,14 +51,14 @@ env.close()
 ```
 
 
-### Class Description
+## Class Description
 ```{eval-rst}
 .. autoclass:: shimmy.dm_lab_compatibility.DmLabCompatibilityV0
     :members:
     :undoc-members:
 ```
 
-### Utils
+## Utils
 ```{eval-rst}
 .. automodule:: shimmy.utils.dm_lab
    :members:

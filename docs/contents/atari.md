@@ -1,6 +1,7 @@
-## Atari Environments
+# Atari Environments
 
-### [Arcade Learning Environment (ALE)](https://github.com/mgbellemare/Arcade-Learning-Environment)
+## [Arcade Learning Environment (ALE)](https://github.com/mgbellemare/Arcade-Learning-Environment)
+
 [ALE](https://github.com/mgbellemare/Arcade-Learning-Environment) is a collection of 50+ Atari 2600 games powered by the [Stella](https://stella-emu.github.io/) emulator.
 
 Shimmy provides compatibility wrappers to convert all [ALE](https://github.com/mgbellemare/Arcade-Learning-Environment) environments to [Gymnasium](https://gymnasium.farama.org/).
@@ -19,12 +20,12 @@ Note: [PettingZoo](https://pettingzoo.farama.org/) also provides 20+ multi-agent
     :width: 40%
 ```
 
-### Installation
+## Installation
 ```
 pip install shimmy[atari]
 ```
 
-### Usage
+## Usage
 Load an `ALE` environment:
 ```python
 import gymnasium as gym
@@ -44,7 +45,7 @@ for _ in range(1000):
 env.close()
 ```
 
-### Class Description
+## Class Description
 ```{eval-rst}
 .. autoclass:: shimmy.atari_env.AtariEnv
     :members:

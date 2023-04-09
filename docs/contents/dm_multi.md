@@ -1,6 +1,7 @@
-## DM Control (multi-agent)
+# DM Control (multi-agent)
 
-### [DeepMind Control: Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md)
+## [DeepMind Control: Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md)
+
 [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) is a multi-agent robotics environment where teams of agents compete in soccer. It extends the single-agent [DM Control Locomotion](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md) library, powered by the [MuJoCo](https://github.com/deepmind/mujoco#) physics engine.
 
 Shimmy provides compatibility wrappers to convert all [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
@@ -11,12 +12,12 @@ Shimmy provides compatibility wrappers to convert all [DM Control Soccer](https:
     :width: 80%
 ```
 
-### Installation
+## Installation
 ```
 pip install shimmy[dm-control-multi-agent]
 ```
 
-### Usage (Multi agent)
+## Usage
 
 Load a `dm_control.locomotion.soccer` environment:
 ```python
@@ -57,7 +58,7 @@ while env.agents:
 env.close()
 ```
 
-### Class Description
+## Class Description
 
 ```{eval-rst}
 .. autoclass:: shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0
@@ -65,7 +66,7 @@ env.close()
     :undoc-members:
 ```
 
-### Utils
+## Utils
 ```{eval-rst}
 .. automodule:: shimmy.utils.dm_control_multiagent
    :members:

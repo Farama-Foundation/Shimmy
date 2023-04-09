@@ -1,7 +1,7 @@
-## OpenSpiel (multi-agent)
+# OpenSpiel (multi-agent)
 
 
-### [DeepMind OpenSpiel](https://github.com/deepmind/open_spiel)
+## [DeepMind OpenSpiel](https://github.com/deepmind/open_spiel)
 
 [OpenSpiel](https://github.com/deepmind/open_spiel) is a collection of 70+ environments for common board games, card games, as well as simple grid worlds and social dilemmas.
 
@@ -17,12 +17,12 @@ Shimmy provides compatibility wrappers to convert all [OpenSpiel](https://github
 
 ```
 
-### Installation
+## Installation
 ```
 pip install shimmy[openspiel]
 ```
 
-### Usage
+## Usage
 
 Load an `openspiel` environment:
 ```python
@@ -97,7 +97,7 @@ Scores, X: 0, O: 0
 * rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 ```
 
-### Class Description
+## Class Description
 ```{eval-rst}
 .. autoclass:: shimmy.openspiel_compatibility.OpenSpielCompatibilityV0
     :members:

@@ -1,6 +1,6 @@
-## OpenAI Gym
+# OpenAI Gym
 
-### [OpenAI Gym](https://github.com/openai/gym)
+## [OpenAI Gym](https://github.com/openai/gym)
 
 [OpenAI Gym](https://github.com/openai/gym) is a widely-used standard API for developing reinforcement learning environments and algorithms. OpenAI stopped maintaining Gym in late 2020, leading to the [Farama Foundation](https://farama.org/)'s creation of [Gymnasium](https://gymnasium.farama.org/) a maintained fork and drop-in replacement for Gym (see [blog post](https://farama.org/Announcing-The-Farama-Foundation)).
 
@@ -12,7 +12,7 @@ Shimmy provides compatibility wrappers to convert Gym [V26](https://github.com/o
     :width: 100%
 ```
 
-### Installation
+## Installation
 First, install shimmy:
 ```
 pip install shimmy[gym]
@@ -31,7 +31,7 @@ Gym V26:
 pip install gym==0.26.1
 ```
 
-### Usage
+## Usage
 
 Note: the following code requires gym V21 installed: )
 
@@ -55,7 +55,7 @@ env.close()
 ```
 
 
-### Class Description
+## Class Description
 ```{eval-rst}
 .. autoclass:: shimmy.openai_gym_compatibility.GymV26CompatibilityV0
     :members:
