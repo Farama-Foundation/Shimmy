@@ -17,6 +17,52 @@ from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 from shimmy.utils.meltingpot import load_substrate
 
 
+@pytest.mark.parametrize("substrate_name", SUBSTRATES)
+def test_loading_env(substrate_name):
+    """Tests the loading of all Melting Pot environments using the MeltingPotCompatibility wrapper."""
+    env = MeltingPotCompatibilityV0(
+        env=None, substrate_name=substrate_name, render_mode=None
+    )
+
+    # api test the env
+    parallel_api_test(env)
+
+    env.reset()
+    while env.agents:
+        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
+        observations, rewards, terminations, truncations, infos = env.step(actions)
+    env.close()
+
+
+@pytest.mark.parametrize("substrate_name", SUBSTRATES)
+def test_existing_env(substrate_name):
+    """Tests the MeltingPotCompatibility wrapper on all melting pot envs, loaded from substrate name."""
+    env = load_substrate(substrate_name)
+    env = MeltingPotCompatibilityV0(env, render_mode=None)
+
+    # api test the env
+    parallel_api_test(env)
+
+    env.reset()
+    while env.agents:
+        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
+        observations, rewards, terminations, truncations, infos = env.step(actions)
+    env.close()
+
+
+@pytest.mark.parametrize("substrate_name", SUBSTRATES)
+def test_rendering(substrate_name):
+    """Tests rendering for all Melting Pot substrates with MeltingPotCompatibility wrapper (using pygame)."""
+    env = load_substrate(substrate_name)
+    env = MeltingPotCompatibilityV0(env, render_mode="human")
+
+    env.reset()
+    for _ in range(10):
+        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
+        env.step(actions)
+        env.render()
+
+
 @pytest.mark.skip(
     reason="Melting Pot environments are stochastic and do not currently support seeding."
 )
@@ -54,59 +100,12 @@ def test_seeding(substrate_name):
     env2.close()
 
 
-@pytest.mark.parametrize("substrate_name", SUBSTRATES)
-def test_substrate(substrate_name):
-    """Tests the conversion of all melting pot envs, loaded from substrate name."""
-    env = load_substrate(substrate_name)
-    env = MeltingPotCompatibilityV0(env, render_mode=None)
-
-    # api test the env
-    parallel_api_test(env)
-
-    env.reset()
-    while env.agents:
-        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
-        observations, rewards, terminations, truncations, infos = env.step(actions)
-    env.close()
-
-
-def test_custom_substrate():
-    """Tests the conversion of melting pot substrates which have already been loaded (supporting custom envs)."""
-    # Take the first element of the frozen set of substrate names
-    CUSTOM_SUBSTRATE, *_ = SUBSTRATES
-
-    env = load_substrate(CUSTOM_SUBSTRATE)
-
-    # Test that the already created environment can be converted to pettingzoo
-    env = MeltingPotCompatibilityV0(env, render_mode="None")
-
-    env.reset()
-    for _ in range(10):
-        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
-        env.step(actions)
-        env.render()
-    env.close()
-
-
-@pytest.mark.parametrize("substrate_name", SUBSTRATES)
-def test_rendering(substrate_name):
-    """Tests rendering for all melting pot envs (using pygame)."""
-    env = load_substrate(substrate_name)
-    env = MeltingPotCompatibilityV0(env, render_mode="human")
-
-    env.reset()
-    for _ in range(10):
-        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
-        env.step(actions)
-        env.render()
-
-
 @pytest.mark.skip(
     reason="Melting Pot environments are stochastic and do not currently support seeding."
 )
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_pickle(substrate_name):
-    """Test that environments can be saved and loaded with pickle."""
+    """Test that environments using the MeltingPotCompatibility wrapper can be serialized and deserialized via pickling."""
     # load and convert the envs
     env = load_substrate(substrate_name)
     env1 = MeltingPotCompatibilityV0(env, render_mode=None)
