@@ -40,7 +40,7 @@ env = DmLabCompatibilityV0(env)
 
 Run the environment:
 ```python
-observation, info = env.reset(seed=42)
+observation, info = env.reset()
 for _ in range(1000):
    action = env.action_space.sample()  # this is where you would insert your policy
    observation, reward, terminated, truncated, info = env.step(action)
