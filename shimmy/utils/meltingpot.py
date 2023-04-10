@@ -12,7 +12,7 @@ PLAYER_STR_FORMAT = "player_{index}"
 _WORLD_PREFIX = "WORLD."
 
 
-def load_substrate(substrate_name: str):
+def load_meltingpot(substrate_name: str):
     """Helper function to load Melting Pot substrates.
 
     Args:

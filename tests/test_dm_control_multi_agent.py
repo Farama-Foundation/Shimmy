@@ -70,7 +70,7 @@ def test_loading_env(config):
 
 @pytest.mark.parametrize("config", CONFIGS)
 def test_existing_env(config):
-    """Tests existing DM Control Soccer environments with the DmControlMultiAgentCompatibility wrapper."""
+    """Tests wrapping existing DM Control Soccer environments with the DmControlMultiAgentCompatibility wrapper."""
     team_size, time_limit, disable_walker_contacts, enable_field_box, terminate_on_goal, walker_type = config  # fmt: skip
     env = load_dm_control_soccer(
         team_size,

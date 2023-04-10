@@ -90,7 +90,9 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
         """Wrapper to convert a dm control multi-agent environment into a PettingZoo environment.
 
         Due to how the underlying environment is set up, this environment is nondeterministic, so seeding does not work.
-        Note: Arguments marked [DM CONTROL ARG] will be used to load a new environment, and cannot be specified at the same time as `env`.
+
+        Note: to wrap an existing environment, only the env and render_mode arguments can be specified.
+        All other arguments (marked [DM CONTROL ARG]) are specific to DM Lab and will be used to load a new environment.
 
         Args:
             env (Optional[dm_env.Environment]): existing dm control multi-agent environment to wrap
@@ -114,7 +116,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
             walker_type,
         ]
 
-        # One of env and DM_CONTROL_ARGS can be provided, the other should be None.
+        # Only one of env and DM_CONTROL_ARGS can be provided, the other should be None.
         if env is None and all(arg is None for arg in DM_CONTROL_ARGS):
             raise ValueError(
                 "No environment provided. Use `env` to specify an existing environment, or load an environment by specifying at least one of `team_size`, `time_limit`, `disable_walker_contacts`, `enable_field_box` `terminate_on_goal`, or `walker_type`."

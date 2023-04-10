@@ -14,7 +14,7 @@ import meltingpot.python
 from meltingpot.python.configs.substrates import SUBSTRATES
 
 from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
-from shimmy.utils.meltingpot import load_substrate
+from shimmy.utils.meltingpot import load_meltingpot
 
 
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
@@ -34,8 +34,8 @@ def test_loading_env(substrate_name):
 
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_existing_env(substrate_name):
-    """Tests the MeltingPotCompatibility wrapper on all melting pot envs, loaded from substrate name."""
-    env = load_substrate(substrate_name)
+    """Tests wrapping existing Melting Pot environments with the MeltingPotCompatibility wrapper."""
+    env = load_meltingpot(substrate_name)
     env = MeltingPotCompatibilityV0(env, render_mode=None)
 
     # api test the env
@@ -51,7 +51,7 @@ def test_existing_env(substrate_name):
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_rendering(substrate_name):
     """Tests rendering for all Melting Pot substrates with MeltingPotCompatibility wrapper (using pygame)."""
-    env = load_substrate(substrate_name)
+    env = load_meltingpot(substrate_name)
     env = MeltingPotCompatibilityV0(env, render_mode="human")
 
     env.reset()
@@ -67,10 +67,10 @@ def test_rendering(substrate_name):
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_seeding(substrate_name):
     """Tests the seeding of the melting pot conversion wrapper."""
-    env1 = load_substrate(substrate_name)
+    env1 = load_meltingpot(substrate_name)
     env1 = MeltingPotCompatibilityV0(env1, render_mode=None)
 
-    env2 = load_substrate(substrate_name)
+    env2 = load_meltingpot(substrate_name)
     env2 = MeltingPotCompatibilityV0(env2, render_mode=None)
 
     env1.reset(seed=42)
@@ -105,7 +105,7 @@ def test_seeding(substrate_name):
 def test_pickle(substrate_name):
     """Test that environments using the MeltingPotCompatibility wrapper can be serialized and deserialized via pickling."""
     # load and convert the envs
-    env = load_substrate(substrate_name)
+    env = load_meltingpot(substrate_name)
     env1 = MeltingPotCompatibilityV0(env, render_mode=None)
     env2 = pickle.loads(pickle.dumps(env1))
 

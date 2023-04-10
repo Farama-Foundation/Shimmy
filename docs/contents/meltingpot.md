@@ -32,9 +32,9 @@ env = MeltingPotCompatibilityV0(env=None, substrate_name="prisoners_dilemma_in_t
 Wrap an existing `meltingpot` environment:
 ```python
 from shimmy import MeltingPotCompatibilityV0
-from shimmy.utils.meltingpot import load_substrate
+from shimmy.utils.meltingpot import load_meltingpot
 
-env = load_substrate("prisoners_dilemma_in_the_matrix__arena") 
+env = load_meltingpot("prisoners_dilemma_in_the_matrix__arena") 
 env = MeltingPotCompatibilityV0(env, render_mode=None)
 ```
 Note: the first argument `env` wraps an existing environment, while `substrate_name` loads a new environment and wraps it.

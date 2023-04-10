@@ -8,7 +8,7 @@ import numpy as np
 from gymnasium import spaces
 
 
-def load_env(
+def load_dm_lab(
     level_name: str = "lt_chasm",
     observations: str | None = "RGBD",
     renderer: str | None = "hardware",
@@ -59,7 +59,7 @@ def load_env(
             "mixerSeed": str(mixerSeed),
             "botCount": str(botCount),
         }
-        return deepmind_lab.Lab("lt_chasm", obs, config=config, renderer=renderer)
+        return deepmind_lab.Lab(level_name, obs, config=config, renderer=renderer)
 
     except Exception:
         pass

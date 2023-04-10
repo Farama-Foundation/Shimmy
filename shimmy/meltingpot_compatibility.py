@@ -74,7 +74,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
                 "Two environments provided. Use `env` to specify an existing environment, or load an environment with `substrate_name`."
             )
         elif substrate_name is not None:
-            self._env = utils.load_substrate(substrate_name)
+            self._env = utils.load_meltingpot(substrate_name)
         elif env is not None:
             self._env = env
 

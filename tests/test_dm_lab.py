@@ -9,6 +9,7 @@ from gymnasium.utils.env_checker import check_env, data_equivalence
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 
 pytest.importorskip("deepmind_lab")
+import deepmind_lab
 
 LEVEL_NAMES = [
     "lt_chasm",
@@ -26,8 +27,37 @@ LEVEL_NAMES = [
 ]
 
 
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
+def test_loading_env(level_name):
+    """Tests the loading of DM Lab environments using the DmLabCompatibility wrapper."""
+    env = DmLabCompatibilityV0(level_name=level_name)
+
+    env.reset()
+    for _ in range(100):
+        actions = env.action_space.sample()
+        env.step(actions)
+    env.close()
+
+
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
+def test_existing_env(level_name):
+    """Tests wrapping existing DM Lab environments with the DmLabCompatibility wrapper."""
+    observations = ["RGBD"]
+    config = {"width": "640", "height": "480", "botCount": "2"}
+    renderer = "hardware"
+
+    env = deepmind_lab.Lab(level_name, observations, config=config, renderer=renderer)
+    env = DmLabCompatibilityV0(env)
+
+    env.reset()
+    for _ in range(100):
+        actions = env.action_space.sample()
+        env.step(actions)
+    env.close()
+
+
 @pytest.mark.skip("DM lab tests are not currently possible.")
-@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
 def test_check_env(level_name):
     """Check that environment pass the gym check_env."""
     observations = ["RGBD"]
@@ -43,7 +73,7 @@ def test_check_env(level_name):
 
 
 @pytest.mark.skip("DM lab seed tests are not currently possible.")
-@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
 def test_seeding(level_name):
     """Checks that the environment can be properly seeded."""
     observations = ["RGBD"]
@@ -74,7 +104,7 @@ def test_seeding(level_name):
 
 
 @pytest.mark.skip("DM lab pickle tests are not currently possible.")
-@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
 def test_pickle(level_name):
     """Checks that the environment can be saved and loaded by pickling."""
     observations = ["RGBD"]
