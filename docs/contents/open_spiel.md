@@ -13,14 +13,19 @@ Shimmy provides compatibility wrappers to convert all [OpenSpiel](https://github
 ```{figure} /_static/img/openspiel.png
     :name: Open Spiel
     :alt: Open Spiel
-    :width: 100%
+    :width: 80%
 
 ```
 
 ## Installation
+To install `shimmy` and required dependencies:
+
 ```
 pip install shimmy[openspiel]
 ```
+
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/openspiel.Dockerfile) to allow for cross-platform compatibility.
+
 
 ## Usage
 
@@ -40,19 +45,6 @@ env = pyspiel.load_game("2048")
 env = OpenSpielCompatibilityV0(env)
 ```
 
-```{eval-rst}
-.. note::
-
-    The first argument `env` wraps an existing environment, while `game_name` loads a new environment and wraps it.
-```
-
-```{eval-rst}
-.. warning::
-
-    Using the `env` argument at the same time as the `game_name` argument will result in a ValueError  
-```
-
-
 Run the environment:
 ```python
 env.reset()
@@ -65,6 +57,15 @@ for agent in env.agent_iter():
     env.step(action)
     env.render()
 env.close()
+```
+
+```{eval-rst}
+.. warning::
+
+    Using the **env** and **game_name** arguments together will result in a **ValueError**.
+    
+    * Use `env` to wrap an existing OpenSpiel environment.
+    * Use `game_name` to load a new OpenSpiel environment.
 ```
 
 ### Rendering

@@ -13,9 +13,14 @@ Shimmy provides compatibility wrappers to convert all [DM Control Soccer](https:
 ```
 
 ## Installation
+
+To install `shimmy` and required dependencies:
+
 ```
 pip install shimmy[dm-control-multi-agent]
 ```
+
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_control_multiagent.Dockerfile) to allow for cross-platform compatibility.
 
 ## Usage
 
@@ -34,20 +39,6 @@ from shimmy.dm_control_multiagent_compatibility import DmControlMultiAgentCompat
 env = dm_soccer.load(team_size=2)
 env = DmControlMultiAgentCompatibilityV0(env)
 ```
-The first argument `env` wraps an existing environment, while specifying any of `team_size`, `time_limit`, `disable_walker_contacts`, `enable_field_box`, `terminate_on_goal` or `walker_type` loads a new environment and wraps it. 
-
-```{eval-rst}
-.. warning::
-
-    Using the `env` argument with any of the following arguments will result in a ValueError:
-     `team_size`, 
-     `time_limit`, 
-     `disable_walker_contacts`, 
-     `enable_field_box` 
-     `terminate_on_goal`, 
-     `walker_type`    
-```
-
 
 Run the environment:
 ```python
@@ -56,6 +47,21 @@ while env.agents:
     actions = {agent: env.action_space(agent).sample() for agent in env.agents}  # this is where you would insert your policy
     observations, rewards, terminations, truncations, infos = env.step(actions)
 env.close()
+```
+
+```{eval-rst}
+.. warning::
+
+    Using the **env** argument with any of the following arguments will result in a **ValueError**: 
+     `team_size`, 
+     `time_limit`, 
+     `disable_walker_contacts`, 
+     `enable_field_box`, 
+     `terminate_on_goal`, 
+     `walker_type`
+     
+    * Use the `env` argument to wrap an existing environment.
+    * Use the `team_size`, `time_limit`, `disable_walker_contacts`, `enable_field_box`, `terminate_on_goal`, and `walker_type` arguments to load a new environment.     
 ```
 
 ## Class Description

@@ -11,9 +11,12 @@ Shimmy provides compatibility wrappers to convert all [Melting Pot](https://gith
 
 ```{figure} /_static/img/meltingpot.gif
     :name: Melting Pot
+    :width: 50%
 ```
 
 ## Installation
+
+To install `shimmy` and required dependencies:
 
 ```
 pip install shimmy[melting-pot]
@@ -21,7 +24,11 @@ pip install shimmy[melting-pot]
 
 Melting Pot is not distributed via [pypi](https://pypi.org/) and must be installed manually. We provide an [installation script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_melting_pot.sh) (compatible with macOS and linux) to clone the melting pot repository, install bazel, and run the included installation scripts. For troubleshooting,  refer to the official [installation instructions](https://github.com/deepmind/meltingpot#installation).
 
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/bsuite.Dockerfile) to allow for cross-platform compatibility.
+
+
 ## Usage
+
 Load a `meltingpot` environment:
 ```python
 from shimmy import MeltingPotCompatibilityV0
@@ -37,12 +44,6 @@ from shimmy.utils.meltingpot import load_meltingpot
 env = load_meltingpot("prisoners_dilemma_in_the_matrix__arena") 
 env = MeltingPotCompatibilityV0(env, render_mode=None)
 ```
-Note: the first argument `env` wraps an existing environment, while `substrate_name` loads a new environment and wraps it.
-```{eval-rst}
-.. warning::
-
-    Using the `env` argument at the same time as the `game_name` argument will result in a ValueError  
-```
 
 Run the environment:
 ```python
@@ -52,6 +53,15 @@ while env.agents:
     observations, rewards, terminations, truncations, infos = env.step(actions)
     env.step(actions)
 env.close()
+```
+
+```{eval-rst}
+.. warning::
+
+    Using the **env** and **substrate_name** arguments together will result in a **ValueError**.
+    
+    * Use the `env` argument to wrap an existing Melting Pot environment.
+    * Use the `substrate_name` argument to load a new Melting Pot environment.
 ```
 
 ## Class Description

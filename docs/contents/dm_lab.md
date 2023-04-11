@@ -22,7 +22,17 @@ Shimmy provides compatibility wrappers to convert all DM Lab environments to [Gy
 pip install shimmy[dm-lab]
 ```
 
-DeepMind Lab is not distributed via [pypi](https://pypi.org/) and must be installed manually. Courtesy to [Danijar Hafner](https://github.com/deepmind/lab/issues/242) for providing an [install script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_dm_lab.sh). For troubleshooting, refer to the official [installation instructions](https://github.com/deepmind/lab#getting-started-on-linux).
+DeepMind Lab is not distributed via [pypi](https://pypi.org/) and must be installed manually. Courtesy to  [Danijar Hafner](https://github.com/deepmind/lab/issues/242) for providing an [install script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_dm_lab.sh). For troubleshooting, refer to the official [installation instructions](https://github.com/deepmind/lab#getting-started-on-linux).
+
+```{eval-rst}
+.. warning::
+
+    DM Lab is not currently supported on Windows or macOS.
+```
+
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_lab.Dockerfile) to allow for cross-platform compatibility.
+
+
 
 ## Usage
 Load a `deepmind_lab` environment:
@@ -49,6 +59,15 @@ for _ in range(1000):
       observation, info = env.reset()
 env.close()
 ```
+
+```{eval-rst}
+.. warning::
+
+    Using `gym.make()` to load DM Lab environments is not currently supported.     
+```
+
+We provide a [helper function](#shimmy.utils.dm_lab.load_dm_lab) to load DM Lab environments, but it is not guaranteed to work for all configurations.
+
 
 
 ## Class Description

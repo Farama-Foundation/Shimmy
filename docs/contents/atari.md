@@ -14,16 +14,16 @@ Shimmy provides compatibility wrappers to convert all [ALE](https://github.com/m
 
 Note: [PettingZoo](https://pettingzoo.farama.org/) also provides 20+ multi-agent Atari environments: [PettingZoo Atari](https://pettingzoo.farama.org/environments/atari/)
 
-```{figure} https://pettingzoo.farama.org/_images/atari_double_dunk.gif
-    :name: PettingZoo Atari
-    :alt: PettingZoo Atari
-    :width: 40%
-```
 
 ## Installation
+To install `shimmy` and required dependencies:
+
 ```
 pip install shimmy[atari]
 ```
+
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/atari.Dockerfile) to allow for cross-platform compatibility.
+
 
 ## Usage
 Load an `ALE` environment:
@@ -43,6 +43,17 @@ for _ in range(1000):
    if terminated or truncated:
       observation, info = env.reset()
 env.close()
+```
+
+To get a list of all available `atari` environments (208 total):
+```python
+from gymnasium.envs.registration import registry
+ATARI_ENV_IDS = [
+    env_id
+    for env_id in registry
+    if env_id.startswith("ALE") and env_id != "atari/compatibility-env-v0"
+]
+print(ATARI_ENV_IDS)
 ```
 
 ## Class Description

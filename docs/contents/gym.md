@@ -13,29 +13,26 @@ Shimmy provides compatibility wrappers to convert Gym [V26](https://github.com/o
 ```
 
 ## Installation
-First, install shimmy:
+To install `shimmy` and required dependencies for Gym V26:
 ```
-pip install shimmy[gym]
-```
-
-Then, install the corresponding version of Gym. 
-
-Gym V21:
-
-```
-pip install gym==0.21.0
+pip install shimmy[gym-v26]
 ```
 
-Gym V26:
+To install `shimmy` and required dependencies for Gym V21:
 ```
-pip install gym==0.26.1
+pip install shimmy[gym-v21]
+```
+
+
+```{eval-rst}
+.. note::
+
+    For more information about compatibility with Gym, see https://gymnasium.farama.org/content/gym_compatibility/.
 ```
 
 ## Usage
 
-Note: the following code requires gym V21 installed: )
-
-Load a `gym` V21 environment: 
+Load a Gym V21 environment: 
 ```python
 import gymnasium as gym
 

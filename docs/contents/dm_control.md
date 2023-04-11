@@ -9,13 +9,18 @@ Shimmy provides compatibility wrappers to convert [Control Suite](https://github
 ```{figure} /_static/img/dm_locomotion.png
     :name: DM Locomotion
     :alt: DeepMind Locomotion
-    :width: 80%
+    :width: 60%
 ```
 
 ## Installation
+To install `shimmy` and required dependencies:
+
 ```
 pip install shimmy[dm-control]
 ```
+
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_control.Dockerfile) to allow for cross-platform compatibility.
+
 
 ## Usage
 Load a `dm_control` environment:
