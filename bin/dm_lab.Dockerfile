@@ -51,3 +51,4 @@ RUN git clone https://github.com/deepmind/lab.git \
     && cd .. \
     && rm -rf lab
 
+ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
