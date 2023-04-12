@@ -1,6 +1,7 @@
 """Tests the functionality of the MeltingPotCompatibility wrapper on meltingpot substrates."""
 # pyright: reportUndefinedVariable=false
 # flake8: noqa F821 E402
+# isort: skip_file
 import pickle
 
 import pytest
@@ -11,9 +12,53 @@ pytest.importorskip("meltingpot")
 
 import meltingpot.python
 from meltingpot.python.configs.substrates import SUBSTRATES
-from ml_collections import config_dict
 
 from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
+from shimmy.utils.meltingpot import load_meltingpot
+
+
+@pytest.mark.parametrize("substrate_name", SUBSTRATES)
+def test_loading_env(substrate_name):
+    """Tests the loading of all Melting Pot environments using the MeltingPotCompatibility wrapper."""
+    env = MeltingPotCompatibilityV0(substrate_name=substrate_name, render_mode=None)
+
+    # api test the env
+    parallel_api_test(env)
+
+    env.reset()
+    while env.agents:
+        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
+        observations, rewards, terminations, truncations, infos = env.step(actions)
+    env.close()
+
+
+@pytest.mark.parametrize("substrate_name", SUBSTRATES)
+def test_existing_env(substrate_name):
+    """Tests wrapping existing Melting Pot environments with the MeltingPotCompatibility wrapper."""
+    env = load_meltingpot(substrate_name)
+    env = MeltingPotCompatibilityV0(env, render_mode=None)
+
+    # api test the env
+    parallel_api_test(env)
+
+    env.reset()
+    while env.agents:
+        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
+        observations, rewards, terminations, truncations, infos = env.step(actions)
+    env.close()
+
+
+@pytest.mark.parametrize("substrate_name", SUBSTRATES)
+def test_rendering(substrate_name):
+    """Tests rendering for all Melting Pot substrates with MeltingPotCompatibility wrapper (using pygame)."""
+    env = load_meltingpot(substrate_name)
+    env = MeltingPotCompatibilityV0(env, render_mode="human")
+
+    env.reset()
+    for _ in range(10):
+        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
+        env.step(actions)
+        env.render()
 
 
 @pytest.mark.skip(
@@ -22,9 +67,11 @@ from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_seeding(substrate_name):
     """Tests the seeding of the melting pot conversion wrapper."""
-    # load and convert the envs
-    env1 = MeltingPotCompatibilityV0(substrate_name=substrate_name, render_mode=None)
-    env2 = MeltingPotCompatibilityV0(substrate_name=substrate_name, render_mode=None)
+    env1 = load_meltingpot(substrate_name)
+    env1 = MeltingPotCompatibilityV0(env1, render_mode=None)
+
+    env2 = load_meltingpot(substrate_name)
+    env2 = MeltingPotCompatibilityV0(env2, render_mode=None)
 
     env1.reset(seed=42)
     env2.reset(seed=42)
@@ -51,72 +98,15 @@ def test_seeding(substrate_name):
     env2.close()
 
 
-@pytest.mark.parametrize("substrate_name", SUBSTRATES)
-def test_substrate(substrate_name):
-    """Tests the conversion of all melting pot envs, loaded from substrate name."""
-    env = MeltingPotCompatibilityV0(substrate_name=substrate_name, render_mode=None)
-
-    # api test the env
-    parallel_api_test(env)
-
-    env.reset()
-    while env.agents:
-        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
-        observations, rewards, terminations, truncations, infos = env.step(actions)
-    env.close()
-
-
-def test_custom_substrate():
-    """Tests the conversion of melting pot substrates which have already been loaded (supporting custom envs)."""
-    # Take the first element of the frozen set of substrate names
-    CUSTOM_SUBSTRATE, *_ = SUBSTRATES
-
-    # Create env config
-    player_roles = meltingpot.python.substrate.get_config(
-        CUSTOM_SUBSTRATE
-    ).default_player_roles
-    env_config = {
-        "substrate": CUSTOM_SUBSTRATE,
-        "roles": player_roles,
-    }
-
-    # Build substrate from pickle
-    env_config = config_dict.ConfigDict(env_config)
-    env = meltingpot.python.substrate.build(
-        env_config["substrate"], roles=env_config["roles"]
-    )
-
-    # Test that the already created environment can be converted to pettingzoo
-    env = MeltingPotCompatibilityV0(substrate_name="", render_mode="None", env=env)
-
-    env.reset()
-    for _ in range(10):
-        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
-        env.step(actions)
-        env.render()
-    env.close()
-
-
-@pytest.mark.parametrize("substrate_name", SUBSTRATES)
-def test_rendering(substrate_name):
-    """Tests rendering for all melting pot envs (using pygame)."""
-    env = MeltingPotCompatibilityV0(substrate_name=substrate_name, render_mode="human")
-
-    env.reset()
-    for _ in range(10):
-        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
-        env.step(actions)
-        env.render()
-
-
 @pytest.mark.skip(
     reason="Melting Pot environments are stochastic and do not currently support seeding."
 )
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_pickle(substrate_name):
-    """Test that environments can be saved and loaded with pickle."""
+    """Test that environments using the MeltingPotCompatibility wrapper can be serialized and deserialized via pickling."""
     # load and convert the envs
-    env1 = MeltingPotCompatibilityV0(substrate_name=substrate_name, render_mode=None)
+    env = load_meltingpot(substrate_name)
+    env1 = MeltingPotCompatibilityV0(env, render_mode=None)
     env2 = pickle.loads(pickle.dumps(env1))
 
     env1.reset(seed=42)

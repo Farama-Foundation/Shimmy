@@ -1,7 +1,7 @@
-## OpenSpiel (multi-agent)
+# OpenSpiel (multi-agent)
 
 
-### [DeepMind OpenSpiel](https://github.com/deepmind/open_spiel)
+## [DeepMind OpenSpiel](https://github.com/deepmind/open_spiel)
 
 [OpenSpiel](https://github.com/deepmind/open_spiel) is a collection of 70+ environments for common board games, card games, as well as simple grid worlds and social dilemmas.
 
@@ -13,24 +13,36 @@ Shimmy provides compatibility wrappers to convert all [OpenSpiel](https://github
 ```{figure} /_static/img/openspiel.png
     :name: Open Spiel
     :alt: Open Spiel
-    :width: 100%
+    :width: 80%
 
 ```
 
-### Installation
+## Installation
+To install `shimmy` and required dependencies:
+
 ```
 pip install shimmy[openspiel]
 ```
 
-### Usage
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/openspiel.Dockerfile) to allow for cross-platform compatibility.
+
+
+## Usage
 
 Load an `openspiel` environment:
 ```python
+from shimmy import OpenSpielCompatibilityV0
+
+env = OpenSpielCompatibilityV0(game_name="backgammon", render_mode="human")
+```
+
+Wrap an existing `openspiel` environment:
+```python
 import pyspiel
-from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
+from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
 
 env = pyspiel.load_game("2048")
-env = OpenspielCompatibilityV0(env)
+env = OpenSpielCompatibilityV0(env)
 ```
 
 Run the environment:
@@ -47,9 +59,17 @@ for agent in env.agent_iter():
 env.close()
 ```
 
-Note: OpenSpiel does not provide rendering for all environments. 
+```{eval-rst}
+.. warning::
 
-Calling `env.render()` will return different results depending on the environment. 
+    Using the **env** and **game_name** arguments together will result in a **ValueError**.
+    
+    * Use `env` to wrap an existing OpenSpiel environment.
+    * Use `game_name` to load a new OpenSpiel environment.
+```
+
+### Rendering
+OpenSpiel does not support graphical rendering, and only supports ASCII text rendering for some environments. Calling `env.render()` for environments which do not provide rendering will print the internal game state.
 
 * ASCII text visualization (Backgammon):
 
@@ -78,9 +98,9 @@ Scores, X: 0, O: 0
 * rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 ```
 
-### Class Description
+## Class Description
 ```{eval-rst}
-.. autoclass:: shimmy.openspiel_compatibility.OpenspielCompatibilityV0
+.. autoclass:: shimmy.openspiel_compatibility.OpenSpielCompatibilityV0
     :members:
     :undoc-members:
 ```

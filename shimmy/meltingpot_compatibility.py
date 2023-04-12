@@ -1,29 +1,29 @@
-"""Wrapper to convert a meltingpot substrate into a pettingzoo compatible environment.
+"""Wrapper to convert a Melting Pot substrate into a PettingZoo compatible environment.
 
 Taken from
 https://github.com/deepmind/meltingpot/blob/main/examples/pettingzoo/utils.py
-and modified to modern pettingzoo API
+and modified to modern PettingZoo API
 """
 # pyright: reportOptionalSubscript=false
-# isort: skip_file
 from __future__ import annotations
 
 import functools
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 import gymnasium
 import numpy as np
 import pygame
 from gymnasium.utils.ezpickle import EzPickle
-from ml_collections import config_dict
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
-import meltingpot.python
 import shimmy.utils.meltingpot as utils
+
+if TYPE_CHECKING:
+    import meltingpot.python
 
 
 class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
-    """This compatibility wrapper converts a meltingpot substrate into a pettingzoo environment.
+    """This compatibility wrapper converts a Melting Pot substrate into a PettingZoo environment.
 
     Due to how the underlying environment is set up, this environment is nondeterministic, so seeding doesn't work.
 
@@ -42,41 +42,42 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
     def __init__(
         self,
-        substrate_name: str,
-        render_mode: str | None = None,
-        max_cycles: int = MAX_CYCLES,
         env: meltingpot.python.utils.substrates.substrate.Substrate | None = None,
+        substrate_name: str | None = None,
+        max_cycles: int = MAX_CYCLES,
+        render_mode: str | None = None,
     ):
-        """Wrapper that converts a openspiel environment into a pettingzoo environment.
+        """Wrapper that converts a Melting Pot environment into a PettingZoo environment.
 
         Args:
-            substrate_name (str): name of meltingpot substrate to load
-            render_mode (Optional[str]): render_mode
-            max_cycles (Optional[int]): maximum number of cycles (steps) before termination
-            env (Optional[meltingpot.python.utils.substrates.substrate.Substrate]): existing meltingpot env to use
-
+            env (Optional[meltingpot.python.utils.substrates.substrate.Substrate]): existing Melting Pot environment to wrap
+            substrate_name (Optional[str]): name of Melting Pot substrate to load (instead of existing environment)
+            max_cycles (Optional[int]): maximum number of cycles before truncation
+            render_mode (Optional[str]): rendering mode
         """
-        EzPickle.__init__(self, substrate_name, render_mode, max_cycles, env)
+        EzPickle.__init__(
+            self,
+            env,
+            substrate_name,
+            max_cycles,
+            render_mode,
+        )
+
+        # Only one of substrate_name and env can be provided, the other should be None
+        if env is None and substrate_name is None:
+            raise ValueError(
+                "No environment provided. Use `env` to specify an existing environment, or load an environment with `substrate_name`."
+            )
+        elif env is not None and substrate_name is not None:
+            raise ValueError(
+                "Two environments provided. Use `env` to specify an existing environment, or load an environment with `substrate_name`."
+            )
+        elif substrate_name is not None:
+            self._env = utils.load_meltingpot(substrate_name)
+        elif env is not None:
+            self._env = env
 
         self.max_cycles = max_cycles
-        if env is not None:
-            self._env = env
-        else:
-            # Create env config
-            self.substrate_name = substrate_name
-            self.player_roles = meltingpot.python.substrate.get_config(
-                self.substrate_name
-            ).default_player_roles
-            self.env_config = {
-                "substrate": self.substrate_name,
-                "roles": self.player_roles,
-            }
-
-            # Build substrate from pickle
-            self.env_config = config_dict.ConfigDict(self.env_config)
-            self._env = meltingpot.python.substrate.build(
-                self.env_config["substrate"], roles=self.env_config["roles"]
-            )
 
         # Set up PettingZoo variables
         self.render_mode = render_mode
@@ -111,7 +112,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     def observation_space(self, agent: AgentID) -> gymnasium.spaces.Space:
         """observation_space.
 
-        Get the observation space from the underlying meltingpot substrate.
+        Get the observation space from the underlying Melting Pot substrate.
 
         Args:
             agent (AgentID): agent
@@ -128,7 +129,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     def action_space(self, agent: AgentID) -> gymnasium.spaces.Space:
         """action_space.
 
-        Get the action space from the underlying meltingpot substrate.
+        Get the action space from the underlying Melting Pot substrate.
 
         Args:
             agent (AgentID): agent

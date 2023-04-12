@@ -1,6 +1,7 @@
-## Atari Environments
+# Atari Environments
 
-### [Arcade Learning Environment (ALE)](https://github.com/mgbellemare/Arcade-Learning-Environment)
+## [Arcade Learning Environment (ALE)](https://github.com/mgbellemare/Arcade-Learning-Environment)
+
 [ALE](https://github.com/mgbellemare/Arcade-Learning-Environment) is a collection of 50+ Atari 2600 games powered by the [Stella](https://stella-emu.github.io/) emulator.
 
 Shimmy provides compatibility wrappers to convert all [ALE](https://github.com/mgbellemare/Arcade-Learning-Environment) environments to [Gymnasium](https://gymnasium.farama.org/).
@@ -13,18 +14,18 @@ Shimmy provides compatibility wrappers to convert all [ALE](https://github.com/m
 
 Note: [PettingZoo](https://pettingzoo.farama.org/) also provides 20+ multi-agent Atari environments: [PettingZoo Atari](https://pettingzoo.farama.org/environments/atari/)
 
-```{figure} https://pettingzoo.farama.org/_images/atari_double_dunk.gif
-    :name: PettingZoo Atari
-    :alt: PettingZoo Atari
-    :width: 40%
-```
 
-### Installation
+## Installation
+To install `shimmy` and required dependencies:
+
 ```
 pip install shimmy[atari]
 ```
 
-### Usage
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/atari.Dockerfile) to allow for cross-platform compatibility.
+
+
+## Usage
 Load an `ALE` environment:
 ```python
 import gymnasium as gym
@@ -44,7 +45,18 @@ for _ in range(1000):
 env.close()
 ```
 
-### Class Description
+To get a list of all available `atari` environments (208 total):
+```python
+from gymnasium.envs.registration import registry
+ATARI_ENV_IDS = [
+    env_id
+    for env_id in registry
+    if env_id.startswith("ALE") and env_id != "atari/compatibility-env-v0"
+]
+print(ATARI_ENV_IDS)
+```
+
+## Class Description
 ```{eval-rst}
 .. autoclass:: shimmy.atari_env.AtariEnv
     :members:

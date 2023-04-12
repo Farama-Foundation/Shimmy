@@ -1,6 +1,6 @@
-"""Shared utils for meltingpot."""
+"""Utility functions for Melting Pot."""
 # pyright: reportGeneralTypeIssues=false
-
+# flake8: noqa F821
 import dm_env
 from gymnasium import spaces
 from pettingzoo.utils.env import ObsDict
@@ -11,8 +11,38 @@ PLAYER_STR_FORMAT = "player_{index}"
 _WORLD_PREFIX = "WORLD."
 
 
+def load_meltingpot(substrate_name: str):
+    """Helper function to load Melting Pot substrates.
+
+    Args:
+        substrate_name: str
+
+    Returns:
+        env: meltingpot.python.utils.substrates.substrate.Substrate
+    """
+    import meltingpot.python
+    from ml_collections import config_dict
+
+    # Create env config
+    substrate_name = substrate_name
+    player_roles = meltingpot.python.substrate.get_config(
+        substrate_name
+    ).default_player_roles
+    env_config = {
+        "substrate": substrate_name,
+        "roles": player_roles,
+    }
+
+    # Build substrate from pickle
+    env_config = config_dict.ConfigDict(env_config)
+    env = meltingpot.python.substrate.build(
+        env_config["substrate"], roles=env_config["roles"]
+    )
+    return env
+
+
 def timestep_to_observations(timestep: dm_env.TimeStep) -> ObsDict:
-    """Extracts Gymnasium-compatible observations from a melting pot timestep.
+    """Extracts Gymnasium-compatible observations from a Melting Pot timestep.
 
     Args:
         timestep: The dm_env timestep
@@ -34,10 +64,10 @@ def remove_world_observations_from_space(observation: spaces.Dict) -> spaces.Dic
     This is used to limit the information an individual agent has access to (it cannot see the entire world).
 
     Args:
-        observation: The melting pot observation
+        observation: The Melting Pot observation
 
     Returns:
-        observation: The melting pot observation, without world observations.
+        observation: The Melting Pot observation, without world observations.
     """
     return spaces.Dict(
         {key: observation[key] for key in observation if _WORLD_PREFIX not in key}

@@ -40,26 +40,53 @@ lastpage:
 - Bindings to convert [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 
-## Installation and Usage
-
-To install Shimmy from PyPI:
+## Installation
+To install Shimmy from [PyPI](https://pypi.org/):
 ```
 pip install shimmy
 ```
-Out of the box, Shimmy doesn't install any of the dependencies required for the environments it supports.
-To install them, you'll have to install the optional extras (e.g., `pip install shimmy[dm_lab]`).
+To install Shimmy and required dependencies for an environment, specify the environment as follows:
+```
+pip install shimmy[dm-control-multi-agent]
+```
 
-All single agent environments have registration under the [Gymnasium API](https://gymnasium.farama.org/api/registry/), while all multiagent environments must be wrapped using the corresponding compatibility wrappers.
+Available environments: 
 
-### For Developers and Testing Only
+`gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
+
+[//]: # ()
+[//]: # (Single-agent environments:)
+
+[//]: # (`gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`)
+
+[//]: # ()
+[//]: # (Multi-agent environments: `dm-control-multi-agent`, `openspiel`, `meltingpot`)
+
+### For Developers and Testing
 ```
 pip install shimmy[testing]
 ```
 
-### To just install everything
+### All Environments
 ```
 pip install shimmy[all, testing]
 ```
+## Usage
+
+Single-agent environments have registration under the [Gymnasium API](https://gymnasium.farama.org/api/registry/), and can be loaded via `gym.make()`:
+```python
+import gymnasium as gym
+env = gym.make("dm_control/acrobot-swingup_sparse-v0")
+```
+Multi-agent environments can be loaded in a similar manner, but require importing compatibility wrappers directly:
+
+```python
+from shimmy import MeltingPotCompatibilityV0
+env = MeltingPotCompatibilityV0(substrate_name="prisoners_dilemma_in_the_matrix__arena")
+```
+
+[//]: # (As PettingZoo does not currently support registration, multi-agent environments require loading compatibility wrappers directly. )
+[//]: # (For more information, see documentation for individual environments.)
 
 ## At a glance
 
@@ -97,7 +124,7 @@ If you use this in your research, please cite:
 ```
 @software{shimmy2022github,
   author = {{Jun Jet Tai, Mark Towers} and Elliot Tower and Jordan Terry},
-  title = {Shimmy: Gymnasium and Pettingzoo Wrappers for Commonly Used Environments},
+  title = {Shimmy: Gymnasium and PettingZoo Wrappers for Commonly Used Environments},
   url = {http://github.com/Farama-Foundation/Shimmy},
   version = {0.2.0},
   year = {2022},

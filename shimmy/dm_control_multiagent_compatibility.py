@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import functools
 from itertools import repeat
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import dm_control.composer
 import dm_env
@@ -13,7 +13,11 @@ from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 from gymnasium.utils import EzPickle
 from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 
+from shimmy.utils.dm_control_multiagent import load_dm_control_soccer
 from shimmy.utils.dm_env import dm_obs2gym_obs, dm_spec2gym_space
+
+if TYPE_CHECKING:
+    from dm_control.locomotion import soccer as dm_soccer
 
 
 def _unravel_ma_timestep(
@@ -64,7 +68,7 @@ def _unravel_ma_timestep(
 
 
 class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
-    """This compatibility wrapper converts multi-agent dm-control environments, primarily soccer, into a Pettingzoo environment.
+    """This compatibility wrapper converts multi-agent dm-control environments, primarily soccer, into a PettingZoo environment.
 
     Dm-control is DeepMind's software stack for physics-based simulation and Reinforcement Learning environments,
     using MuJoCo physics. This compatibility wrapper converts a dm-control environment into a gymnasium environment.
@@ -74,20 +78,65 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
     def __init__(
         self,
-        env: dm_control.composer.Environment,
+        env: dm_control.composer.Environment | None = None,
+        team_size: int | None = None,
+        time_limit: float | None = None,
+        disable_walker_contacts: bool | None = None,
+        enable_field_box: bool | None = None,
+        terminate_on_goal: bool | None = None,
+        walker_type: dm_soccer.WalkerType | None = None,
         render_mode: str | None = None,
     ):
-        """Wrapper to convert a dm control multi-agent environment into a pettingzoo environment.
+        """Wrapper to convert a dm control multi-agent environment into a PettingZoo environment.
 
-        Due to how the underlying environment is set up, this environment is nondeterministic, so seeding doesn't work.
+        Due to how the underlying environment is set up, this environment is nondeterministic, so seeding does not work.
+
+        Note: to wrap an existing environment, only the env and render_mode arguments can be specified.
+        All other arguments (marked [DM CONTROL ARG]) are specific to DM Lab and will be used to load a new environment.
 
         Args:
-            env (dm_env.Environment): dm control multi-agent environment
-            render_mode (Optional[str]): render_mode
+            env (Optional[dm_env.Environment]): existing dm control multi-agent environment to wrap
+            team_size (Optional[int]): number of players for each team                                    [DM CONTROL ARG]
+            time_limit (Optional[float]): time limit for the game                                         [DM CONTROL ARG]
+            disable_walker_contacts (Optional[bool]): flag to disable walker contacts                     [DM CONTROL ARG]
+            enable_field_box (Optional[bool]): flag to enable field box                                   [DM CONTROL ARG]
+            terminate_on_goal (Optional[bool]): flag to terminate the environment on goal                 [DM CONTROL ARG]
+            walker_type (Optional[dm_soccer.WalkerType]): specify walker type (BOXHEAD, ANT, or HUMANOID) [DM CONTROL ARG]
+            render_mode (Optional[str]): rendering mode
         """
         EzPickle.__init__(self, env=env, render_mode=render_mode)
         ParallelEnv.__init__(self)
-        self._env = env
+
+        DM_CONTROL_ARGS = [
+            team_size,
+            time_limit,
+            disable_walker_contacts,
+            enable_field_box,
+            terminate_on_goal,
+            walker_type,
+        ]
+
+        # Only one of env and DM_CONTROL_ARGS can be provided, the other should be None.
+        if env is None and all(arg is None for arg in DM_CONTROL_ARGS):
+            raise ValueError(
+                "No environment provided. Use `env` to specify an existing environment, or load an environment by specifying at least one of `team_size`, `time_limit`, `disable_walker_contacts`, `enable_field_box` `terminate_on_goal`, or `walker_type`."
+            )
+        elif env is not None and any(arg is not None for arg in DM_CONTROL_ARGS):
+            raise ValueError(
+                "Two environments provided. Use `env` to specify an existing environment, or load an environment by specifying at least one of `team_size`, `time_limit`, `disable_walker_contacts`, `enable_field_box` `terminate_on_goal`, or `walker_type`."
+            )
+        elif any(arg is not None for arg in DM_CONTROL_ARGS):
+            self._env = load_dm_control_soccer(
+                team_size,
+                time_limit,
+                disable_walker_contacts,
+                enable_field_box,
+                terminate_on_goal,
+                walker_type,
+            )
+        elif env is not None:
+            self._env = env
+
         self.render_mode = render_mode
 
         # get action and observation specs first

@@ -9,6 +9,7 @@ from gymnasium.utils.env_checker import check_env, data_equivalence
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 
 pytest.importorskip("deepmind_lab")
+import deepmind_lab
 
 LEVEL_NAMES = [
     "lt_chasm",
@@ -26,8 +27,8 @@ LEVEL_NAMES = [
 ]
 
 
-@pytest.mark.skip("DM lab tests are not currently possible.")
-@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+@pytest.mark.skip(reason="DM lab tests are not currently passing and are disabled.")
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
 def test_check_env(level_name):
     """Check that environment pass the gym check_env."""
     observations = ["RGBD"]
@@ -42,8 +43,8 @@ def test_check_env(level_name):
     env.close()
 
 
-@pytest.mark.skip("DM lab seed tests are not currently possible.")
-@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+@pytest.mark.skip(reason="DM lab tests are not currently passing and are disabled.")
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
 def test_seeding(level_name):
     """Checks that the environment can be properly seeded."""
     observations = ["RGBD"]
@@ -73,8 +74,8 @@ def test_seeding(level_name):
     env_2.close()
 
 
-@pytest.mark.skip("DM lab pickle tests are not currently possible.")
-@pytest.mark.parametrize("level_name", LEVEL_NAMES[0])
+@pytest.mark.skip(reason="DM lab tests are not currently passing and are disabled.")
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
 def test_pickle(level_name):
     """Checks that the environment can be saved and loaded by pickling."""
     observations = ["RGBD"]

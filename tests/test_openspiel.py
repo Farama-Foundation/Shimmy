@@ -1,4 +1,4 @@
-"""Tests the functionality of the OpenspielWrapper on openspiel envs."""
+"""Tests the functionality of the OpenSpielCompatibility wrapper on OpenSpiel envs."""
 import pickle
 
 import numpy as np
@@ -6,7 +6,7 @@ import pyspiel
 import pytest
 from gymnasium.utils.env_checker import data_equivalence
 
-from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
+from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
 
 # todo add api_test however chess causes a OOM error
 # from pettingzoo.test import api_test
@@ -113,14 +113,14 @@ _FAILING_GAMES = [
 _UNKNOWN_BUGS_GAMES = ["nfg_game"]
 
 
-@pytest.mark.parametrize("game", _PASSING_GAMES)
-def test_passing_games(game):
-    """Tests the conversion of all openspiel envs."""
+@pytest.mark.parametrize("game_name", _PASSING_GAMES)
+def test_passing_games(game_name):
+    """Tests the conversion of all OpenSpiel environments using the OpenSpielCompatibility wrapper."""
     for _ in range(5):
-        env = pyspiel.load_game(game)
-        env = OpenspielCompatibilityV0(game=env, render_mode=None)
+        env = pyspiel.load_game(game_name)
+        env = OpenSpielCompatibilityV0(env=env, render_mode=None)
 
-        # api test the env
+        # api test the env (disabled because some environments fail the test)
         # api_test(env)
 
         env.reset()
@@ -130,23 +130,40 @@ def test_passing_games(game):
             env.step(action)
 
 
-@pytest.mark.parametrize("game", _FAILING_GAMES)
-def test_failing_games(game):
-    """Ensures that failing games are still failing."""
+@pytest.mark.parametrize("game_name", _FAILING_GAMES)
+def test_failing_games(game_name):
+    """Ensures that failing OpenSpiel games are still failing."""
     with pytest.raises(pyspiel.SpielError):
-        test_passing_games(game)
+        test_passing_games(game_name)
 
 
-@pytest.mark.parametrize("game", _PASSING_GAMES)
-def test_seeding(game):
-    """Tests the seeding of the openspiel conversion wrapper."""
+@pytest.mark.parametrize("game_name", _PASSING_GAMES)
+def test_loading_env(game_name):
+    """Tests the loading of all OpenSpiel environments using the OpenSpielCompatibility wrapper."""
+    env = OpenSpielCompatibilityV0(game_name=game_name, render_mode=None)
+
+    # api test the env
+    # api_test(env)
+
+    # run through the environment
+    env.reset()
+    for agent in env.agent_iter():
+        observation, reward, termination, truncation, info = env.last()
+        action = env.action_space(agent).sample(mask=info["action_mask"])
+        env.step(action)
+    env.close()
+
+
+@pytest.mark.parametrize("game_name", _PASSING_GAMES)
+def test_seeding(game_name):
+    """Tests the seeding of the OpenSpielCompatibility wrapper."""
     # load envs
-    env1 = pyspiel.load_game(game)
-    env2 = pyspiel.load_game(game)
+    env1 = pyspiel.load_game(game_name)
+    env2 = pyspiel.load_game(game_name)
 
     # convert the environment
-    env1 = OpenspielCompatibilityV0(env1, render_mode=None)
-    env2 = OpenspielCompatibilityV0(env2, render_mode=None)
+    env1 = OpenSpielCompatibilityV0(env1, render_mode=None)
+    env2 = OpenSpielCompatibilityV0(env2, render_mode=None)
     env1.reset(seed=42)
     env2.reset(seed=42)
 
@@ -183,11 +200,11 @@ def test_seeding(game):
     env2.close()
 
 
-@pytest.mark.parametrize("game", _PASSING_GAMES)
-def test_pickle(game):
-    """Tests the seeding of the openspiel conversion wrapper."""
-    env1 = pyspiel.load_game(game)
-    env1 = OpenspielCompatibilityV0(env1, render_mode=None)
+@pytest.mark.parametrize("game_name", _PASSING_GAMES)
+def test_pickle(game_name):
+    """Tests that environments using the OpenSpielCompatibility wrapper can be serialized and deserialized with pickle."""
+    env1 = pyspiel.load_game(game_name)
+    env1 = OpenSpielCompatibilityV0(env1, render_mode=None)
 
     env2 = pickle.loads(pickle.dumps(env1))
 

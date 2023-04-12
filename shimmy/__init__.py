@@ -33,15 +33,15 @@ try:
     )
 except ImportError as e:
     DmControlMultiAgentCompatibilityV0 = NotInstallClass(
-        "Dm-control or Pettingzoo is not installed, run `pip install 'shimmy[dm-control-multi-agent]'`",
+        "Dm-control or PettingZoo is not installed, run `pip install 'shimmy[dm-control-multi-agent]'`",
         e,
     )
 
 try:
-    from shimmy.openspiel_compatibility import OpenspielCompatibilityV0
+    from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
 except ImportError as e:
-    OpenspielCompatibilityV0 = NotInstallClass(
-        "Openspiel or Pettingzoo is not installed, run `pip install 'shimmy[openspiel]'`",
+    OpenSpielCompatibilityV0 = NotInstallClass(
+        "OpenSpiel or PettingZoo is not installed, run `pip install 'shimmy[openspiel]'`",
         e,
     )
 
@@ -57,7 +57,7 @@ try:
     from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
 except ImportError as e:
     MeltingPotCompatibilityV0 = NotInstallClass(
-        "Melting Pot or PettingZoo is not installed, run `pip install 'shimmy[melting-pot]' and install melting pot via https://github.com/deepmind/meltingpot#installation`",
+        "Melting Pot or PettingZoo is not installed, run `pip install 'shimmy[melting-pot]' and install Melting Pot via https://github.com/deepmind/meltingpot#installation`",
         e,
     )
 
@@ -65,7 +65,7 @@ __all__ = [
     "BSuiteCompatibilityV0",
     "DmControlCompatibilityV0",
     "DmControlMultiAgentCompatibilityV0",
-    "OpenspielCompatibilityV0",
+    "OpenSpielCompatibilityV0",
     "DmLabCompatibilityV0",
     "GymV21CompatibilityV0",
     "GymV26CompatibilityV0",
