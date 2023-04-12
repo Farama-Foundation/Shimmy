@@ -23,13 +23,26 @@ RUN apt-get -y update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+COPY . /usr/local/shimmy/
+WORKDIR /usr/local/shimmy/
+
+# Include Shimmy in Python path
+ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
+
+# Install Shimmy
+RUN if [ -f "pyproject.toml" ]; then \
+      pip install ".[dm-lab, testing]" --no-cache-dir; \
+    else \
+      pip install -U "shimmy[dm-lab, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
+    fi
+
 # Install DM lab requirements
 RUN apt-get -y update \
     && apt-get install --no-install-recommends -y \
     build-essential curl freeglut3 gettext git libffi-dev libglu1-mesa \
     libglu1-mesa-dev libjpeg-dev liblua5.1-0-dev libosmesa6-dev \
     libsdl2-dev lua5.1 pkg-config python-setuptools python3-dev \
-    software-properties-common unzip zip zlib1g-dev g++ \
+    software-properties-common unzip zip zlib1g-dev g++
 #    apt-utils
 
 # Install Bazel
@@ -49,17 +62,5 @@ RUN git clone https://github.com/deepmind/lab.git \
     && pip3 install --force-reinstall /tmp/dmlab_pkg/deepmind_lab-*.whl \
     && cd .. \
     && rm -rf lab
-
-COPY . /usr/local/shimmy/
-WORKDIR /usr/local/shimmy/
-
-# Include Shimmy in Python path
-ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
-
-RUN if [ -f "pyproject.toml" ]; then \
-      pip install ".[dm-lab, testing]" --no-cache-dir; \
-    else \
-      pip install -U "shimmy[dm-lab, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
-    fi
 
 ENTRYPOINT ["/usr/local/shimmy/docker_entrypoint"]

@@ -9,6 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN pip install --upgrade pip
 
+# Install Shimmy requirements
 RUN apt-get -y update \
     && apt-get install --no-install-recommends -y \
     unzip \
@@ -25,6 +26,7 @@ RUN apt-get -y update \
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
 
+# Install Shimmy
 RUN if [ -f "pyproject.toml" ]; then \
         pip install ".[openspiel, testing]" --no-cache-dir; \
     else \
