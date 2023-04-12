@@ -26,15 +26,15 @@ We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/
 
 Load a `dm_control.locomotion.soccer` environment:
 ```python
-from shimmy.dm_control_multiagent_compatibility import DmControlMultiAgentCompatibilityV0)
+from shimmy import DmControlMultiAgentCompatibilityV0
 
-env = DmControlMultiAgentCompatibilityV0(team_size=5)
+env = DmControlMultiAgentCompatibilityV0(team_size=5, render_mode="human")
 ```
 
 Load an existing `dm_control.locomotion.soccer` environment:
 ```python
 from dm_control.locomotion import soccer as dm_soccer
-from shimmy.dm_control_multiagent_compatibility import DmControlMultiAgentCompatibilityV0
+from shimmy import DmControlMultiAgentCompatibilityV0
 
 env = dm_soccer.load(team_size=2)
 env = DmControlMultiAgentCompatibilityV0(env)

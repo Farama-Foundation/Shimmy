@@ -33,7 +33,7 @@ Load a `meltingpot` environment:
 ```python
 from shimmy import MeltingPotCompatibilityV0
 
-env = MeltingPotCompatibilityV0(env=None, substrate_name="prisoners_dilemma_in_the_matrix__arena", render_mode=None)
+env = MeltingPotCompatibilityV0(substrate_name="prisoners_dilemma_in_the_matrix__arena", render_mode="human")
 ```
 
 Wrap an existing `meltingpot` environment:
@@ -42,7 +42,7 @@ from shimmy import MeltingPotCompatibilityV0
 from shimmy.utils.meltingpot import load_meltingpot
 
 env = load_meltingpot("prisoners_dilemma_in_the_matrix__arena") 
-env = MeltingPotCompatibilityV0(env, render_mode=None)
+env = MeltingPotCompatibilityV0(env, render_mode="human")
 ```
 
 Run the environment:

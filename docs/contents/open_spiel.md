@@ -31,9 +31,9 @@ We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/
 
 Load an `openspiel` environment:
 ```python
-from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
+from shimmy import OpenSpielCompatibilityV0
 
-env = OpenSpielCompatibilityV0(game_name="2048")
+env = OpenSpielCompatibilityV0(game_name="backgammon", render_mode="human")
 ```
 
 Wrap an existing `openspiel` environment:
