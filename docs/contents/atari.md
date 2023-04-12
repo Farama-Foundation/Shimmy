@@ -22,7 +22,7 @@ To install `shimmy` and required dependencies:
 pip install shimmy[atari]
 ```
 
-We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/atari.Dockerfile) to allow for cross-platform compatibility.
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/atari.Dockerfile) for reproducibility and cross-platform compatibility. 
 
 
 ## Usage

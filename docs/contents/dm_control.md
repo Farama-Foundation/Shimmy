@@ -19,7 +19,7 @@ To install `shimmy` and required dependencies:
 pip install shimmy[dm-control]
 ```
 
-We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_control.Dockerfile) to allow for cross-platform compatibility.
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_control.Dockerfile) for reproducibility and cross-platform compatibility. 
 
 
 ## Usage

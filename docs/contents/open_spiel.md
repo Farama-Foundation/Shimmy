@@ -24,7 +24,7 @@ To install `shimmy` and required dependencies:
 pip install shimmy[openspiel]
 ```
 
-We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/openspiel.Dockerfile) to allow for cross-platform compatibility.
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/openspiel.Dockerfile) for reproducibility and cross-platform compatibility. 
 
 
 ## Usage
