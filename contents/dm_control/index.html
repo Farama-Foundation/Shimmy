@@ -8,7 +8,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/dm_control.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Control (multi-agent)" href="../dm_multi/" /><link rel="prev" title="Atari Environments" href="../atari/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Control (multi-agent)" href="../dm_multi/" /><link rel="prev" title="DM Lab" href="../dm_lab/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/dm_control.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07.dev1 -->
@@ -226,11 +226,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">DM Control</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -299,17 +299,19 @@
 <p><a class="reference external" href="https://github.com/deepmind/dm_control/">DM Control</a> is a framework for physics-based simulation and reinforcement learning environments using the <a class="reference external" href="https://github.com/deepmind/mujoco#">MuJoCo</a> physics engine.</p>
 <p>Shimmy provides compatibility wrappers to convert <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/suite/README.md">Control Suite</a> environments and custom <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/README.md">Locomotion</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p>
 <figure class="align-default" id="dm-locomotion">
-<a class="reference internal image-reference" href="../../_images/dm_locomotion.png"><img alt="DeepMind Locomotion" src="../../_images/dm_locomotion.png" style="width: 80%;" /></a>
+<a class="reference internal image-reference" href="../../_images/dm_locomotion.png"><img alt="DeepMind Locomotion" src="../../_images/dm_locomotion.png" style="width: 60%;" /></a>
 </figure>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<p>To install <code class="docutils literal notranslate"><span class="pre">shimmy</span></code> and required dependencies:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">dm</span><span class="o">-</span><span class="n">control</span><span class="p">]</span>
 </pre></div>
 </div>
+<p>We also provide a <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_control.Dockerfile">Dockerfile</a> to allow for cross-platform compatibility.</p>
 </section>
-<section id="usage-single-agent">
-<h2>Usage (Single agent)<a class="headerlink" href="#usage-single-agent" title="Permalink to this heading">#</a></h2>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
 <p>Load a <code class="docutils literal notranslate"><span class="pre">dm_control</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 
@@ -423,7 +425,7 @@ uses <cite>np.random.Generator</cite>, therefore the return type of <cite>np_ran
                 <use href="#svg-arrow-right"></use>
               </svg>
             </a>
-            <a class="prev-page" href="../atari/">
+            <a class="prev-page" href="../dm_lab/">
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
               </svg>
@@ -432,7 +434,7 @@ uses <cite>np.random.Generator</cite>, therefore the return type of <cite>np_ran
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Atari Environments</div>
+                <div class="title">DM Lab</div>
                 
               </div>
             </a>
@@ -472,7 +474,7 @@ uses <cite>np.random.Generator</cite>, therefore the return type of <cite>np_ran
 <li><a class="reference internal" href="#">DM Control</a><ul>
 <li><a class="reference internal" href="#deepmind-control">DeepMind Control</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#usage-single-agent">Usage (Single agent)</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#class-description">Class Description</a><ul>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0</span></code></a><ul>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.metadata</span></code></a></li>

@@ -226,11 +226,11 @@
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -304,24 +304,22 @@
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<p>First, install shimmy:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">gym</span><span class="p">]</span>
+<p>To install <code class="docutils literal notranslate"><span class="pre">shimmy</span></code> and required dependencies for Gym V26:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">gym</span><span class="o">-</span><span class="n">v26</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Then, install the corresponding version of Gym.</p>
-<p>Gym V21:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">gym</span><span class="o">==</span><span class="mf">0.21.0</span>
+<p>To install <code class="docutils literal notranslate"><span class="pre">shimmy</span></code> and required dependencies for Gym V21:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">gym</span><span class="o">-</span><span class="n">v21</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Gym V26:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">gym</span><span class="o">==</span><span class="mf">0.26.1</span>
-</pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information about compatibility with Gym, see <a class="reference external" href="https://gymnasium.farama.org/content/gym_compatibility/">https://gymnasium.farama.org/content/gym_compatibility/</a>.</p>
 </div>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
-<p>Note: the following code requires gym V21 installed: )</p>
-<p>Load a <code class="docutils literal notranslate"><span class="pre">gym</span></code> V21 environment:</p>
+<p>Load a Gym V21 environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;GymV21Environment-v0&quot;</span><span class="p">,</span> <span class="n">env_id</span><span class="o">=</span><span class="s2">&quot;CartPole-v1&quot;</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>

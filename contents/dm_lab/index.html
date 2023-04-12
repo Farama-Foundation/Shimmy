@@ -8,7 +8,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/dm_lab.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Behavior Suite" href="../bsuite/" /><link rel="prev" title="OpenSpiel (multi-agent)" href="../open_spiel/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Control" href="../dm_control/" /><link rel="prev" title="Behavior Suite" href="../bsuite/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/dm_lab.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07.dev1 -->
@@ -226,11 +226,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">DM Lab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -310,7 +310,12 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">dm</span><span class="o">-</span><span class="n">lab</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>DeepMind Lab is not distributed via <a class="reference external" href="https://pypi.org/">pypi</a> and must be installed manually. Courtesy to <a class="reference external" href="https://github.com/deepmind/lab/issues/242">Danijar Hafner</a> for providing an <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_dm_lab.sh">install script</a>. For troubleshooting, refer to the official <a class="reference external" href="https://github.com/deepmind/lab#getting-started-on-linux">installation instructions</a>.</p>
+<p>DeepMind Lab is not distributed via <a class="reference external" href="https://pypi.org/">pypi</a> and must be installed manually. Courtesy to  <a class="reference external" href="https://github.com/deepmind/lab/issues/242">Danijar Hafner</a> for providing an <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_dm_lab.sh">install script</a>. For troubleshooting, refer to the official <a class="reference external" href="https://github.com/deepmind/lab#getting-started-on-linux">installation instructions</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>DM Lab is not currently supported on Windows or macOS.</p>
+</div>
+<p>We also provide a <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_lab.Dockerfile">Dockerfile</a> to allow for cross-platform compatibility.</p>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
@@ -327,7 +332,7 @@
 </pre></div>
 </div>
 <p>Run the environment:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
    <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>  <span class="c1"># this is where you would insert your policy</span>
    <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
@@ -337,21 +342,46 @@
 <span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using <cite>gym.make()</cite> to load DM Lab environments is not currently supported.</p>
+</div>
+<p>We provide a <a class="reference internal" href="#shimmy.utils.dm_lab.load_dm_lab" title="shimmy.utils.dm_lab.load_dm_lab"><span class="xref myst py py-func">helper function</span></a> to load DM Lab environments, but it is not guaranteed to work for all configurations.</p>
 </section>
 <section id="class-description">
 <h2>Class Description<a class="headerlink" href="#class-description" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.dm_lab_compatibility.</span></span><span class="sig-name descname"><span class="pre">DmLabCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0" title="Permalink to this definition">#</a></dt>
-<dd><p>This compatibility wrapper converts a dm_lab-control environment into a gymnasium environment.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.dm_lab_compatibility.</span></span><span class="sig-name descname"><span class="pre">DmLabCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mixerSeed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levelDirectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">appendCommand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">botCount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0" title="Permalink to this definition">#</a></dt>
+<dd><p>This compatibility wrapper converts a DM Lab environment into a gymnasium environment.</p>
 <p>DeepMind Lab is a 3D learning environment based on id Software’s Quake III Arena via ioquake3 and
 other open source software. DeepMind Lab provides a suite of challenging 3D navigation and
 puzzle-solving tasks for learning agents.
 Its primary purpose is to act as a testbed for research in artificial intelligence, especially deep reinforcement learning.</p>
-<p>Initialises the environment with a render mode along with render information.</p>
+<p>Wrapper to convert a DM Lab environment into a Gymnasium environment.</p>
+<p>Note: to wrap an existing environment, only the env and render_mode arguments can be specified.
+All other arguments are specific to DM Lab and will be used to load a new environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – existing DM Lab environment to wrap</p></li>
+<li><p><strong>level_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – name of level to load</p></li>
+<li><p><strong>observations</strong> – (Optional[str]): type of observations to use (default: “RGBD”)</p></li>
+<li><p><strong>renderer</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – renderer to use (default: “hardware”)</p></li>
+<li><p><strong>width</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – horizontal resolution of the observation frames (default: 240)</p></li>
+<li><p><strong>height</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – vertical resolution of the observation frames (default: 320)</p></li>
+<li><p><strong>fps</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – frames-per-second (default: 60)</p></li>
+<li><p><strong>mixerSeed</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – value combined with each of the seeds fed to the environment to define unique subsets of seeds (default: 0)</p></li>
+<li><p><strong>levelDirectory</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – optional path to level directory (relative paths are relative to game_scripts/levels)</p></li>
+<li><p><strong>appendCommand</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Commands for the internal Quake console</p></li>
+<li><p><strong>botCount</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – number of bots to use</p></li>
+<li><p><strong>render_mode</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – rendering mode to use (choices: “human”, “none”</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.metadata">
-<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_fps':</span> <span class="pre">10,</span> <span class="pre">'render_modes':</span> <span class="pre">[]}</span></em><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_fps':</span> <span class="pre">10,</span> <span class="pre">'render_modes':</span> <span class="pre">['human']}</span></em><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -379,7 +409,7 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.dm_lab_compatibility.DmLabCompatibilityV0.render">
 <span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
-<dd><p>Renders the dm_lab env.</p>
+<dd><p>Renders the DM Lab env.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -391,6 +421,48 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
 </dd></dl>
 
 </section>
+<section id="module-shimmy.utils.dm_lab">
+<span id="utils"></span><h2>Utils<a class="headerlink" href="#module-shimmy.utils.dm_lab" title="Permalink to this heading">#</a></h2>
+<p>Utility functions for the compatibility wrappers.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="shimmy.utils.dm_lab.load_dm_lab">
+<span class="sig-prename descclassname"><span class="pre">shimmy.utils.dm_lab.</span></span><span class="sig-name descname"><span class="pre">load_dm_lab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'lt_chasm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'RGBD'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'hardware'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">320</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">240</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mixerSeed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levelDirectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">appendCommand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">botCount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shimmy.utils.dm_lab.load_dm_lab" title="Permalink to this definition">#</a></dt>
+<dd><p>Helper function to load a DM Lab environment.</p>
+<p>Handles arguments which are None or unspecified (which will throw errors otherwise).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level_name</strong> (<em>str</em>) – name of level to load</p></li>
+<li><p><strong>observations</strong> – (Optional[str]): type of observations to use (default: “RGBD”)</p></li>
+<li><p><strong>renderer</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – renderer to use (default: “hardware”)</p></li>
+<li><p><strong>width</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – horizontal resolution of the observation frames (default: 240)</p></li>
+<li><p><strong>height</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – vertical resolution of the observation frames (default: 320)</p></li>
+<li><p><strong>fps</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – frames-per-second (default: 60)</p></li>
+<li><p><strong>mixerSeed</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – value combined with each of the seeds fed to the environment to define unique subsets of seeds (default: 0)</p></li>
+<li><p><strong>levelDirectory</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – optional path to level directory (relative paths are relative to game_scripts/levels)</p></li>
+<li><p><strong>appendCommand</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Commands for the internal Quake console</p></li>
+<li><p><strong>botCount</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – number of bots to use</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>env</strong> – DM Lab environment</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="shimmy.utils.dm_lab.dm_lab_obs2gym_obs_space">
+<span class="sig-prename descclassname"><span class="pre">shimmy.utils.dm_lab.</span></span><span class="sig-name descname"><span class="pre">dm_lab_obs2gym_obs_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.utils.dm_lab.dm_lab_obs2gym_obs_space" title="Permalink to this definition">#</a></dt>
+<dd><p>Gets the observation spec from a single observation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="shimmy.utils.dm_lab.dm_lab_spec2gym_space">
+<span class="sig-prename descclassname"><span class="pre">shimmy.utils.dm_lab.</span></span><span class="sig-name descname"><span class="pre">dm_lab_spec2gym_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#shimmy.utils.dm_lab.dm_lab_spec2gym_space" title="Permalink to this definition">#</a></dt>
+<dd><p>Converts a dm_lab spec to a gymnasium space.</p>
+</dd></dl>
+
+</section>
 </section>
 
           </article>
@@ -398,18 +470,18 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
         <footer>
           
           <div class="related-pages">
-            <a class="next-page" href="../bsuite/">
+            <a class="next-page" href="../dm_control/">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Behavior Suite</div>
+                <div class="title">DM Control</div>
               </div>
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
               </svg>
             </a>
-            <a class="prev-page" href="../open_spiel/">
+            <a class="prev-page" href="../bsuite/">
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
               </svg>
@@ -418,7 +490,7 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">OpenSpiel (multi-agent)</div>
+                <div class="title">Behavior Suite</div>
                 
               </div>
             </a>
@@ -470,6 +542,12 @@ Its primary purpose is to act as a testbed for research in artificial intelligen
 <li><a class="reference internal" href="#shimmy.dm_lab_compatibility.DmLabCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">DmLabCompatibilityV0.close()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-shimmy.utils.dm_lab">Utils</a><ul>
+<li><a class="reference internal" href="#shimmy.utils.dm_lab.load_dm_lab"><code class="docutils literal notranslate"><span class="pre">load_dm_lab()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.utils.dm_lab.dm_lab_obs2gym_obs_space"><code class="docutils literal notranslate"><span class="pre">dm_lab_obs2gym_obs_space()</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.utils.dm_lab.dm_lab_spec2gym_space"><code class="docutils literal notranslate"><span class="pre">dm_lab_spec2gym_space()</span></code></a></li>
 </ul>
 </li>
 </ul>

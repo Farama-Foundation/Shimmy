@@ -8,7 +8,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/contents/atari.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Control" href="../dm_control/" /><link rel="prev" title="OpenAI Gym" href="../gym/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Behavior Suite" href="../bsuite/" /><link rel="prev" title="OpenAI Gym" href="../gym/" />
         <link rel="canonical" href="https://shimmy.farama.org/contents/atari.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07.dev1 -->
@@ -226,11 +226,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Atari Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../open_spiel/">OpenSpiel (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot (multi-agent)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
@@ -302,15 +302,14 @@
 <a class="reference internal image-reference" href="../../_images/ALE.png"><img alt="Arcade Learning Environment" src="../../_images/ALE.png" style="width: 100%;" /></a>
 </figure>
 <p>Note: <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a> also provides 20+ multi-agent Atari environments: <a class="reference external" href="https://pettingzoo.farama.org/environments/atari/">PettingZoo Atari</a></p>
-<figure class="align-default" id="pettingzoo-atari">
-<a class="reference internal image-reference" href="https://pettingzoo.farama.org/_images/atari_double_dunk.gif"><img alt="PettingZoo Atari" src="https://pettingzoo.farama.org/_images/atari_double_dunk.gif" style="width: 40%;" /></a>
-</figure>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<p>To install <code class="docutils literal notranslate"><span class="pre">shimmy</span></code> and required dependencies:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">atari</span><span class="p">]</span>
 </pre></div>
 </div>
+<p>We also provide a <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/bin/atari.Dockerfile">Dockerfile</a> to allow for cross-platform compatibility.</p>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
@@ -329,6 +328,16 @@
    <span class="k">if</span> <span class="n">terminated</span> <span class="ow">or</span> <span class="n">truncated</span><span class="p">:</span>
       <span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 <span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To get a list of all available <code class="docutils literal notranslate"><span class="pre">atari</span></code> environments (208 total):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gymnasium.envs.registration</span> <span class="kn">import</span> <span class="n">registry</span>
+<span class="n">ATARI_ENV_IDS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">env_id</span>
+    <span class="k">for</span> <span class="n">env_id</span> <span class="ow">in</span> <span class="n">registry</span>
+    <span class="k">if</span> <span class="n">env_id</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;ALE&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">env_id</span> <span class="o">!=</span> <span class="s2">&quot;atari/compatibility-env-v0&quot;</span>
+<span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ATARI_ENV_IDS</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -526,12 +535,12 @@ For complete cloning and restoring of the full state, see <cite>{clone,restore}_
         <footer>
           
           <div class="related-pages">
-            <a class="next-page" href="../dm_control/">
+            <a class="next-page" href="../bsuite/">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">DM Control</div>
+                <div class="title">Behavior Suite</div>
               </div>
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
