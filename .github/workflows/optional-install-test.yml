@@ -62,7 +62,7 @@ jobs:
         # meltingpot
       - run: |
           docker build -f bin/meltingpot.Dockerfile \
-            --build-arg PYTHON_VERSION='3.19' \
+            --build-arg PYTHON_VERSION='3.9' \
             --tag shimmy-meltingpot-docker .
       - name: Run meltingpot tests
         run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py
