@@ -31,6 +31,7 @@ RUN if [ -f "pyproject.toml" ]; then \
         pip install ".[atari, testing]" --no-cache-dir; \
     else \
         pip install -U "shimmy[atari, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
+        mkdir -p bin && mv docker_entrypoint bin/docker_entrypoint; \
     fi
 
-ENTRYPOINT ["/usr/local/shimmy/docker_entrypoint"]
+ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]

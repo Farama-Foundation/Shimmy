@@ -31,9 +31,10 @@ ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
 
 # Install Shimmy
 RUN if [ -f "pyproject.toml" ]; then \
-      pip install ".[dm-lab, testing]" --no-cache-dir; \
+        pip install ".[dm-lab, testing]" --no-cache-dir; \
     else \
-      pip install -U "shimmy[dm-lab, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
+        pip install -U "shimmy[dm-lab, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
+        mkdir -p bin && mv docker_entrypoint bin/docker_entrypoint; \
     fi
 
 # Install DM lab requirements
@@ -63,4 +64,4 @@ RUN git clone https://github.com/deepmind/lab.git \
     && cd .. \
     && rm -rf lab
 
-ENTRYPOINT ["/usr/local/shimmy/docker_entrypoint"]
+ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
