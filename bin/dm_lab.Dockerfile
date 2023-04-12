@@ -44,7 +44,6 @@ RUN apt-get -y update \
     libglu1-mesa-dev libjpeg-dev liblua5.1-0-dev libosmesa6-dev \
     libsdl2-dev lua5.1 pkg-config python-setuptools python3-dev \
     software-properties-common unzip zip zlib1g-dev g++
-#    apt-utils
 
 # Install Bazel
 RUN apt-get install -y apt-transport-https curl gnupg  \
@@ -59,7 +58,6 @@ RUN git clone https://github.com/deepmind/lab.git \
     && echo 'build --cxxopt=-std=c++17' > .bazelrc \
     && bazel build -c opt //python/pip_package:build_pip_package  \
     && ./bazel-bin/python/pip_package/build_pip_package /tmp/dmlab_pkg \
-#    && pip3 install numpy \
     && pip3 install --force-reinstall /tmp/dmlab_pkg/deepmind_lab-*.whl \
     && cd .. \
     && rm -rf lab

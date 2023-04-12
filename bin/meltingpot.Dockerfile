@@ -39,8 +39,8 @@ RUN if [ -f "pyproject.toml" ]; then \
     fi
 
 # Install Melting Pot dependencies
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
     build-essential \
     curl \
     ffmpeg \
@@ -57,17 +57,14 @@ RUN if [ "$(uname -m)" != 'x86_64' ]; then \
     fi
 
 # Download Melting Pot assets
-RUN mkdir -p /workspaces/meltingpot/meltingpot && \
-    curl -SL https://storage.googleapis.com/dm-meltingpot/meltingpot-assets-2.1.0.tar.gz \
+RUN mkdir -p /workspaces/meltingpot/meltingpot \
+    && curl -SL https://storage.googleapis.com/dm-meltingpot/meltingpot-assets-2.1.0.tar.gz \
     | tar -xz --directory=/workspaces/meltingpot/meltingpot
 
-# Clone Melting Pot repository
-RUN git clone https://github.com/deepmind/meltingpot.git
-RUN cp -r /meltingpot/ /workspaces/meltingpot/ && rm -R /meltingpot/
-WORKDIR /workspaces/meltingpot/meltingpot/
-
-# Install meltingpot dependencies
-RUN pip install .
+# Clone Melting Pot repository and install dependencies
+RUN git clone https://github.com/deepmind/meltingpot.git \
+    && pip install . \
+    && rm -rf meltingpot
 
 # Set Python path for meltingpot
 ENV PYTHONPATH "${PYTHONPATH}:/workspaces/meltingpot/meltingpot/"
