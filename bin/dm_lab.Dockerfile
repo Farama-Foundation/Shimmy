@@ -15,7 +15,8 @@ RUN apt-get -y update \
     build-essential curl freeglut3 gettext git libffi-dev libglu1-mesa \
     libglu1-mesa-dev libjpeg-dev liblua5.1-0-dev libosmesa6-dev \
     libsdl2-dev lua5.1 pkg-config python-setuptools python3-dev \
-    software-properties-common unzip zip zlib1g-dev g++
+    software-properties-common unzip zip zlib1g-dev g++ \
+    apt-utils
 
 # Install Bazel
 RUN apt-get install -y apt-transport-https curl gnupg  \
