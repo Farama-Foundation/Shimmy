@@ -10,6 +10,33 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN pip install --upgrade pip
 
+# Install Shimmy requirements
+RUN apt-get -y update \
+    && apt-get install --no-install-recommends -y \
+    unzip \
+    libglu1-mesa-dev \
+    libgl1-mesa-dev \
+    libosmesa6-dev \
+    xvfb \
+    patchelf \
+    cmake \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . /usr/local/shimmy/
+WORKDIR /usr/local/shimmy/
+
+# Include Shimmy in Python path
+ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
+
+# Install Shimmy
+RUN if [ -f "pyproject.toml" ]; then \
+        pip install ".[meltingpot, testing]" --no-cache-dir; \
+    else \
+        pip install -U "shimmy[meltingpot, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
+    fi
+
 # Install Melting Pot dependencies
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
@@ -42,33 +69,7 @@ WORKDIR /workspaces/meltingpot/meltingpot/
 RUN pip install .
 
 # Set Python path for meltingpot
-ENV PYTHONPATH=/workspaces/meltingpot/meltingpot/
-
-# Install Shimmy requirements
-RUN apt-get -y update \
-    && apt-get install --no-install-recommends -y \
-    unzip \
-    libglu1-mesa-dev \
-    libgl1-mesa-dev \
-    libosmesa6-dev \
-    xvfb \
-    patchelf \
-    cmake \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY . /usr/local/shimmy/
-WORKDIR /usr/local/shimmy/
-
-# Include Shimmy in Python path
-ENV PYTHONPATH="$PYTHONPATH:/usr/local/shimmy/"
-
-RUN if [ -f "pyproject.toml" ]; then \
-        pip install ".[meltingpot, testing]" --no-cache-dir; \
-    else \
-        pip install -U "shimmy[meltingpot, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
-    fi
+ENV PYTHONPATH "${PYTHONPATH}:/workspaces/meltingpot/meltingpot/"
 
 ENTRYPOINT ["/usr/local/shimmy/docker_entrypoint"]
 
