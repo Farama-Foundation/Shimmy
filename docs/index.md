@@ -10,7 +10,7 @@ lastpage:
 ```{eval-rst}
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
 | .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif    | .. figure::  /_static/img/dm_lab_single.gif    |
-|   :alt: map to buried treasure                 |   :alt: map to buried treasure            |   :alt: map to buried treasure                 |
+|   :alt: DM Control                             |   :alt: DM Soccer                         |   :alt: DM Lab                                 |
 |   :height: 200px                               |   :height: 200px                          |   :height: 200px                               |
 |   :target: environments/dm_control             |   :target: environments/dm_multi          |   :target: environments/dm_lab                 |
 |                                                |                                           |                                                |
@@ -19,7 +19,7 @@ lastpage:
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
 | .. figure:: /_static/img/bsuite.png            | .. figure:: /_static/img/ALE.png          | .. figure:: /_static/img/meltingpot.gif        |
-|    :alt: map to buried treasure                |   :alt: map to buried treasure            |   :alt: map to buried treasure                 |
+|    :alt: Behavior Suite                        |   :alt: Atari Learning Environment        |   :alt: Melting Pot                            |
 |    :height: 200px                              |   :height: 200px                          |   :height: 200px                               |
 |    :target: environments/bsuite                |   :target: environments/atari             |   :target: environments/meltingpot             |
 |                                                |                                           |                                                |
@@ -28,7 +28,7 @@ lastpage:
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
 | .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png    |                                                |
-|    :alt: map to buried treasure                |   :alt: map to buried treasure            |                                                |
+|    :alt: OpenAI Gym                            |   :alt: OpenSpiel                         |                                                |
 |    :height: 200px                              |   :height: 200px                          |                                                |
 |    :target: environments/gym                   |   :target: environments/open_spiel        |                                                |
 |                                                |                                           |                                                |
