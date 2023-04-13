@@ -27,12 +27,12 @@ DeepMind Lab is not distributed via [pypi](https://pypi.org/) and must be instal
 ```{eval-rst}
 .. warning::
 
-    DM Lab is not currently supported on Windows or macOS.
+    DeepMind Lab is not currently supported on Windows or macOS.
 ```
 
-We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_lab.Dockerfile) for reproducibility and cross-platform compatibility. 
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/dm_lab.Dockerfile) for reproducibility and cross-platform compatibility:
 
-
+`curl https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/dm_lab.Dockerfile | docker build -t dm_lab -f - . && docker run -it dm_lab`
 
 ## Usage
 Load a `deepmind_lab` environment:

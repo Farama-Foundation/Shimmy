@@ -7,37 +7,46 @@ lastpage:
 
 # Shimmy is an API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
 
-```{figure} /_static/img/dm_lab.gif
-    :name: DM lab
-    :alt: DeepMind Lab
-    :width: 80%
+```{eval-rst}
++------------------------------------------------+-------------------------------------------+-----------------------------------------+
+| .. figure:: /_static/img/dm_locomotion.png     | .. figure:: /_static/img/dm_soccer.png    | .. figure::  /_static/img/dm_lab.jpg    |
+|   :alt: map to buried treasure                 |   :alt: map to buried treasure            |   :alt: map to buried treasure          |
+|   :height: 200px                               |   :height: 200px                          |   :height: 200px                        |
+|                                                |                                           |                                         |
+|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent      |   **DM Lab**: 3D navigation and a       |
+|   robotics simulation.                         |   cooperative soccer game.                |   puzzle-solving.                       |
++------------------------------------------------+-------------------------------------------+-----------------------------------------+
++------------------------------------------------+-------------------------------------------+-----------------------------------------+
+| .. figure:: /_static/img/bsuite.png            | .. figure:: /_static/img/ALE.png          | .. figure:: /_static/img/meltingpot.gif | 
+|    :alt: map to buried treasure                |   :alt: map to buried treasure            |   :alt: map to buried treasure          |
+|    :height: 200px                              |   :height: 200px                          |   :height: 200px                        |
+|                                                |                                           |                                         |
+|    **Behavior Suite**: Test suite for          |   **Atari Learning Environment**:         |   **Melting Pot**: Multi-agent social   |  
+|    evaluating model behavior.                  |   Set of 50+ classic Atari 2600 games.    |   reasoning benchmark.                  |
++------------------------------------------------+-------------------------------------------+-----------------------------------------+
++------------------------------------------------+-------------------------------------------+-----------------------------------------+
+| .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png    |                                         | 
+|    :alt: map to buried treasure                |   :alt: map to buried treasure            |                                         |
+|    :height: 200px                              |   :height: 200px                          |                                         |
+|                                                |                                           |                                         |
+|    **OpenAI Gym**: Compatibility support for   |   **OpenSpiel**: Collection of 70+ board  |                                         |  
+|    Gym V21 & V26.                              |   & card game environments.               |                                         |
++------------------------------------------------+-------------------------------------------+-----------------------------------------+
 ```
 
 ## Supported APIs
 
-### [OpenAI Gym](http://shimmy.farama.org/contents/gym/)
-- Bindings to convert [OpenAI Gym](https://github.com/openai/gym) environments to [Gymnasium](https://gymnasium.farama.org/).
+### Single-agent
+- [OpenAI Gym](https://github.com/openai/gym)
+- [ALE-py](https://github.com/mgbellemare/Arcade-Learning-Environment)
+- [DM Lab](https://github.com/deepmind/lab)
+- [Behavior Suite](https://github.com/deepmind/bsuite)
+- [DM Control](https://github.com/deepmind/dm_control/)
 
-### [Atari Environments for OpenAI Gym](http://shimmy.farama.org/contents/atari/)
-- Bindings to convert [ALE-py](https://github.com/mgbellemare/Arcade-Learning-Environment) Atari environments to [Gymnasium](https://gymnasium.farama.org/).
-
-### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
-- Bindings to convert [DM Lab](https://github.com/deepmind/lab) environments to [Gymnasium](https://gymnasium.farama.org/).
-
-### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
-- Bindings to convert [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
-
-### [DeepMind Control](http://shimmy.farama.org/contents/dm_control/)
-- Bindings to convert [DM Control](https://github.com/deepmind/dm_control/) environments to [Gymnasium](https://gymnasium.farama.org/). 
-
-### [DeepMind Control: Multi-Agent](http://shimmy.farama.org/contents/dm_multi/)
-- Bindings to convert [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
-
-### [OpenSpiel](http://shimmy.farama.org/contents/open_spiel/)
-- Bindings to convert [OpenSpiel](https://github.com/deepmind/open_spiel) enviromnets to [PettingZoo](https://pettingzoo.farama.org/).
-
-### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
-- Bindings to convert [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
+### Multi-agent
+- [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md)
+- [OpenSpiel](https://github.com/deepmind/open_spiel)
+- [Melting Pot](https://github.com/deepmind/meltingpot)
 
 
 ## Installation
@@ -45,22 +54,10 @@ To install Shimmy from [PyPI](https://pypi.org/):
 ```
 pip install shimmy
 ```
-To install Shimmy and required dependencies for an environment, specify the environment as follows:
+To install Shimmy and required dependencies for environments, specify them as follows:
 ```
-pip install shimmy[dm-control-multi-agent]
+pip install shimmy[bsuite, atari]
 ```
-
-Available environments: 
-
-`gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
-
-[//]: # ()
-[//]: # (Single-agent environments:)
-
-[//]: # (`gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`)
-
-[//]: # ()
-[//]: # (Multi-agent environments: `dm-control-multi-agent`, `openspiel`, `meltingpot`)
 
 ### For Developers and Testing
 ```
@@ -69,24 +66,26 @@ pip install shimmy[testing]
 
 ### All Environments
 ```
-pip install shimmy[all, testing]
+pip install shimmy[all]
 ```
+
+`gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
+
 ## Usage
 
-Single-agent environments have registration under the [Gymnasium API](https://gymnasium.farama.org/api/registry/), and can be loaded via `gym.make()`:
+Single-agent [Gymnasium](https://gymnasium.farama.org/) environments can be loaded via `gym.make()`:
+
 ```python
 import gymnasium as gym
 env = gym.make("dm_control/acrobot-swingup_sparse-v0")
 ```
-Multi-agent environments can be loaded in a similar manner, but require importing compatibility wrappers directly:
+Multi-agent [PettingZoo](https://pettingzoo.farama.org) environments can be loaded via imported Shimmy wrappers:
 
 ```python
 from shimmy import MeltingPotCompatibilityV0
 env = MeltingPotCompatibilityV0(substrate_name="prisoners_dilemma_in_the_matrix__arena")
 ```
 
-[//]: # (As PettingZoo does not currently support registration, multi-agent environments require loading compatibility wrappers directly. )
-[//]: # (For more information, see documentation for individual environments.)
 
 ## At a glance
 

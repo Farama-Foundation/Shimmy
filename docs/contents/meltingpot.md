@@ -22,10 +22,11 @@ To install `shimmy` and required dependencies:
 pip install shimmy[melting-pot]
 ```
 
-Melting Pot is not distributed via [pypi](https://pypi.org/) and must be installed manually. We provide an [installation script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_melting_pot.sh) (compatible with macOS and linux) to clone the melting pot repository, install bazel, and run the included installation scripts. For troubleshooting,  refer to the official [installation instructions](https://github.com/deepmind/meltingpot#installation).
+Melting Pot is not distributed via [pypi](https://pypi.org/) and must be installed manually. We provide an [installation script](https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_melting_pot.sh) (compatible with macOS and linux). For troubleshooting,  refer to the official [installation instructions](https://github.com/deepmind/meltingpot#installation).
 
-We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/meltingpot.Dockerfile) for reproducibility and cross-platform compatibility. 
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/meltingpot.Dockerfile) for reproducibility and cross-platform compatibility:
 
+`curl https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/meltingpot.Dockerfile | docker build -t meltingpot -f - . && docker run -it meltingpot`
 
 ## Usage
 

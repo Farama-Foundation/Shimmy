@@ -19,8 +19,9 @@ To install `shimmy` and required dependencies:
 pip install shimmy[bsuite]
 ```
 
-We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/bsuite.Dockerfile) for reproducibility and cross-platform compatibility. 
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/bsuite.Dockerfile) for reproducibility and cross-platform compatibility:
 
+`curl https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/bsuite.Dockerfile | docker build -t bsuite -f - . && docker run -it bsuite`
 
 ## Usage
 Load a `bsuite` environment:

@@ -1,6 +1,5 @@
 # OpenSpiel (multi-agent)
 
-
 ## [DeepMind OpenSpiel](https://github.com/deepmind/open_spiel)
 
 [OpenSpiel](https://github.com/deepmind/open_spiel) is a collection of 70+ environments for common board games, card games, as well as simple grid worlds and social dilemmas.
@@ -24,8 +23,9 @@ To install `shimmy` and required dependencies:
 pip install shimmy[openspiel]
 ```
 
-We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/openspiel.Dockerfile) for reproducibility and cross-platform compatibility. 
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/openspiel.Dockerfile) for reproducibility and cross-platform compatibility:
 
+`curl https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/openspiel.Dockerfile | docker build -t openspiel -f - . && docker run -it openspiel`
 
 ## Usage
 
