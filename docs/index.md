@@ -4,68 +4,83 @@ firstpage:
 lastpage:
 ---
 
+# Shimmy: an API conversion tool for reinforcement learning environments.
 
-# Shimmy is an API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
+**Shimmy allows popular external reinforcement learning environments to be used with [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.**
+
 
 ```{eval-rst}
-+------------------------------------------------+-------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif    | .. figure::  /_static/img/dm_lab_single.gif    |
-|   :alt: DM Control                             |   :alt: DM Soccer                         |   :alt: DM Lab                                 |
-|   :height: 200px                               |   :height: 200px                          |   :height: 200px                               |
-|   :target: environments/dm_control             |   :target: environments/dm_multi          |   :target: environments/dm_lab                 |
-|                                                |                                           |                                                |
-|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent      |   **DM Lab**: 3D navigation and a              |
-|   robotics simulation.                         |   cooperative soccer game.                |   puzzle-solving.                              |
-+------------------------------------------------+-------------------------------------------+------------------------------------------------+
-+------------------------------------------------+-------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/bsuite.png            | .. figure:: /_static/img/ALE.png          | .. figure:: /_static/img/meltingpot.gif        |
-|    :alt: Behavior Suite                        |   :alt: Atari Learning Environment        |   :alt: Melting Pot                            |
-|    :height: 200px                              |   :height: 200px                          |   :height: 200px                               |
-|    :target: environments/bsuite                |   :target: environments/atari             |   :target: environments/meltingpot             |
-|                                                |                                           |                                                |
-|    **Behavior Suite**: Test suite for          |   **Atari Learning Environment**:         |   **Melting Pot**: Multi-agent social          |
-|    evaluating model behavior.                  |   Set of 50+ classic Atari 2600 games.    |   reasoning benchmark.                         |
-+------------------------------------------------+-------------------------------------------+------------------------------------------------+
-+------------------------------------------------+-------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png    |                                                |
-|    :alt: OpenAI Gym                            |   :alt: OpenSpiel                         |                                                |
-|    :height: 200px                              |   :height: 200px                          |                                                |
-|    :target: environments/gym                   |   :target: environments/open_spiel        |                                                |
-|                                                |                                           |                                                |
-|    **OpenAI Gym**: Compatibility support for   |   **OpenSpiel**: Collection of 70+ board  |                                                |
-|    Gym V21 & V26.                              |   & card game environments.               |                                                |
-+------------------------------------------------+-------------------------------------------+------------------------------------------------+
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
+| .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif      | .. figure::  /_static/img/dm_lab_single.gif    |
+|   :alt: DM Control                             |   :alt: DM Soccer                           |   :alt: DM Lab                                 |
+|   :height: 180px                               |   :height: 180px                            |   :height: 180px                               |
+|   :target: environments/dm_control             |   :target: environments/dm_multi            |   :target: environments/dm_lab                 |
+|                                                |                                             |                                                |
+|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **DM Lab**: 3D navigation and a              |
+|   robotics simulation.                         |   cooperative soccer game.                  |   puzzle-solving.                              |
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
+| .. figure:: /_static/img/bsuite.png            | .. figure:: /_static/img/ALE.png            | .. figure:: /_static/img/meltingpot.gif        |
+|    :alt: Behavior Suite                        |   :alt: Atari Learning Environment          |   :alt: Melting Pot                            |
+|    :height: 180px                              |   :height: 180px                            |   :height: 180px                               |
+|    :target: environments/bsuite                |   :target: environments/atari               |   :target: environments/meltingpot             |
+|                                                |                                             |                                                |
+|    **Behavior Suite**: Test suite for          |   **Atari Learning Environment**:           |   **Melting Pot**: Multi-agent social          |
+|    evaluating model behavior.                  |   Set of 50+ classic Atari 2600 games.      |   reasoning games.                             |
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
+| .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png      |                                                |
+|    :alt: OpenAI Gym                            |   :alt: OpenSpiel                           |                                                |
+|    :height: 180px                              |   :height: 180px                            |                                                |
+|    :target: environments/gym                   |   :target: environments/open_spiel          |                                                |
+|                                                |                                             |                                                |
+|    **OpenAI Gym**: Compatibility support for   |   **OpenSpiel**: Collection of 70+ board    |                                                |
+|    Gym V21-V26.                                |   & card game environments.                 |                                                |
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
 ```
 
-## Supported APIs
 
-### Single-agent
-[Gymnasium](https://gymnasium.farama.org/) compatibility wrappers:
-- [OpenAI Gym](https://shimmy.farama.org/contents/gym/)
-- [Atari Learning Environments](https://shimmy.farama.org/contents/atari/)
-- [DeepMind Lab](https://shimmy.farama.org/contents/dm_lab/)
-- [Behavior Suite](https://shimmy.farama.org/contents/bsuite/)
-- [DM Control](https://shimmy.farama.org/contents/dm_control/)
+Environments can be interacted with using a simple, high-level API: 
 
-### Multi-agent
-[PettingZoo](https://pettingzoo.farama.org/) compatibility wrappers:
-- [DM Control Soccer](https://shimmy.farama.org/contents/dm_multi/)
-- [OpenSpiel](https://shimmy.farama.org/contents/open_spiel/)
-- [Melting Pot](https://shimmy.farama.org/contents/meltingpot/)
+```python 
+import gymnasium as gym
+env = gym.make("dm_control/acrobot-swingup_sparse-v0", render_mode="human")
 
+observation, info = env.reset(seed=42)
+for _ in range(1000):
+   action = env.action_space.sample()  # this is where you would insert your policy
+   observation, reward, terminated, truncated, info = env.step(action)
 
-## Citation
-
-If you use this in your research, please cite:
+   if terminated or truncated:
+      observation, info = env.reset()
+env.close()
 ```
-@software{shimmy2022github,
-  author = {{Jun Jet Tai, Mark Towers, Elliot Tower} and Jordan Terry},
-  title = {Shimmy: Gymnasium and PettingZoo Wrappers for Commonly Used Environments},
-  url = {http://github.com/Farama-Foundation/Shimmy},
-  version = {0.2.0},
-  year = {2022},
-}
-```
+
+[//]: # (Citation isn't shown on any other sites AFAIK)
+
+
+[//]: # (## Citation)
+
+[//]: # ()
+[//]: # (If you use this in your research, please cite:)
+
+[//]: # (```)
+
+[//]: # (@software{shimmy2022github,)
+
+[//]: # (  author = {{Jun Jet Tai, Mark Towers, Elliot Tower} and Jordan Terry},)
+
+[//]: # (  title = {Shimmy: Gymnasium and PettingZoo Wrappers for Common RL Environments},)
+
+[//]: # (  url = {http://github.com/Farama-Foundation/Shimmy},)
+
+[//]: # (  version = {0.2.0},)
+
+[//]: # (  year = {2022},)
+
+[//]: # (})
+
+[//]: # (```)
 
 ```{toctree}
 :hidden:

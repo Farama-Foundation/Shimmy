@@ -6,11 +6,13 @@
 
 Shimmy provides compatibility wrappers to convert all [ALE](https://github.com/mgbellemare/Arcade-Learning-Environment) environments to [Gymnasium](https://gymnasium.farama.org/).
 
+
 ```{figure} /_static/img/ALE.png
     :name: ALE
     :alt: Arcade Learning Environment
     :width: 100%
 ```
+For reference information and a complete list of environments, see [Gymnasium Atari](https://gymnasium.farama.org/environments/atari/).
 
 Note: [PettingZoo](https://pettingzoo.farama.org/) also provides 20+ multi-agent Atari environments: [PettingZoo Atari](https://pettingzoo.farama.org/environments/atari/)
 
