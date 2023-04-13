@@ -69,7 +69,6 @@ observations = env.reset()
 while env.agents:
     actions = {agent: env.action_space(agent).sample() for agent in env.agents}
     observations, rewards, terminations, truncations, infos = env.step(actions)
-    env.step(actions)
 env.close()
 ```
 Environments are loaded as [`ParallelEnv`](https://pettingzoo.farama.org/api/parallel/), but can be converted to [`AECEnv`](https://pettingzoo.farama.org/api/aec/) using [PettingZoo Wrappers](https://pettingzoo.farama.org/api/pz_wrappers/).

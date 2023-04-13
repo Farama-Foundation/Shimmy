@@ -10,23 +10,28 @@ To install Shimmy from [PyPI](https://pypi.org/):
 ```
 pip install shimmy
 ```
-To install Shimmy and required dependencies for environments, specify them as follows:
+To install required dependencies for environments, specify them as follows:
 ```
 pip install shimmy[bsuite, atari]
 ```
 
-Install Shimmy for development and testing:
+Choices: `gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
+
+For development and testing:
 
 ```
-pip install shimmy[testing]
+pip install shimmy[all, testing]
 ```
 
-Install Shimmy with all environments:
-```
-pip install shimmy[all]
-```
+[//]: # ()
+[//]: # (Install Shimmy with all environments:)
 
-`gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
+[//]: # (```)
+
+[//]: # (pip install shimmy[all])
+
+[//]: # (```)
+
 
 ### Docker
 

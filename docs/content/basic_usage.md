@@ -34,8 +34,6 @@ Multi-agent [PettingZoo](https://pettingzoo.farama.org) environments can be load
 
 ### AEC Environments
 
-- OpenSpiel
-
 Load the environment:
 
 ```python
@@ -59,9 +57,6 @@ env.close()
 
 ### Parallel Environments
 
-- Melting Pot
-- DM Control Multi-Agent
-
 Load the environment:
 
 ```python
@@ -75,7 +70,6 @@ observations = env.reset()
 while env.agents:
     actions = {agent: env.action_space(agent).sample() for agent in env.agents}
     observations, rewards, terminations, truncations, infos = env.step(actions)
-    env.step(actions)
 env.close()
 ```
 
