@@ -12,24 +12,27 @@ lastpage:
 | .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif    | .. figure::  /_static/img/dm_lab_single.gif    |
 |   :alt: map to buried treasure                 |   :alt: map to buried treasure            |   :alt: map to buried treasure                 |
 |   :height: 200px                               |   :height: 200px                          |   :height: 200px                               |
+|   :target: environments/dm_control             |   :target: environments/dm_multi          |   :target: environments/dm_lab                 |
 |                                                |                                           |                                                |
 |   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent      |   **DM Lab**: 3D navigation and a              |
 |   robotics simulation.                         |   cooperative soccer game.                |   puzzle-solving.                              |
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/bsuite.png            | .. figure:: /_static/img/ALE.png          | .. figure:: /_static/img/meltingpot.gif        | 
+| .. figure:: /_static/img/bsuite.png            | .. figure:: /_static/img/ALE.png          | .. figure:: /_static/img/meltingpot.gif        |
 |    :alt: map to buried treasure                |   :alt: map to buried treasure            |   :alt: map to buried treasure                 |
 |    :height: 200px                              |   :height: 200px                          |   :height: 200px                               |
+|    :target: environments/bsuite                |   :target: environments/atari             |   :target: environments/meltingpot             |
 |                                                |                                           |                                                |
-|    **Behavior Suite**: Test suite for          |   **Atari Learning Environment**:         |   **Melting Pot**: Multi-agent social          |  
+|    **Behavior Suite**: Test suite for          |   **Atari Learning Environment**:         |   **Melting Pot**: Multi-agent social          |
 |    evaluating model behavior.                  |   Set of 50+ classic Atari 2600 games.    |   reasoning benchmark.                         |
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png    |                                                | 
+| .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png    |                                                |
 |    :alt: map to buried treasure                |   :alt: map to buried treasure            |                                                |
 |    :height: 200px                              |   :height: 200px                          |                                                |
+|    :target: environments/gym                   |   :target: environments/open_spiel        |                                                |
 |                                                |                                           |                                                |
-|    **OpenAI Gym**: Compatibility support for   |   **OpenSpiel**: Collection of 70+ board  |                                                |  
+|    **OpenAI Gym**: Compatibility support for   |   **OpenSpiel**: Collection of 70+ board  |                                                |
 |    Gym V21 & V26.                              |   & card game environments.               |                                                |
 +------------------------------------------------+-------------------------------------------+------------------------------------------------+
 ```
