@@ -10,7 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # DM Control Multi-Agent
+        # dm-lab
+      - run: |
+          docker build -f bin/dm_lab.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-dm_lab-docker .
+      - name: Run dm-lab tests
+        run: docker run shimmy-dm_lab-docker pytest tests/test_dm_lab.py
+
+        # dm-control-multi-agent
       - run: |
           docker build -f bin/dm_control_multiagent.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
@@ -18,7 +26,7 @@ jobs:
       - name: Run dm-control-multi-agent tests
         run: docker run shimmy-dm-control-multi-agent-docker pytest tests/test_dm_control_multi_agent.py
 
-      # Behavior Suite
+        # bsuite
       - run: |
           docker build -f bin/bsuite.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
@@ -27,7 +35,7 @@ jobs:
         run: docker run shimmy-bsuite-docker pytest tests/test_bsuite.py
 
 
-      # Atari
+        # Atari
       - run: |
            docker build -f bin/atari.Dockerfile \
              --build-arg PYTHON_VERSION='3.10' \
@@ -35,7 +43,7 @@ jobs:
       - name: Run atari tests
         run: docker run shimmy-atari-docker pytest tests/test_atari.py
 
-      # DM Control
+        # dm-control
       - run: |
           docker build -f bin/dm_control.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
@@ -43,7 +51,7 @@ jobs:
       - name: Run dm-control tests
         run: docker run shimmy-dm-control-docker pytest tests/test_dm_control.py
 
-      # OpenSpiel
+        # openspiel
       - run: |
           docker build -f bin/openspiel.Dockerfile \
             --build-arg PYTHON_VERSION='3.10' \
@@ -51,18 +59,11 @@ jobs:
       - name: Run openspiel tests
         run: docker run shimmy-openspiel-docker pytest tests/test_openspiel.py
 
-      # Melting Pot
+        # meltingpot
       - run: |
           docker build -f bin/meltingpot.Dockerfile \
-            --build-arg PYTHON_VERSION='3.9' \
+            --build-arg PYTHON_VERSION='3.19' \
             --tag shimmy-meltingpot-docker .
       - name: Run meltingpot tests
         run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py
 
-      # DM Lab
-      - run: |
-          docker build -f bin/dm_lab.Dockerfile \
-            --build-arg PYTHON_VERSION='3.10' \
-            --tag shimmy-dm_lab-docker .
-      - name: Run dm-lab tests
-        run: docker run shimmy-dm_lab-docker pytest tests/test_dm_lab.py
