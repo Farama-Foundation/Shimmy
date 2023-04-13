@@ -19,7 +19,7 @@
 import shimmy
 
 project = "Shimmy"
-copyright = "2023"
+copyright = "Farama Foundation 2023"
 author = "Farama Foundation"
 
 # The full version, including alpha/beta/rc tags
