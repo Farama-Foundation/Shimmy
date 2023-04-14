@@ -6,7 +6,7 @@ lastpage:
 
 # Shimmy: an API conversion tool for reinforcement learning environments.
 
-**Shimmy allows popular external reinforcement learning environments to be used with [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.**
+**Shimmy provides [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) bindings for popular external RL environments.**
 
 
 ```{eval-rst}
@@ -55,32 +55,6 @@ for _ in range(1000):
       observation, info = env.reset()
 env.close()
 ```
-
-[//]: # (Citation isn't shown on any other sites AFAIK)
-
-
-[//]: # (## Citation)
-
-[//]: # ()
-[//]: # (If you use this in your research, please cite:)
-
-[//]: # (```)
-
-[//]: # (@software{shimmy2022github,)
-
-[//]: # (  author = {{Jun Jet Tai, Mark Towers, Elliot Tower} and Jordan Terry},)
-
-[//]: # (  title = {Shimmy: Gymnasium and PettingZoo Wrappers for Common RL Environments},)
-
-[//]: # (  url = {http://github.com/Farama-Foundation/Shimmy},)
-
-[//]: # (  version = {0.2.0},)
-
-[//]: # (  year = {2022},)
-
-[//]: # (})
-
-[//]: # (```)
 
 ```{toctree}
 :hidden:
