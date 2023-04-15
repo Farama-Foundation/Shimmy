@@ -4,137 +4,82 @@ firstpage:
 lastpage:
 ---
 
+# Shimmy: an API conversion tool for reinforcement learning environments.
 
-# Shimmy is an API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
+**Shimmy provides [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) bindings for popular external RL environments.**
 
-```{figure} /_static/img/dm_lab.gif
-    :name: DM lab
-    :alt: DeepMind Lab
-    :width: 80%
+
+```{eval-rst}
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
+| .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif      | .. figure::  /_static/img/dm_lab_single.gif    |
+|   :alt: DM Control                             |   :alt: DM Soccer                           |   :alt: DM Lab                                 |
+|   :height: 180px                               |   :height: 180px                            |   :height: 180px                               |
+|   :target: environments/dm_control             |   :target: environments/dm_multi            |   :target: environments/dm_lab                 |
+|                                                |                                             |                                                |
+|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **DM Lab**: 3D navigation and a              |
+|   robotics simulation.                         |   cooperative soccer game.                  |   puzzle-solving.                              |
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
+| .. figure:: /_static/img/bsuite.png            | .. figure:: /_static/img/ALE.png            | .. figure:: /_static/img/meltingpot.gif        |
+|    :alt: Behavior Suite                        |   :alt: Atari Learning Environment          |   :alt: Melting Pot                            |
+|    :height: 180px                              |   :height: 180px                            |   :height: 180px                               |
+|    :target: environments/bsuite                |   :target: environments/atari               |   :target: environments/meltingpot             |
+|                                                |                                             |                                                |
+|    **Behavior Suite**: Test suite for          |   **Atari Learning Environment**:           |   **Melting Pot**: Multi-agent social          |
+|    evaluating model behavior.                  |   Set of 50+ classic Atari 2600 games.      |   reasoning games.                             |
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
+| .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png      |                                                |
+|    :alt: OpenAI Gym                            |   :alt: OpenSpiel                           |                                                |
+|    :height: 180px                              |   :height: 180px                            |                                                |
+|    :target: environments/gym                   |   :target: environments/open_spiel          |                                                |
+|                                                |                                             |                                                |
+|    **OpenAI Gym**: Compatibility support for   |   **OpenSpiel**: Collection of 70+ board    |                                                |
+|    Gym V21-V26.                                |   & card game environments.                 |                                                |
++------------------------------------------------+---------------------------------------------+------------------------------------------------+
 ```
 
-## Supported APIs
 
-### [OpenAI Gym](http://shimmy.farama.org/contents/gym/)
-- Bindings to convert [OpenAI Gym](https://github.com/openai/gym) environments to [Gymnasium](https://gymnasium.farama.org/).
+Environments can be interacted with using a simple, high-level API: 
 
-### [Atari Environments for OpenAI Gym](http://shimmy.farama.org/contents/atari/)
-- Bindings to convert [ALE-py](https://github.com/mgbellemare/Arcade-Learning-Environment) Atari environments to [Gymnasium](https://gymnasium.farama.org/).
-
-### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
-- Bindings to convert [DM Lab](https://github.com/deepmind/lab) environments to [Gymnasium](https://gymnasium.farama.org/).
-
-### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
-- Bindings to convert [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
-
-### [DeepMind Control](http://shimmy.farama.org/contents/dm_control/)
-- Bindings to convert [DM Control](https://github.com/deepmind/dm_control/) environments to [Gymnasium](https://gymnasium.farama.org/). 
-
-### [DeepMind Control: Multi-Agent](http://shimmy.farama.org/contents/dm_multi/)
-- Bindings to convert [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
-
-### [OpenSpiel](http://shimmy.farama.org/contents/open_spiel/)
-- Bindings to convert [OpenSpiel](https://github.com/deepmind/open_spiel) enviromnets to [PettingZoo](https://pettingzoo.farama.org/).
-
-### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
-- Bindings to convert [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
-
-
-## Installation
-To install Shimmy from [PyPI](https://pypi.org/):
-```
-pip install shimmy
-```
-To install Shimmy and required dependencies for an environment, specify the environment as follows:
-```
-pip install shimmy[dm-control-multi-agent]
-```
-
-Available environments: 
-
-`gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
-
-[//]: # ()
-[//]: # (Single-agent environments:)
-
-[//]: # (`gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`)
-
-[//]: # ()
-[//]: # (Multi-agent environments: `dm-control-multi-agent`, `openspiel`, `meltingpot`)
-
-### For Developers and Testing
-```
-pip install shimmy[testing]
-```
-
-### All Environments
-```
-pip install shimmy[all, testing]
-```
-## Usage
-
-Single-agent environments have registration under the [Gymnasium API](https://gymnasium.farama.org/api/registry/), and can be loaded via `gym.make()`:
-```python
+```python 
 import gymnasium as gym
-env = gym.make("dm_control/acrobot-swingup_sparse-v0")
-```
-Multi-agent environments can be loaded in a similar manner, but require importing compatibility wrappers directly:
+env = gym.make("dm_control/acrobot-swingup_sparse-v0", render_mode="human")
 
-```python
-from shimmy import MeltingPotCompatibilityV0
-env = MeltingPotCompatibilityV0(substrate_name="prisoners_dilemma_in_the_matrix__arena")
-```
+observation, info = env.reset(seed=42)
+for _ in range(1000):
+   action = env.action_space.sample()  # this is where you would insert your policy
+   observation, reward, terminated, truncated, info = env.step(action)
 
-[//]: # (As PettingZoo does not currently support registration, multi-agent environments require loading compatibility wrappers directly. )
-[//]: # (For more information, see documentation for individual environments.)
-
-## At a glance
-
-This is an example of using Shimmy to convert DM Control environments into a Gymnasium compatible environment:
-
-```python
-import gymnasium as gym
-from shimmy.registration import DM_CONTROL_SUITE_ENVS
-
-env_ids = [f"dm_control/{'-'.join(item)}-v0" for item in DM_CONTROL_SUITE_ENVS]
-print(env_ids)
-
-env = gym.make(env_ids[0])
-env_flatten = gym.wrappers.FlattenObservation(env)
-print(env_ids[0])
-print("===🌎", env.observation_space)
-print("===🕹️", env.action_space)
-print("---flattened 🌎", env_flatten.observation_space)
-print("---flattened 🕹️", env_flatten.action_space)
-```
-```bash
-['dm_control/acrobot-swingup-v0', 'dm_control/acrobot-swingup_sparse-v0', 'dm_control/ball_in_cup-catch-v0', 'dm_control/cartpole-balance-v0', 'dm_control/cartpole-balance_sparse-v0', 'dm_control/cartpole-swingup-v0', 'dm_control/cartpole-swingup_sparse-v0', 'dm_control/cartpole-two_poles-v0', 'dm_control/cartpole-three_poles-v0', 'dm_control/cheetah-run-v0', 'dm_control/dog-stand-v0', 'dm_control/dog-walk-v0', 'dm_control/dog-trot-v0', 'dm_control/dog-run-v0', 'dm_control/dog-fetch-v0', 'dm_control/finger-spin-v0', 'dm_control/finger-turn_easy-v0', 'dm_control/finger-turn_hard-v0', 'dm_control/fish-upright-v0', 'dm_control/fish-swim-v0', 'dm_control/hopper-stand-v0', 'dm_control/hopper-hop-v0', 'dm_control/humanoid-stand-v0', 'dm_control/humanoid-walk-v0', 'dm_control/humanoid-run-v0', 'dm_control/humanoid-run_pure_state-v0', 'dm_control/humanoid_CMU-stand-v0', 'dm_control/humanoid_CMU-run-v0', 'dm_control/lqr-lqr_2_1-v0', 'dm_control/lqr-lqr_6_2-v0', 'dm_control/manipulator-bring_ball-v0', 'dm_control/manipulator-bring_peg-v0', 'dm_control/manipulator-insert_ball-v0', 'dm_control/manipulator-insert_peg-v0', 'dm_control/pendulum-swingup-v0', 'dm_control/point_mass-easy-v0', 'dm_control/point_mass-hard-v0', 'dm_control/quadruped-walk-v0', 'dm_control/quadruped-run-v0', 'dm_control/quadruped-escape-v0', 'dm_control/quadruped-fetch-v0', 'dm_control/reacher-easy-v0', 'dm_control/reacher-hard-v0', 'dm_control/stacker-stack_2-v0', 'dm_control/stacker-stack_4-v0', 'dm_control/swimmer-swimmer6-v0', 'dm_control/swimmer-swimmer15-v0', 'dm_control/walker-stand-v0', 'dm_control/walker-walk-v0', 'dm_control/walker-run-v0']
-dm_control/acrobot-swingup-v0
-===🌎 Dict('orientations': Box(-inf, inf, (4,), float64), 'velocity': Box(-inf, inf, (2,), float64))
-===🕹️ Box(-1.0, 1.0, (1,), float64)
----flattened 🌎 Box(-inf, inf, (6,), float64)
----flattened 🕹️ Box(-1.0, 1.0, (1,), float64)
+   if terminated or truncated:
+      observation, info = env.reset()
+env.close()
 ```
 
-For most usage, we recommend applying the `gym.wrappers.FlattenObservation(env)` wrapper to reduce the `Dict` observation space to a `Box` observation space.
+```{toctree}
+:hidden:
+:caption: Introduction
 
-## Citation
-
-If you use this in your research, please cite:
-```
-@software{shimmy2022github,
-  author = {{Jun Jet Tai, Mark Towers} and Elliot Tower and Jordan Terry},
-  title = {Shimmy: Gymnasium and PettingZoo Wrappers for Commonly Used Environments},
-  url = {http://github.com/Farama-Foundation/Shimmy},
-  version = {0.2.0},
-  year = {2022},
-}
+content/getting_started
+content/basic_usage
 ```
 
 ```{toctree}
 :hidden:
 :caption: Environments
-contents/index
+environments/gym
+environments/atari
+environments/bsuite
+environments/dm_lab
+environments/dm_control
+```
+
+```{toctree}
+:hidden:
+:caption: Multi-Agent Environments
+environments/dm_multi
+environments/open_spiel
+environments/meltingpot
 ```
 
 ```{toctree}
