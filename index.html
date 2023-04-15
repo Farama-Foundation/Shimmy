@@ -8,14 +8,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/index.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="genindex/" /><link rel="search" title="Search" href="search/" /><link rel="next" title="&lt;no title&gt;" href="contents/" />
+<link rel="index" title="Index" href="genindex/" /><link rel="search" title="Search" href="search/" /><link rel="next" title="Getting Started" href="content/getting_started/" />
         <link rel="canonical" href="https://shimmy.farama.org/index.html" />
 
     <link rel="shortcut icon" href="_static/shimmy.svg"/><!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07.dev1 -->
         <title>Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=721f65a87c37740baa8d605b09db5bec3a2987a8" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=b0c92cd440df7c18a0306b0433406327ff2c572f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=4297ed78bc2370ec4493f1a6639f04addebc5da5" />
     
     
 
@@ -222,16 +222,24 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contents/gym/">OpenAI Gym</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/atari/">Atari Environments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/bsuite/">Behavior Suite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/dm_control/">DM Control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/dm_multi/">DM Control (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/open_spiel/">OpenSpiel (multi-agent)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/meltingpot/">Melting Pot (multi-agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/getting_started/">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/basic_usage/">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Environments</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="environments/gym/">OpenAI Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environments/atari/">Atari Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environments/bsuite/">Behavior Suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environments/dm_lab/">DM Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environments/dm_control/">DM Control</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Multi-Agent Environments</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="environments/dm_multi/">DM Control (multi-agent)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environments/open_spiel/">OpenSpiel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environments/meltingpot/">Melting Pot</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -292,145 +300,113 @@
           </div>
           <article role="main">
             
-            <section id="shimmy-is-an-api-conversion-tool-for-popular-external-reinforcement-learning-environments-to-gymnasium-and-pettingzoo-apis">
-<h1>Shimmy is an API conversion tool for popular external reinforcement learning environments to <a class="reference external" href="https://github.com/farama-Foundation/gymnasium">Gymnasium</a> and <a class="reference external" href="https://github.com/farama-Foundation/pettingZoo/">PettingZoo</a> APIs.<a class="headerlink" href="#shimmy-is-an-api-conversion-tool-for-popular-external-reinforcement-learning-environments-to-gymnasium-and-pettingzoo-apis" title="Permalink to this heading">#</a></h1>
-<figure class="align-default" id="dm-lab">
-<a class="reference internal image-reference" href="_images/dm_lab.gif"><img alt="DeepMind Lab" src="_images/dm_lab.gif" style="width: 80%;" /></a>
+            <section id="shimmy-an-api-conversion-tool-for-reinforcement-learning-environments">
+<h1>Shimmy: an API conversion tool for reinforcement learning environments.<a class="headerlink" href="#shimmy-an-api-conversion-tool-for-reinforcement-learning-environments" title="Permalink to this heading">#</a></h1>
+<p><strong>Shimmy provides <a class="reference external" href="https://github.com/farama-Foundation/gymnasium">Gymnasium</a> and <a class="reference external" href="https://github.com/farama-Foundation/pettingZoo/">PettingZoo</a> bindings for popular external RL environments.</strong></p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><figure class="align-default" id="id1">
+<a class="reference external image-reference" href="environments/dm_control"><img alt="DM Control" src="_images/dm_control.gif" style="height: 180px;" /></a>
+<figcaption>
+<p><span class="caption-text"><strong>DM Control</strong>: 3D physics-based
+robotics simulation.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
 </figure>
-<section id="supported-apis">
-<h2>Supported APIs<a class="headerlink" href="#supported-apis" title="Permalink to this heading">#</a></h2>
-<section id="openai-gym">
-<h3><a class="reference external" href="http://shimmy.farama.org/contents/gym/">OpenAI Gym</a><a class="headerlink" href="#openai-gym" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Bindings to convert <a class="reference external" href="https://github.com/openai/gym">OpenAI Gym</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
-</ul>
-</section>
-<section id="atari-environments-for-openai-gym">
-<h3><a class="reference external" href="http://shimmy.farama.org/contents/atari/">Atari Environments for OpenAI Gym</a><a class="headerlink" href="#atari-environments-for-openai-gym" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Bindings to convert <a class="reference external" href="https://github.com/mgbellemare/Arcade-Learning-Environment">ALE-py</a> Atari environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
-</ul>
-</section>
-<section id="dmlab">
-<h3><a class="reference external" href="http://shimmy.farama.org/contents/dm_lab/">DMLab</a><a class="headerlink" href="#dmlab" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Bindings to convert <a class="reference external" href="https://github.com/deepmind/lab">DM Lab</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
-</ul>
-</section>
-<section id="behavior-suite">
-<h3><a class="reference external" href="http://shimmy.farama.org/contents/bsuite/">Behavior Suite</a><a class="headerlink" href="#behavior-suite" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Bindings to convert <a class="reference external" href="https://github.com/deepmind/bsuite">Behavior Suite</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
-</ul>
-</section>
-<section id="deepmind-control">
-<h3><a class="reference external" href="http://shimmy.farama.org/contents/dm_control/">DeepMind Control</a><a class="headerlink" href="#deepmind-control" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Bindings to convert <a class="reference external" href="https://github.com/deepmind/dm_control/">DM Control</a> environments to <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a>.</p></li>
-</ul>
-</section>
-<section id="deepmind-control-multi-agent">
-<h3><a class="reference external" href="http://shimmy.farama.org/contents/dm_multi/">DeepMind Control: Multi-Agent</a><a class="headerlink" href="#deepmind-control-multi-agent" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Bindings to convert <a class="reference external" href="https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md">DM Control Soccer</a> environments to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p></li>
-</ul>
-</section>
-<section id="openspiel">
-<h3><a class="reference external" href="http://shimmy.farama.org/contents/open_spiel/">OpenSpiel</a><a class="headerlink" href="#openspiel" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Bindings to convert <a class="reference external" href="https://github.com/deepmind/open_spiel">OpenSpiel</a> enviromnets to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p></li>
-</ul>
-</section>
-<section id="melting-pot">
-<h3><a class="reference external" href="http://shimmy.farama.org/contents/meltingpot/">Melting Pot</a><a class="headerlink" href="#melting-pot" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Bindings to convert <a class="reference external" href="https://github.com/deepmind/meltingpot">Melting Pot</a> environments to <a class="reference external" href="https://pettingzoo.farama.org/">PettingZoo</a>.</p></li>
-</ul>
-</section>
-</section>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
-<p>To install Shimmy from <a class="reference external" href="https://pypi.org/">PyPI</a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span>
-</pre></div>
+</td>
+<td><figure class="align-default" id="id2">
+<a class="reference external image-reference" href="environments/dm_multi"><img alt="DM Soccer" src="_images/dm_soccer.gif" style="height: 180px;" /></a>
+<figcaption>
+<p><span class="caption-text"><strong>DM Control Soccer</strong>: Multi-agent
+cooperative soccer game.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id3">
+<a class="reference external image-reference" href="environments/dm_lab"><img alt="DM Lab" src="_images/dm_lab_single.gif" style="height: 180px;" /></a>
+<figcaption>
+<p><span class="caption-text"><strong>DM Lab</strong>: 3D navigation and a
+puzzle-solving.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><figure class="align-default" id="id4">
+<a class="reference external image-reference" href="environments/bsuite"><img alt="Behavior Suite" src="_images/bsuite.png" style="height: 180px;" /></a>
+<figcaption>
+<p><span class="caption-text"><strong>Behavior Suite</strong>: Test suite for
+evaluating model behavior.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id5">
+<a class="reference external image-reference" href="environments/atari"><img alt="Atari Learning Environment" src="_images/ALE.png" style="height: 180px;" /></a>
+<figcaption>
+<p><span class="caption-text"><strong>Atari Learning Environment</strong>:
+Set of 50+ classic Atari 2600 games.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id6">
+<a class="reference external image-reference" href="environments/meltingpot"><img alt="Melting Pot" src="_images/meltingpot.gif" style="height: 180px;" /></a>
+<figcaption>
+<p><span class="caption-text"><strong>Melting Pot</strong>: Multi-agent social
+reasoning games.</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><figure class="align-default" id="id7">
+<a class="reference external image-reference" href="environments/gym"><img alt="OpenAI Gym" src="_images/openai_gym.png" style="height: 180px;" /></a>
+<figcaption>
+<p><span class="caption-text"><strong>OpenAI Gym</strong>: Compatibility support for
+Gym V21-V26.</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id8">
+<a class="reference external image-reference" href="environments/open_spiel"><img alt="OpenSpiel" src="_images/openspiel.png" style="height: 180px;" /></a>
+<figcaption>
+<p><span class="caption-text"><strong>OpenSpiel</strong>: Collection of 70+ board
+&amp; card game environments.</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>To install Shimmy and required dependencies for an environment, specify the environment as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">dm</span><span class="o">-</span><span class="n">control</span><span class="o">-</span><span class="n">multi</span><span class="o">-</span><span class="n">agent</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Available environments:</p>
-<p><code class="docutils literal notranslate"><span class="pre">gym-v21</span></code>, <code class="docutils literal notranslate"><span class="pre">gym-v26</span></code>, <code class="docutils literal notranslate"><span class="pre">atari</span></code>, <code class="docutils literal notranslate"><span class="pre">bsuite</span></code>, <code class="docutils literal notranslate"><span class="pre">dm-control</span></code>, <code class="docutils literal notranslate"><span class="pre">dm-control-multi-agent</span></code>, <code class="docutils literal notranslate"><span class="pre">openspiel</span></code>, <code class="docutils literal notranslate"><span class="pre">meltingpot</span></code></p>
-<section id="for-developers-and-testing">
-<h3>For Developers and Testing<a class="headerlink" href="#for-developers-and-testing" title="Permalink to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">testing</span><span class="p">]</span>
-</pre></div>
-</div>
-</section>
-<section id="all-environments">
-<h3>All Environments<a class="headerlink" href="#all-environments" title="Permalink to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="nb">all</span><span class="p">,</span> <span class="n">testing</span><span class="p">]</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
-<p>Single-agent environments have registration under the <a class="reference external" href="https://gymnasium.farama.org/api/registry/">Gymnasium API</a>, and can be loaded via <code class="docutils literal notranslate"><span class="pre">gym.make()</span></code>:</p>
+<p>Environments can be interacted with using a simple, high-level API:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;dm_control/acrobot-swingup_sparse-v0&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Multi-agent environments can be loaded in a similar manner, but require importing compatibility wrappers directly:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shimmy</span> <span class="kn">import</span> <span class="n">MeltingPotCompatibilityV0</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">MeltingPotCompatibilityV0</span><span class="p">(</span><span class="n">substrate_name</span><span class="o">=</span><span class="s2">&quot;prisoners_dilemma_in_the_matrix__arena&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="at-a-glance">
-<h2>At a glance<a class="headerlink" href="#at-a-glance" title="Permalink to this heading">#</a></h2>
-<p>This is an example of using Shimmy to convert DM Control environments into a Gymnasium compatible environment:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
-<span class="kn">from</span> <span class="nn">shimmy.registration</span> <span class="kn">import</span> <span class="n">DM_CONTROL_SUITE_ENVS</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;dm_control/acrobot-swingup_sparse-v0&quot;</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
 
-<span class="n">env_ids</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;dm_control/</span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s2">-v0&quot;</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">DM_CONTROL_SUITE_ENVS</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">env_ids</span><span class="p">)</span>
+<span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+   <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>  <span class="c1"># this is where you would insert your policy</span>
+   <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 
-<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="n">env_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">env_flatten</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">wrappers</span><span class="o">.</span><span class="n">FlattenObservation</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">env_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===🌎&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===🕹️&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---flattened 🌎&quot;</span><span class="p">,</span> <span class="n">env_flatten</span><span class="o">.</span><span class="n">observation_space</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---flattened 🕹️&quot;</span><span class="p">,</span> <span class="n">env_flatten</span><span class="o">.</span><span class="n">action_space</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="s1">&#39;dm_control/acrobot-swingup-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/acrobot-swingup_sparse-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/ball_in_cup-catch-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/cartpole-balance-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/cartpole-balance_sparse-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/cartpole-swingup-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/cartpole-swingup_sparse-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/cartpole-two_poles-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/cartpole-three_poles-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/cheetah-run-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/dog-stand-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/dog-walk-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/dog-trot-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/dog-run-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/dog-fetch-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/finger-spin-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/finger-turn_easy-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/finger-turn_hard-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/fish-upright-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/fish-swim-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/hopper-stand-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/hopper-hop-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/humanoid-stand-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/humanoid-walk-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/humanoid-run-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/humanoid-run_pure_state-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/humanoid_CMU-stand-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/humanoid_CMU-run-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/lqr-lqr_2_1-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/lqr-lqr_6_2-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/manipulator-bring_ball-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/manipulator-bring_peg-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/manipulator-insert_ball-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/manipulator-insert_peg-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/pendulum-swingup-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/point_mass-easy-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/point_mass-hard-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/quadruped-walk-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/quadruped-run-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/quadruped-escape-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/quadruped-fetch-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/reacher-easy-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/reacher-hard-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/stacker-stack_2-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/stacker-stack_4-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/swimmer-swimmer6-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/swimmer-swimmer15-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/walker-stand-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/walker-walk-v0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dm_control/walker-run-v0&#39;</span><span class="o">]</span>
-dm_control/acrobot-swingup-v0
-<span class="o">===</span>🌎<span class="w"> </span>Dict<span class="o">(</span><span class="s1">&#39;orientations&#39;</span>:<span class="w"> </span>Box<span class="o">(</span>-inf,<span class="w"> </span>inf,<span class="w"> </span><span class="o">(</span><span class="m">4</span>,<span class="o">)</span>,<span class="w"> </span>float64<span class="o">)</span>,<span class="w"> </span><span class="s1">&#39;velocity&#39;</span>:<span class="w"> </span>Box<span class="o">(</span>-inf,<span class="w"> </span>inf,<span class="w"> </span><span class="o">(</span><span class="m">2</span>,<span class="o">)</span>,<span class="w"> </span>float64<span class="o">))</span>
-<span class="o">===</span>🕹️<span class="w"> </span>Box<span class="o">(</span>-1.0,<span class="w"> </span><span class="m">1</span>.0,<span class="w"> </span><span class="o">(</span><span class="m">1</span>,<span class="o">)</span>,<span class="w"> </span>float64<span class="o">)</span>
----flattened<span class="w"> </span>🌎<span class="w"> </span>Box<span class="o">(</span>-inf,<span class="w"> </span>inf,<span class="w"> </span><span class="o">(</span><span class="m">6</span>,<span class="o">)</span>,<span class="w"> </span>float64<span class="o">)</span>
----flattened<span class="w"> </span>🕹️<span class="w"> </span>Box<span class="o">(</span>-1.0,<span class="w"> </span><span class="m">1</span>.0,<span class="w"> </span><span class="o">(</span><span class="m">1</span>,<span class="o">)</span>,<span class="w"> </span>float64<span class="o">)</span>
-</pre></div>
-</div>
-<p>For most usage, we recommend applying the <code class="docutils literal notranslate"><span class="pre">gym.wrappers.FlattenObservation(env)</span></code> wrapper to reduce the <code class="docutils literal notranslate"><span class="pre">Dict</span></code> observation space to a <code class="docutils literal notranslate"><span class="pre">Box</span></code> observation space.</p>
-</section>
-<section id="citation">
-<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this heading">#</a></h2>
-<p>If you use this in your research, please cite:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@software</span><span class="p">{</span><span class="n">shimmy2022github</span><span class="p">,</span>
-  <span class="n">author</span> <span class="o">=</span> <span class="p">{{</span><span class="n">Jun</span> <span class="n">Jet</span> <span class="n">Tai</span><span class="p">,</span> <span class="n">Mark</span> <span class="n">Towers</span><span class="p">}</span> <span class="ow">and</span> <span class="n">Elliot</span> <span class="n">Tower</span> <span class="ow">and</span> <span class="n">Jordan</span> <span class="n">Terry</span><span class="p">},</span>
-  <span class="n">title</span> <span class="o">=</span> <span class="p">{</span><span class="n">Shimmy</span><span class="p">:</span> <span class="n">Gymnasium</span> <span class="ow">and</span> <span class="n">PettingZoo</span> <span class="n">Wrappers</span> <span class="k">for</span> <span class="n">Commonly</span> <span class="n">Used</span> <span class="n">Environments</span><span class="p">},</span>
-  <span class="n">url</span> <span class="o">=</span> <span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Farama</span><span class="o">-</span><span class="n">Foundation</span><span class="o">/</span><span class="n">Shimmy</span><span class="p">},</span>
-  <span class="n">version</span> <span class="o">=</span> <span class="p">{</span><span class="mf">0.2.0</span><span class="p">},</span>
-  <span class="n">year</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2022</span><span class="p">},</span>
-<span class="p">}</span>
+   <span class="k">if</span> <span class="n">terminated</span> <span class="ow">or</span> <span class="n">truncated</span><span class="p">:</span>
+      <span class="n">observation</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
-</section>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
           </article>
@@ -444,7 +420,7 @@ dm_control/acrobot-swingup-v0
           <div class="bottom-of-page">
             <div class="left-details">
               <div class="copyright">
-                Copyright &#169; 2023
+                Copyright &#169; Farama Foundation 2023
               </div>
               <!--
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
