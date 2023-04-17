@@ -33,12 +33,12 @@ pip install shimmy[all, testing]
 [//]: # (```)
 
 
-### Docker
+## Docker
 
-[Docker](https://docs.docker.com/get-docker/) can be used for reproducible environment creation on any platform, through containerized virtualized application containers.
+[Docker](https://docs.docker.com/get-docker/) can be used for installation and reproducible environment creation on any platform, through virtualized application containers.
 We provide [Dockerfiles](https://docs.docker.com/engine/reference/builder/) for each environment, located in [`/bin/`](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/) 
 
-#### Build a Docker Image
+### Build a Docker Image
 
 To download environment's Dockerfile and build an image:
 
@@ -52,7 +52,7 @@ Or, clone our [GitHub repository](https://github.com/Farama-Foundation/shimmy) a
 docker build -t dm_lab -f bin/dm_lab.Dockerfile .
 ```
 
-#### Running a Container
+### Running a Container
 
 Then, to run the Docker container with an interactive bash terminal:
 ``` 
