@@ -23,15 +23,6 @@ For development and testing:
 pip install shimmy[all, testing]
 ```
 
-[//]: # ()
-[//]: # (Install Shimmy with all environments:)
-
-[//]: # (```)
-
-[//]: # (pip install shimmy[all])
-
-[//]: # (```)
-
 
 ### Docker
 

@@ -1,6 +1,6 @@
 # Shimmy
 
-An API conversion tool for popular external reinforcement learning environments to [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) APIs.
+An API conversion tool providing [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) bindings for popular external reinforcement learning environments.
 
 The documentation website is at [shimmy.farama.org](https://shimmy.farama.org/) and we have a public discord server (which we also use to coordinate development work) that you can join here: https://discord.gg/nhvKkYa6qX
 
@@ -19,35 +19,33 @@ The documentation website is at [shimmy.farama.org](https://shimmy.farama.org/) 
 - Bindings to convert [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 ### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
-- Bindings to convert all [DM Lab](https://github.com/deepmind/lab) environments to [PettingZoo](https://pettingzoo.farama.org/).
+- Bindings to convert [DM Lab](https://github.com/deepmind/lab) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 ### [OpenSpiel](shimmy.farama.org/contents/open_spiel/)
-- Bindings to convert all [OpenSpiel](https://github.com/deepmind/open_spiel) enviromnets to [PettingZoo](https://pettingzoo.farama.org/).
+- Bindings to convert [OpenSpiel](https://github.com/deepmind/open_spiel) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 ### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
-- Bindings to convert all [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
+- Bindings to convert [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
 
 ### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
-- Bindings to convert all [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
+- Bindings to convert [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 
 ## Installation and Usage
 
-To install Shimmy from PyPI:
+To install Shimmy from [PyPI](https://pypi.org/):
 ```
 pip install shimmy
 ```
-Out of the box, Shimmy doesn't install any of the dependencies required for the environments it supports.
-To install them, you'll have to install the optional extras (e.g., `pip install shimmy[dm_lab]`).
-
-All single agent environments have registration under the [Gymnasium API](https://gymnasium.farama.org/api/registry/), while all multiagent environments must be wrapped using the corresponding compatibility wrappers.
-
-### For Developers and Testing Only
+To install required dependencies for environments, specify them as follows:
 ```
-pip install shimmy[testing]
+pip install shimmy[bsuite, atari]
 ```
 
-### To just install everything
+Choices: `gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
+
+For development and testing:
+
 ```
 pip install shimmy[all, testing]
 ```
@@ -80,7 +78,7 @@ dm_control/acrobot-swingup-v0
 ---flattened 🕹️ Box(-1.0, 1.0, (1,), float64)
 ```
 
-For most usage, we recommend applying the `gym.wrappers.FlattenObservation(env)` wrapper to reduce the `Dict` observation space to a `Box` observation space.
+For more information, see [Basic Usage](https://shimmy.farama.org/content/basic_usage/).
 
 ## Project Maintainers
 Main Contributors: [Jet Tai](https://github.com/jjshoots), [Mark Towers](https://github.com/pseudo-rnd-thoughts), [Elliot Tower](https://github.com/elliottower/) 
@@ -92,10 +90,10 @@ Maintenance for this project is also contributed by the broader Farama team: [fa
 If you use this in your research, please cite:
 ```
 @software{shimmy2022github,
-  author = {{Jun Jet Tai, Mark Towers} and Elliot Tower and Jordan Terry},
+  author = {{Jun Jet Tai, Mark Towers, Elliot Tower} and Jordan Terry},
   title = {Shimmy: Gymnasium and PettingZoo Wrappers for Commonly Used Environments},
-  url = {http://github.com/Farama-Foundation/Shimmy},
-  version = {0.2.0},
+  url = {https://github.com/Farama-Foundation/Shimmy},
+  version = {1.0.0},
   year = {2022},
 }
 ```
