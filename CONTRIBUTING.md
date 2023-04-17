@@ -2,7 +2,7 @@
 
 We welcome:
 
-- New compatibility wrappers (see [Incoming Projects](https://github.com/Farama-Foundation/Shimmy#incoming-projects))
+- New compatibility wrappers
 - Bug reports
 - Pull requests for bug fixes
 - Documentation improvements
