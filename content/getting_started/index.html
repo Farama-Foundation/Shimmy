@@ -317,14 +317,24 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="nb">all</span><span class="p">,</span> <span class="n">testing</span><span class="p">]</span>
 </pre></div>
 </div>
+</section>
 <section id="docker">
-<h3>Docker<a class="headerlink" href="#docker" title="Permalink to this heading">#</a></h3>
-<p><a class="reference external" href="https://docs.docker.com/get-docker/">Docker</a> can be used for reproducible environment creation on any platform, through containerized virtualized application containers.
+<h2>Docker<a class="headerlink" href="#docker" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://docs.docker.com/get-docker/">Docker</a> can be used for installation and reproducible environment creation on any platform, through virtualized application containers.
 We provide <a class="reference external" href="https://docs.docker.com/engine/reference/builder/">Dockerfiles</a> for each environment, located in <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/bin/"><code class="docutils literal notranslate"><span class="pre">/bin/</span></code></a></p>
-<p>To download and run a Dockerfile for an environment:</p>
-<p><code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/dm_lab.Dockerfile</span> <span class="pre">|</span> <span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">dm_lab</span> <span class="pre">-f</span> <span class="pre">-</span> <span class="pre">.</span> <span class="pre">&amp;&amp;</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">dm_lab</span></code></p>
-<p>Or, clone our <a class="reference external" href="https://github.com/Farama-Foundation/shimmy">GitHub repository</a> and run the Dockerfile locally:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">dm_lab</span> <span class="o">-</span><span class="n">f</span> <span class="nb">bin</span><span class="o">/</span><span class="n">dm_lab</span><span class="o">.</span><span class="n">Dockerfile</span> <span class="o">&amp;&amp;</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">dm_lab</span>
+<section id="build-a-docker-image">
+<h3>Build a Docker Image<a class="headerlink" href="#build-a-docker-image" title="Permalink to this heading">#</a></h3>
+<p>To download environment’s Dockerfile and build an image:</p>
+<p><code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/dm_lab.Dockerfile</span> <span class="pre">|</span> <span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">dm_lab</span> <span class="pre">-f</span> <span class="pre">-</span> <span class="pre">.</span></code></p>
+<p>Or, clone our <a class="reference external" href="https://github.com/Farama-Foundation/shimmy">GitHub repository</a> and build from the Dockerfile locally:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">dm_lab</span> <span class="o">-</span><span class="n">f</span> <span class="nb">bin</span><span class="o">/</span><span class="n">dm_lab</span><span class="o">.</span><span class="n">Dockerfile</span> <span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="running-a-container">
+<h3>Running a Container<a class="headerlink" href="#running-a-container" title="Permalink to this heading">#</a></h3>
+<p>Then, to run the Docker container with an interactive bash terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">dm_lab</span> <span class="n">bash</span>
 </pre></div>
 </div>
 <p>Stop the container:</p>
@@ -336,6 +346,10 @@ We provide <a class="reference external" href="https://docs.docker.com/engine/re
 </pre></div>
 </div>
 <p>For more information, see <a class="reference external" href="https://docs.docker.com/get-started/">Docker Documentation</a>.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.docker.com/engine/reference/commandline/build/">Docker Build</a></p></li>
+<li><p><a class="reference external" href="https://docs.docker.com/engine/reference/commandline/run/">Docker Run</a></p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -391,8 +405,10 @@ We provide <a class="reference external" href="https://docs.docker.com/engine/re
             <div class="toc-tree">
               <ul>
 <li><a class="reference internal" href="#">Getting Started</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a><ul>
-<li><a class="reference internal" href="#docker">Docker</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#docker">Docker</a><ul>
+<li><a class="reference internal" href="#build-a-docker-image">Build a Docker Image</a></li>
+<li><a class="reference internal" href="#running-a-container">Running a Container</a></li>
 </ul>
 </li>
 </ul>
