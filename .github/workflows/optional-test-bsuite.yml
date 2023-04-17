@@ -1,0 +1,19 @@
+name: build
+on: [pull_request, push]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  optional-test-bsuite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Behavior Suite
+      - run: |
+          docker build -f bin/bsuite.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-bsuite-docker .
+      - name: Run bsuite tests
+        run: docker run shimmy-bsuite-docker pytest tests/test_bsuite.py

@@ -1,0 +1,19 @@
+name: build
+on: [pull_request, push]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  optional-test-meltingpot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Melting Pot
+      - run: |
+          docker build -f bin/meltingpot.Dockerfile \
+            --build-arg PYTHON_VERSION='3.9' \
+            --tag shimmy-meltingpot-docker .
+      - name: Run meltingpot tests
+        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py

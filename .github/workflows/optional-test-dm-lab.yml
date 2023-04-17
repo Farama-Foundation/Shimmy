@@ -1,0 +1,19 @@
+name: build
+on: [pull_request, push]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  optional-test-dm-lab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # DM Lab
+      - run: |
+          docker build -f bin/dm_lab.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-dm_lab-docker .
+      - name: Run dm-lab tests
+        run: docker run shimmy-dm_lab-docker pytest tests/test_dm_lab.py

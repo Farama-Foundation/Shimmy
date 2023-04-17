@@ -1,0 +1,19 @@
+name: build
+on: [pull_request, push]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  optional-test-openspiel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # OpenSpiel
+      - run: |
+          docker build -f bin/openspiel.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-openspiel-docker .
+      - name: Run openspiel tests
+        run: docker run shimmy-openspiel-docker pytest tests/test_openspiel.py
