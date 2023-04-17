@@ -63,7 +63,7 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot \
 
 # Clone Melting Pot repository and install dependencies
 RUN git clone https://github.com/deepmind/meltingpot.git \
-    && pip install . \
+    && pip install -e meltingpot \
     && rm -rf meltingpot
 
 # Set Python path for meltingpot
