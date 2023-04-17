@@ -1,0 +1,19 @@
+name: build
+on: [pull_request, push]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  optional-test-dm-control:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # DM Control
+      - run: |
+          docker build -f bin/dm_control.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-dm-control-docker .
+      - name: Run dm-control tests
+        run: docker run shimmy-dm-control-docker pytest tests/test_dm_control.py

@@ -1,0 +1,19 @@
+name: build
+on: [pull_request, push]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  optional-test-dm-control-multiagent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # DM Control Multi-Agent
+      - run: |
+          docker build -f bin/dm_control_multiagent.Dockerfile \
+            --build-arg PYTHON_VERSION='3.10' \
+            --tag shimmy-dm-control-multi-agent-docker .
+      - name: Run dm-control-multi-agent tests
+        run: docker run shimmy-dm-control-multi-agent-docker pytest tests/test_dm_control_multi_agent.py
