@@ -61,7 +61,7 @@ setup(
     version=version,
     author="Farama Foundation",
     author_email="contact@farama.org",
-    description="API for converting popular non-gymnasium environments to a gymnasium compatible environment.",
+    description="An API conversion tool providing Gymnasium and PettingZoo bindings for popular external reinforcement learning environments.",
     url="https://github.com/Farama-Foundation/Shimmy",
     license_files=("LICENSE.txt",),
     long_description=long_description,
