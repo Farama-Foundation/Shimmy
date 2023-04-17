@@ -61,13 +61,10 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot \
     && curl -SL https://storage.googleapis.com/dm-meltingpot/meltingpot-assets-2.1.0.tar.gz \
     | tar -xz --directory=/workspaces/meltingpot/meltingpot
 
-# Clone Melting Pot repository
+# Clone Melting Pot repository and install dependencies
 RUN git clone https://github.com/deepmind/meltingpot.git
 RUN cp -r meltingpot/ /workspaces/meltingpot/ && rm -R meltingpot/
-WORKDIR /workspaces/meltingpot/meltingpot/
-
-# Install meltingpot dependencies
-RUN pip install .
+RUN pip install -e /workspaces/meltingpot/meltingpot
 
 # Set Python path for meltingpot
 ENV PYTHONPATH "${PYTHONPATH}:/workspaces/meltingpot/meltingpot/"
