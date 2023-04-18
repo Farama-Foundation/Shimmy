@@ -9,6 +9,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Any
 
+import math
 import dm_env
 import gymnasium
 import numpy as np
@@ -47,7 +48,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         uses `np.random.Generator`, therefore the return type of `np_random` is different from expected.
     """
 
-    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 10}
+    metadata = {"render_modes": ["human", "rgb_array", "multi_camera"], "render_fps": 10}
 
     def __init__(
         self,
@@ -119,6 +120,24 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
                 width=self.render_width,
                 camera_id=self.camera_id,
             )
+        elif self.render_mode == "multi_camera":
+            physics = self._env.physics
+            num_cameras = physics.model.ncam
+            num_columns = int(math.ceil(math.sqrt(num_cameras)))
+            num_rows = int(math.ceil(float(num_cameras) / num_columns))
+            frame = np.zeros((num_rows * self.render_height, num_columns * self.render_width, 3), dtype=np.uint8)
+            for col in range(num_columns):
+                for row in range(num_rows):
+                    camera_id = row * num_columns + col
+                    if camera_id >= num_cameras:
+                        break
+                    subframe = physics.render(
+                        height=self.render_height, width=self.render_width, camera_id=camera_id
+                    )
+                    frame[
+                        row * self.render_height : (row + 1) * self.render_height, col * self.render_width : (col + 1) * self.render_width
+                    ] = subframe
+            return frame
 
     def close(self):
         """Closes the environment."""
