@@ -51,7 +51,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
     """
 
     metadata = {
-        "render_modes": ["human", "rgb_array", "multi_camera", "depth_array"],
+        "render_modes": ["human", "rgb_array", "depth_array", "multi_camera"],
         "render_fps": 10,
     }
 
@@ -61,11 +61,31 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         render_mode: str | None = None,
         render_height: int = 84,
         render_width: int = 84,
-        camera_id: int = 0,
-        render_scene_callback: None
-        | (Callable[[MujocoEnginePhysics, mujoco.MjvScene], None]) = None,
+        camera_id: int | str = 0,
+        render_scene_callback: (Callable[[MujocoEnginePhysics, mujoco.MjvScene], None])
+        | None = None,
+        render_kwargs: dict[str, Any] | None = None,
     ):
-        """Initialises the environment with a render mode along with render information."""
+        """Initialises the environment with a render mode along with render information.
+
+        Note: this wrapper supports multi-camera rendering via the `render_mode` argument (render_mode = "multi_camera")
+
+        For more information on DM Control rendering, see https://github.com/deepmind/dm_control/blob/main/dm_control/mujoco/engine.py#L178
+
+        Args:
+            env (Optional[composer.Environment | control.Environment | dm_env.Environment]): DM Control env to wrap
+            render_mode (Optional[str]): rendering mode (options: "human", "rgb_array", "depth_array", "multi_camera")
+            render_height (Optional[int]): height for rendering frame in pixels
+            render_width (Optional[int]): width for rendering frame in pixels
+            camera_id (Optional[int | str]): Optional camera name or index. Defaults to -1, the free
+                camera, which is always defined. A nonnegative integer or string
+                corresponds to a fixed camera, which must be defined in the model XML.
+                If `camera_id` is a string then the camera must also be named.
+            render_scene_callback (Optional[(Callable[[MujocoEnginePhysics, mujoco.MjvScene], None])]): Called after
+                the scene has been created and before it is rendered. Can be used to add more geoms to the scene.
+            render_kwargs (Optional[dict[str, Any]]): Additional keyword arguments for rendering. Note: kwargs are not used
+                for human rendering, which uses simpler Gymnasium MuJoCo rendering.
+        """
         EzPickle.__init__(
             self, env, render_mode, render_height, render_width, camera_id
         )
@@ -81,6 +101,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         self.render_height, self.render_width = render_height, render_width
         self.camera_id = camera_id
         self.render_scene_callback = render_scene_callback
+        self.render_kwargs = render_kwargs
 
         if self.render_mode == "human":
             # We use the gymnasium mujoco rendering, dm-control provides more complex rendering options.
@@ -129,6 +150,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
                 width=self.render_width,
                 camera_id=self.camera_id,
                 scene_callback=self.render_scene_callback,
+                **self.render_kwargs,
             )
         elif self.render_mode == "depth_array":
             return self._env.physics.render(
@@ -137,6 +159,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
                 camera_id=self.camera_id,
                 depth=True,
                 scene_callback=self.render_scene_callback,
+                **self.render_kwargs,
             )
         elif self.render_mode == "multi_camera":
             physics = self._env.physics
@@ -157,6 +180,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
                         width=self.render_width,
                         camera_id=camera_id,
                         scene_callback=self.render_scene_callback,
+                        **self.render_kwargs,
                     )
                     frame[
                         row * self.render_height : (row + 1) * self.render_height,
