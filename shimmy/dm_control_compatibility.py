@@ -101,6 +101,9 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         self.render_height, self.render_width = render_height, render_width
         self.camera_id = camera_id
         self.render_scene_callback = render_scene_callback
+
+        if render_kwargs is None:
+            render_kwargs = {}
         self.render_kwargs = render_kwargs
 
         if self.render_mode == "human":
