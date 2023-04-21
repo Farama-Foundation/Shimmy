@@ -150,6 +150,7 @@ def test_rendering_camera_id(camera_id):
 
     env.close()
 
+
 @pytest.mark.parametrize("height,width", [(84, 84), (48, 48), (128, 128), (100, 200)])
 def test_rendering_multiple_cameras(height, width):
     """Test that multi_camera rendering mode works for dm-control environments."""
@@ -157,7 +158,7 @@ def test_rendering_multiple_cameras(height, width):
         DM_CONTROL_ENV_IDS[0],
         render_mode="multi_camera",
         render_height=height,
-        render_width=width
+        render_width=width,
     )
     env.reset()
     frames = []
@@ -167,14 +168,15 @@ def test_rendering_multiple_cameras(height, width):
 
     env.close()
 
+
 @pytest.mark.parametrize("height,width", [(84, 84), (48, 48), (128, 128), (100, 200)])
 def test_rendering_depth(height, width):
-    """Test that depth rendering mode works for dm-control environments"""
+    """Test that depth rendering mode works for dm-control environments."""
     env = gym.make(
         DM_CONTROL_ENV_IDS[0],
         render_mode="depth_array",
         render_height=height,
-        render_width=width
+        render_width=width,
     )
     env.reset()
     frames = []
@@ -183,6 +185,7 @@ def test_rendering_depth(height, width):
         env.step(env.action_space.sample())
 
     env.close()
+
 
 @pytest.mark.parametrize("height,width", [(84, 84), (48, 48), (128, 128), (100, 200)])
 def test_render_height_widths(height, width):
