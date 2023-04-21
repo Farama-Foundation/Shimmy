@@ -74,7 +74,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
     using MuJoCo physics. This compatibility wrapper converts a dm-control environment into a gymnasium environment.
     """
 
-    metadata = {"render_modes": ["human"]}
+    metadata = {"render_modes": ["human"], "name": "DmControlMultiAgentCompatibilityV0"}
 
     def __init__(
         self,
