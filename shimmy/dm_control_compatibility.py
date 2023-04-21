@@ -6,13 +6,16 @@ and modified to modern gymnasium API
 """
 from __future__ import annotations
 
+import math
 from enum import Enum
-from typing import Any
+from typing import Any, Callable, Optional
 
 import dm_env
 import gymnasium
+import mujoco
 import numpy as np
 from dm_control import composer
+from dm_control.mujoco.engine import Physics as MujocoEnginePhysics
 from dm_control.rl import control
 from gymnasium.core import ObsType
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
@@ -47,7 +50,10 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         uses `np.random.Generator`, therefore the return type of `np_random` is different from expected.
     """
 
-    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 10}
+    metadata = {
+        "render_modes": ["human", "rgb_array", "multi_camera", "depth_array"],
+        "render_fps": 10,
+    }
 
     def __init__(
         self,
@@ -56,6 +62,8 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         render_height: int = 84,
         render_width: int = 84,
         camera_id: int = 0,
+        render_scene_callback: None
+        | (Callable[[MujocoEnginePhysics, mujoco.MjvScene], None]) = None,
     ):
         """Initialises the environment with a render mode along with render information."""
         EzPickle.__init__(
@@ -63,6 +71,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         )
         self._env = env
         self.env_type = self._find_env_type(env)
+        self.metadata["render_fps"] = self._env.control_timestep()
 
         self.observation_space = dm_spec2gym_space(env.observation_spec())
         self.action_space = dm_spec2gym_space(env.action_spec())
@@ -71,6 +80,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         self.render_mode = render_mode
         self.render_height, self.render_width = render_height, render_width
         self.camera_id = camera_id
+        self.render_scene_callback = render_scene_callback
 
         if self.render_mode == "human":
             # We use the gymnasium mujoco rendering, dm-control provides more complex rendering options.
@@ -118,7 +128,41 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
                 height=self.render_height,
                 width=self.render_width,
                 camera_id=self.camera_id,
+                scene_callback=self.render_scene_callback,
             )
+        elif self.render_mode == "depth_array":
+            return self._env.physics.render(
+                height=self.render_height,
+                width=self.render_width,
+                camera_id=self.camera_id,
+                depth=True,
+                scene_callback=self.render_scene_callback,
+            )
+        elif self.render_mode == "multi_camera":
+            physics = self._env.physics
+            num_cameras = physics.model.ncam
+            num_columns = int(math.ceil(math.sqrt(num_cameras)))
+            num_rows = int(math.ceil(float(num_cameras) / num_columns))
+            frame = np.zeros(
+                (num_rows * self.render_height, num_columns * self.render_width, 3),
+                dtype=np.uint8,
+            )
+            for col in range(num_columns):
+                for row in range(num_rows):
+                    camera_id = row * num_columns + col
+                    if camera_id >= num_cameras:
+                        break
+                    subframe = physics.render(
+                        height=self.render_height,
+                        width=self.render_width,
+                        camera_id=camera_id,
+                        scene_callback=self.render_scene_callback,
+                    )
+                    frame[
+                        row * self.render_height : (row + 1) * self.render_height,
+                        col * self.render_width : (col + 1) * self.render_width,
+                    ] = subframe
+            return frame
 
     def close(self):
         """Closes the environment."""
