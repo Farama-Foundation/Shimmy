@@ -1,4 +1,6 @@
-# Shimmy
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/shimmy-text.png" width="500px"/>
+</p>
 
 An API conversion tool providing [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) bindings for popular external reinforcement learning environments.
 
