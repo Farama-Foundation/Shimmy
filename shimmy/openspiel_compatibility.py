@@ -22,7 +22,11 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
     (partially- and fully- observable) grid worlds and social dilemmas.
     """
 
-    metadata = {"render_modes": ["human"]}
+    metadata = {
+        "render_modes": ["human"],
+        "name": "OpenSpielCompatibilityV0",
+        "is_parallelizable": False,
+    }
 
     def __init__(
         self,

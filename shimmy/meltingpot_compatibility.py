@@ -35,7 +35,10 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
     on which to train agents, and over 256 unique test scenarios on which to evaluate these trained agents.
     """
 
-    metadata = {"render_modes": ["human", "rgb_array"]}
+    metadata = {
+        "render_modes": ["human", "rgb_array"],
+        "name": "MeltingPotCompatibilityV0",
+    }
 
     PLAYER_STR_FORMAT = "player_{index}"
     MAX_CYCLES = 1000
