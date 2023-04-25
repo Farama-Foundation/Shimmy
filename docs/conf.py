@@ -40,6 +40,7 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.autodoc",
     "sphinx.ext.githubpages",
+    "sphinxext.opengraph",
     "myst_parser",
 ]
 
@@ -83,3 +84,7 @@ html_theme_options = {
 
 html_static_path = ["_static"]
 html_css_files = []
+
+# sphinx opengraph social media previews
+ogp_site_url = "https://shimmy.farama.org/"
+ogp_image = "https://shimmy.farama.org/_static/img/shimmy.svg"
