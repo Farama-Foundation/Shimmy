@@ -45,7 +45,7 @@ def test_check_env(level_name):
 
 
 @pytest.mark.skip(reason="Seeding tests are not currently possible for DM Lab.")
-@pytest.mark.parametrize("level_name", PASSING_LEVEL_NAMES)
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
 def test_seeding(level_name):
     """Checks that the environment can be properly seeded."""
     observations = ["RGBD"]
@@ -76,7 +76,7 @@ def test_seeding(level_name):
 
 
 @pytest.mark.skip(reason="Seeding tests are not currently possible for DM Lab.")
-@pytest.mark.parametrize("level_name", PASSING_LEVEL_NAMES)
+@pytest.mark.parametrize("level_name", LEVEL_NAMES)
 def test_pickle(level_name):
     """Checks that the environment can be saved and loaded by pickling."""
     observations = ["RGBD"]
