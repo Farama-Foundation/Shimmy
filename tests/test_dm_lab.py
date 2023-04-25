@@ -26,12 +26,9 @@ LEVEL_NAMES = [
     "stairway_to_melon",
 ]
 
-PASSING_LEVEL_NAMES = [
-    "lt_chasm"
-]
+PASSING_LEVEL_NAMES = ["lt_chasm"]
 
 
-# @pytest.mark.skip(reason="DM lab tests are not currently passing and are disabled.")
 @pytest.mark.parametrize("level_name", PASSING_LEVEL_NAMES)
 def test_check_env(level_name):
     """Check that environment pass the gym check_env."""
