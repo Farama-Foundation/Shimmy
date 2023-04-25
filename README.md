@@ -2,7 +2,7 @@
     <img src="https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/shimmy-text.png" width="500px"/>
 </p>
 
-An API conversion tool providing [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) bindings for popular external reinforcement learning environments.
+Shimmy is an API conversion tool providing [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) bindings for popular external reinforcement learning environments.
 
 The documentation website is at [shimmy.farama.org](https://shimmy.farama.org/) and we have a public discord server (which we also use to coordinate development work) that you can join here: https://discord.gg/nhvKkYa6qX
 
@@ -80,16 +80,19 @@ dm_control/acrobot-swingup-v0
 ---flattened 🕹️ Box(-1.0, 1.0, (1,), float64)
 ```
 
-For more information, see [Basic Usage](https://shimmy.farama.org/content/basic_usage/).
+See [Basic Usage](https://shimmy.farama.org/content/basic_usage/) for more information.
 
 ## Project Maintainers
-Main Contributors: [Jet Tai](https://github.com/jjshoots), [Mark Towers](https://github.com/pseudo-rnd-thoughts), [Elliot Tower](https://github.com/elliottower/) 
+
+Project Manager: [Elliot Tower](https://github.com/elliottower/)
+
+Core Contributors: [Jet Tai](https://github.com/jjshoots/), [Mark Towers](https://github.com/pseudo-rnd-thoughts/)
 
 Maintenance for this project is also contributed by the broader Farama team: [farama.org/team](https://farama.org/team).
 
 ## Citation
 
-If you use this in your research, please cite:
+If you use Shimmy in your research, please cite:
 ```
 @software{shimmy2022github,
   author = {{Jun Jet Tai, Mark Towers, Elliot Tower} and Jordan Terry},
