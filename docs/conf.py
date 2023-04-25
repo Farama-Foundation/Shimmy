@@ -87,4 +87,3 @@ html_css_files = []
 
 # sphinx opengraph social media previews
 ogp_site_url = "https://shimmy.farama.org/"
-ogp_image = "https://shimmy.farama.org/_static/img/shimmy.svg"
