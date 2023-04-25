@@ -67,11 +67,11 @@ content/basic_usage
 ```{toctree}
 :hidden:
 :caption: Environments
+environments/dm_control
+environments/dm_lab
+environments/bsuite
 environments/gym
 environments/atari
-environments/bsuite
-environments/dm_lab
-environments/dm_control
 ```
 
 ```{toctree}
