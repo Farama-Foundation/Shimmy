@@ -332,9 +332,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         """Updates all the _cumulative_rewards of the environment."""
         # update cumulative rewards
         rewards = self.game_state.rewards()
-        self._cumulative_rewards = {
-            self.agent_id_name_mapping[id]: rewards[id] for id in self.agent_ids
-        }
+        self._accumulate_rewards()
 
     def _update_termination_truncation(self):
         """Updates all terminations and truncations of the environment."""
