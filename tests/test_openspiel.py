@@ -1,21 +1,16 @@
 """Tests the functionality of the OpenSpielCompatibility wrapper on OpenSpiel envs."""
 import pickle
 
-import numpy as np
 import pyspiel
 import pytest
 from gymnasium.utils.env_checker import data_equivalence
+from pettingzoo.test import api_test
 
 from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
-
-# todo add api_test however chess causes a OOM error
-# from pettingzoo.test import api_test
-
 
 _PASSING_GAMES = [
     "2048",
     "amazons",
-    "backgammon",
     "bargaining",
     "battleship",
     "blackjack",
@@ -86,7 +81,6 @@ _PASSING_GAMES = [
     "rbc",
     "sheriff",
     "skat",
-    "solitaire",
     "stones_and_gems",
     "tarok",
     "tic_tac_toe",
@@ -98,6 +92,11 @@ _PASSING_GAMES = [
     "universal_poker",
     "y",
     "mfg_dynamic_routing",
+]
+
+_SOMETIMES_FAILING_GAMES = [
+    "backgammon",
+    "solitaire",
 ]
 
 _FAILING_GAMES = [
@@ -143,7 +142,7 @@ def test_loading_env(game_name):
     env = OpenSpielCompatibilityV0(game_name=game_name, render_mode=None)
 
     # api test the env
-    # api_test(env)
+    api_test(env)
 
     # run through the environment
     env.reset()
