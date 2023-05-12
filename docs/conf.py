@@ -39,6 +39,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.doctest",
     "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "sphinxext.opengraph",
     "myst_parser",
