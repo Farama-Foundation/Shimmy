@@ -16,6 +16,8 @@
 # sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
+import os
+
 import shimmy
 
 project = "Shimmy"
@@ -41,8 +43,9 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
-    "sphinxext.opengraph",
+    # "sphinx.ext.opengraph",
     "myst_parser",
+    "sphinx_github_changelog",
 ]
 
 source_suffix = {
@@ -89,3 +92,7 @@ html_css_files = []
 # sphinx opengraph social media previews
 ogp_site_url = "https://shimmy.farama.org/"
 ogp_image = "https://shimmy.farama.org/_static/img/shimmy.svg"
+
+# -- Generate Changelog -------------------------------------------------
+
+sphinx_github_changelog_token = os.environ.get("SPHINX_GITHUB_CHANGELOG_TOKEN")

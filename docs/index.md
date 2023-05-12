@@ -4,7 +4,13 @@ firstpage:
 lastpage:
 ---
 
-# Shimmy: an API conversion tool for reinforcement learning environments.
+```{project-logo} _static/img/shimmy-text.png
+:alt: Gymnasium Logo
+```
+
+```{project-heading}
+An API conversion tool for reinforcement learning environments.
+```
 
 **Shimmy provides [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) bindings for popular external RL environments.**
 
@@ -40,9 +46,9 @@ lastpage:
 ```
 
 
-Environments can be interacted with using a simple, high-level API: 
+Environments can be interacted with using a simple, high-level API:
 
-```python 
+```python
 import gymnasium as gym
 env = gym.make("dm_control/acrobot-swingup_sparse-v0", render_mode="human")
 
@@ -86,5 +92,6 @@ environments/meltingpot
 :hidden:
 :caption: Development
 Github <https://github.com/Farama-Foundation/shimmy>
+release_notes
 ```
 
