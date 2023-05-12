@@ -8,22 +8,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/environments/dm_multi.html" /><meta name="twitter:card" content="summary_large_image"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<meta property="og:title" content="DM Control (multi-agent)" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://shimmy.farama.org/environments/dm_multi/" />
-<meta property="og:site_name" content="Shimmy" />
-<meta property="og:description" content="DeepMind Control: Soccer: DM Control Soccer is a multi-agent robotics environment where teams of agents compete in soccer. It extends the single-agent DM Control Locomotion library, powered by the ..." />
-<meta property="og:image" content="https://shimmy.farama.org/_static/img/shimmy.svg" />
-<meta property="og:image:alt" content="Shimmy" />
-<meta name="description" content="DeepMind Control: Soccer: DM Control Soccer is a multi-agent robotics environment where teams of agents compete in soccer. It extends the single-agent DM Control Locomotion library, powered by the ..." />
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="OpenSpiel" href="../open_spiel/" /><link rel="prev" title="Atari Environments" href="../atari/" />
         <link rel="canonical" href="https://shimmy.farama.org/environments/dm_multi.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 6.2.1 and Furo 2022.12.07.dev1 -->
         <title>DM Control (multi-agent) - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=721f65a87c37740baa8d605b09db5bec3a2987a8" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=67ddc8aaa908fff6a8eb5c854d313935a27431d3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=cfd2cc3354364f303ef4a892d279bfffada5835d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=6342a809aabeb35cfac296000cfa245808bc1d78" />
     
     
 
@@ -252,6 +244,7 @@
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/Farama-Foundation/shimmy">Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes/">Release Notes</a></li>
 </ul>
 
 </div>
@@ -465,7 +458,7 @@ All other arguments (marked [DM CONTROL ARG]) are specific to DM Lab and will be
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ActionDict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsDict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/shimmy/dm_control_multiagent_compatibility/#DmControlMultiAgentCompatibilityV0.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ActionType</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/shimmy/dm_control_multiagent_compatibility/#DmControlMultiAgentCompatibilityV0.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step" title="Permalink to this definition">#</a></dt>
 <dd><p>step.</p>
 <p>Steps through all agents with the actions.</p>
 <dl class="field-list simple">
