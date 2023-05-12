@@ -120,7 +120,8 @@ def test_passing_games(game_name):
         env = OpenSpielCompatibilityV0(env=env, render_mode=None)
 
         # api test the env (disabled because some environments fail the test)
-        # api_test(env)
+        # TODO: fix this (fails play_test, not sure what the cause is)
+        api_test(env)
 
         env.reset()
         for agent in env.agent_iter():

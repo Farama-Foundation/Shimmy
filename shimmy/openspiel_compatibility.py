@@ -70,6 +70,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         )
 
         self.game_type = self._env.get_type()
+        self.game_name = self.game_type.short_name
 
         self.render_mode = render_mode
 
@@ -173,6 +174,11 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         """
         # initialize the seed
         self.np_random, seed = seeding.np_random(seed)
+
+        # seed argument is only valid for three games
+        if self.game_name in ["deep_sea", "hanabi", "mgf_garnet"]:
+            self.game_name = self.game_type.short_name
+            self._env = pyspiel.load_game(self.game_name, {"seed": seed})
 
         # all agents
         self.agents = self.possible_agents[:]
