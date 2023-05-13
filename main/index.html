@@ -302,7 +302,7 @@
           <article role="main">
             
             <figure class="farama-project-logo align-default">
-<img alt="Gymnasium Logo" src="_images/shimmy-text.png" />
+<img alt="Shimmy Logo" src="_images/shimmy-text.png" />
 </figure>
 <div class="docutils container">
 <h2 class='farama-project-heading'>
@@ -332,7 +332,7 @@ cooperative soccer game.</span><a class="headerlink" href="#id2" title="Permalin
 <td><figure class="align-default" id="id3">
 <a class="reference external image-reference" href="environments/dm_lab"><img alt="DM Lab" src="_images/dm_lab_single.gif" style="height: 180px;" /></a>
 <figcaption>
-<p><span class="caption-text"><strong>DM Lab</strong>: 3D navigation and a
+<p><span class="caption-text"><strong>DM Lab</strong>: 3D navigation and
 puzzle-solving.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
@@ -392,6 +392,18 @@ Gym V21-V26.</span><a class="headerlink" href="#id7" title="Permalink to this im
 </tbody>
 </table>
 </div>
+<style>
+@media (min-width: 550px) {
+    figure img{
+        max-height: 180px;
+    }
+}
+@media (max-width: 550px) {
+    figure img{
+        max-height: 100px;
+    }
+}
+</style>
 <p>Environments can be interacted with using a simple, high-level API:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;dm_control/acrobot-swingup_sparse-v0&quot;</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
