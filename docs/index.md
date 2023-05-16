@@ -4,7 +4,13 @@ firstpage:
 lastpage:
 ---
 
-# Shimmy: an API conversion tool for reinforcement learning environments.
+```{project-logo} _static/img/shimmy-text.png
+:alt: Shimmy Logo
+```
+
+```{project-heading}
+An API conversion tool for reinforcement learning environments.
+```
 
 **Shimmy provides [Gymnasium](https://github.com/farama-Foundation/gymnasium) and [PettingZoo](https://github.com/farama-Foundation/pettingZoo/) bindings for popular external RL environments.**
 
@@ -16,7 +22,7 @@ lastpage:
 |   :height: 180px                               |   :height: 180px                            |   :height: 180px                               |
 |   :target: environments/dm_control             |   :target: environments/dm_multi            |   :target: environments/dm_lab                 |
 |                                                |                                             |                                                |
-|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **DM Lab**: 3D navigation and a              |
+|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **DM Lab**: 3D navigation and                |
 |   robotics simulation.                         |   cooperative soccer game.                  |   puzzle-solving.                              |
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
@@ -39,10 +45,23 @@ lastpage:
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
 ```
 
+<style>
+@media (min-width: 550px) {
+    figure img{
+        max-height: 180px;
+    }
+}
+@media (max-width: 550px) {
+    figure img{
+        max-height: 100px;
+    }
+}
+</style>
 
-Environments can be interacted with using a simple, high-level API: 
 
-```python 
+Environments can be interacted with using a simple, high-level API:
+
+```python
 import gymnasium as gym
 env = gym.make("dm_control/acrobot-swingup_sparse-v0", render_mode="human")
 
@@ -86,5 +105,6 @@ environments/meltingpot
 :hidden:
 :caption: Development
 Github <https://github.com/Farama-Foundation/shimmy>
+release_notes
 ```
 
