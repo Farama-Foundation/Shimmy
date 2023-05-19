@@ -8,8 +8,9 @@ and modified to modern PettingZoo API
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Any
 
+import dm_env
 import gymnasium
 import numpy as np
 import pygame
@@ -157,7 +158,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         self,
         seed: int | None = None,
         options: dict | None = None,
-    ) -> ObsDict:
+    ) -> tuple[ObsDict, dict[str, Any]]:
         """reset.
 
         Resets the environment.
@@ -169,13 +170,13 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         Returns:
             observations
         """
-        timestep = self._env.reset()
+        timestep: dm_env.TimeStep = self._env.reset()
         self.agents = self.possible_agents[:]
         self.num_cycles = 0
 
         observations = utils.timestep_to_observations(timestep)
 
-        return observations
+        return observations, {'step-type': timestep.step_type, 'discount': timestep.discount}
 
     def step(
         self, actions: ActionDict

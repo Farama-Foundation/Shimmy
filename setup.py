@@ -42,10 +42,10 @@ extras = {
         "dm-control>=1.0.10",
         "imageio",
         "h5py>=3.7.0",
-        "pettingzoo>=1.22.3",
+        "pettingzoo>=1.23",
     ],
     "dm-lab": ["dm-env>=1.6"],
-    "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.22.3"],
+    "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.23"],
     "meltingpot": ["pettingzoo>=1.22.3"],
     "bsuite": ["bsuite>=0.3.5"],
 }

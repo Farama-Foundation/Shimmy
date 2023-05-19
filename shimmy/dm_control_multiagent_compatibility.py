@@ -215,7 +215,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
     def reset(
         self, seed: int | None = None, options: dict[AgentID, Any] | None = None
-    ) -> ObsDict:
+    ) -> tuple[ObsDict, dict[str, Any]]:
         """reset.
 
         Resets the dm-control environment.
@@ -231,10 +231,9 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
         self.num_moves = 0
 
         timestep = self._env.reset()
+        observations, _, _, _, info = _unravel_ma_timestep(timestep, self.agents)
 
-        observations, _, _, _, _ = _unravel_ma_timestep(timestep, self.agents)
-
-        return observations
+        return observations, info
 
     def step(
         self, actions: ActionDict
