@@ -22,7 +22,7 @@ An API conversion tool for reinforcement learning environments.
 |   :height: 180px                               |   :height: 180px                            |   :height: 180px                               |
 |   :target: environments/dm_control             |   :target: environments/dm_multi            |   :target: environments/dm_lab                 |
 |                                                |                                             |                                                |
-|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **DM Lab**: 3D navigation and a              |
+|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **DM Lab**: 3D navigation and                |
 |   robotics simulation.                         |   cooperative soccer game.                  |   puzzle-solving.                              |
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
