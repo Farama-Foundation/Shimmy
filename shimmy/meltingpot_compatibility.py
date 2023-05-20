@@ -8,7 +8,7 @@ and modified to modern PettingZoo API
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, Optional, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 import dm_env
 import gymnasium
@@ -176,7 +176,10 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
         observations = utils.timestep_to_observations(timestep)
 
-        return observations, {'step-type': timestep.step_type, 'discount': timestep.discount}
+        return observations, {
+            "step-type": timestep.step_type,
+            "discount": timestep.discount,
+        }
 
     def step(
         self, actions: ActionDict
@@ -193,8 +196,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         Returns:
             (observations, rewards, terminations, truncations, infos)
         """
-        actions = [actions[agent] for agent in self.agents]
-        timestep = self._env.step(actions)
+        timestep = self._env.step([actions[agent] for agent in self.agents])
         rewards = {
             agent: timestep.reward[index] for index, agent in enumerate(self.agents)
         }

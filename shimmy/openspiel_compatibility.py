@@ -142,7 +142,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
         print(self.game_state)
 
-    def observe(self, agent: AgentID) -> ObsType:
+    def observe(self, agent: AgentID) -> Any:
         """observe.
 
         Args:
@@ -317,7 +317,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             }
         else:
             raise NotImplementedError(
-                f"No information/observation tensor/string implemented for {self.game}."
+                f"No information/observation tensor/string implemented for {self._env}."
             )
 
     def _update_action_masks(self):

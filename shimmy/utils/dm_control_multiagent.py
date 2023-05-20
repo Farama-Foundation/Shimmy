@@ -33,11 +33,15 @@ def load_dm_control_soccer(
         env (dm_control.composer.Environment): dm control soccer environment
     """
     env = dm_soccer.load(
-        team_size if team_size is not None else 2,
-        time_limit if time_limit is not None else 10.0,
-        disable_walker_contacts if disable_walker_contacts is not None else False,
-        enable_field_box if enable_field_box is not None else True,
-        terminate_on_goal if terminate_on_goal is not None else False,
-        walker_type if walker_type is not None else dm_soccer.WalkerType.BOXHEAD,
+        team_size=team_size if team_size is not None else 2,
+        time_limit=time_limit if time_limit is not None else 10.0,
+        disable_walker_contacts=disable_walker_contacts
+        if disable_walker_contacts is not None
+        else False,
+        enable_field_box=enable_field_box if enable_field_box is not None else True,
+        terminate_on_goal=terminate_on_goal if terminate_on_goal is not None else False,
+        walker_type=walker_type
+        if walker_type is not None
+        else dm_soccer.WalkerType.BOXHEAD,
     )
     return env

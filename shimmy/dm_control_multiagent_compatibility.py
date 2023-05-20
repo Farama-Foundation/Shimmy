@@ -156,6 +156,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
         self.act_spaces = dict(zip(self.possible_agents, all_act_spaces))
 
         if self.render_mode == "human":
+            assert self._env.physics is not None
             self.viewer = MujocoRenderer(
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
@@ -207,6 +208,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
         Closes the environment.
         """
+        assert self._env.physics is not None
         self._env.physics.free()
         self._env.close()
 
@@ -259,8 +261,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
             self.agents
         ), f"Must have actions for all {len(self.agents)} agents, currently only found {len(actions)}."
 
-        actions = actions.values()
-        timestep = self._env.step(actions)
+        timestep = self._env.step(actions.values())
 
         obs, rewards, terminations, truncations, infos = _unravel_ma_timestep(
             timestep, self.agents

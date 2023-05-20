@@ -35,7 +35,7 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
     ):
         """Initialises the environment with a render mode along with render information."""
         EzPickle.__init__(self, env, render_mode)
-        self._env = env
+        self._env: Any = env
 
         self.observation_space = dm_spec2gym_space(env.observation_spec())
         self.action_space = dm_spec2gym_space(env.action_spec())
@@ -49,15 +49,14 @@ class BSuiteCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         super().reset(seed=seed)
         if seed is not None:
             self.np_random = np.random.RandomState(seed=seed)
-            self._env._rng = self.np_random  # pyright: ignore[reportGeneralTypeIssues]
+            self._env._rng = self.np_random
             if hasattr(self._env, "raw_env"):
                 self._env.raw_env._rng = self.np_random
 
         timestep = self._env.reset()
-
         obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
-        return obs, info  # pyright: ignore[reportGeneralTypeIssues]
+        return obs, info
 
     def step(self, action: int) -> tuple[ObsType, float, bool, bool, dict[str, Any]]:
         """Steps through the bsuite environment."""
