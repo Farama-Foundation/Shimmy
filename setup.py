@@ -42,11 +42,11 @@ extras = {
         "dm-control>=1.0.10",
         "imageio",
         "h5py>=3.7.0",
-        "pettingzoo>=1.23.0",
+        "pettingzoo @ git+https://github.com/Farama-Foundation/PettingZoo.git",
     ],
     "dm-lab": ["dm-env>=1.6"],
-    "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.23.0"],
-    "meltingpot": ["pettingzoo>=1.23.0"],
+    "openspiel": ["open_spiel>=1.2", "pettingzoo @ git+https://github.com/Farama-Foundation/PettingZoo.git"],
+    "meltingpot": ["pettingzoo @ git+https://github.com/Farama-Foundation/PettingZoo.git"],
     "bsuite": ["bsuite>=0.3.5"],
 }
 extras["all"] = list({lib for libs in extras.values() for lib in libs})
