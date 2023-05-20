@@ -172,11 +172,11 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             seed (Optional[int]): seed
             options (Optional[Dict]): options
         """
-        # initialize the seed
-        self.np_random, seed = seeding.np_random(seed)
+        # initialize np random the seed
+        self.np_random, self.np_seed = seeding.np_random(seed)
 
         # seed argument is only valid for three games
-        if self.game_name in ["deep_sea", "hanabi", "mgf_garnet"]:
+        if self.game_name in ["deep_sea", "hanabi", "mfg_garnet"] and seed is not None:
             self.game_name = self.game_type.short_name
             self._env = pyspiel.load_game(self.game_name, {"seed": seed})
 
@@ -251,7 +251,11 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
                 self.simultaneous_actions = dict()
         else:
             # if not simultaneous, step the state generically
-            self.game_state.apply_action(action)
+            try:
+                self.game_state.apply_action(action)
+            except pyspiel.SpielError:
+                print()
+                self.game_state.apply_action(action)
             self.game_length += 1
 
     def _choose_next_agent(self):
