@@ -1,4 +1,5 @@
 """Tests the functionality of the OpenSpielCompatibility wrapper on OpenSpiel envs."""
+# pyright: reportGeneralTypeIssues=false
 import pickle
 
 import pyspiel

@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+title: >-
+  Shimmy: Gymnasium and PettingZoo Wrappers for Commonly
+  Used Environments
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Jun Jet
+    family-names: Tai
+    email: taijunjet@hotmail.com
+    affiliation: Farama Foundation
+    orcid: 'https://orcid.org/0000-0002-0455-6642'
+  - given-names: Mark
+    family-names: Towers
+    email: mark.m.towers@gmail.com
+    affiliation: Farama Foundation
+    orcid: 'https://orcid.org/0000-0002-2609-2041'
+  - given-names: Elliot
+    family-names: Tower
+    email: elliot@elliottower.com
+    affiliation: Farama Foundation
+    orcid: 'https://orcid.org/0000-0001-7004-8884'
+identifiers:
+  - type: url
+    value: 'https://github.com/Farama-Foundation/shimmy'
+repository-code: 'https://github.com/Farama-Foundation/shimmy'
+url: 'https://shimmy.farama.org/'
+abstract: >-
+  Shimmy is an API conversion tool providing Gymnasium and
+  PettingZoo bindings for popular external reinforcement
+  learning environments.
+keywords:
+  - Machine Learning
+  - Reinforcement Learning
+  - Gymnasium
+  - PettingZoo
+license: MIT
