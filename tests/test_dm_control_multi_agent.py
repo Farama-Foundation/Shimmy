@@ -119,6 +119,8 @@ def test_seeding(config):
     for agent in env1.possible_agents:
         env1.action_space(agent).seed(42)
         env2.action_space(agent).seed(42)
+        env1.observation_space(agent).seed(42)
+        env2.observation_space(agent).seed(42)
 
     while env1.agents:
         actions1 = {agent: env1.action_space(agent).sample() for agent in env1.agents}
@@ -129,7 +131,7 @@ def test_seeding(config):
         obs1, rewards1, terminations1, truncations1, infos1 = env1.step(actions1)
         obs2, rewards2, terminations2, truncations2, infos2 = env2.step(actions2)
 
-        assert data_equivalence(obs1, obs2)
+        assert data_equivalence(obs1, obs2), "Incorrect observations"
         assert data_equivalence(rewards1, rewards2), "Incorrect values for rewards"
         assert data_equivalence(terminations1, terminations2), "Incorrect terminations."
         assert data_equivalence(truncations1, truncations2), "Incorrect truncations"

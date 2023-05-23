@@ -224,7 +224,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
         Args:
             seed: the seed to reset the environment with
-            options: the options to reset the environment with
+            options: the options to reset the environment with (unused)
 
         Returns:
             observations
@@ -232,6 +232,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
         self.agents = self.possible_agents[:]
         self.num_moves = 0
 
+        self._env._random_state = np.random.RandomState(seed)
         timestep = self._env.reset()
         observations, _, _, _, info = _unravel_ma_timestep(timestep, self.agents)
 
