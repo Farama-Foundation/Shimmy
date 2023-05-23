@@ -21,7 +21,12 @@ def dm_spec2gym_space(spec) -> spaces.Space[Any]:
     elif type(spec) is BoundedArray:
         low = np.broadcast_to(spec.minimum, spec.shape)
         high = np.broadcast_to(spec.maximum, spec.shape)
-        return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
+        return spaces.Box(
+            low=low,
+            high=high,
+            shape=spec.shape,
+            dtype=spec.dtype,  # pyright: ignore[reportGeneralTypeIssues]
+        )
     elif type(spec) is Array:
         if np.issubdtype(spec.dtype, np.integer):
             low = np.iinfo(spec.dtype).min
@@ -35,7 +40,12 @@ def dm_spec2gym_space(spec) -> spaces.Space[Any]:
         else:
             raise TypeError(f"Unknown dtype {spec.dtype} for spec {spec}.")
 
-        return spaces.Box(low=low, high=high, shape=spec.shape, dtype=spec.dtype)
+        return spaces.Box(
+            low=low,
+            high=high,
+            shape=spec.shape,
+            dtype=spec.dtype,  # pyright: ignore[reportGeneralTypeIssues]
+        )
     elif type(spec) is DiscreteArray:
         return spaces.Discrete(spec.num_values)
     else:

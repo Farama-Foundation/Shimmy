@@ -156,6 +156,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
         self.act_spaces = dict(zip(self.possible_agents, all_act_spaces))
 
         if self.render_mode == "human":
+            assert self._env.physics is not None
             self.viewer = MujocoRenderer(
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
@@ -207,6 +208,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
         Closes the environment.
         """
+        assert self._env.physics is not None
         self._env.physics.free()
         self._env.close()
 
@@ -215,14 +217,14 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
     def reset(
         self, seed: int | None = None, options: dict[AgentID, Any] | None = None
-    ) -> ObsDict:
+    ) -> tuple[ObsDict, dict[str, Any]]:
         """reset.
 
         Resets the dm-control environment.
 
         Args:
             seed: the seed to reset the environment with
-            options: the options to reset the environment with
+            options: the options to reset the environment with (unused)
 
         Returns:
             observations
@@ -230,11 +232,11 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
         self.agents = self.possible_agents[:]
         self.num_moves = 0
 
+        self._env._random_state = np.random.RandomState(seed)
         timestep = self._env.reset()
+        observations, _, _, _, info = _unravel_ma_timestep(timestep, self.agents)
 
-        observations, _, _, _, _ = _unravel_ma_timestep(timestep, self.agents)
-
-        return observations
+        return observations, info
 
     def step(
         self, actions: ActionDict
@@ -260,8 +262,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
             self.agents
         ), f"Must have actions for all {len(self.agents)} agents, currently only found {len(actions)}."
 
-        actions = actions.values()
-        timestep = self._env.step(actions)
+        timestep = self._env.step(actions.values())
 
         obs, rewards, terminations, truncations, infos = _unravel_ma_timestep(
             timestep, self.agents

@@ -12,7 +12,6 @@ from typing import Any, Callable, Optional
 
 import dm_env
 import gymnasium
-import mujoco
 import numpy as np
 from dm_control import composer
 from dm_control.mujoco.engine import Physics as MujocoEnginePhysics
@@ -20,6 +19,7 @@ from dm_control.rl import control
 from gymnasium.core import ObsType
 from gymnasium.envs.mujoco.mujoco_rendering import MujocoRenderer
 from gymnasium.utils import EzPickle
+from mujoco._structs import MjvScene
 
 from shimmy.utils.dm_env import dm_env_step2gym_step, dm_spec2gym_space
 
@@ -62,7 +62,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         render_height: int = 84,
         render_width: int = 84,
         camera_id: int | str = 0,
-        render_scene_callback: (Callable[[MujocoEnginePhysics, mujoco.MjvScene], None])
+        render_scene_callback: (Callable[[MujocoEnginePhysics, MjvScene], None])
         | None = None,
         render_kwargs: dict[str, Any] | None = None,
     ):
@@ -89,7 +89,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         EzPickle.__init__(
             self, env, render_mode, render_height, render_width, camera_id
         )
-        self._env = env
+        self._env: Any = env
         self.env_type = self._find_env_type(env)
         self.metadata["render_fps"] = self._env.control_timestep()
 
@@ -121,7 +121,6 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
             self.np_random = np.random.RandomState(seed=seed)
 
         timestep = self._env.reset()
-
         obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
         return obs, info
@@ -228,9 +227,13 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
             assert isinstance(env, dm_env.Environment)
 
             if hasattr(env, "_env"):
-                return self._find_env_type(env._env)
+                return self._find_env_type(
+                    env._env  # pyright: ignore[reportGeneralTypeIssues]
+                )
             elif hasattr(env, "env"):
-                return self._find_env_type(env.env)
+                return self._find_env_type(
+                    env.env  # pyright: ignore[reportGeneralTypeIssues]
+                )
             else:
                 raise AttributeError(
                     f"Can't know the dm-control environment type, actual type: {type(env)}"
