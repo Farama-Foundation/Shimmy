@@ -296,6 +296,7 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">string</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -363,6 +364,7 @@
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">short_name</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">render_mode</span> <span class="o">=</span> <span class="n">render_mode</span>
 
@@ -399,7 +401,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_information_state_string</span>
             <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_string</span>
         <span class="p">):</span>
-            <span class="k">return</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">16</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
+                <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">16</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">printable</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;No information/observation tensor/string implemented for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="si">}</span><span class="s2">.&quot;</span>
@@ -462,16 +466,21 @@
 <span class="sd">            seed (Optional[int]): seed</span>
 <span class="sd">            options (Optional[Dict]): options</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># initialize the seed</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">np_random</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seeding</span><span class="o">.</span><span class="n">np_random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="c1"># initialize np random the seed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">np_random</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">np_seed</span> <span class="o">=</span> <span class="n">seeding</span><span class="o">.</span><span class="n">np_random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="c1"># seed argument is only valid for three games</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;deep_sea&quot;</span><span class="p">,</span> <span class="s2">&quot;hanabi&quot;</span><span class="p">,</span> <span class="s2">&quot;mfg_garnet&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">short_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">})</span>
 
         <span class="c1"># all agents</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">[:]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_name_id_mapping</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">]</span>
 
         <span class="c1"># boilerplate stuff</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cumulative_rewards</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cumulative_rewards</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mf">0.0</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mf">0.0</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">terminations</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="kc">False</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">truncations</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="kc">False</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">infos</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="p">{}</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
@@ -527,9 +536,6 @@
             <span class="c1"># store the agent&#39;s action</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous_actions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_selection</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
 
-            <span class="c1"># set the agents reward to 0 since it&#39;s seen it</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_cumulative_rewards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_selection</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-
             <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous_actions</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">):</span>
                 <span class="c1"># if we already have all the actions, just step regularly</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">apply_actions</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simultaneous_actions</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
@@ -539,7 +545,11 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous_actions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># if not simultaneous, step the state generically</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">SpielError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">game_length</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">_choose_next_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -624,11 +634,8 @@
 
     <span class="k">def</span> <span class="nf">_update_rewards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates all the _cumulative_rewards of the environment.&quot;&quot;&quot;</span>
-        <span class="c1"># update cumulative rewards</span>
-        <span class="n">rewards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">rewards</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cumulative_rewards</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">agent_id_name_mapping</span><span class="p">[</span><span class="nb">id</span><span class="p">]:</span> <span class="n">rewards</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
-        <span class="p">}</span>
+        <span class="c1"># retrieve rewards</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="n">r</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">rewards</span><span class="p">())}</span>
 
     <span class="k">def</span> <span class="nf">_update_termination_truncation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates all terminations and truncations of the environment.&quot;&quot;&quot;</span>
@@ -680,6 +687,9 @@
 <span class="sd">        Args:</span>
 <span class="sd">            action (int): action</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># reset the cumulative rewards for the current agent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cumulative_rewards</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_selection</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
         <span class="c1"># handle the possibility of an end step</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_routine</span><span class="p">():</span>
             <span class="c1"># step the environment</span>
@@ -690,7 +700,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_rewards</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_termination_truncation</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_choose_next_agent</span><span class="p">()</span></div></div>
+        <span class="c1"># pick the next agent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_choose_next_agent</span><span class="p">()</span>
+
+        <span class="c1"># accumulate the rewards</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accumulate_rewards</span><span class="p">()</span></div></div>
 </pre></div>
           </article>
         </div>
