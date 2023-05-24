@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import functools
+import string
 from typing import Any, Dict, Optional
 
 import numpy as np
@@ -69,6 +70,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         )
 
         self.game_type = self._env.get_type()
+        self.game_name = self.game_type.short_name
 
         self.render_mode = render_mode
 
@@ -105,7 +107,9 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             self.game_type.provides_information_state_string
             or self.game_type.provides_observation_string
         ):
-            return spaces.Text(max_length=2**16)
+            return spaces.Text(
+                min_length=0, max_length=2**16, charset=string.printable
+            )
         else:
             raise NotImplementedError(
                 f"No information/observation tensor/string implemented for {self._env}."
@@ -168,16 +172,21 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             seed (Optional[int]): seed
             options (Optional[Dict]): options
         """
-        # initialize the seed
-        self.np_random, seed = seeding.np_random(seed)
+        # initialize np random the seed
+        self.np_random, self.np_seed = seeding.np_random(seed)
+
+        # seed argument is only valid for three games
+        if self.game_name in ["deep_sea", "hanabi", "mfg_garnet"] and seed is not None:
+            self.game_name = self.game_type.short_name
+            self._env = pyspiel.load_game(self.game_name, {"seed": seed})
 
         # all agents
         self.agents = self.possible_agents[:]
         self.agent_ids = [self.agent_name_id_mapping[a] for a in self.agents]
 
         # boilerplate stuff
-        self._cumulative_rewards = {a: 0 for a in self.agents}
-        self.rewards = {a: 0 for a in self.agents}
+        self._cumulative_rewards = {a: 0.0 for a in self.agents}
+        self.rewards = {a: 0.0 for a in self.agents}
         self.terminations = {a: False for a in self.agents}
         self.truncations = {a: False for a in self.agents}
         self.infos = {a: {} for a in self.agents}
@@ -233,9 +242,6 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             # store the agent's action
             self.simultaneous_actions[self.agent_selection] = action
 
-            # set the agents reward to 0 since it's seen it
-            self._cumulative_rewards[self.agent_selection] = 0
-
             if all(a in self.simultaneous_actions for a in self.agents):
                 # if we already have all the actions, just step regularly
                 self.game_state.apply_actions(list(self.simultaneous_actions.values()))
@@ -245,7 +251,11 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
                 self.simultaneous_actions = dict()
         else:
             # if not simultaneous, step the state generically
-            self.game_state.apply_action(action)
+            try:
+                self.game_state.apply_action(action)
+            except pyspiel.SpielError:
+                print()
+                self.game_state.apply_action(action)
             self.game_length += 1
 
     def _choose_next_agent(self):
@@ -330,11 +340,8 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
     def _update_rewards(self):
         """Updates all the _cumulative_rewards of the environment."""
-        # update cumulative rewards
-        rewards = self.game_state.rewards()
-        self._cumulative_rewards = {
-            self.agent_id_name_mapping[id]: rewards[id] for id in self.agent_ids
-        }
+        # retrieve rewards
+        self.rewards = {a: r for a, r in zip(self.agents, self.game_state.rewards())}
 
     def _update_termination_truncation(self):
         """Updates all terminations and truncations of the environment."""
@@ -386,6 +393,9 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         Args:
             action (int): action
         """
+        # reset the cumulative rewards for the current agent
+        self._cumulative_rewards[self.agent_selection] = 0.0
+
         # handle the possibility of an end step
         if not self._end_routine():
             # step the environment
@@ -396,4 +406,8 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             self._update_rewards()
             self._update_termination_truncation()
 
+        # pick the next agent
         self._choose_next_agent()
+
+        # accumulate the rewards
+        self._accumulate_rewards()
