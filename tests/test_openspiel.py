@@ -10,12 +10,6 @@ from pettingzoo.test import api_test
 from shimmy.openspiel_compatibility import OpenSpielCompatibilityV0
 
 _PASSING_GAMES = [
-    "deep_sea",
-    "hanabi",
-    "mfg_garnet",
-    "hearts",
-]
-passing = [
     "2048",
     "amazons",
     "bargaining",
