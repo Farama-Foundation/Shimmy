@@ -49,7 +49,9 @@ extras = {
     "meltingpot": ["pettingzoo>=1.22.3"],
     "bsuite": ["bsuite>=0.3.5"],
 }
-extras["all"] = list({lib for libs in extras.values() for lib in libs})
+extras["all"] = [
+    lib for key, libs in extras.items() if key != "gym-v21" for lib in libs
+]
 extras["testing"] = [
     "pytest==7.1.3",
     "pillow>=9.3.0",
