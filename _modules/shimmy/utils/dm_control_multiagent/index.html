@@ -327,12 +327,16 @@
 <span class="sd">        env (dm_control.composer.Environment): dm control soccer environment</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-        <span class="n">team_size</span> <span class="k">if</span> <span class="n">team_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="n">time_limit</span> <span class="k">if</span> <span class="n">time_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mf">10.0</span><span class="p">,</span>
-        <span class="n">disable_walker_contacts</span> <span class="k">if</span> <span class="n">disable_walker_contacts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">enable_field_box</span> <span class="k">if</span> <span class="n">enable_field_box</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">terminate_on_goal</span> <span class="k">if</span> <span class="n">terminate_on_goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">walker_type</span> <span class="k">if</span> <span class="n">walker_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">WalkerType</span><span class="o">.</span><span class="n">BOXHEAD</span><span class="p">,</span>
+        <span class="n">team_size</span><span class="o">=</span><span class="n">team_size</span> <span class="k">if</span> <span class="n">team_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span> <span class="k">if</span> <span class="n">time_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">disable_walker_contacts</span><span class="o">=</span><span class="n">disable_walker_contacts</span>
+        <span class="k">if</span> <span class="n">disable_walker_contacts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">enable_field_box</span><span class="o">=</span><span class="n">enable_field_box</span> <span class="k">if</span> <span class="n">enable_field_box</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">terminate_on_goal</span><span class="o">=</span><span class="n">terminate_on_goal</span> <span class="k">if</span> <span class="n">terminate_on_goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">walker_type</span><span class="o">=</span><span class="n">walker_type</span>
+        <span class="k">if</span> <span class="n">walker_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">else</span> <span class="n">dm_soccer</span><span class="o">.</span><span class="n">WalkerType</span><span class="o">.</span><span class="n">BOXHEAD</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">env</span></div>
 </pre></div>
