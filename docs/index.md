@@ -5,7 +5,7 @@ lastpage:
 ---
 
 ```{project-logo} _static/img/shimmy-text.png
-:alt: Gymnasium Logo
+:alt: Shimmy Logo
 ```
 
 ```{project-heading}
@@ -44,6 +44,19 @@ An API conversion tool for reinforcement learning environments.
 |    Gym V21-V26.                                |   & card game environments.                 |                                                |
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
 ```
+
+<style>
+@media (min-width: 550px) {
+    figure img{
+        max-height: 180px;
+    }
+}
+@media (max-width: 550px) {
+    figure img{
+        max-height: 100px;
+    }
+}
+</style>
 
 
 Environments can be interacted with using a simple, high-level API:
