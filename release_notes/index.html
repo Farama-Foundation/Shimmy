@@ -303,6 +303,18 @@
             
             <section id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this heading">#</a></h1>
+<section id="release-v1-1-0">
+<h2>Shimmy v1.1.0<a class="headerlink" href="#release-v1-1-0" title="Permalink to this heading">#</a></h2>
+<p><em>Released on 2023-06-15 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.1.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.1.0/">PyPI</a></em></p>
+<h2><strong>Shimmy 1.1.0 Release Notes:</strong></h2>
+<p>This is a small bug fix release which fixes rendering issues in the dm-control compatibility wrapper.</p>
+<h2>Breaking changes</h2>
+<ul>
+<li>The dm-control compatibility environment used the <code>env.control_timesteps()</code> for the render frames per second (<code>render_fps</code>), however, this value is the interval between actions per seconds, i.e., <code>0.04</code>. This was fixed to be the actual <code>fps</code> (through multiplying by 1000). <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1758513506" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/91" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/91/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/91">#91</a></li>
+<li>A <code>dt</code> attribute was added to the dm-control compatibility environment that is equivalent to the mujoco environment <code>dt</code> attribute. <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1758513506" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/91" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/91/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/91">#91</a></li>
+<li>Modified the rendering in dm-control compatibility, removing <code>render_height</code>, <code>render_width</code>, <code>camera_id</code> and <code>scene_callback</code> in favor of <code>render_kwargs</code>. As such users should specify kwargs in the dm-control engine render function, i.e., <code>height</code>, <code>width</code>, <code>camera_id</code> and <code>scene_callback</code>. Additionally, this will use the default dm-control arguments unless overridden by the user <code>render_kwargs</code>. <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1759134580" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/92" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/92/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/92">#92</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.0.1...v1.1.0"><tt>v1.0.1...v1.1.0</tt></a></p></section>
 <section id="release-v1-0-1">
 <h2>v1.0.1: Shimmy 1.0.1<a class="headerlink" href="#release-v1-0-1" title="Permalink to this heading">#</a></h2>
 <p><em>Released on 2023-05-24 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.0.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.0.1/">PyPI</a></em></p>
@@ -310,8 +322,8 @@
 <p>This release is a small hotfix which updates the multi-agent environments to PettingZoo 1.23.0, and fixes seeding issues with OpenSpiel and DM control multi-agent. It also fixes setup.py to properly install gym v21, and updates testing accordingly. Documentation updates include minor quality of life changes.</p>
 <h3><strong>Bug Fixes:</strong></h3>
 <ul>
-<li>Fix dm control multiagent seeding, meltingpot API issues (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1722788455" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/87" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/87/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/87">#87</a>)</li>
-<li>Fix OpenSpiel API test &amp; seeding (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1707953621" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/80" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/80/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/80">#80</a>)</li>
+<li>Update DM control multi agent and melting pot to PettingZoo 1.23.0 API, fix seeding (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1722788455" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/87" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/87/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/87">#87</a>)</li>
+<li>Update OpenSpiel to PettingZoo 1.23.0 API, fix API test &amp; seeding (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1707953621" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/80" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/80/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/80">#80</a>)</li>
 <li>Fix setup.py for gym v21 (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1724411032" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/88" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/88/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/88">#88</a>)</li>
 </ul>
 <h3><strong>Documentation Updates:</strong></h3>
@@ -326,7 +338,7 @@
 <section id="release-v1-0-0">
 <h2>v1.0.0: Shimmy 1.0.0: Shimmy Becomes Mature<a class="headerlink" href="#release-v1-0-0" title="Permalink to this heading">#</a></h2>
 <p><em>Released on 2023-04-25 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.0.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.0.0/">PyPI</a></em></p>
-<h1><strong>Shimmy 1.0.0 Release Notes:</strong></h1>
+<h2><strong>Shimmy 1.0.0 Release Notes:</strong></h2>
 <p>We are excited to announce the mature release of <a href="https://shimmy.farama.org/" rel="nofollow">Shimmy</a>, an API compatibility tool for converting external RL environments to the <a href="https://gymnasium.farama.org/" rel="nofollow">Gymnasium</a> and <a href="https://pettingzoo.farama.org/" rel="nofollow">PettingZoo</a> APIs. This allows users to access a wide range of single and multi-agent environments, all under a single standard API.</p>
 <p>Within Reinforcement learning (RL), a number of API's are used to implement environments, with limited ability to convert between them. This makes training agents across different APIs highly difficult. Shimmy addresses this issue by integrating a range of APIs into the Farama ecosystem. This is part of the <a href="https://farama.org/" rel="nofollow">Farama Foundation</a>'s greater goal of creating a unified and user-friendly ecosystem for open-source reinforcement learning software, for both research and industry.</p>
 <p>We plan to maintain Shimmy for the long term, and are welcome to new contributions or suggestions. Future plans include general <a href="https://github.com/deepmind/dm_env">DM Env</a> and <a href="https://github.com/deepmind/lab2d">DM lab2d</a> support, and additional environments such as <a href="https://github.com/deepmind/ai-safety-gridworlds">ai-safety-gridworlds</a>.</p>
@@ -493,6 +505,7 @@ Additionally, this changes <code>GymV22Environment</code> to <code>GymV21Environ
             <div class="toc-tree">
               <ul>
 <li><a class="reference internal" href="#">Release Notes</a><ul>
+<li><a class="reference internal" href="#release-v1-1-0">Shimmy v1.1.0</a></li>
 <li><a class="reference internal" href="#release-v1-0-1">v1.0.1: Shimmy 1.0.1</a></li>
 <li><a class="reference internal" href="#release-v1-0-0">v1.0.0: Shimmy 1.0.0: Shimmy Becomes Mature</a></li>
 <li><a class="reference internal" href="#release-v0-2-1">v0.2.1</a></li>
