@@ -134,13 +134,13 @@ def test_pickle(env_id):
     env_2.close()
 
 
-@pytest.mark.parametrize("camera_id", [0, 1])
+@pytest.mark.parametrize("camera_id", [-1, 0, 1])
 def test_rendering_camera_id(camera_id):
     """Test that dm-control rendering works."""
     env = gym.make(
         DM_CONTROL_ENV_IDS[0],
         render_mode="rgb_array",
-        camera_id=camera_id,
+        render_kwargs=dict(camera_id=camera_id),
     )
     env.reset()
     frames = []
@@ -157,8 +157,10 @@ def test_rendering_multiple_cameras(height, width):
     env = gym.make(
         DM_CONTROL_ENV_IDS[0],
         render_mode="multi_camera",
-        render_height=height,
-        render_width=width,
+        render_kwargs=dict(
+            height=height,
+            width=width,
+        ),
     )
     env.reset()
     frames = []
@@ -175,8 +177,10 @@ def test_rendering_depth(height, width):
     env = gym.make(
         DM_CONTROL_ENV_IDS[0],
         render_mode="depth_array",
-        render_height=height,
-        render_width=width,
+        render_kwargs=dict(
+            height=height,
+            width=width,
+        ),
     )
     env.reset()
     frames = []
@@ -193,8 +197,10 @@ def test_render_height_widths(height, width):
     env = gym.make(
         DM_CONTROL_ENV_IDS[0],
         render_mode="rgb_array",
-        render_height=height,
-        render_width=width,
+        render_kwargs=dict(
+            height=height,
+            width=width,
+        ),
     )
     env.reset()
     frame = env.render()
