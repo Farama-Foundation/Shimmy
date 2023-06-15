@@ -52,7 +52,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
 
     metadata = {
         "render_modes": ["human", "rgb_array", "depth_array", "multi_camera"],
-        "render_fps": 10,
+        "render_fps": 10,  # this value is updated to use the `env.control_timesteps() * 1000`
     }
 
     def __init__(
@@ -78,7 +78,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
             render_height (Optional[int]): height for rendering frame in pixels
             render_width (Optional[int]): width for rendering frame in pixels
             camera_id (Optional[int | str]): Optional camera name or index. Defaults to -1, the free
-                camera, which is always defined. A nonnegative integer or string
+                camera, which is always defined. A non-negative integer or string
                 corresponds to a fixed camera, which must be defined in the model XML.
                 If `camera_id` is a string then the camera must also be named.
             render_scene_callback (Optional[(Callable[[MujocoEnginePhysics, mujoco.MjvScene], None])]): Called after
@@ -91,7 +91,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         )
         self._env: Any = env
         self.env_type = self._find_env_type(env)
-        self.metadata["render_fps"] = self._env.control_timestep()
+        self.metadata["render_fps"] = self._env.control_timestep() * 1000
 
         self.observation_space = dm_spec2gym_space(env.observation_spec())
         self.action_space = dm_spec2gym_space(env.action_spec())
@@ -111,6 +111,11 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
             self.viewer = MujocoRenderer(
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
+
+    @property
+    def dt(self):
+        """Returns the environment control timestep which is equivalent to the number of actions per second."""
+        return self._env.control_timestep()
 
     def reset(
         self, *, seed: int | None = None, options: dict[str, Any] | None = None
