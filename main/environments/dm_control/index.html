@@ -381,7 +381,7 @@ uses <cite>np.random.Generator</cite>, therefore the return type of <cite>np_ran
 <li><p><strong>render_height</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – height for rendering frame in pixels</p></li>
 <li><p><strong>render_width</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – width for rendering frame in pixels</p></li>
 <li><p><strong>camera_id</strong> (<em>Optional</em><em>[</em><em>int</em><em> | </em><em>str</em><em>]</em>) – Optional camera name or index. Defaults to -1, the free
-camera, which is always defined. A nonnegative integer or string
+camera, which is always defined. A non-negative integer or string
 corresponds to a fixed camera, which must be defined in the model XML.
 If <cite>camera_id</cite> is a string then the camera must also be named.</p></li>
 <li><p><strong>render_scene_callback</strong> (<em>Optional</em><em>[</em><em>(</em><em>Callable</em><em>[</em><em>[</em><em>MujocoEnginePhysics</em><em>, </em><em>mujoco.MjvScene</em><em>]</em><em>, </em><em>None</em><em>]</em><em>)</em><em>]</em>) – Called after
@@ -405,6 +405,12 @@ for human rendering, which uses simpler Gymnasium MuJoCo rendering.</p></li>
 <dt class="sig sig-object py" id="shimmy.dm_control_compatibility.DmControlCompatibilityV0.action_space">
 <span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">spaces.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="shimmy.dm_control_compatibility.DmControlCompatibilityV0.dt">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dt</span></span><a class="headerlink" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.dt" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the environment control timestep which is equivalent to the number of actions per second.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.dm_control_compatibility.DmControlCompatibilityV0.reset">
@@ -519,6 +525,7 @@ for human rendering, which uses simpler Gymnasium MuJoCo rendering.</p></li>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.metadata</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.observation_space</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.action_space</span></code></a></li>
+<li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.dt"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.dt</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.reset"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.reset()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.step"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.step()</span></code></a></li>
 <li><a class="reference internal" href="#shimmy.dm_control_compatibility.DmControlCompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">DmControlCompatibilityV0.render()</span></code></a></li>
