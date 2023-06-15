@@ -114,6 +114,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
 
     @property
     def dt(self):
+        """Returns the environment control timestep which is equivalent to the number of actions per second."""
         return self._env.control_timestep()
 
     def reset(
