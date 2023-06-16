@@ -130,7 +130,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
         if self.render_mode == "human":
-            self.render()
+            self.viewer.render(self.render_mode)
 
         return (
             obs,
@@ -142,8 +142,6 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
 
     def render(self) -> np.ndarray | None:
         """Renders the dm-control env."""
-        if self.render_mode == "human":
-            self.viewer.render(self.render_mode)
         if self.render_mode == "rgb_array":
             return self._env.physics.render(
                 **self.render_kwargs,
