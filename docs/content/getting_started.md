@@ -12,7 +12,7 @@ pip install shimmy
 ```
 To install required dependencies for environments, specify them as follows:
 ```
-pip install shimmy[bsuite, atari]
+pip install shimmy[bsuite,atari]
 ```
 
 Choices: `gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
@@ -20,7 +20,7 @@ Choices: `gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-mult
 For development and testing:
 
 ```
-pip install shimmy[all, testing]
+pip install shimmy[all,testing]
 ```
 
 
