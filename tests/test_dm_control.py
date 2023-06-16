@@ -1,3 +1,4 @@
+# pyright: reportGeneralTypeIssues=false
 """Tests the functionality of the DmControlCompatibility Wrapper on dm_control envs."""
 import pickle
 import warnings
@@ -136,7 +137,7 @@ def test_pickle(env_id):
 
 @pytest.mark.parametrize("camera_id", [-1, 0, 1])
 def test_rendering_camera_id(camera_id):
-    """Test that dm-control rendering works."""
+    """Test that dm-control rendering works for a specified camera_id."""
     env = gym.make(
         DM_CONTROL_ENV_IDS[0],
         render_mode="rgb_array",
@@ -207,6 +208,85 @@ def test_render_height_widths(height, width):
     assert isinstance(frame, np.ndarray)
     assert frame.shape == (height, width, 3), frame.shape
 
+    env.close()
+
+
+@pytest.mark.skip(
+    reason="Gymnasium MujocoRenderer does not support specifying camera ID for human render mode"
+)
+@pytest.mark.parametrize("camera_id", [-1, 0, 1])
+def test_rendering_human(camera_id):
+    """Test that dm-control human rendering works for specified camera id."""
+    env = gym.make(
+        DM_CONTROL_ENV_IDS[0],
+        render_mode="human",
+        render_kwargs=dict(camera_id=camera_id),
+    )
+    env.reset()
+    for _ in range(10):
+        env.render()
+        env.step(env.action_space.sample())
+
+    env.close()
+
+
+@pytest.mark.parametrize(
+    "distance,elevation",
+    [(2.0, -45), (10.0, -45), (1.0, -45), (2.0, 45), (10.0, 45), (1.0, 45)],
+)
+def test_render_human_default_cam_config(distance, elevation):
+    """Tests that dm-control rendering works with a specified default_cam_config (altering distance and elevation).
+
+    Note: manual testing is required to validate that the config settings produce the desired results (i.e., camera distance and elevation changes).
+    """
+    env = gym.make(
+        DM_CONTROL_ENV_IDS[0],
+        render_mode="human",
+        render_kwargs=dict(
+            default_cam_config=dict(
+                azimuth=90.0,
+                distance=distance,
+                elevation=elevation,
+                fixedcamid=-1,
+                lookat=np.array([0.0, 0.0, 0.0]),
+                trackbodyid=-1,
+                type=0,
+            )
+        ),
+    )
+    env.reset()
+    for _ in range(50):
+        env.step(env.action_space.sample())
+        env.render()
+
+    env.close()
+
+
+def test_rendering_human_composer():
+    """Tests that human rendering works for composed environments.
+
+    Note: manual testing is required to validate that the scene renders properly (i.e., is not frozen)
+    """
+    from dm_control import composer
+    from dm_control.locomotion import tasks
+    from dm_control.locomotion.arenas.floors import Floor
+    from dm_control.locomotion.walkers.cmu_humanoid import CMUHumanoidPositionControlled
+
+    task = tasks.corridors.RunThroughCorridor(CMUHumanoidPositionControlled(), Floor())
+    env = DmControlCompatibilityV0(composer.Environment(task), render_mode="human")
+    env.reset(seed=42)
+    rewards = []
+    observations = []
+    for _ in range(100):
+        action = env.action_space.sample()  # this is where you would insert your policy
+        observation, reward, terminated, truncated, info = env.step(action)
+        observations.append(observation)
+        rewards.append(reward)
+        if terminated or truncated:
+            env.reset()
+    # Check that the environment is actually updating (obs and rewards are not all exactly the same)
+    assert not all(x == observations[0] for x in observations)
+    assert not all(x == rewards[0] for x in rewards)
     env.close()
 
 

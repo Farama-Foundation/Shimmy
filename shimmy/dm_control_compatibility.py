@@ -63,17 +63,19 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
     ):
         """Initialises the environment with a render mode along with render information.
 
-        Note: this wrapper supports multi-camera rendering via the `render_mode` argument (render_mode = "multi_camera")
+        Note: this wrapper supports multi-camera rendering via the `render_mode` argument (render_mode = "multi_camera").
 
-        For more information on DM Control rendering, see https://github.com/deepmind/dm_control/blob/main/dm_control/mujoco/engine.py#L178
+        For more information on DM Control rendering, see https://github.com/deepmind/dm_control/blob/main/dm_control/mujoco/engine.py#L178.
 
         Args:
             env (Optional[composer.Environment | control.Environment | dm_env.Environment]): DM Control env to wrap
             render_mode (Optional[str]): rendering mode (options: "human", "rgb_array", "depth_array", "multi_camera")
-            render_kwargs (Optional[dict[str, Any]]): Additional keyword arguments for rendering.
+            render_kwargs (Optional[dict[str, Any]]): Additional keyword arguments for rendering
                 For the width, height and camera id use "width", "height" and "camera_id" respectively.
-                See the dm_control implementation for the list of possible kwargs, https://github.com/deepmind/dm_control/blob/330c91f41a21eacadcf8316f0a071327e3f5c017/dm_control/mujoco/engine.py#L178
-                Note: kwargs are not used for human rendering, which uses simpler Gymnasium MuJoCo rendering.
+                See the dm_control implementation for the list of possible kwargs, https://github.com/deepmind/dm_control/blob/330c91f41a21eacadcf8316f0a071327e3f5c017/dm_control/mujoco/engine.py#L178.
+                For human rendering (which uses simpler Gymnasium MuJoCo rendering), supply a "default_cam_config" dict in render_kwargs.
+                The following attributes can be used in default_cam_config: azimuth, distance, elevation, fixedcamid, lookat, trackbodyid, type.
+                See https://mujoco.readthedocs.io/en/latest/XMLreference.html?highlight=camera#visual-global for information.
         """
         EzPickle.__init__(self, env, render_mode, render_kwargs)
         self._env: Any = env
@@ -92,8 +94,13 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
 
         if self.render_mode == "human":
             # We use the gymnasium mujoco rendering, dm-control provides more complex rendering options.
+            # Note: default_cam_config allows customization of the following attributes: azimuth, distance, elevation, fixedcamid, lookat, trackbodyid, type
+            # See https://mujoco.readthedocs.io/en/latest/XMLreference.html?highlight=camera#visual-global for more information
+            default_cam_config = self.render_kwargs.get("default_cam_config")
             self.viewer = MujocoRenderer(
-                self._env.physics.model.ptr, self._env.physics.data.ptr
+                self._env.physics.model.ptr,
+                self._env.physics.data.ptr,
+                default_cam_config,
             )
 
     @property
@@ -123,7 +130,7 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
         if self.render_mode == "human":
-            self.viewer.render(self.render_mode)
+            self.render()
 
         return (
             obs,
@@ -135,6 +142,8 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
 
     def render(self) -> np.ndarray | None:
         """Renders the dm-control env."""
+        if self.render_mode == "human":
+            self.viewer.render(self.render_mode)
         if self.render_mode == "rgb_array":
             return self._env.physics.render(
                 **self.render_kwargs,
