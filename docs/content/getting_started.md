@@ -20,7 +20,7 @@ Choices: `gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-mult
 For development and testing:
 
 ```
-pip install shimmy[all,testing]
+pip install "shimmy[all,testing]"
 ```
 
 
