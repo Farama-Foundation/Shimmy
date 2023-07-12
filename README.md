@@ -96,11 +96,17 @@ Maintenance for this project is also contributed by the broader Farama team: [fa
 
 If you use Shimmy in your research, please cite:
 ```
-@software{shimmy2022github,
-  author = {{Jun Jet Tai, Mark Towers, Elliot Tower} and Jordan Terry},
-  title = {Shimmy: Gymnasium and PettingZoo Wrappers for Commonly Used Environments},
-  url = {https://github.com/Farama-Foundation/Shimmy},
-  version = {1.0.0},
-  year = {2022},
+@software{jun_jet_tai_2023_8140744,
+  author       = {Jun Jet Tai and
+                  Mark Towers and
+                  Elliot Tower},
+  title        = {{Shimmy: Gymnasium and PettingZoo Wrappers for 
+                   Commonly Used Environments}},
+  month        = jun,
+  year         = 2023,
+  publisher    = {Zenodo},
+  version      = {v1.1.0},
+  doi          = {10.5281/zenodo.8140744},
+  url          = {https://doi.org/10.5281/zenodo.8140744}
 }
 ```
