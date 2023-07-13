@@ -60,7 +60,7 @@ CHECK_ENV_IGNORE_WARNINGS.append(
     'arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.',
 )
 CHECK_ENV_IGNORE_WARNINGS.append(
-    'Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)'
+    "Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)"
 )
 
 
