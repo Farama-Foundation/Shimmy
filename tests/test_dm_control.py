@@ -54,6 +54,7 @@ CHECK_ENV_IGNORE_WARNINGS = [
         "It seems a Box observation space is an image but the `dtype` is not `np.uint8`, actual type: float64. If the Box observation space is not an image, we recommend flattening the observation to have only a 1D vector.",
         "It seems a Box observation space is an image but the upper and lower bounds are not in [0, 255]. Generally, CNN policies assume observations are within that range, so you may encounter an issue if the observation values are not.",
         "arrays to stack must be passed as a 'sequence' type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.",
+        "Calling `env.close()` on the closed environment should be allowed, but it raised an exception: _data",
     ]
 ]
 CHECK_ENV_IGNORE_WARNINGS.append(
