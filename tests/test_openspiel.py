@@ -93,24 +93,22 @@ _PASSING_GAMES = [
     "universal_poker",
     "y",
     "mfg_dynamic_routing",
-]
-
-_SOMETIMES_FAILING_GAMES = [
     "backgammon",
     "solitaire",
 ]
 
-_FAILING_GAMES = [
+# See https://github.com/deepmind/open_spiel/blob/efa004d8c5f5088224e49fdc198c5d74b6b600d0/open_spiel/python/tests/pyspiel_test.py#L162
+_NON_DEFAULT_LOADABLE_GAMES = [
+    "add_noise",
     "efg_game",
-    "misere",
+    "nfg_game" "misere",
+    "turn_based_simultaneous_game",
     "normal_form_extensive_game",
     "repeated_game",
     "restricted_nash_response",
     "start_at",
-    "turn_based_simultaneous_game",
+    "zerosum",
 ]
-
-_UNKNOWN_BUGS_GAMES = ["nfg_game"]
 
 
 @pytest.mark.parametrize("game_name", _PASSING_GAMES)
@@ -131,11 +129,15 @@ def test_passing_games(game_name):
             env.step(action)
 
 
-@pytest.mark.parametrize("game_name", _FAILING_GAMES)
+@pytest.mark.parametrize("game_name", _NON_DEFAULT_LOADABLE_GAMES)
 def test_failing_games(game_name):
     """Ensures that failing OpenSpiel games are still failing."""
     with pytest.raises(pyspiel.SpielError):
-        test_passing_games(game_name)
+        if game_name == "nfg_game":
+            with pytest.raises(IndexError):
+                test_passing_games(game_name)
+        else:
+            test_passing_games(game_name)
 
 
 @pytest.mark.parametrize("game_name", _PASSING_GAMES)
