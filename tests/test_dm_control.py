@@ -214,6 +214,9 @@ def test_render_height_widths(height, width):
     env.close()
 
 
+@pytest.mark.skip(
+    reason="This test is currently broken due to an issue with DM control and Gymnasium v29."
+)
 @pytest.mark.parametrize(
     "wrapper_fn",
     (
