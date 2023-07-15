@@ -328,6 +328,7 @@
         <span class="n">env</span><span class="p">:</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">Game</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">game_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">render_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapper to convert a OpenSpiel environment into a PettingZoo environment.</span>
 
@@ -335,9 +336,12 @@
 <span class="sd">            env (Optional[pyspiel.Game]): existing OpenSpiel environment to wrap</span>
 <span class="sd">            game_name (Optional[str]): name of OpenSpiel game to load</span>
 <span class="sd">            render_mode (Optional[str]): rendering mode</span>
+<span class="sd">            config (Optional[dict]): PySpiel config</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">EzPickle</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">game_name</span><span class="p">,</span> <span class="n">render_mode</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
 
         <span class="c1"># Only one of game_name and env can be provided, the other should be None</span>
         <span class="k">if</span> <span class="n">env</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">game_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -349,7 +353,10 @@
                 <span class="s2">&quot;Two environments provided. Use `env` to specify an existing environment, or load an environment with `game_name`.&quot;</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">game_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="n">game_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="n">game_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="n">game_name</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">env</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">env</span>
 
@@ -469,10 +476,19 @@
         <span class="c1"># initialize np random the seed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">np_random</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">np_seed</span> <span class="o">=</span> <span class="n">seeding</span><span class="o">.</span><span class="n">np_random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">short_name</span>
+
         <span class="c1"># seed argument is only valid for three games</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;deep_sea&quot;</span><span class="p">,</span> <span class="s2">&quot;hanabi&quot;</span><span class="p">,</span> <span class="s2">&quot;mfg_garnet&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">short_name</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">})</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">reset_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">reset_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+                <span class="n">reset_config</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">,</span> <span class="n">reset_config</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">)</span>
 
         <span class="c1"># all agents</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">[:]</span>
@@ -598,7 +614,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_tensor</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">observation_tensor</span><span class="p">(</span><span class="n">a</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
                 <span class="p">)</span>
                 <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
             <span class="p">}</span>
@@ -606,7 +622,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">information_state_tensor</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-                <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
             <span class="p">}</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_string</span><span class="p">:</span>
@@ -627,7 +643,7 @@
     <span class="k">def</span> <span class="nf">_update_action_masks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates all the action masks inside the infos dictionary.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">agent_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">):</span>
-            <span class="n">action_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_space</span><span class="p">(</span><span class="n">agent_name</span><span class="p">)</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+            <span class="n">action_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">num_distinct_actions</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
             <span class="n">action_mask</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">legal_actions</span><span class="p">(</span><span class="n">agent_id</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;action_mask&quot;</span><span class="p">:</span> <span class="n">action_mask</span><span class="p">}</span>
