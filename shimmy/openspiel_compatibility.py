@@ -34,6 +34,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         env: pyspiel.Game | None = None,
         game_name: str | None = None,
         render_mode: str | None = None,
+        config: dict | None = None,
     ):
         """Wrapper to convert a OpenSpiel environment into a PettingZoo environment.
 
@@ -41,9 +42,12 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             env (Optional[pyspiel.Game]): existing OpenSpiel environment to wrap
             game_name (Optional[str]): name of OpenSpiel game to load
             render_mode (Optional[str]): rendering mode
+            config (Optional[dict]): PySpiel config
         """
         EzPickle.__init__(self, env, game_name, render_mode)
         super().__init__()
+
+        self.config = config
 
         # Only one of game_name and env can be provided, the other should be None
         if env is None and game_name is None:
@@ -55,7 +59,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
                 "Two environments provided. Use `env` to specify an existing environment, or load an environment with `game_name`."
             )
         elif game_name is not None:
-            self._env = pyspiel.load_game(game_name)
+            self._env = pyspiel.load_game(game_name, self.config)
         elif env is not None:
             self._env = env
 
@@ -175,10 +179,14 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         # initialize np random the seed
         self.np_random, self.np_seed = seeding.np_random(seed)
 
+        self.game_name = self.game_type.short_name
+        reset_config = self.config.copy() if self.config is not None else {}
+
         # seed argument is only valid for three games
         if self.game_name in ["deep_sea", "hanabi", "mfg_garnet"] and seed is not None:
-            self.game_name = self.game_type.short_name
-            self._env = pyspiel.load_game(self.game_name, {"seed": seed})
+            reset_config["seed"] = seed
+
+        self._env = pyspiel.load_game(self.game_name, reset_config)
 
         # all agents
         self.agents = self.possible_agents[:]
@@ -304,7 +312,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         if self.game_type.provides_observation_tensor:
             self.observations = {
                 self.agents[a]: np.array(self.game_state.observation_tensor(a)).reshape(
-                    self.observation_space(self.agents[0]).shape
+                    self.observation_space(a).shape
                 )
                 for a in self.agent_ids
             }
@@ -312,7 +320,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             self.observations = {
                 self.agents[a]: np.array(
                     self.game_state.information_state_tensor(a)
-                ).reshape(self.observation_space(self.agents[0]).shape)
+                ).reshape(self.observation_space(a).shape)
                 for a in self.agent_ids
             }
         elif self.game_type.provides_observation_string:
@@ -333,7 +341,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
     def _update_action_masks(self):
         """Updates all the action masks inside the infos dictionary."""
         for agent_id, agent_name in zip(self.agent_ids, self.agents):
-            action_mask = np.zeros(self.action_space(agent_name).n, dtype=np.int8)
+            action_mask = np.zeros(self._env.num_distinct_actions(), dtype=np.int8)
             action_mask[self.game_state.legal_actions(agent_id)] = 1
 
             self.infos[agent_name] = {"action_mask": action_mask}
