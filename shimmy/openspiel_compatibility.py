@@ -188,15 +188,17 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
         # seed argument is only valid for three games
         if self.game_name in ["deep_sea", "hanabi", "mfg_garnet"] and seed is not None:
-            if self.config is None:
-                reset_config = {"seed": seed}
-            else:
-                reset_config = self.config.copy() if self.config is not None else {}
+            if self.config is not None:
+                reset_config = self.config.copy()
                 reset_config["seed"] = seed
+            else:
+                reset_config = {"seed": seed}
             self._env = pyspiel.load_game(self.game_name, reset_config)
-
         else:
-            self._env = pyspiel.load_game(self.game_name, self.config)
+            if self.config is not None:
+                self._env = pyspiel.load_game(self.game_name, self.config)
+            else:
+                self._env = pyspiel.load_game(self.game_name)
 
         # all agents
         self.agents = self.possible_agents[:]
