@@ -32,7 +32,7 @@ pip install shimmy[gym-v21]
 
 ## Usage
 
-Load a Gym V21 environment: 
+Load a Gym V21 environment:
 ```python
 import gymnasium as gym
 

@@ -65,7 +65,7 @@ env.close()
 ```{eval-rst}
 .. warning::
 
-    Using `gym.make()` to load DM Lab environments is not currently supported.     
+    Using `gym.make()` to load DM Lab environments is not currently supported.
 ```
 
 We provide a [helper function](#shimmy.utils.dm_lab.load_dm_lab) to load DM Lab environments, but cannot guarantee compatibility with all configurations. For troubleshooting, see [Python API](https://github.com/deepmind/lab/blob/master/docs/users/python_api.md).

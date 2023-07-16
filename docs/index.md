@@ -107,4 +107,3 @@ environments/meltingpot
 Github <https://github.com/Farama-Foundation/shimmy>
 release_notes
 ```
-
