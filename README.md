@@ -17,7 +17,7 @@ The documentation website is at [shimmy.farama.org](https://shimmy.farama.org/) 
 - Bindings to convert [ALE-py](https://github.com/mgbellemare/Arcade-Learning-Environment) Atari environments to [Gymnasium](https://gymnasium.farama.org/).
 
 ### [DeepMind Control](http://shimmy.farama.org/contents/dm_control/)
-- Bindings to convert [DM Control](https://github.com/deepmind/dm_control/) environments to [Gymnasium](https://gymnasium.farama.org/). 
+- Bindings to convert [DM Control](https://github.com/deepmind/dm_control/) environments to [Gymnasium](https://gymnasium.farama.org/).
 
 ### [DeepMind Control: Multi-Agent](http://shimmy.farama.org/contents/dm_multi/)
 - Bindings to convert [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
@@ -100,7 +100,7 @@ If you use Shimmy in your research, please cite:
   author       = {Jun Jet Tai and
                   Mark Towers and
                   Elliot Tower},
-  title        = {{Shimmy: Gymnasium and PettingZoo Wrappers for 
+  title        = {{Shimmy: Gymnasium and PettingZoo Wrappers for
                    Commonly Used Environments}},
   month        = jun,
   year         = 2023,

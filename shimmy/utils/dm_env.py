@@ -5,7 +5,7 @@ import copy
 from collections import OrderedDict
 from typing import Any
 
-import dm_env
+# import dm_env
 import numpy as np
 from dm_env.specs import Array, BoundedArray, DiscreteArray
 from gymnasium import spaces

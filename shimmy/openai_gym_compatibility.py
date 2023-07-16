@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import sys
-from typing import Any
+from typing import Any, Protocol, runtime_checkable
 
 import gymnasium
 from gymnasium import error
@@ -24,12 +24,6 @@ from gymnasium.spaces import (
 from gymnasium.utils.step_api_compatibility import (
     convert_to_terminated_truncated_step_api,
 )
-
-if sys.version_info >= (3, 8):
-    from typing import Protocol, runtime_checkable
-else:
-    from typing_extensions import Protocol, runtime_checkable
-
 
 try:
     import gym

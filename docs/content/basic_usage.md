@@ -18,12 +18,12 @@ env = gym.make("dm_control/acrobot-swingup_sparse-v0")
 
 Run the environment:
 
-```python 
+```python
 observation, info = env.reset(seed=42)
 for _ in range(1000):
    action = env.action_space.sample()  # this is where you would insert your policy
    observation, reward, terminated, truncated, info = env.step(action)
-   
+
    if terminated or truncated:
       observation, info = env.reset()
 env.close()
@@ -75,7 +75,7 @@ env.close()
 
 
 ### Conversion
-Environments loaded as [`ParallelEnv`](https://pettingzoo.farama.org/api/parallel/) can be converted to [`AECEnv`](https://pettingzoo.farama.org/api/aec/) using [`parallel_to_aec`](https://pettingzoo.farama.org/api/pz_wrappers/#parallel-to-aec). 
+Environments loaded as [`ParallelEnv`](https://pettingzoo.farama.org/api/parallel/) can be converted to [`AECEnv`](https://pettingzoo.farama.org/api/aec/) using [`parallel_to_aec`](https://pettingzoo.farama.org/api/pz_wrappers/#parallel-to-aec).
 
 Environments loaded as [`AECEnv`](https://pettingzoo.farama.org/api/aec/) can be converted to [`ParallelEnv`](https://pettingzoo.farama.org/api/parallel/) using [`parallel_to_aec`](https://pettingzoo.farama.org/api/pz_wrappers/#parallel-to-aec)
 * Note: this conversion makes the following assumptions about the underlying environment:
