@@ -295,7 +295,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;Wrapper to convert an OpenSpiel environment into a pettingzoo compatible environment.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">string</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
@@ -304,7 +303,7 @@
 <span class="kn">import</span> <span class="nn">pyspiel</span>
 <span class="kn">from</span> <span class="nn">gymnasium</span> <span class="kn">import</span> <span class="n">spaces</span>
 <span class="kn">from</span> <span class="nn">gymnasium.utils</span> <span class="kn">import</span> <span class="n">EzPickle</span><span class="p">,</span> <span class="n">seeding</span>
-<span class="kn">from</span> <span class="nn">pettingzoo.utils.env</span> <span class="kn">import</span> <span class="n">AgentID</span><span class="p">,</span> <span class="n">ObsType</span>
+<span class="kn">from</span> <span class="nn">pettingzoo.utils.env</span> <span class="kn">import</span> <span class="n">AgentID</span>
 
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0"><a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0">[docs]</a><span class="k">class</span> <span class="nc">OpenSpielCompatibilityV0</span><span class="p">(</span><span class="n">pz</span><span class="o">.</span><span class="n">AECEnv</span><span class="p">,</span> <span class="n">EzPickle</span><span class="p">):</span>
@@ -369,14 +368,59 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">agent_name_id_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
             <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">num_players</span><span class="p">()))</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_name_id_mapping</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">short_name</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_spaces</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_spaces</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_observation_spaces</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_action_spaces</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">render_mode</span> <span class="o">=</span> <span class="n">render_mode</span>
 
-<div class="viewcode-block" id="OpenSpielCompatibilityV0.observation_space"><a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observation_space">[docs]</a>    <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_update_observation_spaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_tensor</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">observation_spaces</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span>
+                    <span class="n">low</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                    <span class="n">high</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                    <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">observation_tensor_shape</span><span class="p">(),</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_information_state_tensor</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">observation_spaces</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span>
+                    <span class="n">low</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                    <span class="n">high</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                    <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">information_state_tensor_shape</span><span class="p">(),</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_information_state_string</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_string</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">observation_spaces</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
+                    <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">16</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">printable</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;No information/observation tensor/string implemented for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_action_spaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action_spaces</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Discrete</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">num_distinct_actions</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">SpielError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> for action space for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+
+<div class="viewcode-block" id="OpenSpielCompatibilityV0.observation_space"><a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observation_space">[docs]</a>    <span class="k">def</span> <span class="nf">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;observation_space.</span>
 
 <span class="sd">        We get the observation space from the underlying game.</span>
@@ -389,35 +433,13 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            agent (AgentID): agent</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_tensor</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span>
-                <span class="n">low</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                <span class="n">high</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">observation_tensor_shape</span><span class="p">(),</span>
-                <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_information_state_tensor</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span>
-                <span class="n">low</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                <span class="n">high</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">information_state_tensor_shape</span><span class="p">(),</span>
-                <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">elif</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_information_state_string</span>
-            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_string</span>
-        <span class="p">):</span>
-            <span class="k">return</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
-                <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">16</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">printable</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;No information/observation tensor/string implemented for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span></div>
+<span class="sd">        Returns:</span>
+<span class="sd">            space (gymnasium.spaces.Space): observation space for the specified agent</span>
 
-<div class="viewcode-block" id="OpenSpielCompatibilityV0.action_space"><a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.action_space">[docs]</a>    <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">action_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_spaces</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="OpenSpielCompatibilityV0.action_space"><a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.action_space">[docs]</a>    <span class="k">def</span> <span class="nf">action_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;action_space.</span>
 
 <span class="sd">        Get the action space from the underlying OpenSpiel game.</span>
@@ -426,14 +448,9 @@
 <span class="sd">            agent (AgentID): agent</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            space</span>
+<span class="sd">            space (gymnasium.spaces.Space): action space for the specified agent</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Discrete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">num_distinct_actions</span><span class="p">())</span>
-        <span class="k">except</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">SpielError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> for action space for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_spaces</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0.render"><a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;render.</span>
@@ -454,7 +471,7 @@
 <span class="sd">            agent (AgentID): agent</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            observation</span>
+<span class="sd">            observation (Any)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span></div>
 
@@ -480,19 +497,20 @@
 
         <span class="c1"># seed argument is only valid for three games</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;deep_sea&quot;</span><span class="p">,</span> <span class="s2">&quot;hanabi&quot;</span><span class="p">,</span> <span class="s2">&quot;mfg_garnet&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">reset_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">}</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">reset_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">reset_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
                 <span class="n">reset_config</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">reset_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">,</span> <span class="n">reset_config</span><span class="p">)</span>
-
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">load_game</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_name</span><span class="p">)</span>
 
         <span class="c1"># all agents</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">[:]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_name_id_mapping</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">]</span>
 
         <span class="c1"># boilerplate stuff</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cumulative_rewards</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mf">0.0</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
@@ -507,6 +525,10 @@
 
         <span class="c1"># holders in case of simultaneous actions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous_actions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># make sure observation and action spaces are correct for this environment config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_observation_spaces</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_action_spaces</span><span class="p">()</span>
 
         <span class="c1"># step through chance nodes</span>
         <span class="c1"># then update obs and act masks</span>
@@ -613,27 +635,27 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_tensor</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">observation_tensor</span><span class="p">(</span><span class="n">a</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">observation_tensor</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span>
                 <span class="p">)</span>
-                <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
             <span class="p">}</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_information_state_tensor</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">information_state_tensor</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-                <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">information_state_tensor</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
             <span class="p">}</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_string</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">observation_string</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">observation_string</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
             <span class="p">}</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_information_state_string</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">observations</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">information_state_string</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">information_state_string</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span>
             <span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
@@ -708,6 +730,10 @@
 
         <span class="c1"># handle the possibility of an end step</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_routine</span><span class="p">():</span>
+            <span class="c1"># ensure observation and action spaces are up-to-date with the underlying environment</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_observation_spaces</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_action_spaces</span><span class="p">()</span>
+
             <span class="c1"># step the environment</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_execute_action_node</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_execute_chance_node</span><span class="p">()</span>
