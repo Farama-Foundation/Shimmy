@@ -79,7 +79,52 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         self.game_type = self._env.get_type()
         self.game_name = self.game_type.short_name
 
+        self.observation_spaces = {}
+        self.action_spaces = {}
+
+        self._update_observation_spaces()
+        self._update_action_spaces()
+
         self.render_mode = render_mode
+
+    def _update_observation_spaces(self):
+        for agent in self.possible_agents:
+            if self.game_type.provides_observation_tensor:
+                self.observation_spaces[agent] = spaces.Box(
+                    low=-np.inf,
+                    high=np.inf,
+                    shape=self._env.observation_tensor_shape(),
+                    dtype=np.float64,
+                )
+            elif self.game_type.provides_information_state_tensor:
+                self.observation_spaces[agent] = spaces.Box(
+                    low=-np.inf,
+                    high=np.inf,
+                    shape=self._env.information_state_tensor_shape(),
+                    dtype=np.float64,
+                )
+            elif (
+                self.game_type.provides_information_state_string
+                or self.game_type.provides_observation_string
+            ):
+                self.observation_spaces[agent] = spaces.Text(
+                    min_length=0, max_length=2**16, charset=string.printable
+                )
+            else:
+                raise NotImplementedError(
+                    f"No information/observation tensor/string implemented for {self._env}."
+                )
+
+    def _update_action_spaces(self):
+        for agent in self.possible_agents:
+            try:
+                self.action_spaces[agent] = spaces.Discrete(
+                    self._env.num_distinct_actions()
+                )
+            except pyspiel.SpielError as e:
+                raise NotImplementedError(
+                    f"{str(e)[:-1]} for action space for {self._env}."
+                )
 
     def observation_space(self, agent: AgentID):
         """observation_space.
@@ -98,32 +143,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             space (gymnasium.spaces.Space): observation space for the specified agent
 
         """
-        # return self.observation_spaces[agent]
-        if self.game_type.provides_observation_tensor:
-            return spaces.Box(
-                low=-np.inf,
-                high=np.inf,
-                shape=self._env.observation_tensor_shape(),
-                dtype=np.float64,
-            )
-        elif self.game_type.provides_information_state_tensor:
-            return spaces.Box(
-                low=-np.inf,
-                high=np.inf,
-                shape=self._env.information_state_tensor_shape(),
-                dtype=np.float64,
-            )
-        elif (
-            self.game_type.provides_information_state_string
-            or self.game_type.provides_observation_string
-        ):
-            return spaces.Text(
-                min_length=0, max_length=2**16, charset=string.printable
-            )
-        else:
-            raise NotImplementedError(
-                f"No information/observation tensor/string implemented for {self._env}."
-            )
+        return self.observation_spaces[agent]
 
     def action_space(self, agent: AgentID):
         """action_space.
@@ -136,12 +156,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         Returns:
             space (gymnasium.spaces.Space): action space for the specified agent
         """
-        try:
-            return spaces.Discrete(self._env.num_distinct_actions())
-        except pyspiel.SpielError as e:
-            raise NotImplementedError(
-                f"{str(e)[:-1]} for action space for {self._env}."
-            )
+        return self.action_spaces[agent]
 
     def render(self):
         """render.
@@ -216,6 +231,10 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
         # holders in case of simultaneous actions
         self.simultaneous_actions = dict()
+
+        # make sure observation and action spaces are correct for this environment config
+        self._update_observation_spaces()
+        self._update_action_spaces()
 
         # step through chance nodes
         # then update obs and act masks
@@ -417,6 +436,10 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
         # handle the possibility of an end step
         if not self._end_routine():
+            # ensure observation and action spaces are up-to-date with the underlying environment
+            self._update_observation_spaces()
+            self._update_action_spaces()
+
             # step the environment
             self._execute_action_node(action)
             self._execute_chance_node()
