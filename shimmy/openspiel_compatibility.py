@@ -1,7 +1,6 @@
 """Wrapper to convert an OpenSpiel environment into a pettingzoo compatible environment."""
 from __future__ import annotations
 
-import functools
 import string
 from typing import Any, Dict, Optional
 
@@ -10,7 +9,7 @@ import pettingzoo as pz
 import pyspiel
 from gymnasium import spaces
 from gymnasium.utils import EzPickle, seeding
-from pettingzoo.utils.env import AgentID, ObsType
+from pettingzoo.utils.env import AgentID
 
 
 class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
@@ -75,13 +74,13 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         self.agent_name_id_mapping = dict(
             zip(self.possible_agents, range(self._env.num_players()))
         )
+        self.agent_ids = [self.agent_name_id_mapping[a] for a in self.possible_agents]
 
         self.game_type = self._env.get_type()
         self.game_name = self.game_type.short_name
 
         self.render_mode = render_mode
 
-    @functools.lru_cache(maxsize=None)
     def observation_space(self, agent: AgentID):
         """observation_space.
 
@@ -95,7 +94,11 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
         Args:
             agent (AgentID): agent
+        Returns:
+            space (gymnasium.spaces.Space): observation space for the specified agent
+
         """
+        # return self.observation_spaces[agent]
         if self.game_type.provides_observation_tensor:
             return spaces.Box(
                 low=-np.inf,
@@ -122,7 +125,6 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
                 f"No information/observation tensor/string implemented for {self._env}."
             )
 
-    @functools.lru_cache(maxsize=None)
     def action_space(self, agent: AgentID):
         """action_space.
 
@@ -132,7 +134,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             agent (AgentID): agent
 
         Returns:
-            space
+            space (gymnasium.spaces.Space): action space for the specified agent
         """
         try:
             return spaces.Discrete(self._env.num_distinct_actions())
@@ -160,7 +162,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             agent (AgentID): agent
 
         Returns:
-            observation
+            observation (Any)
         """
         return self.observations[agent]
 
@@ -194,11 +196,10 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             self._env = pyspiel.load_game(self.game_name, reset_config)
 
         else:
-            self._env = pyspiel.load_game(self.game_name)
+            self._env = pyspiel.load_game(self.game_name, self.config)
 
         # all agents
         self.agents = self.possible_agents[:]
-        self.agent_ids = [self.agent_name_id_mapping[a] for a in self.agents]
 
         # boilerplate stuff
         self._cumulative_rewards = {a: 0.0 for a in self.agents}
@@ -319,27 +320,27 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
         if self.game_type.provides_observation_tensor:
             self.observations = {
-                self.agents[a]: np.array(self.game_state.observation_tensor(a)).reshape(
-                    self.observation_space(a).shape
+                self.agents[i]: np.array(self.game_state.observation_tensor(i)).reshape(
+                    self.observation_space(self.agents[i]).shape
                 )
-                for a in self.agent_ids
+                for i in self.agent_ids
             }
         elif self.game_type.provides_information_state_tensor:
             self.observations = {
-                self.agents[a]: np.array(
-                    self.game_state.information_state_tensor(a)
-                ).reshape(self.observation_space(a).shape)
-                for a in self.agent_ids
+                self.agents[i]: np.array(
+                    self.game_state.information_state_tensor(i)
+                ).reshape(self.observation_space(self.agents[i]).shape)
+                for i in self.agent_ids
             }
         elif self.game_type.provides_observation_string:
             self.observations = {
-                self.agents[a]: self.game_state.observation_string(a)
-                for a in self.agent_ids
+                self.agents[i]: self.game_state.observation_string(i)
+                for i in self.agent_ids
             }
         elif self.game_type.provides_information_state_string:
             self.observations = {
-                self.agents[a]: self.game_state.information_state_string(a)
-                for a in self.agent_ids
+                self.agents[i]: self.game_state.information_state_string(i)
+                for i in self.agent_ids
             }
         else:
             raise NotImplementedError(
