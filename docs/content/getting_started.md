@@ -27,7 +27,7 @@ pip install "shimmy[all,testing]"
 ## Docker
 
 [Docker](https://docs.docker.com/get-docker/) can be used for installation and reproducible environment creation on any platform, through virtualized application containers.
-We provide [Dockerfiles](https://docs.docker.com/engine/reference/builder/) for each environment, located in [`/bin/`](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/) 
+We provide [Dockerfiles](https://docs.docker.com/engine/reference/builder/) for each environment, located in [`/bin/`](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/)
 
 ### Build a Docker Image
 
@@ -46,20 +46,20 @@ docker build -t dm_lab -f bin/dm_lab.Dockerfile .
 ### Running a Container
 
 Then, to run the Docker container with an interactive bash terminal:
-``` 
+```
 docker run -it dm_lab bash
 ```
 
 Stop the container:
-``` 
+```
 docker stop dm_lab
 ```
 
 Remove the stopped container:
-``` 
+```
 docker rm dm_lab
 ```
 
-For more information, see [Docker Documentation](https://docs.docker.com/get-started/). 
+For more information, see [Docker Documentation](https://docs.docker.com/get-started/).
 * [Docker Build](https://docs.docker.com/engine/reference/commandline/build/)
 * [Docker Run](https://docs.docker.com/engine/reference/commandline/run/)

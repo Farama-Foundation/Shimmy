@@ -70,5 +70,3 @@ RUN pip install -e /workspaces/meltingpot/meltingpot
 ENV PYTHONPATH "${PYTHONPATH}:/workspaces/meltingpot/meltingpot/"
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
-
-
