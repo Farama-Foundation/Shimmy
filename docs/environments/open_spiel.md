@@ -22,7 +22,7 @@ Shimmy provides compatibility wrappers to convert all [OpenSpiel](https://github
 
 ```
 
-Note: [PettingZoo](https://pettingzoo.farama.org/) also provides popular board & card game environments: [PettingZoo Classic](https://pettingzoo.farama.org/environments/classic/). 
+Note: [PettingZoo](https://pettingzoo.farama.org/) also provides popular board & card game environments: [PettingZoo Classic](https://pettingzoo.farama.org/environments/classic/).
 
 ## Installation
 To install `shimmy` and required dependencies:

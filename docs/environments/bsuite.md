@@ -2,7 +2,7 @@
 
 ## [DeepMind Behavior Suite](https://github.com/deepmind/bsuite)
 
-[Behavior Suite](https://github.com/deepmind/bsuite) is a collection of carefully-designed experiments that investigate various aspects of agent behavior through shared benchmarks. 
+[Behavior Suite](https://github.com/deepmind/bsuite) is a collection of carefully-designed experiments that investigate various aspects of agent behavior through shared benchmarks.
 
 Shimmy provides compatibility wrappers to convert [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
 

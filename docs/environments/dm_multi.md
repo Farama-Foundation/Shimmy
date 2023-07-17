@@ -53,7 +53,7 @@ from shimmy import DmControlMultiAgentCompatibilityV0
 env = dm_soccer.load(team_size=2)
 env = DmControlMultiAgentCompatibilityV0(env)
 ```
-Note: Using the `env` argument any argument other than `render_mode` will result in a `ValueError`: 
+Note: Using the `env` argument any argument other than `render_mode` will result in a `ValueError`:
 
 * Use the `env` argument to wrap an existing environment.
 * Use the `team_size`, `time_limit`, `disable_walker_contacts`, `enable_field_box`, `terminate_on_goal`, and `walker_type` arguments to load a new environment.
