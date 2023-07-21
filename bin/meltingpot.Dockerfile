@@ -36,6 +36,6 @@ RUN if [ -f "pyproject.toml" ]; then \
     else \
         pip install -U "shimmy[meltingpot, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
         mkdir -p bin && mv docker_entrypoint bin/docker_entrypoint; \
-    fi \
+    fi
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
