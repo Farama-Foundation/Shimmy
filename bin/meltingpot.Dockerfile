@@ -63,8 +63,7 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot \
 
 # Clone Melting Pot repository and install dependencies
 RUN git clone https://github.com/deepmind/meltingpot.git
-# RUN git checkout 61aa857da252a9be365bcc9c07d03a6024c3b73f # update to python 3.10 commit
-RUN git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81 # last update with 3.9 support which passed their CI
+RUN git checkout ed2e6e7 # last update with 3.9 support which passed their CI
 RUN cp -r meltingpot/ /workspaces/meltingpot/ && rm -R meltingpot/
 RUN pip install -e /workspaces/meltingpot/meltingpot
 
