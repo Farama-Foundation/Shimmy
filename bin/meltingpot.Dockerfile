@@ -1,9 +1,9 @@
 # A Dockerfile that sets up a full shimmy install with test dependencies
 # adapted from https://github.com/deepmind/meltingpot/blob/main/.devcontainer/Dockerfile
 
-# if PYTHON_VERSION is not specified as a build argument, set it to 3.10.
+# if PYTHON_VERSION is not specified as a build argument, set it to 3.9.
 ARG PYTHON_VERSION
-ARG PYTHON_VERSION=${PYTHON_VERSION:-3.10}
+ARG PYTHON_VERSION=${PYTHON_VERSION:-3.9}
 FROM python:$PYTHON_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -46,8 +46,15 @@ RUN apt-get update \
     ffmpeg \
     git
 
-# Install lab2d via pip
-RUN pip install dmlab2d
+# Install lab2d (appropriate version for architecture)
+RUN if [ "$(uname -m)" != 'x86_64' ]; then \
+        echo "No Lab2d wheel available for $(uname -m) machines." >&2 \
+        exit 1; \
+    elif [ "$(uname -s)" = 'Linux' ]; then \
+        pip install https://github.com/deepmind/lab2d/releases/download/release_candidate_2022-03-24/dmlab2d-1.0-cp39-cp39-manylinux_2_31_x86_64.whl ;\
+    else \
+        pip install https://github.com/deepmind/lab2d/releases/download/release_candidate_2022-03-24/dmlab2d-1.0-cp39-cp39-macosx_10_15_x86_64.whl ;\
+    fi
 
 # Download Melting Pot assets
 RUN mkdir -p /workspaces/meltingpot/meltingpot \
@@ -56,7 +63,8 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot \
 
 # Clone Melting Pot repository and install dependencies
 RUN git clone https://github.com/deepmind/meltingpot.git
-RUN git checkout 61aa857da252a9be365bcc9c07d03a6024c3b73f
+# RUN git checkout 61aa857da252a9be365bcc9c07d03a6024c3b73f # update to python 3.10 commit
+RUN git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81 # last update with 3.9 support which passed their CI
 RUN cp -r meltingpot/ /workspaces/meltingpot/ && rm -R meltingpot/
 RUN pip install -e /workspaces/meltingpot/meltingpot
 
