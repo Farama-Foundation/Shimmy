@@ -29,6 +29,11 @@ else
   echo "directory already exists"
 fi
 cd meltingpot
+
+# Checkout the last commit with 3.9 support that passed CI (July 17 2023)
+# Newer versions and pypi wheels caused issues
+git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81
+
 chmod +x *.sh
 echo "Installing dmlab2d..."
 ./install-dmlab2d.sh
