@@ -69,7 +69,6 @@ RUN cp -r meltingpot/ /workspaces/meltingpot/ && rm -R meltingpot/
 # Newer versions and pypi wheels caused issues
 RUN cd /workspaces/meltingpot/meltingpot && git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81
 
-#RUN git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81 # last update with 3.9 support which passed their CI
 RUN pip install -e /workspaces/meltingpot/meltingpot
 
 # Set Python path for meltingpot
