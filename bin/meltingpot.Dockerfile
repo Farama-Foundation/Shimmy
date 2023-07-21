@@ -68,6 +68,7 @@ RUN cd /workspaces/meltingpot/meltingpot && ls && git checkout v2.1.1
 
 #RUN git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81 # last update with 3.9 support which passed their CI
 RUN pip install -e .
+RUN pip install ml_collections
 
 # Set Python path for meltingpot
 ENV PYTHONPATH "${PYTHONPATH}:/workspaces/meltingpot/meltingpot/"
