@@ -291,6 +291,18 @@
             
             <section id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this heading">#</a></h1>
+<section id="release-v1-2-1">
+<h2>v1.2.1: Shimmy 1.2.1<a class="headerlink" href="#release-v1-2-1" title="Permalink to this heading">#</a></h2>
+<p><em>Released on 2023-07-21 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.2.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.2.1/">PyPI</a></em></p>
+<h2>Shimmy 1.2.1 Release Notes:</h2>
+<p>This is a minor hot fix which solves an issue where the Melting Pot dockerfile was not running successfully, leading to CI failures and making our install scripts fail.</p>
+<p>Note: DeepMind is working towards fully pip-installable modules for <code>dmlab2d</code> (<a href="https://github.com/deepmind/lab2d/deployments/activity_log?environment=pypi">link</a>)and <code>meltingpot</code> (<a href="https://github.com/deepmind/meltingpot/deployments/activity_log?environment=pypi">link</a>), but both are currently in pre-release alpha stage, and currently are not fully functional for our usage.</p>
+<h2>Bug Fixes:</h2>
+<ul>
+<li>Fix meltingpot dockerfile (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1815062775" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/102" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/102/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/102">#102</a>)</li>
+<li>Fix meltingpot install script (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1815179875" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/103" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/103/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/103">#103</a>)</li>
+</ul>
+<p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.2.0...v1.2.1"><tt>v1.2.0...v1.2.1</tt></a></p></section>
 <section id="release-v1-2-0">
 <h2>v1.2.0: Shimmy 1.2.0<a class="headerlink" href="#release-v1-2-0" title="Permalink to this heading">#</a></h2>
 <p><em>Released on 2023-07-21 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.2.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.2.0/">PyPI</a></em></p>
@@ -532,6 +544,7 @@ Additionally, this changes <code>GymV22Environment</code> to <code>GymV21Environ
             <div class="toc-tree">
               <ul>
 <li><a class="reference internal" href="#">Release Notes</a><ul>
+<li><a class="reference internal" href="#release-v1-2-1">v1.2.1: Shimmy 1.2.1</a></li>
 <li><a class="reference internal" href="#release-v1-2-0">v1.2.0: Shimmy 1.2.0</a></li>
 <li><a class="reference internal" href="#release-v1-1-0">v1.1.0: Shimmy 1.1.0</a></li>
 <li><a class="reference internal" href="#release-v1-0-1">v1.0.1: Shimmy 1.0.1</a></li>
