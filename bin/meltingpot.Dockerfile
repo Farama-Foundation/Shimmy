@@ -38,4 +38,28 @@ RUN if [ -f "pyproject.toml" ]; then \
         mkdir -p bin && mv docker_entrypoint bin/docker_entrypoint; \
     fi
 
+# Install Melting Pot dependencies
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
+    build-essential \
+    curl \
+    ffmpeg \
+    git
+
+# Install lab2d via pip
+RUN pip install dmlab2d
+
+# Download Melting Pot assets
+RUN mkdir -p /workspaces/meltingpot/meltingpot \
+    && curl -SL https://storage.googleapis.com/dm-meltingpot/meltingpot-assets-2.1.0.tar.gz \
+    | tar -xz --directory=/workspaces/meltingpot/meltingpot
+
+# Clone Melting Pot repository and install dependencies
+RUN git clone https://github.com/deepmind/meltingpot.git
+RUN cp -r meltingpot/ /workspaces/meltingpot/ && rm -R meltingpot/
+RUN pip install -e /workspaces/meltingpot/meltingpot
+
+# Set Python path for meltingpot
+ENV PYTHONPATH "${PYTHONPATH}:/workspaces/meltingpot/meltingpot/"
+
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
