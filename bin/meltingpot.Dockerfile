@@ -1,9 +1,9 @@
 # A Dockerfile that sets up a full shimmy install with test dependencies
 # adapted from https://github.com/deepmind/meltingpot/blob/main/.devcontainer/Dockerfile
 
-# if PYTHON_VERSION is not specified as a build argument, set it to 3.9.
+# if PYTHON_VERSION is not specified as a build argument, set it to 3.10.
 ARG PYTHON_VERSION
-ARG PYTHON_VERSION=${PYTHON_VERSION:-3.9}
+ARG PYTHON_VERSION=${PYTHON_VERSION:-3.10}
 FROM python:$PYTHON_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -46,15 +46,8 @@ RUN apt-get update \
     ffmpeg \
     git
 
-# Install lab2d (appropriate version for architecture)
-RUN if [ "$(uname -m)" != 'x86_64' ]; then \
-        echo "No Lab2d wheel available for $(uname -m) machines." >&2 \
-        exit 1; \
-    elif [ "$(uname -s)" = 'Linux' ]; then \
-        pip install https://github.com/deepmind/lab2d/releases/download/release_candidate_2022-03-24/dmlab2d-1.0-cp39-cp39-manylinux_2_31_x86_64.whl ;\
-    else \
-        pip install https://github.com/deepmind/lab2d/releases/download/release_candidate_2022-03-24/dmlab2d-1.0-cp39-cp39-macosx_10_15_x86_64.whl ;\
-    fi
+# Install lab2d via pip
+RUN pip install dmlab2d
 
 # Download Melting Pot assets
 RUN mkdir -p /workspaces/meltingpot/meltingpot \
