@@ -64,10 +64,8 @@ RUN mkdir -p /workspaces/meltingpot/meltingpot \
 # Clone Melting Pot repository and install dependencies
 RUN git clone https://github.com/deepmind/meltingpot.git
 RUN cp -r meltingpot/ /workspaces/meltingpot/ && rm -R meltingpot/
-RUN cd /workspaces/meltingpot/meltingpot
-RUN ls
-RUN ls ..
-RUN git checkout v2.1.1
+RUN cd /workspaces/meltingpot/meltingpot && ls && git checkout v2.1.1
+
 #RUN git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81 # last update with 3.9 support which passed their CI
 RUN pip install -e .
 
