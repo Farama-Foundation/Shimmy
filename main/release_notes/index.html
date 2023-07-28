@@ -11,9 +11,9 @@
 <link rel="index" title="Index" href="../genindex/" /><link rel="search" title="Search" href="../search/" /><link rel="prev" title="Melting Pot" href="../environments/meltingpot/" />
         <link rel="canonical" href="https://shimmy.farama.org/release_notes.html" />
 
-    <link rel="shortcut icon" href="../_static/shimmy.svg"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20.dev1 -->
+    <link rel="shortcut icon" href="../_static/shimmy.svg"/><!-- Generated with Sphinx 7.1.1 and Furo 2023.05.20.dev1 -->
         <title>Release Notes - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=2b6f8eb5452c44539a42dd9ada0a48f56e5f404d" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=d98e5db1aa483f10fd0a50bf79700ebb0c5bab79" />
     
@@ -291,6 +291,18 @@
             
             <section id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this heading">#</a></h1>
+<section id="release-v1-2-1">
+<h2>v1.2.1: Shimmy 1.2.1<a class="headerlink" href="#release-v1-2-1" title="Permalink to this heading">#</a></h2>
+<p><em>Released on 2023-07-21 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.2.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.2.1/">PyPI</a></em></p>
+<h2>Shimmy 1.2.1 Release Notes:</h2>
+<p>This is a minor hotfix which solves an issue where the Melting Pot dockerfile was not running successfully, leading to CI failures and making our install scripts fail.</p>
+<p>Note: DeepMind is working towards fully pip-installable modules for <code>dmlab2d</code> (<a href="https://github.com/deepmind/lab2d/deployments/activity_log?environment=pypi">link</a>)and <code>meltingpot</code> (<a href="https://github.com/deepmind/meltingpot/deployments/activity_log?environment=pypi">link</a>), but both are currently in pre-release alpha stage, and currently are not fully functional for our usage.</p>
+<h2>Bug Fixes:</h2>
+<ul>
+<li>Fix meltingpot dockerfile (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1815062775" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/102" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/102/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/102">#102</a>)</li>
+<li>Fix meltingpot install script (<a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1815179875" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/103" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/103/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/103">#103</a>)</li>
+</ul>
+<p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.2.0...v1.2.1"><tt>v1.2.0...v1.2.1</tt></a></p></section>
 <section id="release-v1-2-0">
 <h2>v1.2.0: Shimmy 1.2.0<a class="headerlink" href="#release-v1-2-0" title="Permalink to this heading">#</a></h2>
 <p><em>Released on 2023-07-21 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.2.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.2.0/">PyPI</a></em></p>
@@ -532,6 +544,7 @@ Additionally, this changes <code>GymV22Environment</code> to <code>GymV21Environ
             <div class="toc-tree">
               <ul>
 <li><a class="reference internal" href="#">Release Notes</a><ul>
+<li><a class="reference internal" href="#release-v1-2-1">v1.2.1: Shimmy 1.2.1</a></li>
 <li><a class="reference internal" href="#release-v1-2-0">v1.2.0: Shimmy 1.2.0</a></li>
 <li><a class="reference internal" href="#release-v1-1-0">v1.1.0: Shimmy 1.1.0</a></li>
 <li><a class="reference internal" href="#release-v1-0-1">v1.0.1: Shimmy 1.0.1</a></li>
@@ -625,10 +638,10 @@ Additionally, this changes <code>GymV22Environment</code> to <code>GymV21Environ
         })()
       </script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=3f7802b3"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/scripts/furo.js?v=7660844c"></script>
     
     <script>
 
