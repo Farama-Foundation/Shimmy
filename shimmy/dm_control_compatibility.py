@@ -112,6 +112,12 @@ class DmControlCompatibilityV0(gymnasium.Env[ObsType, np.ndarray], EzPickle):
         timestep = self._env.reset()
         obs, reward, terminated, truncated, info = dm_env_step2gym_step(timestep)
 
+        if self.render_mode == "human":
+            self.viewer.close()
+            self.viewer = MujocoRenderer(
+                self._env.physics.model.ptr, self._env.physics.data.ptr
+            )
+
         return obs, info
 
     def step(

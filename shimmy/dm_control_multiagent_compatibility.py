@@ -236,6 +236,12 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
         timestep = self._env.reset()
         observations, _, _, _, info = _unravel_ma_timestep(timestep, self.agents)
 
+        if self.render_mode == "human":
+            self.viewer.close()
+            self.viewer = MujocoRenderer(
+                self._env.physics.model.ptr, self._env.physics.data.ptr
+            )
+
         return observations, info
 
     def step(
