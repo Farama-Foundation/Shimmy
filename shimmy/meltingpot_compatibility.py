@@ -8,6 +8,7 @@ and modified to modern PettingZoo API
 from __future__ import annotations
 
 import functools
+from itertools import repeat
 from typing import TYPE_CHECKING, Any, Optional
 
 import dm_env
@@ -46,7 +47,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
     def __init__(
         self,
-        env: meltingpot.utils.substrates.substrate.Substrate | None = None,
+        env: meltingpot.configs.substrates.substrate.Substrate | None = None,
         substrate_name: str | None = None,
         max_cycles: int = MAX_CYCLES,
         render_mode: str | None = None,
@@ -158,7 +159,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         self,
         seed: int | None = None,
         options: dict | None = None,
-    ) -> tuple[ObsDict, dict[str, Any]]:
+    ) -> tuple[ObsDict, dict[AgentID, Any]]:
         """reset.
 
         Resets the environment.
@@ -176,10 +177,20 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
         observations = utils.timestep_to_observations(timestep)
 
-        return observations, {
-            "step-type": timestep.step_type,
-            "discount": timestep.discount,
-        }
+        # duplicate infos
+        info: dict[AgentID, Any] = dict(
+            zip(
+                self.agents,
+                repeat(
+                    {
+                        "timestep.discount": timestep.discount,
+                        "timestep.step_type": timestep.step_type,
+                    }
+                ),
+            )
+        )
+
+        return observations, info
 
     def step(
         self, actions: ActionDict
