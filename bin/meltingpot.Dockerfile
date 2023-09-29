@@ -56,22 +56,7 @@ RUN if [ "$(uname -m)" != 'x86_64' ]; then \
         pip install https://github.com/deepmind/lab2d/releases/download/release_candidate_2022-03-24/dmlab2d-1.0-cp39-cp39-macosx_10_15_x86_64.whl ;\
     fi
 
-# Download Melting Pot assets
-RUN mkdir -p /workspaces/meltingpot/meltingpot \
-    && curl -SL https://storage.googleapis.com/dm-meltingpot/meltingpot-assets-2.1.0.tar.gz \
-    | tar -xz --directory=/workspaces/meltingpot/meltingpot
-
-# Clone Melting Pot repository and install dependencies
-RUN git clone https://github.com/deepmind/meltingpot.git
-RUN cp -r meltingpot/ /workspaces/meltingpot/ && rm -R meltingpot/
-
-# Checkout the last commit with 3.9 support that passed CI (July 17 2023)
-# Newer versions and pypi wheels caused issues
-RUN cd /workspaces/meltingpot/meltingpot && git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81
-
-RUN pip install -e /workspaces/meltingpot/meltingpot
-
-# Set Python path for meltingpot
-ENV PYTHONPATH "${PYTHONPATH}:/workspaces/meltingpot/meltingpot/"
+# Install meltingpot and dependencies
+RUN pip install dm-meltingpot
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
