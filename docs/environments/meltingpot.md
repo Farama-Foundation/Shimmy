@@ -28,7 +28,7 @@ To install `shimmy` and required dependencies:
 pip install shimmy[melting-pot]
 ```
 
-We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/meltingpot.Dockerfile) for reproducibility and cross-platform compatibility (see 
+We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/meltingpot.Dockerfile) for reproducibility and cross-platform compatibility (see
 
 [Installation](/content/getting_started/))
 
