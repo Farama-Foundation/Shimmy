@@ -22,6 +22,7 @@ import shimmy.utils.meltingpot as utils
 
 if TYPE_CHECKING:
     import meltingpot
+    from meltingpot.utils.substrates import substrate
 
 
 class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
@@ -47,7 +48,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
     def __init__(
         self,
-        env: meltingpot.configs.substrates.substrate.Substrate | None = None,
+        env: substrate.Substrate | None = None,
         substrate_name: str | None = None,
         max_cycles: int = MAX_CYCLES,
         render_mode: str | None = None,
@@ -55,7 +56,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         """Wrapper that converts a Melting Pot environment into a PettingZoo environment.
 
         Args:
-            env (Optional[meltingpot.utils.substrates.substrate.Substrate]): existing Melting Pot environment to wrap
+            env (Optional[substrate.Substrate]): existing Melting Pot environment to wrap
             substrate_name (Optional[str]): name of Melting Pot substrate to load (instead of existing environment)
             max_cycles (Optional[int]): maximum number of cycles before truncation
             render_mode (Optional[str]): rendering mode
@@ -177,20 +178,16 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
         observations = utils.timestep_to_observations(timestep)
 
-        # duplicate infos
-        info: dict[AgentID, Any] = dict(
-            zip(
-                self.agents,
-                repeat(
-                    {
-                        "timestep.discount": timestep.discount,
-                        "timestep.step_type": timestep.step_type,
-                    }
-                ),
-            )
-        )
+        # duplicate infos across agents
+        infos = {
+            agent: {
+                "timestep.discount": timestep.discount,
+                "timestep.step_type": timestep.step_type,
+            }
+            for agent in self.agents
+        }
 
-        return observations, info
+        return observations, infos
 
     def step(
         self, actions: ActionDict
