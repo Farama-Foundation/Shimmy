@@ -46,7 +46,7 @@ extras = {
     ],
     "dm-lab": ["dm-env>=1.6"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.23"],
-    "meltingpot": ["pettingzoo>=1.23", "meltingpot>=1.0.0"],
+    "meltingpot": ["pettingzoo>=1.23", "meltingpot>=2.2.0"],
     "bsuite": ["bsuite>=0.3.5"],
 }
 extras["all"] = [
