@@ -25,7 +25,7 @@ Shimmy provides compatibility wrappers to convert all [Melting Pot](https://gith
 To install `shimmy` and required dependencies:
 
 ```
-pip install shimmy[melting-pot]
+pip install shimmy[meltingpot]
 ```
 
 We also provide a [Dockerfile](https://github.com/Farama-Foundation/Shimmy/blob/main/bin/meltingpot.Dockerfile) for reproducibility and cross-platform compatibility (see
