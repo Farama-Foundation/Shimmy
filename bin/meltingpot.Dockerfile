@@ -1,9 +1,9 @@
 # A Dockerfile that sets up a full shimmy install with test dependencies
 # adapted from https://github.com/deepmind/meltingpot/blob/main/.devcontainer/Dockerfile
 
-# if PYTHON_VERSION is not specified as a build argument, set it to 3.9.
+# if PYTHON_VERSION is not specified as a build argument, set it to 3.10.
 ARG PYTHON_VERSION
-ARG PYTHON_VERSION=${PYTHON_VERSION:-3.9}
+ARG PYTHON_VERSION=${PYTHON_VERSION:-3.10}
 FROM python:$PYTHON_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
