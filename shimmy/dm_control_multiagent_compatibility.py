@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import functools
-from itertools import repeat
 from typing import TYPE_CHECKING, Any
 
 import dm_control.composer
@@ -43,27 +42,30 @@ def _unravel_ma_timestep(
     observations: dict[AgentID, Any] = dict(zip(agents, list_observations))
 
     # sometimes deepmind decides not to reward people
-    rewards: dict[AgentID, float] = dict(zip(agents, repeat(0.0)))
+    rewards: dict[AgentID, float] = {agent: 0.0 for agent in agents}
+
     if timestep.reward:
         rewards = dict(zip(agents, timestep.reward))
 
     # expand everything else
-    terminations: dict[AgentID, bool] = dict(zip(agents, repeat(term)))
-    truncations: dict[AgentID, bool] = dict(zip(agents, repeat(trunc)))
+    terminations: dict[AgentID, bool] = {agent: term for agent in agents}
+    truncations: dict[AgentID, bool] = {agent: trunc for agent in agents}
 
-    # duplicate infos
-    info = {
-        "timestep.discount": timestep.discount,
-        "timestep.step_type": timestep.step_type,
+    # duplicate infos across agents
+    infos = {
+        agent: {
+            "timestep.discount": timestep.discount,
+            "timestep.step_type": timestep.step_type,
+        }
+        for agent in agents
     }
-    info: dict[AgentID, Any] = dict(zip(agents, repeat(info)))
 
     return (
         observations,
         rewards,
         terminations,
         truncations,
-        info,
+        infos,
     )
 
 

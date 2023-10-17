@@ -1,9 +1,9 @@
 # A Dockerfile that sets up a full shimmy install with test dependencies
 # adapted from https://github.com/deepmind/meltingpot/blob/main/.devcontainer/Dockerfile
 
-# if PYTHON_VERSION is not specified as a build argument, set it to 3.9.
+# if PYTHON_VERSION is not specified as a build argument, set it to 3.10.
 ARG PYTHON_VERSION
-ARG PYTHON_VERSION=${PYTHON_VERSION:-3.9}
+ARG PYTHON_VERSION=${PYTHON_VERSION:-3.10}
 FROM python:$PYTHON_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -37,41 +37,5 @@ RUN if [ -f "pyproject.toml" ]; then \
         pip install -U "shimmy[meltingpot, testing] @ git+https://github.com/Farama-Foundation/Shimmy.git" --no-cache-dir; \
         mkdir -p bin && mv docker_entrypoint bin/docker_entrypoint; \
     fi
-
-# Install Melting Pot dependencies
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
-    build-essential \
-    curl \
-    ffmpeg \
-    git
-
-# Install lab2d (appropriate version for architecture)
-RUN if [ "$(uname -m)" != 'x86_64' ]; then \
-        echo "No Lab2d wheel available for $(uname -m) machines." >&2 \
-        exit 1; \
-    elif [ "$(uname -s)" = 'Linux' ]; then \
-        pip install https://github.com/deepmind/lab2d/releases/download/release_candidate_2022-03-24/dmlab2d-1.0-cp39-cp39-manylinux_2_31_x86_64.whl ;\
-    else \
-        pip install https://github.com/deepmind/lab2d/releases/download/release_candidate_2022-03-24/dmlab2d-1.0-cp39-cp39-macosx_10_15_x86_64.whl ;\
-    fi
-
-# Download Melting Pot assets
-RUN mkdir -p /workspaces/meltingpot/meltingpot \
-    && curl -SL https://storage.googleapis.com/dm-meltingpot/meltingpot-assets-2.1.0.tar.gz \
-    | tar -xz --directory=/workspaces/meltingpot/meltingpot
-
-# Clone Melting Pot repository and install dependencies
-RUN git clone https://github.com/deepmind/meltingpot.git
-RUN cp -r meltingpot/ /workspaces/meltingpot/ && rm -R meltingpot/
-
-# Checkout the last commit with 3.9 support that passed CI (July 17 2023)
-# Newer versions and pypi wheels caused issues
-RUN cd /workspaces/meltingpot/meltingpot && git checkout ed2e6e79ca49a14a22aa4b6117ac407f39fbef81
-
-RUN pip install -e /workspaces/meltingpot/meltingpot
-
-# Set Python path for meltingpot
-ENV PYTHONPATH "${PYTHONPATH}:/workspaces/meltingpot/meltingpot/"
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]

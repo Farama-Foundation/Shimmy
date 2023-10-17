@@ -8,6 +8,7 @@ and modified to modern PettingZoo API
 from __future__ import annotations
 
 import functools
+from itertools import repeat
 from typing import TYPE_CHECKING, Any, Optional
 
 import dm_env
@@ -20,7 +21,8 @@ from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 import shimmy.utils.meltingpot as utils
 
 if TYPE_CHECKING:
-    import meltingpot.python
+    import meltingpot
+    from meltingpot.utils.substrates import substrate
 
 
 class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
@@ -46,7 +48,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
     def __init__(
         self,
-        env: meltingpot.python.utils.substrates.substrate.Substrate | None = None,
+        env: substrate.Substrate | None = None,
         substrate_name: str | None = None,
         max_cycles: int = MAX_CYCLES,
         render_mode: str | None = None,
@@ -54,7 +56,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         """Wrapper that converts a Melting Pot environment into a PettingZoo environment.
 
         Args:
-            env (Optional[meltingpot.python.utils.substrates.substrate.Substrate]): existing Melting Pot environment to wrap
+            env (Optional[substrate.Substrate]): existing Melting Pot environment to wrap
             substrate_name (Optional[str]): name of Melting Pot substrate to load (instead of existing environment)
             max_cycles (Optional[int]): maximum number of cycles before truncation
             render_mode (Optional[str]): rendering mode
@@ -158,7 +160,7 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
         self,
         seed: int | None = None,
         options: dict | None = None,
-    ) -> tuple[ObsDict, dict[str, Any]]:
+    ) -> tuple[ObsDict, dict[AgentID, Any]]:
         """reset.
 
         Resets the environment.
@@ -176,10 +178,16 @@ class MeltingPotCompatibilityV0(ParallelEnv, EzPickle):
 
         observations = utils.timestep_to_observations(timestep)
 
-        return observations, {
-            "step-type": timestep.step_type,
-            "discount": timestep.discount,
+        # duplicate infos across agents
+        infos = {
+            agent: {
+                "timestep.discount": timestep.discount,
+                "timestep.step_type": timestep.step_type,
+            }
+            for agent in self.agents
         }
+
+        return observations, infos
 
     def step(
         self, actions: ActionDict

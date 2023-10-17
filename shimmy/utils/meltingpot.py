@@ -18,16 +18,14 @@ def load_meltingpot(substrate_name: str):
         substrate_name: str
 
     Returns:
-        env: meltingpot.python.utils.substrates.substrate.Substrate
+        env: meltingpot.utils.substrates.substrate.Substrate
     """
-    import meltingpot.python
+    import meltingpot
     from ml_collections import config_dict
 
     # Create env config
     substrate_name = substrate_name
-    player_roles = meltingpot.python.substrate.get_config(
-        substrate_name
-    ).default_player_roles
+    player_roles = meltingpot.substrate.get_config(substrate_name).default_player_roles
     env_config = {
         "substrate": substrate_name,
         "roles": player_roles,
@@ -35,9 +33,7 @@ def load_meltingpot(substrate_name: str):
 
     # Build substrate from pickle
     env_config = config_dict.ConfigDict(env_config)
-    env = meltingpot.python.substrate.build(
-        env_config["substrate"], roles=env_config["roles"]
-    )
+    env = meltingpot.substrate.build(env_config["substrate"], roles=env_config["roles"])
     return env
 
 
