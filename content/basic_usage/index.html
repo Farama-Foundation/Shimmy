@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark">
@@ -11,11 +11,11 @@
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="DM Control" href="../../environments/dm_control/" /><link rel="prev" title="Getting Started" href="../getting_started/" />
         <link rel="canonical" href="https://shimmy.farama.org/content/basic_usage.html" />
 
-    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20.dev1 -->
+    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.08.19.dev1 -->
         <title>Basic Usage - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=2b6f8eb5452c44539a42dd9ada0a48f56e5f404d" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=d98e5db1aa483f10fd0a50bf79700ebb0c5bab79" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=3e7f4c72" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=49cbaffd" />
     
     
 
@@ -290,10 +290,10 @@
           <article role="main">
             
             <section id="basic-usage">
-<h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this heading">#</a></h1>
+<h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h1>
 <p>Shimmy provides API compatibility tools to adapt popular external reinforcement learning environments to work with <a class="reference external" href="https://github.com/farama-Foundation/gymnasium">Gymnasium</a> and <a class="reference external" href="https://github.com/farama-Foundation/pettingZoo/">PettingZoo</a>.</p>
 <section id="single-agent">
-<h2>Single-agent<a class="headerlink" href="#single-agent" title="Permalink to this heading">#</a></h2>
+<h2>Single-agent<a class="headerlink" href="#single-agent" title="Link to this heading">#</a></h2>
 <p>Single-agent <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a> environments can be loaded via <code class="docutils literal notranslate"><span class="pre">gym.make()</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;dm_control/acrobot-swingup_sparse-v0&quot;</span><span class="p">)</span>
@@ -312,10 +312,10 @@
 </div>
 </section>
 <section id="multi-agent">
-<h2>Multi-agent<a class="headerlink" href="#multi-agent" title="Permalink to this heading">#</a></h2>
+<h2>Multi-agent<a class="headerlink" href="#multi-agent" title="Link to this heading">#</a></h2>
 <p>Multi-agent <a class="reference external" href="https://pettingzoo.farama.org">PettingZoo</a> environments can be loaded via Shimmy <code class="docutils literal notranslate"><span class="pre">Compatibility</span></code> wrappers.</p>
 <section id="aec-environments">
-<h3>AEC Environments<a class="headerlink" href="#aec-environments" title="Permalink to this heading">#</a></h3>
+<h3>AEC Environments<a class="headerlink" href="#aec-environments" title="Link to this heading">#</a></h3>
 <p>Load the environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shimmy</span> <span class="kn">import</span> <span class="n">OpenSpielCompatibilityV0</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">OpenSpielCompatibilityV0</span><span class="p">(</span><span class="n">game_name</span><span class="o">=</span><span class="s2">&quot;backgammon&quot;</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
@@ -336,7 +336,7 @@
 </div>
 </section>
 <section id="parallel-environments">
-<h3>Parallel Environments<a class="headerlink" href="#parallel-environments" title="Permalink to this heading">#</a></h3>
+<h3>Parallel Environments<a class="headerlink" href="#parallel-environments" title="Link to this heading">#</a></h3>
 <p>Load the environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shimmy</span> <span class="kn">import</span> <span class="n">MeltingPotCompatibilityV0</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">MeltingPotCompatibilityV0</span><span class="p">(</span><span class="n">substrate_name</span><span class="o">=</span><span class="s2">&quot;prisoners_dilemma_in_the_matrix__arena&quot;</span><span class="p">)</span>
@@ -352,7 +352,7 @@
 </div>
 </section>
 <section id="conversion">
-<h3>Conversion<a class="headerlink" href="#conversion" title="Permalink to this heading">#</a></h3>
+<h3>Conversion<a class="headerlink" href="#conversion" title="Link to this heading">#</a></h3>
 <p>Environments loaded as <a class="reference external" href="https://pettingzoo.farama.org/api/parallel/"><code class="docutils literal notranslate"><span class="pre">ParallelEnv</span></code></a> can be converted to <a class="reference external" href="https://pettingzoo.farama.org/api/aec/"><code class="docutils literal notranslate"><span class="pre">AECEnv</span></code></a> using <a class="reference external" href="https://pettingzoo.farama.org/api/pz_wrappers/#parallel-to-aec"><code class="docutils literal notranslate"><span class="pre">parallel_to_aec</span></code></a>.</p>
 <p>Environments loaded as <a class="reference external" href="https://pettingzoo.farama.org/api/aec/"><code class="docutils literal notranslate"><span class="pre">AECEnv</span></code></a> can be converted to <a class="reference external" href="https://pettingzoo.farama.org/api/parallel/"><code class="docutils literal notranslate"><span class="pre">ParallelEnv</span></code></a> using <a class="reference external" href="https://pettingzoo.farama.org/api/pz_wrappers/#parallel-to-aec"><code class="docutils literal notranslate"><span class="pre">parallel_to_aec</span></code></a></p>
 <ul class="simple">
@@ -519,10 +519,10 @@
         })()
       </script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/documentation_options.js?v=0559ecf3"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=7660844c"></script>
     
     <script>
 
@@ -652,7 +652,7 @@
             const subSectionContainerElem = Object.assign(
                 document.createElement('div'), {
                   className:'farama-header-menu__subsections-container',
-                  style: key == "Mature Projects" ? "display: flex" : ""
+                  style: 'display: flex'
                 }
             )
             Object.keys(subSections).forEach((subKey, i) => {
@@ -667,7 +667,7 @@
                   innerText: subKey
                 }
               ))
-              const ulElem = createProjectsList(subSections[subKey], key !== "Foundation");
+              const ulElem = createProjectsList(subSections[subKey], key !== 'Foundation');
               subSectionElem.appendChild(ulElem);
               subSectionContainerElem.appendChild(subSectionElem);
             })

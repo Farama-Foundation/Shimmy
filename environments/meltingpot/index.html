@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark">
@@ -11,11 +11,11 @@
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Release Notes" href="../../release_notes/" /><link rel="prev" title="OpenSpiel" href="../open_spiel/" />
         <link rel="canonical" href="https://shimmy.farama.org/environments/meltingpot.html" />
 
-    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20.dev1 -->
+    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.08.19.dev1 -->
         <title>Melting Pot - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=2b6f8eb5452c44539a42dd9ada0a48f56e5f404d" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=d98e5db1aa483f10fd0a50bf79700ebb0c5bab79" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=3e7f4c72" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=49cbaffd" />
     
     
 
@@ -290,9 +290,9 @@
           <article role="main">
             
             <section id="melting-pot">
-<h1>Melting Pot<a class="headerlink" href="#melting-pot" title="Permalink to this heading">#</a></h1>
+<h1>Melting Pot<a class="headerlink" href="#melting-pot" title="Link to this heading">#</a></h1>
 <section id="deepmind-melting-pot">
-<h2><a class="reference external" href="https://github.com/deepmind/meltingpot">DeepMind Melting Pot</a><a class="headerlink" href="#deepmind-melting-pot" title="Permalink to this heading">#</a></h2>
+<h2><a class="reference external" href="https://github.com/deepmind/meltingpot">DeepMind Melting Pot</a><a class="headerlink" href="#deepmind-melting-pot" title="Link to this heading">#</a></h2>
 <p><a class="reference external" href="https://github.com/deepmind/meltingpot">Melting Pot</a> is a suite of test scenarios for multi-agent reinforcement learning, using 2D game environments.</p>
 <p>It assesses generalization to novel social situations (familiar and unfamiliar individuals),
 and requires social reasoning such as cooperation, competition, deception, reciprocation, trust, and stubbornness.</p>
@@ -302,13 +302,13 @@ and requires social reasoning such as cooperation, competition, deception, recip
 </figure>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
 <p>To install <code class="docutils literal notranslate"><span class="pre">shimmy</span></code> and required dependencies:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">melting</span><span class="o">-</span><span class="n">pot</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">shimmy</span><span class="p">[</span><span class="n">meltingpot</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Melting Pot is not distributed via <a class="reference external" href="https://pypi.org/">pypi</a> and must be installed manually. We provide an <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/scripts/install_melting_pot.sh">installation script</a> (compatible with macOS and linux). For troubleshooting,  refer to the official <a class="reference external" href="https://github.com/deepmind/meltingpot#installation">installation instructions</a>.</p>
-<p>We also provide a <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/bin/meltingpot.Dockerfile">Dockerfile</a> for reproducibility and cross-platform compatibility (see <a class="reference internal" href="../../content/getting_started/"><span class="doc std std-doc">Installation</span></a>)</p>
+<p>We also provide a <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/blob/main/bin/meltingpot.Dockerfile">Dockerfile</a> for reproducibility and cross-platform compatibility (see</p>
+<p><a class="reference internal" href="../../content/getting_started/"><span class="doc std std-doc">Installation</span></a>)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Farama</span><span class="o">-</span><span class="n">Foundation</span><span class="o">/</span><span class="n">Shimmy</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">meltingpot</span><span class="o">.</span><span class="n">Dockerfile</span> <span class="o">|</span> <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">meltingpot</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span> <span class="o">.</span> <span class="o">&amp;&amp;</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">meltingpot</span>
 </pre></div>
 </div>
@@ -318,7 +318,7 @@ and requires social reasoning such as cooperation, competition, deception, recip
 </div>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
 <p>Load a new <code class="docutils literal notranslate"><span class="pre">meltingpot</span></code> environment:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shimmy</span> <span class="kn">import</span> <span class="n">MeltingPotCompatibilityV0</span>
 
@@ -353,10 +353,10 @@ and requires social reasoning such as cooperation, competition, deception, recip
 </div>
 </section>
 <section id="class-description">
-<h2>Class Description<a class="headerlink" href="#class-description" title="Permalink to this heading">#</a></h2>
+<h2>Class Description<a class="headerlink" href="#class-description" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.meltingpot_compatibility.</span></span><span class="sig-name descname"><span class="pre">MeltingPotCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">meltingpot.python.utils.substrates.substrate.Substrate</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_cycles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">MAX_CYCLES</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.meltingpot_compatibility.</span></span><span class="sig-name descname"><span class="pre">MeltingPotCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">substrate.Substrate</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_cycles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">MAX_CYCLES</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0" title="Link to this definition">#</a></dt>
 <dd><p>This compatibility wrapper converts a Melting Pot substrate into a PettingZoo environment.</p>
 <p>Due to how the underlying environment is set up, this environment is nondeterministic, so seeding doesn’t work.</p>
 <p>Melting Pot is a research tool developed to facilitate work on multi-agent artificial intelligence.
@@ -369,7 +369,7 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>env</strong> (<em>Optional</em><em>[</em><em>meltingpot.python.utils.substrates.substrate.Substrate</em><em>]</em>) – existing Melting Pot environment to wrap</p></li>
+<li><p><strong>env</strong> (<em>Optional</em><em>[</em><em>substrate.Substrate</em><em>]</em>) – existing Melting Pot environment to wrap</p></li>
 <li><p><strong>substrate_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – name of Melting Pot substrate to load (instead of existing environment)</p></li>
 <li><p><strong>max_cycles</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – maximum number of cycles before truncation</p></li>
 <li><p><strong>render_mode</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – rendering mode</p></li>
@@ -378,32 +378,32 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.metadata">
-<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'name':</span> <span class="pre">'MeltingPotCompatibilityV0',</span> <span class="pre">'render_modes':</span> <span class="pre">['human',</span> <span class="pre">'rgb_array']}</span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.metadata" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'name':</span> <span class="pre">'MeltingPotCompatibilityV0',</span> <span class="pre">'render_modes':</span> <span class="pre">['human',</span> <span class="pre">'rgb_array']}</span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.metadata" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.PLAYER_STR_FORMAT">
-<span class="sig-name descname"><span class="pre">PLAYER_STR_FORMAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'player_{index}'</span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.PLAYER_STR_FORMAT" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">PLAYER_STR_FORMAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'player_{index}'</span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.PLAYER_STR_FORMAT" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.MAX_CYCLES">
-<span class="sig-name descname"><span class="pre">MAX_CYCLES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000</span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.MAX_CYCLES" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">MAX_CYCLES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000</span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.MAX_CYCLES" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.possible_agents">
-<span class="sig-name descname"><span class="pre">possible_agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.possible_agents" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">possible_agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.possible_agents" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.agents">
-<span class="sig-name descname"><span class="pre">agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.agents" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.agents" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.observation_space">
-<span class="sig-name descname"><span class="pre">observation_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.observation_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.observation_space" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">observation_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AgentID</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.observation_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.observation_space" title="Link to this definition">#</a></dt>
 <dd><p>observation_space.</p>
 <p>Get the observation space from the underlying Melting Pot substrate.</p>
 <dl class="field-list simple">
@@ -418,7 +418,7 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.action_space">
-<span class="sig-name descname"><span class="pre">action_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.action_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.action_space" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">action_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AgentID</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Space</span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.action_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.action_space" title="Link to this definition">#</a></dt>
 <dd><p>action_space.</p>
 <p>Get the action space from the underlying Melting Pot substrate.</p>
 <dl class="field-list simple">
@@ -433,7 +433,7 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.state">
-<span class="sig-name descname"><span class="pre">state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.state" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.state" title="Link to this definition">#</a></dt>
 <dd><p>State.</p>
 <p>Get an observation of the current environment’s state. Used in rendering.</p>
 <dl class="field-list simple">
@@ -445,7 +445,7 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsDict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.reset" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ObsDict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.reset" title="Link to this definition">#</a></dt>
 <dd><p>reset.</p>
 <p>Resets the environment.</p>
 <dl class="field-list simple">
@@ -463,7 +463,7 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ActionType</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.step" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ActionType</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.step" title="Link to this definition">#</a></dt>
 <dd><p>step.</p>
 <p>Steps through all agents with one action</p>
 <dl class="field-list simple">
@@ -478,14 +478,14 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.close" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.close" title="Link to this definition">#</a></dt>
 <dd><p>close.</p>
 <p>Closes the environment.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">np.ndarray</span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.render" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">np.ndarray</span></span></span><a class="reference internal" href="../../_modules/shimmy/meltingpot_compatibility/#MeltingPotCompatibilityV0.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.render" title="Link to this definition">#</a></dt>
 <dd><p>render.</p>
 <p>Renders the environment.</p>
 <dl class="field-list simple">
@@ -497,37 +497,37 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.observation_spaces">
-<span class="sig-name descname"><span class="pre">observation_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.space.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.observation_spaces" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">observation_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.observation_spaces" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.action_spaces">
-<span class="sig-name descname"><span class="pre">action_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.space.Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.action_spaces" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">action_spaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Space</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.action_spaces" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
 <section id="module-shimmy.utils.meltingpot">
-<span id="utils"></span><h2>Utils<a class="headerlink" href="#module-shimmy.utils.meltingpot" title="Permalink to this heading">#</a></h2>
+<span id="utils"></span><h2>Utils<a class="headerlink" href="#module-shimmy.utils.meltingpot" title="Link to this heading">#</a></h2>
 <p>Utility functions for Melting Pot.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="shimmy.utils.meltingpot.load_meltingpot">
-<span class="sig-prename descclassname"><span class="pre">shimmy.utils.meltingpot.</span></span><span class="sig-name descname"><span class="pre">load_meltingpot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substrate_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/utils/meltingpot/#load_meltingpot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.utils.meltingpot.load_meltingpot" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">shimmy.utils.meltingpot.</span></span><span class="sig-name descname"><span class="pre">load_meltingpot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">substrate_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/utils/meltingpot/#load_meltingpot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.utils.meltingpot.load_meltingpot" title="Link to this definition">#</a></dt>
 <dd><p>Helper function to load Melting Pot substrates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>substrate_name</strong> – str</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>env</strong> – meltingpot.python.utils.substrates.substrate.Substrate</p>
+<dd class="field-even"><p><strong>env</strong> – meltingpot.utils.substrates.substrate.Substrate</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="shimmy.utils.meltingpot.timestep_to_observations">
-<span class="sig-prename descclassname"><span class="pre">shimmy.utils.meltingpot.</span></span><span class="sig-name descname"><span class="pre">timestep_to_observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TimeStep</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/shimmy/utils/meltingpot/#timestep_to_observations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.utils.meltingpot.timestep_to_observations" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">shimmy.utils.meltingpot.</span></span><span class="sig-name descname"><span class="pre">timestep_to_observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TimeStep</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">AgentID</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ObsType</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/shimmy/utils/meltingpot/#timestep_to_observations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.utils.meltingpot.timestep_to_observations" title="Link to this definition">#</a></dt>
 <dd><p>Extracts Gymnasium-compatible observations from a Melting Pot timestep.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -541,7 +541,7 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
 
 <dl class="py function">
 <dt class="sig sig-object py" id="shimmy.utils.meltingpot.remove_world_observations_from_space">
-<span class="sig-prename descclassname"><span class="pre">shimmy.utils.meltingpot.</span></span><span class="sig-name descname"><span class="pre">remove_world_observations_from_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/shimmy/utils/meltingpot/#remove_world_observations_from_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.utils.meltingpot.remove_world_observations_from_space" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">shimmy.utils.meltingpot.</span></span><span class="sig-name descname"><span class="pre">remove_world_observations_from_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/shimmy/utils/meltingpot/#remove_world_observations_from_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.utils.meltingpot.remove_world_observations_from_space" title="Link to this definition">#</a></dt>
 <dd><p>Removes the world observations key from a Gymnasium observation dict.</p>
 <p>This is used to limit the information an individual agent has access to (it cannot see the entire world).</p>
 <dl class="field-list simple">
@@ -730,10 +730,10 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
         })()
       </script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/documentation_options.js?v=0559ecf3"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=7660844c"></script>
     
     <script>
 
@@ -863,7 +863,7 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
             const subSectionContainerElem = Object.assign(
                 document.createElement('div'), {
                   className:'farama-header-menu__subsections-container',
-                  style: key == "Mature Projects" ? "display: flex" : ""
+                  style: 'display: flex'
                 }
             )
             Object.keys(subSections).forEach((subKey, i) => {
@@ -878,7 +878,7 @@ on which to train agents, and over 256 unique test scenarios on which to evaluat
                   innerText: subKey
                 }
               ))
-              const ulElem = createProjectsList(subSections[subKey], key !== "Foundation");
+              const ulElem = createProjectsList(subSections[subKey], key !== 'Foundation');
               subSectionElem.appendChild(ulElem);
               subSectionContainerElem.appendChild(subSectionElem);
             })
