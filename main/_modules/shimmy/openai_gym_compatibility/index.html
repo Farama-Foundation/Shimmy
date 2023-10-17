@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark">
@@ -10,11 +10,11 @@
     <meta property="og:url" content="https://shimmy.farama.org/_modules/shimmy/openai_gym_compatibility.html" /><meta name="twitter:card" content="summary_large_image"><link rel="index" title="Index" href="../../../genindex/" /><link rel="search" title="Search" href="../../../search/" />
         <link rel="canonical" href="https://shimmy.farama.org/_modules/shimmy/openai_gym_compatibility.html" />
 
-    <link rel="shortcut icon" href="../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.1.1 and Furo 2023.05.20.dev1 -->
+    <link rel="shortcut icon" href="../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.08.19.dev1 -->
         <title>shimmy.openai_gym_compatibility - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=362ab14a" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=2b6f8eb5452c44539a42dd9ada0a48f56e5f404d" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=d98e5db1aa483f10fd0a50bf79700ebb0c5bab79" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=3e7f4c72" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=49cbaffd" />
     
     
 
@@ -316,7 +316,9 @@
     <span class="n">GYM_IMPORT_ERROR</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="GymV26CompatibilityV0"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0">[docs]</a><span class="k">class</span> <span class="nc">GymV26CompatibilityV0</span><span class="p">(</span><span class="n">gymnasium</span><span class="o">.</span><span class="n">Env</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="n">ActType</span><span class="p">]):</span>
+<div class="viewcode-block" id="GymV26CompatibilityV0">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0">[docs]</a>
+<span class="k">class</span> <span class="nc">GymV26CompatibilityV0</span><span class="p">(</span><span class="n">gymnasium</span><span class="o">.</span><span class="n">Env</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="n">ActType</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This compatibility layer converts a Gym v26 environment to a Gymnasium environment.</span>
 
 <span class="sd">    Gym is the original open source Python library for developing and comparing reinforcement learning algorithms</span>
@@ -371,7 +373,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets an attribute that only exists in the base environments.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
 
-<div class="viewcode-block" id="GymV26CompatibilityV0.reset"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
+<div class="viewcode-block" id="GymV26CompatibilityV0.reset">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Resets the environment.</span>
@@ -387,7 +391,10 @@
         <span class="c1"># Options are ignored</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GymV26CompatibilityV0.step"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">ActType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="GymV26CompatibilityV0.step">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">ActType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Steps through the environment.</span>
 
 <span class="sd">        Args:</span>
@@ -398,7 +405,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GymV26CompatibilityV0.render"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GymV26CompatibilityV0.render">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Renders the environment.</span>
 
 <span class="sd">        Returns:</span>
@@ -406,40 +416,65 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="GymV26CompatibilityV0.close"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GymV26CompatibilityV0.close">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV26CompatibilityV0.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Closes the environment.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</div>
 
 
-<div class="viewcode-block" id="LegacyV21Env"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env">[docs]</a><span class="nd">@runtime_checkable</span>
+
+<div class="viewcode-block" id="LegacyV21Env">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env">[docs]</a>
+<span class="nd">@runtime_checkable</span>
 <span class="k">class</span> <span class="nc">LegacyV21Env</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A protocol for OpenAI Gym v0.21 environment.&quot;&quot;&quot;</span>
 
     <span class="n">observation_space</span><span class="p">:</span> <span class="n">gym</span><span class="o">.</span><span class="n">Space</span>
     <span class="n">action_space</span><span class="p">:</span> <span class="n">gym</span><span class="o">.</span><span class="n">Space</span>
 
-<div class="viewcode-block" id="LegacyV21Env.reset"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<div class="viewcode-block" id="LegacyV21Env.reset">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the environment and return the initial observation.&quot;&quot;&quot;</span>
         <span class="o">...</span></div>
 
-<div class="viewcode-block" id="LegacyV21Env.step"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="LegacyV21Env.step">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run one timestep of the environment&#39;s dynamics.&quot;&quot;&quot;</span>
         <span class="o">...</span></div>
 
-<div class="viewcode-block" id="LegacyV21Env.render"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;human&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+
+<div class="viewcode-block" id="LegacyV21Env.render">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;human&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Render the environment.&quot;&quot;&quot;</span>
         <span class="o">...</span></div>
 
-<div class="viewcode-block" id="LegacyV21Env.close"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="LegacyV21Env.close">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Close the environment.&quot;&quot;&quot;</span>
         <span class="o">...</span></div>
 
-<div class="viewcode-block" id="LegacyV21Env.seed"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.seed">[docs]</a>    <span class="k">def</span> <span class="nf">seed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="LegacyV21Env.seed">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.LegacyV21Env.seed">[docs]</a>
+    <span class="k">def</span> <span class="nf">seed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the seed for this env&#39;s random number generator(s).&quot;&quot;&quot;</span>
-        <span class="o">...</span></div></div>
+        <span class="o">...</span></div>
+</div>
 
 
-<div class="viewcode-block" id="GymV21CompatibilityV0"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0">[docs]</a><span class="k">class</span> <span class="nc">GymV21CompatibilityV0</span><span class="p">(</span><span class="n">gymnasium</span><span class="o">.</span><span class="n">Env</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="n">ActType</span><span class="p">]):</span>
+
+<div class="viewcode-block" id="GymV21CompatibilityV0">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0">[docs]</a>
+<span class="k">class</span> <span class="nc">GymV21CompatibilityV0</span><span class="p">(</span><span class="n">gymnasium</span><span class="o">.</span><span class="n">Env</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="n">ActType</span><span class="p">]):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A wrapper which can transform an environment from the old API to the new API.</span>
 
 <span class="sd">    Old step API refers to step() method returning (observation, reward, done, info), and reset() only retuning the observation.</span>
@@ -493,7 +528,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets an attribute that only exists in the base environments.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
 
-<div class="viewcode-block" id="GymV21CompatibilityV0.reset"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
+<div class="viewcode-block" id="GymV21CompatibilityV0.reset">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Resets the environment.</span>
@@ -521,7 +558,10 @@
 
         <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="p">{}</span></div>
 
-<div class="viewcode-block" id="GymV21CompatibilityV0.step"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">ActType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="GymV21CompatibilityV0.step">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">ActType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Steps through the environment.</span>
 
 <span class="sd">        Args:</span>
@@ -537,7 +577,10 @@
 
         <span class="k">return</span> <span class="n">convert_to_terminated_truncated_step_api</span><span class="p">((</span><span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="GymV21CompatibilityV0.render"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+
+<div class="viewcode-block" id="GymV21CompatibilityV0.render">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Renders the environment.</span>
 
 <span class="sd">        Returns:</span>
@@ -545,9 +588,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">render_mode</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GymV21CompatibilityV0.close"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GymV21CompatibilityV0.close">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility.GymV21CompatibilityV0.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Closes the environment.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gym_env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the wrapper name and the unwrapped environment string.&quot;&quot;&quot;</span>
@@ -558,7 +605,10 @@
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_strip_default_wrappers"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility._strip_default_wrappers">[docs]</a><span class="k">def</span> <span class="nf">_strip_default_wrappers</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="n">gym</span><span class="o">.</span><span class="n">Env</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gym</span><span class="o">.</span><span class="n">Env</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_strip_default_wrappers">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility._strip_default_wrappers">[docs]</a>
+<span class="k">def</span> <span class="nf">_strip_default_wrappers</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="n">gym</span><span class="o">.</span><span class="n">Env</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gym</span><span class="o">.</span><span class="n">Env</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Strips builtin wrappers from the environment.</span>
 
 <span class="sd">    Args:</span>
@@ -577,7 +627,10 @@
     <span class="k">return</span> <span class="n">env</span></div>
 
 
-<div class="viewcode-block" id="_convert_space"><a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility._convert_space">[docs]</a><span class="k">def</span> <span class="nf">_convert_space</span><span class="p">(</span><span class="n">space</span><span class="p">:</span> <span class="n">gym</span><span class="o">.</span><span class="n">Space</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_convert_space">
+<a class="viewcode-back" href="../../../environments/gym/#shimmy.openai_gym_compatibility._convert_space">[docs]</a>
+<span class="k">def</span> <span class="nf">_convert_space</span><span class="p">(</span><span class="n">space</span><span class="p">:</span> <span class="n">gym</span><span class="o">.</span><span class="n">Space</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a gym space to a gymnasium space.</span>
 
 <span class="sd">    Args:</span>
@@ -615,6 +668,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Cannot convert space of type </span><span class="si">{</span><span class="n">space</span><span class="si">}</span><span class="s2">. Please upgrade your code to gymnasium.&quot;</span>
         <span class="p">)</span></div>
+
 </pre></div>
           </article>
         </div>
@@ -732,9 +786,9 @@
         })()
       </script>
 
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=3f7802b3"></script>
+    <script src="../../../_static/documentation_options.js?v=e86ceb7b"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/furo.js?v=7660844c"></script>
     
     <script>
@@ -865,7 +919,7 @@
             const subSectionContainerElem = Object.assign(
                 document.createElement('div'), {
                   className:'farama-header-menu__subsections-container',
-                  style: key == "Mature Projects" ? "display: flex" : ""
+                  style: 'display: flex'
                 }
             )
             Object.keys(subSections).forEach((subKey, i) => {
@@ -880,7 +934,7 @@
                   innerText: subKey
                 }
               ))
-              const ulElem = createProjectsList(subSections[subKey], key !== "Foundation");
+              const ulElem = createProjectsList(subSections[subKey], key !== 'Foundation');
               subSectionElem.appendChild(ulElem);
               subSectionContainerElem.appendChild(subSectionElem);
             })

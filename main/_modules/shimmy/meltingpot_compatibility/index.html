@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark">
@@ -10,11 +10,11 @@
     <meta property="og:url" content="https://shimmy.farama.org/_modules/shimmy/meltingpot_compatibility.html" /><meta name="twitter:card" content="summary_large_image"><link rel="index" title="Index" href="../../../genindex/" /><link rel="search" title="Search" href="../../../search/" />
         <link rel="canonical" href="https://shimmy.farama.org/_modules/shimmy/meltingpot_compatibility.html" />
 
-    <link rel="shortcut icon" href="../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.1.1 and Furo 2023.05.20.dev1 -->
+    <link rel="shortcut icon" href="../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.08.19.dev1 -->
         <title>shimmy.meltingpot_compatibility - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=362ab14a" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=2b6f8eb5452c44539a42dd9ada0a48f56e5f404d" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=d98e5db1aa483f10fd0a50bf79700ebb0c5bab79" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=3e7f4c72" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=49cbaffd" />
     
     
 
@@ -290,6 +290,7 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">repeat</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">dm_env</span>
@@ -302,10 +303,13 @@
 <span class="kn">import</span> <span class="nn">shimmy.utils.meltingpot</span> <span class="k">as</span> <span class="nn">utils</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">meltingpot.python</span>
+    <span class="kn">import</span> <span class="nn">meltingpot</span>
+    <span class="kn">from</span> <span class="nn">meltingpot.utils.substrates</span> <span class="kn">import</span> <span class="n">substrate</span>
 
 
-<div class="viewcode-block" id="MeltingPotCompatibilityV0"><a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0">[docs]</a><span class="k">class</span> <span class="nc">MeltingPotCompatibilityV0</span><span class="p">(</span><span class="n">ParallelEnv</span><span class="p">,</span> <span class="n">EzPickle</span><span class="p">):</span>
+<div class="viewcode-block" id="MeltingPotCompatibilityV0">
+<a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0">[docs]</a>
+<span class="k">class</span> <span class="nc">MeltingPotCompatibilityV0</span><span class="p">(</span><span class="n">ParallelEnv</span><span class="p">,</span> <span class="n">EzPickle</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This compatibility wrapper converts a Melting Pot substrate into a PettingZoo environment.</span>
 
 <span class="sd">    Due to how the underlying environment is set up, this environment is nondeterministic, so seeding doesn&#39;t work.</span>
@@ -328,7 +332,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">env</span><span class="p">:</span> <span class="n">meltingpot</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">substrates</span><span class="o">.</span><span class="n">substrate</span><span class="o">.</span><span class="n">Substrate</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">env</span><span class="p">:</span> <span class="n">substrate</span><span class="o">.</span><span class="n">Substrate</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">substrate_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">max_cycles</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">MAX_CYCLES</span><span class="p">,</span>
         <span class="n">render_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -336,7 +340,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapper that converts a Melting Pot environment into a PettingZoo environment.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            env (Optional[meltingpot.python.utils.substrates.substrate.Substrate]): existing Melting Pot environment to wrap</span>
+<span class="sd">            env (Optional[substrate.Substrate]): existing Melting Pot environment to wrap</span>
 <span class="sd">            substrate_name (Optional[str]): name of Melting Pot substrate to load (instead of existing environment)</span>
 <span class="sd">            max_cycles (Optional[int]): maximum number of cycles before truncation</span>
 <span class="sd">            render_mode (Optional[str]): rendering mode</span>
@@ -394,7 +398,9 @@
                 <span class="p">)</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="MeltingPotCompatibilityV0.observation_space"><a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.observation_space">[docs]</a>    <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class="viewcode-block" id="MeltingPotCompatibilityV0.observation_space">
+<a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.observation_space">[docs]</a>
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;observation_space.</span>
 
@@ -411,7 +417,10 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">observation_space</span></div>
 
-<div class="viewcode-block" id="MeltingPotCompatibilityV0.action_space"><a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.action_space">[docs]</a>    <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MeltingPotCompatibilityV0.action_space">
+<a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.action_space">[docs]</a>
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">action_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;action_space.</span>
 
@@ -426,7 +435,10 @@
         <span class="n">action_space</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">dm_spec2gym_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">action_spec</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">action_space</span></div>
 
-<div class="viewcode-block" id="MeltingPotCompatibilityV0.state"><a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.state">[docs]</a>    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+
+<div class="viewcode-block" id="MeltingPotCompatibilityV0.state">
+<a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.state">[docs]</a>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;State.</span>
 
 <span class="sd">        Get an observation of the current environment&#39;s state. Used in rendering.</span>
@@ -436,11 +448,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">observation</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MeltingPotCompatibilityV0.reset"><a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
+
+<div class="viewcode-block" id="MeltingPotCompatibilityV0.reset">
+<a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsDict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsDict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="n">AgentID</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;reset.</span>
 
 <span class="sd">        Resets the environment.</span>
@@ -458,12 +473,21 @@
 
         <span class="n">observations</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">timestep_to_observations</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">observations</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">&quot;step-type&quot;</span><span class="p">:</span> <span class="n">timestep</span><span class="o">.</span><span class="n">step_type</span><span class="p">,</span>
-            <span class="s2">&quot;discount&quot;</span><span class="p">:</span> <span class="n">timestep</span><span class="o">.</span><span class="n">discount</span><span class="p">,</span>
-        <span class="p">}</span></div>
+        <span class="c1"># duplicate infos across agents</span>
+        <span class="n">infos</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">agent</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;timestep.discount&quot;</span><span class="p">:</span> <span class="n">timestep</span><span class="o">.</span><span class="n">discount</span><span class="p">,</span>
+                <span class="s2">&quot;timestep.step_type&quot;</span><span class="p">:</span> <span class="n">timestep</span><span class="o">.</span><span class="n">step_type</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span>
+        <span class="p">}</span>
 
-<div class="viewcode-block" id="MeltingPotCompatibilityV0.step"><a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">observations</span><span class="p">,</span> <span class="n">infos</span></div>
+
+
+<div class="viewcode-block" id="MeltingPotCompatibilityV0.step">
+<a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">:</span> <span class="n">ActionDict</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
         <span class="n">ObsDict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
@@ -498,14 +522,20 @@
 
         <span class="k">return</span> <span class="n">observations</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">terminations</span><span class="p">,</span> <span class="n">truncations</span><span class="p">,</span> <span class="n">infos</span></div>
 
-<div class="viewcode-block" id="MeltingPotCompatibilityV0.close"><a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MeltingPotCompatibilityV0.close">
+<a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;close.</span>
 
 <span class="sd">        Closes the environment.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MeltingPotCompatibilityV0.render"><a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+
+<div class="viewcode-block" id="MeltingPotCompatibilityV0.render">
+<a class="viewcode-back" href="../../../environments/meltingpot/#shimmy.meltingpot_compatibility.MeltingPotCompatibilityV0.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;render.</span>
 
 <span class="sd">        Renders the environment.</span>
@@ -534,7 +564,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_fps</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_mode</span> <span class="o">==</span> <span class="s2">&quot;rgb_array&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">rgb_arr</span></div></div>
+            <span class="k">return</span> <span class="n">rgb_arr</span></div>
+</div>
+
 </pre></div>
           </article>
         </div>
@@ -652,9 +684,9 @@
         })()
       </script>
 
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=3f7802b3"></script>
+    <script src="../../../_static/documentation_options.js?v=e86ceb7b"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/furo.js?v=7660844c"></script>
     
     <script>
@@ -785,7 +817,7 @@
             const subSectionContainerElem = Object.assign(
                 document.createElement('div'), {
                   className:'farama-header-menu__subsections-container',
-                  style: key == "Mature Projects" ? "display: flex" : ""
+                  style: 'display: flex'
                 }
             )
             Object.keys(subSections).forEach((subKey, i) => {
@@ -800,7 +832,7 @@
                   innerText: subKey
                 }
               ))
-              const ulElem = createProjectsList(subSections[subKey], key !== "Foundation");
+              const ulElem = createProjectsList(subSections[subKey], key !== 'Foundation');
               subSectionElem.appendChild(ulElem);
               subSectionContainerElem.appendChild(subSectionElem);
             })
