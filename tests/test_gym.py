@@ -9,7 +9,10 @@ from gym.spaces import Box as openai_Box
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env
 
+import shimmy.openai_gym_compatibility
 from shimmy import GymV21CompatibilityV0, GymV26CompatibilityV0
+
+gymnasium.register_envs(shimmy.openai_gym_compatibility)
 
 CHECK_ENV_IGNORE_WARNINGS = [
     f"\x1b[33mWARN: {message}\x1b[0m"

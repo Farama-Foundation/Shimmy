@@ -9,6 +9,10 @@ from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
+import shimmy
+
+gym.register_envs(shimmy)
+
 BSUITE_ENV_IDS = [
     env_id
     for env_id in registry

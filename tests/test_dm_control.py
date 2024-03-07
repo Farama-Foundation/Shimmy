@@ -18,8 +18,12 @@ from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
+import shimmy
 from shimmy.dm_control_compatibility import DmControlCompatibilityV0
 from shimmy.registration import DM_CONTROL_SUITE_ENVS
+
+gym.register_envs(shimmy)
+
 
 DM_CONTROL_ENV_IDS = [
     env_id
