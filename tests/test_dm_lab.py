@@ -3,13 +3,12 @@
 # flake8: noqa F821
 import pickle
 
+# pytest.importorskip("deepmind_lab")
+import deepmind_lab
 import pytest
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
-
-pytest.importorskip("deepmind_lab")
-import deepmind_lab
 
 LEVEL_NAMES = [
     "lt_chasm",
