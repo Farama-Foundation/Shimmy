@@ -8,7 +8,7 @@ from gymnasium.utils.env_checker import check_env, data_equivalence
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 
-pytest.importorskip("deepmind_lab")
+# pytest.importorskip("deepmind_lab")
 import deepmind_lab
 
 LEVEL_NAMES = [
