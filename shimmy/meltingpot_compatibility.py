@@ -8,7 +8,6 @@ and modified to modern PettingZoo API
 from __future__ import annotations
 
 import functools
-from itertools import repeat
 from typing import TYPE_CHECKING, Any, Optional
 
 import dm_env
@@ -21,7 +20,6 @@ from pettingzoo.utils.env import ActionDict, AgentID, ObsDict, ParallelEnv
 import shimmy.utils.meltingpot as utils
 
 if TYPE_CHECKING:
-    import meltingpot
     from meltingpot.utils.substrates import substrate
 
 

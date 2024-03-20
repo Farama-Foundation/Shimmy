@@ -3,10 +3,14 @@
 # flake8: noqa F821
 import pickle
 
+import gymnasium as gym
 import pytest
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
+import shimmy
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
+
+gym.register_envs(shimmy)
 
 pytest.importorskip("deepmind_lab")
 import deepmind_lab

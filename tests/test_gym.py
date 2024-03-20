@@ -9,14 +9,17 @@ from gym.spaces import Box as openai_Box
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env
 
+import shimmy.openai_gym_compatibility
 from shimmy import GymV21CompatibilityV0, GymV26CompatibilityV0
+
+gymnasium.register_envs(shimmy.openai_gym_compatibility)
 
 CHECK_ENV_IGNORE_WARNINGS = [
     f"\x1b[33mWARN: {message}\x1b[0m"
     for message in [
         "This version of the mujoco environments depends on the mujoco-py bindings, which are no longer maintained and may stop working. Please upgrade to the v4 versions of the environments (which depend on the mujoco python bindings instead), unless you are trying to precisely replicate previous works).",
         "A Box observation space minimum value is -infinity. This is probably too low.",
-        "A Box observation space maximum value is -infinity. This is probably too high.",
+        "A Box observation space maximum value is infinity. This is probably too high.",
         "For Box action spaces, we recommend using a symmetric and normalized space (range=[-1, 1] or [0, 1]). See https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html for more information.",
         "The environment CartPole-v0 is out of date. You should consider upgrading to version `v1`.",
     ]
