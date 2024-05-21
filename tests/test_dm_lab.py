@@ -12,8 +12,7 @@ from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 
 gym.register_envs(shimmy)
 
-pytest.importorskip("deepmind_lab")
-import deepmind_lab
+deepmind_lab = pytest.importorskip("deepmind_lab")
 
 LEVEL_NAMES = [
     "lt_chasm",

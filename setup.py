@@ -55,7 +55,7 @@ extras["all"] = [
     lib for key, libs in extras.items() if key != "gym-v21" for lib in libs
 ]
 extras["testing"] = [
-    "pytest==7.1.3",
+    "pytest>=7.1.3",
     "pillow>=9.3.0",
 ]
 
@@ -72,7 +72,7 @@ setup(
     keywords=["Reinforcement Learning", "game", "RL", "AI"],
     python_requires=">=3.8",
     packages=find_packages(),
-    install_requires=["numpy>=1.18.0", "gymnasium==1.0.0a1"],
+    install_requires=["numpy>=1.18.0", "gymnasium>=1.0.0a1"],
     tests_require=extras["testing"],
     extras_require=extras,
     classifiers=[
@@ -80,6 +80,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
