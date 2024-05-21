@@ -2,6 +2,7 @@
 import pickle
 import warnings
 
+import bsuite
 import gymnasium as gym
 import pytest
 from gymnasium.envs.registration import registry
@@ -11,8 +12,6 @@ from gymnasium.utils.env_checker import check_env, data_equivalence
 import shimmy
 
 gym.register_envs(shimmy)
-
-bsuite = pytest.importorskip("bsuite")
 
 BSUITE_ENV_IDS = [
     env_id
