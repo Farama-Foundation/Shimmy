@@ -11,7 +11,7 @@
 <link rel="index" title="Index" href="../genindex/" /><link rel="search" title="Search" href="../search/" /><link rel="prev" title="Melting Pot" href="../environments/meltingpot/" />
         <link rel="canonical" href="https://shimmy.farama.org/release_notes.html" />
 
-    <link rel="shortcut icon" href="../_static/shimmy.svg"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.08.19.dev1 -->
+    <link rel="shortcut icon" href="../_static/shimmy.svg"/><!-- Generated with Sphinx 7.3.7 and Furo 2023.08.19.dev1 -->
         <title>Release Notes - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=3e7f4c72" />
@@ -289,10 +289,43 @@
           </div>
           <article role="main">
             
-            <section id="release-notes">
-<h1>Release Notes<a class="headerlink" href="#release-notes" title="Link to this heading">#</a></h1>
+            <section class="tex2jax_ignore mathjax_ignore" id="release-notes">
+<h1>Release Notes<a class="headerlink" href="#release-notes" title="Link to this heading">¶</a></h1>
+<section id="release-v2-0-0">
+<h2>v2.0.0: Shimmy 2.0.0<a class="headerlink" href="#release-v2-0-0" title="Link to this heading">¶</a></h2>
+<p><em>Released on 2024-05-21 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v2.0.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v2.0.0/">PyPI</a></em></p>
+<p>This release updates Shimmy to support Gymnasium <code>&gt;= 1.0.0a1</code>. Most importantly, this affects how environments are registered using Shimmy and Atari is now removed (don’t worry, <a href="https://github.com/Farama-Foundation/Arcade-Learning-Environment">ale-py</a> now natively supports Gymnasium so there is just no need for Shimmy to do this anymore).</p>
+<p>In Gymnasium <code>&lt; 1.0</code>, python modules could configure themselves to be loaded on <code>import gymnasium</code> removing the need for <code>import shimmy</code>, however, behind the scenes, this caused significant issues. Therefore, the development team took the decision to remove this feature from Gymnasium <code>v1.0</code>. Moving forward, using Shimmy, users must <code>import shimmy</code> for environments to be registered to then be created. For example,</p>
+<div class="highlight highlight-source-python notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="import gymnasium as gym
+import shimmy  # this is now necessary
+
+gym.register_envs(shimmy)  # unnecessary but prevents IDEs from complaining
+
+env = gym.make(&quot;dm_control/swingup-v0&quot;, render_mode=&quot;human&quot;)
+
+obs, info = env.reset()
+episode_over = False
+while not episode_over:
+	action = policy(obs)  # replace with actual policy
+	obs, reward, terminated, truncated, info = env.step(action)
+	episode_over = terminated or truncated
+env.close()"><pre><span class="pl-k">import</span> <span class="pl-s1">gymnasium</span> <span class="pl-k">as</span> <span class="pl-s1">gym</span>
+<span class="pl-k">import</span> <span class="pl-s1">shimmy</span>  <span class="pl-c"># this is now necessary</span>
+
+<span class="pl-s1">gym</span>.<span class="pl-en">register_envs</span>(<span class="pl-s1">shimmy</span>)  <span class="pl-c"># unnecessary but prevents IDEs from complaining</span>
+
+<span class="pl-s1">env</span> <span class="pl-c1">=</span> <span class="pl-s1">gym</span>.<span class="pl-en">make</span>(<span class="pl-s">"dm_control/swingup-v0"</span>, <span class="pl-s1">render_mode</span><span class="pl-c1">=</span><span class="pl-s">"human"</span>)
+
+<span class="pl-s1">obs</span>, <span class="pl-s1">info</span> <span class="pl-c1">=</span> <span class="pl-s1">env</span>.<span class="pl-en">reset</span>()
+<span class="pl-s1">episode_over</span> <span class="pl-c1">=</span> <span class="pl-c1">False</span>
+<span class="pl-k">while</span> <span class="pl-c1">not</span> <span class="pl-s1">episode_over</span>:
+	<span class="pl-s1">action</span> <span class="pl-c1">=</span> <span class="pl-en">policy</span>(<span class="pl-s1">obs</span>)  <span class="pl-c"># replace with actual policy</span>
+	<span class="pl-s1">obs</span>, <span class="pl-s1">reward</span>, <span class="pl-s1">terminated</span>, <span class="pl-s1">truncated</span>, <span class="pl-s1">info</span> <span class="pl-c1">=</span> <span class="pl-s1">env</span>.<span class="pl-en">step</span>(<span class="pl-s1">action</span>)
+	<span class="pl-s1">episode_over</span> <span class="pl-c1">=</span> <span class="pl-s1">terminated</span> <span class="pl-c1">or</span> <span class="pl-s1">truncated</span>
+<span class="pl-s1">env</span>.<span class="pl-en">close</span>()</pre></div>
+<p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.3.0...v2.0.0"><tt>v1.3.0...v2.0.0</tt></a></p></section>
 <section id="release-v1-3-0">
-<h2>v1.3.0: Shimmy 1.3.0<a class="headerlink" href="#release-v1-3-0" title="Link to this heading">#</a></h2>
+<h2>v1.3.0: Shimmy 1.3.0<a class="headerlink" href="#release-v1-3-0" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2023-10-17 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.3.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.3.0/">PyPI</a></em></p>
 <h2>Shimmy 1.3.0 Release Notes:</h2>
 <p>This release updates Shimmy's Melting Pot wrapper to use Melting Pot's <a href="https://pypi.org/project/dm-meltingpot/" rel="nofollow">pypi release</a>, and includes a minor rendering bugfix for dm_control,</p>
@@ -319,7 +352,7 @@
 <p><a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/elliottower/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/elliottower">@elliottower</a>, <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/pseudo-rnd-thoughts/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/pseudo-rnd-thoughts">@pseudo-rnd-thoughts</a>, <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/spiglerg/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/spiglerg">@spiglerg</a> <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/KaleabTessera/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/KaleabTessera">@KaleabTessera</a></p>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.2.1...v1.3.0"><tt>v1.2.1...v1.3.0</tt></a></p></section>
 <section id="release-v1-2-1">
-<h2>v1.2.1: Shimmy 1.2.1<a class="headerlink" href="#release-v1-2-1" title="Link to this heading">#</a></h2>
+<h2>v1.2.1: Shimmy 1.2.1<a class="headerlink" href="#release-v1-2-1" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2023-07-21 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.2.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.2.1/">PyPI</a></em></p>
 <h2>Shimmy 1.2.1 Release Notes:</h2>
 <p>This is a minor hotfix which solves an issue where the Melting Pot dockerfile was not running successfully, leading to CI failures and making our install scripts fail.</p>
@@ -331,7 +364,7 @@
 </ul>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.2.0...v1.2.1"><tt>v1.2.0...v1.2.1</tt></a></p></section>
 <section id="release-v1-2-0">
-<h2>v1.2.0: Shimmy 1.2.0<a class="headerlink" href="#release-v1-2-0" title="Link to this heading">#</a></h2>
+<h2>v1.2.0: Shimmy 1.2.0<a class="headerlink" href="#release-v1-2-0" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2023-07-21 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.2.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.2.0/">PyPI</a></em></p>
 <h2>Shimmy 1.2.0 Release Notes:</h2>
 <p>This release drops Python 3.7 support in favor of Python 3.11, updates the OpenSpiel wrapper to be fully consistent with PettingZoo including seeding and observation/action spaces, and includes some minor documentation updates. This release also fixes minor compatibility issues with Gymnasium 0.29.0 and PettingZoo 1.24.0, which is being released alongside this release.</p>
@@ -365,7 +398,7 @@
 </ul>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.1.0...v1.2.0"><tt>v1.1.0...v1.2.0</tt></a></p></section>
 <section id="release-v1-1-0">
-<h2>v1.1.0: Shimmy 1.1.0<a class="headerlink" href="#release-v1-1-0" title="Link to this heading">#</a></h2>
+<h2>v1.1.0: Shimmy 1.1.0<a class="headerlink" href="#release-v1-1-0" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2023-06-15 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.1.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.1.0/">PyPI</a></em></p>
 <h2><strong>Shimmy 1.1.0 Release Notes:</strong></h2>
 <p>This is a small bug fix release which fixes rendering issues in the dm-control compatibility wrapper.</p>
@@ -382,7 +415,7 @@
 </ul>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.0.1...v1.1.0"><tt>v1.0.1...v1.1.0</tt></a></p></section>
 <section id="release-v1-0-1">
-<h2>v1.0.1: Shimmy 1.0.1<a class="headerlink" href="#release-v1-0-1" title="Link to this heading">#</a></h2>
+<h2>v1.0.1: Shimmy 1.0.1<a class="headerlink" href="#release-v1-0-1" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2023-05-24 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.0.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.0.1/">PyPI</a></em></p>
 <h2><strong>Shimmy 1.0.1 Release Notes:</strong></h2>
 <p>This release is a small hotfix which updates the multi-agent environments to PettingZoo 1.23.0, and fixes seeding issues with OpenSpiel and DM control multi-agent. It also fixes setup.py to properly install gym v21, and updates testing accordingly. Documentation updates include minor quality of life changes.</p>
@@ -402,7 +435,7 @@
 </ul>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v1.0.0...v1.0.1"><tt>v1.0.0...v1.0.1</tt></a></p></section>
 <section id="release-v1-0-0">
-<h2>v1.0.0: Shimmy 1.0.0: Shimmy Becomes Mature<a class="headerlink" href="#release-v1-0-0" title="Link to this heading">#</a></h2>
+<h2>v1.0.0: Shimmy 1.0.0: Shimmy Becomes Mature<a class="headerlink" href="#release-v1-0-0" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2023-04-25 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v1.0.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v1.0.0/">PyPI</a></em></p>
 <h2><strong>Shimmy 1.0.0 Release Notes:</strong></h2>
 <p>We are excited to announce the mature release of <a href="https://shimmy.farama.org/" rel="nofollow">Shimmy</a>, an API compatibility tool for converting external RL environments to the <a href="https://gymnasium.farama.org/" rel="nofollow">Gymnasium</a> and <a href="https://pettingzoo.farama.org/" rel="nofollow">PettingZoo</a> APIs. This allows users to access a wide range of single and multi-agent environments, all under a single standard API.</p>
@@ -475,7 +508,7 @@ env.close()"><pre><span class="pl-s1">observation</span>, <span class="pl-s1">in
 <span class="pl-s1">env</span>.<span class="pl-en">close</span>()</pre></div>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v0.2.1...v1.0.0"><tt>v0.2.1...v1.0.0</tt></a></p></section>
 <section id="release-v0-2-1">
-<h2>v0.2.1<a class="headerlink" href="#release-v0-2-1" title="Link to this heading">#</a></h2>
+<h2>v0.2.1<a class="headerlink" href="#release-v0-2-1" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2023-02-17 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v0.2.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v0.2.1/">PyPI</a></em></p>
 <h1>Release</h1>
 <p>This is a minor release that fixes several bugs in dm-control, compatibility with gym <code>v0.21</code> along with bumping dm-control to <code>1.0.10</code> and ale-py to <code>0.8.1</code>.<br>
@@ -488,10 +521,10 @@ Additionally, this changes <code>GymV22Environment</code> to <code>GymV21Environ
 <li>Remove warning that <code>GymV22Environment</code> and <code>GymV26Environment</code> are overwritten and change <code>V22</code> to <code>V21</code> in the <code>GymV22Environment</code> by <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/pseudo-rnd-thoughts/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/pseudo-rnd-thoughts">@pseudo-rnd-thoughts</a> in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1550018597" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/29" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/29/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/29">#29</a></li>
 <li>Bump ale-py to <code>v0.8.1</code> which includes a number of bug fixes by <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/pseudo-rnd-thoughts/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/pseudo-rnd-thoughts">@pseudo-rnd-thoughts</a> in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1589201269" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/37" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/37/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/37">#37</a>. For all the changes, read the <a href="https://github.com/mgbellemare/Arcade-Learning-Environment/releases/tag/v0.8.1">release notes</a>.</li>
 </ul>
-<p>Finally, <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/jjshoots/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/jjshoots">@jjshoots</a> and <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/SiddarGu/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/SiddarGu">@SiddarGu</a> updated the documentation in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1535920525" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/28" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/28/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/28">#28</a> and <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1517915836" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/25" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/25/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/25">#25</a> respectively.</p>
+<p>Finally, <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/jjshoots/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/jjshoots">@jjshoots</a> and @SiddarGu updated the documentation in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1535920525" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/28" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/28/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/28">#28</a> and <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="1517915836" data-permission-text="Title is private" data-url="https://github.com/Farama-Foundation/Shimmy/issues/25" data-hovercard-type="pull_request" data-hovercard-url="/Farama-Foundation/Shimmy/pull/25/hovercard" href="https://github.com/Farama-Foundation/Shimmy/pull/25">#25</a> respectively.</p>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v0.2.0...v0.2.1"><tt>v0.2.0...v0.2.1</tt></a></p></section>
 <section id="release-v0-2-0">
-<h2>v0.2.0<a class="headerlink" href="#release-v0-2-0" title="Link to this heading">#</a></h2>
+<h2>v0.2.0<a class="headerlink" href="#release-v0-2-0" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2022-12-14 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v0.2.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v0.2.0/">PyPI</a></em></p>
 <h1>Release notes</h1>
 <p>We update Shimmy for Gymnasium v0.27 and this release is not compatible with v0.26 with dm-control due to the Gymnasium Mujoco rendering changing.</p>
@@ -509,7 +542,7 @@ Additionally, this changes <code>GymV22Environment</code> to <code>GymV21Environ
 </ul>
 <p><strong>Full Changelog</strong>: <a class="commit-link" href="https://github.com/Farama-Foundation/Shimmy/compare/v0.1.0...v0.2.0"><tt>v0.1.0...v0.2.0</tt></a></p></section>
 <section id="release-v0-1-0">
-<h2>v0.1.0 (Initial release)<a class="headerlink" href="#release-v0-1-0" title="Link to this heading">#</a></h2>
+<h2>v0.1.0 (Initial release)<a class="headerlink" href="#release-v0-1-0" title="Link to this heading">¶</a></h2>
 <p><em>Released on 2022-11-12 - <a class="reference external" href="https://github.com/Farama-Foundation/Shimmy/releases/tag/v0.1.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/shimmy/v0.1.0/">PyPI</a></em></p>
 <p>Shimmy aims to provide compatibility for reinforcement learning environments to be compatible with Gymnasium or PettingZoo.</p>
 <p>In this initial release, we provide compatibility for</p>
@@ -571,6 +604,7 @@ Additionally, this changes <code>GymV22Environment</code> to <code>GymV21Environ
             <div class="toc-tree">
               <ul>
 <li><a class="reference internal" href="#">Release Notes</a><ul>
+<li><a class="reference internal" href="#release-v2-0-0">v2.0.0: Shimmy 2.0.0</a></li>
 <li><a class="reference internal" href="#release-v1-3-0">v1.3.0: Shimmy 1.3.0</a></li>
 <li><a class="reference internal" href="#release-v1-2-1">v1.2.1: Shimmy 1.2.1</a></li>
 <li><a class="reference internal" href="#release-v1-2-0">v1.2.0: Shimmy 1.2.0</a></li>
@@ -666,8 +700,8 @@ Additionally, this changes <code>GymV22Environment</code> to <code>GymV21Environ
         })()
       </script>
 
-    <script src="../_static/documentation_options.js?v=0559ecf3"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=b21b538c"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=7660844c"></script>
     
