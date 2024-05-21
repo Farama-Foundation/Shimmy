@@ -35,7 +35,6 @@ header_count, long_description = get_description()
 extras = {
     "gym-v21": ["gym>=0.21.0,<0.26", "pyglet==1.5.11"],
     "gym-v26": ["gym>=0.26.2"],
-    "atari": ["ale-py~=0.8.1"],
     # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
     "dm-control": ["dm-control>=1.0.10", "imageio", "h5py>=3.7.0"],
     "dm-control-multi-agent": [
@@ -46,16 +45,18 @@ extras = {
     ],
     "dm-lab": ["dm-env>=1.6"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.23"],
-    "meltingpot": ["pettingzoo>=1.23", "dm-meltingpot>=2.2.0; python_version > '3.9'"],
+    "meltingpot": [
+        "pettingzoo>=1.23",
+        "dm-meltingpot>=2.2.2; python_version > '3.10'",
+    ],
     "bsuite": ["bsuite>=0.3.5"],
 }
 extras["all"] = [
     lib for key, libs in extras.items() if key != "gym-v21" for lib in libs
 ]
 extras["testing"] = [
-    "pytest==7.1.3",
+    "pytest>=7.1.3",
     "pillow>=9.3.0",
-    "autorom[accept-rom-license]~=0.6.0",
 ]
 
 setup(
@@ -71,7 +72,7 @@ setup(
     keywords=["Reinforcement Learning", "game", "RL", "AI"],
     python_requires=">=3.8",
     packages=find_packages(),
-    install_requires=["numpy>=1.18.0", "gymnasium>=0.27.0"],
+    install_requires=["numpy>=1.18.0", "gymnasium>=1.0.0a1"],
     tests_require=extras["testing"],
     extras_require=extras,
     classifiers=[
@@ -79,11 +80,9 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
     include_package_data=True,
-    entry_points={
-        "gymnasium.envs": ["__root__ = shimmy.registration:register_gymnasium_envs"]
-    },
 )

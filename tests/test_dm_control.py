@@ -18,8 +18,12 @@ from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
 
+import shimmy
 from shimmy.dm_control_compatibility import DmControlCompatibilityV0
 from shimmy.registration import DM_CONTROL_SUITE_ENVS
+
+gym.register_envs(shimmy)
+
 
 DM_CONTROL_ENV_IDS = [
     env_id
@@ -38,7 +42,7 @@ CHECK_ENV_IGNORE_WARNINGS = [
     f"\x1b[33mWARN: {message}\x1b[0m"
     for message in [
         "A Box observation space minimum value is -infinity. This is probably too low.",
-        "A Box observation space maximum value is -infinity. This is probably too high.",
+        "A Box observation space maximum value is infinity. This is probably too high.",
         "For Box action spaces, we recommend using a symmetric and normalized space (range=[-1, 1] or [0, 1]). See https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html for more information.",
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: ()",
         "A Box observation space has an unconventional shape (neither an image, nor a 1D vector). We recommend flattening the observation to have only a 1D vector or use a custom policy to properly process the data. Actual observation shape: (8, 2)",

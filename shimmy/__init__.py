@@ -5,6 +5,10 @@ from typing import Any
 
 from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 from shimmy.openai_gym_compatibility import GymV21CompatibilityV0, GymV26CompatibilityV0
+from shimmy.registration import register_gymnasium_envs
+
+# this registers the environments on `import shimmy`
+register_gymnasium_envs()
 
 
 class NotInstallClass:
@@ -73,7 +77,7 @@ __all__ = [
 ]
 
 
-__version__ = "1.3.0"
+__version__ = "2.0.0"
 
 
 try:

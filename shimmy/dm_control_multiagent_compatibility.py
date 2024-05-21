@@ -240,6 +240,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
         if self.render_mode == "human":
             self.viewer.close()
+            assert self._env.physics is not None
             self.viewer = MujocoRenderer(
                 self._env.physics.model.ptr, self._env.physics.data.ptr
             )
