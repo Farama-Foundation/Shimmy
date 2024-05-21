@@ -8,7 +8,7 @@ jobs:
   optional-test-dm-control-multiagent:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # DM Control Multi-Agent
       - run: |
