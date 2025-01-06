@@ -45,6 +45,7 @@ CHECK_ENV_IGNORE_WARNINGS = [
         "A Box observation space maximum value is infinity. This is probably too high.",
         "For Box action spaces, we recommend using a symmetric and normalized space (range=[-1, 1] or [0, 1]). See https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html for more information.",
         "Calling `env.close()` on the closed environment should be allowed, but it raised an exception: _data",
+        "`in1d` is deprecated. Use `np.isin` instead.",
     ]
 ]
 
