@@ -1,4 +1,5 @@
 """Setups up the Shimmy module."""
+
 from setuptools import find_packages, setup
 
 
@@ -33,8 +34,8 @@ version = get_version()
 header_count, long_description = get_description()
 
 extras = {
-    "gym-v21": ["gym>=0.21.0,<0.26", "pyglet==1.5.11"],
-    "gym-v26": ["gym>=0.26.2"],
+    "gym-v21": ["gym>=0.21.0,<0.26", "pyglet==1.5.11", "numpy<2.0"],
+    "gym-v26": ["gym>=0.26.2", "numpy<2.0"],
     # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
     "dm-control": ["dm-control>=1.0.10", "imageio", "h5py>=3.7.0"],
     "dm-control-multi-agent": [
@@ -72,7 +73,7 @@ setup(
     keywords=["Reinforcement Learning", "game", "RL", "AI"],
     python_requires=">=3.8",
     packages=find_packages(),
-    install_requires=["numpy>=1.18.0", "gymnasium>=1.0.0a1"],
+    install_requires=["numpy>=1.18.0", "gymnasium>=1.0.0"],
     tests_require=extras["testing"],
     extras_require=extras,
     classifiers=[
