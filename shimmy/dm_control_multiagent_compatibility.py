@@ -1,4 +1,5 @@
 """Wrapper to convert a dm_env multiagent environment into a pettingzoo compatible environment."""
+
 from __future__ import annotations
 
 import functools
@@ -19,9 +20,7 @@ if TYPE_CHECKING:
     from dm_control.locomotion import soccer as dm_soccer
 
 
-def _unravel_ma_timestep(
-    timestep: dm_env.TimeStep, agents: list[AgentID]
-) -> tuple[
+def _unravel_ma_timestep(timestep: dm_env.TimeStep, agents: list[AgentID]) -> tuple[
     dict[AgentID, Any],
     dict[AgentID, float],
     dict[AgentID, bool],
@@ -247,9 +246,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
 
         return observations, info
 
-    def step(
-        self, actions: ActionDict
-    ) -> tuple[
+    def step(self, actions: ActionDict) -> tuple[
         ObsDict,
         dict[AgentID, float],
         dict[AgentID, bool],

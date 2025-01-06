@@ -1,4 +1,5 @@
 """Tests the multi-agent dm-control soccer environment."""
+
 import pickle
 
 import pytest

@@ -1,4 +1,5 @@
 """Wrapper to convert a BSuite environment into a gymnasium compatible environment."""
+
 from __future__ import annotations
 
 from typing import Any

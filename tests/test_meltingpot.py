@@ -1,4 +1,5 @@
 """Tests the functionality of the MeltingPotCompatibility wrapper on meltingpot substrates."""
+
 # pyright: reportUndefinedVariable=false
 # flake8: noqa F821 E402
 # isort: skip_file

@@ -4,6 +4,7 @@ Taken from
 https://github.com/deepmind/meltingpot/blob/main/examples/pettingzoo/utils.py
 and modified to modern PettingZoo API
 """
+
 # pyright: reportOptionalSubscript=false
 from __future__ import annotations
 

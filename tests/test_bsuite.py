@@ -1,4 +1,5 @@
 """Tests the functionality of the BSuiteCompatibilityV0 on bsuite envs."""
+
 import pickle
 import warnings
 

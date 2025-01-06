@@ -1,4 +1,5 @@
 """Wrapper to convert a DM Lab environment into a gymnasium compatible environment."""
+
 # pyright: reportOptionalMemberAccess=false
 from __future__ import annotations
 
