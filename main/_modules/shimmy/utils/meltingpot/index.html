@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="../../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>shimmy.utils.meltingpot - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=3e7f4c72" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=82c8b628" />
     
@@ -281,13 +281,14 @@
             
             <h1>Source code for shimmy.utils.meltingpot</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Utility functions for Melting Pot.&quot;&quot;&quot;</span>
+
 <span class="c1"># pyright: reportGeneralTypeIssues=false</span>
 <span class="c1"># flake8: noqa F821</span>
-<span class="kn">import</span> <span class="nn">dm_env</span>
-<span class="kn">from</span> <span class="nn">gymnasium</span> <span class="kn">import</span> <span class="n">spaces</span>
-<span class="kn">from</span> <span class="nn">pettingzoo.utils.env</span> <span class="kn">import</span> <span class="n">ObsDict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dm_env</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="kn">import</span> <span class="n">spaces</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pettingzoo.utils.env</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObsDict</span>
 
-<span class="kn">from</span> <span class="nn">shimmy.utils.dm_env</span> <span class="kn">import</span> <span class="n">dm_spec2gym_space</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shimmy.utils.dm_env</span><span class="w"> </span><span class="kn">import</span> <span class="n">dm_spec2gym_space</span>
 
 <span class="n">PLAYER_STR_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;player_</span><span class="si">{index}</span><span class="s2">&quot;</span>
 <span class="n">_WORLD_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;WORLD.&quot;</span>
@@ -295,7 +296,7 @@
 
 <div class="viewcode-block" id="load_meltingpot">
 <a class="viewcode-back" href="../../../../environments/meltingpot/#shimmy.utils.meltingpot.load_meltingpot">[docs]</a>
-<span class="k">def</span> <span class="nf">load_meltingpot</span><span class="p">(</span><span class="n">substrate_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_meltingpot</span><span class="p">(</span><span class="n">substrate_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function to load Melting Pot substrates.</span>
 
 <span class="sd">    Args:</span>
@@ -304,8 +305,8 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        env: meltingpot.utils.substrates.substrate.Substrate</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">meltingpot</span>
-    <span class="kn">from</span> <span class="nn">ml_collections</span> <span class="kn">import</span> <span class="n">config_dict</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">meltingpot</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">ml_collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_dict</span>
 
     <span class="c1"># Create env config</span>
     <span class="n">substrate_name</span> <span class="o">=</span> <span class="n">substrate_name</span>
@@ -324,7 +325,7 @@
 
 <div class="viewcode-block" id="timestep_to_observations">
 <a class="viewcode-back" href="../../../../environments/meltingpot/#shimmy.utils.meltingpot.timestep_to_observations">[docs]</a>
-<span class="k">def</span> <span class="nf">timestep_to_observations</span><span class="p">(</span><span class="n">timestep</span><span class="p">:</span> <span class="n">dm_env</span><span class="o">.</span><span class="n">TimeStep</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ObsDict</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">timestep_to_observations</span><span class="p">(</span><span class="n">timestep</span><span class="p">:</span> <span class="n">dm_env</span><span class="o">.</span><span class="n">TimeStep</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ObsDict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extracts Gymnasium-compatible observations from a Melting Pot timestep.</span>
 
 <span class="sd">    Args:</span>
@@ -344,7 +345,7 @@
 
 <div class="viewcode-block" id="remove_world_observations_from_space">
 <a class="viewcode-back" href="../../../../environments/meltingpot/#shimmy.utils.meltingpot.remove_world_observations_from_space">[docs]</a>
-<span class="k">def</span> <span class="nf">remove_world_observations_from_space</span><span class="p">(</span><span class="n">observation</span><span class="p">:</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Dict</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_world_observations_from_space</span><span class="p">(</span><span class="n">observation</span><span class="p">:</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Removes the world observations key from a Gymnasium observation dict.</span>
 
 <span class="sd">    This is used to limit the information an individual agent has access to (it cannot see the entire world).</span>

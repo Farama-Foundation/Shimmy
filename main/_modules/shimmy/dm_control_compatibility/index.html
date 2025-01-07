@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>shimmy.dm_control_compatibility - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=3e7f4c72" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=82c8b628" />
     
@@ -286,27 +286,28 @@
 <span class="sd">https://github.com/ikostrikov/dmcgym/blob/main/dmcgym/env.py</span>
 <span class="sd">and modified to modern gymnasium API</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">dm_env</span>
-<span class="kn">import</span> <span class="nn">gymnasium</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">dm_control</span> <span class="kn">import</span> <span class="n">composer</span>
-<span class="kn">from</span> <span class="nn">dm_control.mujoco.engine</span> <span class="kn">import</span> <span class="n">Physics</span> <span class="k">as</span> <span class="n">MujocoEnginePhysics</span>
-<span class="kn">from</span> <span class="nn">dm_control.rl</span> <span class="kn">import</span> <span class="n">control</span>
-<span class="kn">from</span> <span class="nn">gymnasium.core</span> <span class="kn">import</span> <span class="n">ObsType</span>
-<span class="kn">from</span> <span class="nn">gymnasium.envs.mujoco.mujoco_rendering</span> <span class="kn">import</span> <span class="n">MujocoRenderer</span>
-<span class="kn">from</span> <span class="nn">gymnasium.utils</span> <span class="kn">import</span> <span class="n">EzPickle</span>
-<span class="kn">from</span> <span class="nn">mujoco._structs</span> <span class="kn">import</span> <span class="n">MjvScene</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">shimmy.utils.dm_env</span> <span class="kn">import</span> <span class="n">dm_env_step2gym_step</span><span class="p">,</span> <span class="n">dm_spec2gym_space</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dm_env</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gymnasium</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dm_control</span><span class="w"> </span><span class="kn">import</span> <span class="n">composer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dm_control.mujoco.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Physics</span> <span class="k">as</span> <span class="n">MujocoEnginePhysics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dm_control.rl</span><span class="w"> </span><span class="kn">import</span> <span class="n">control</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObsType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium.envs.mujoco.mujoco_rendering</span><span class="w"> </span><span class="kn">import</span> <span class="n">MujocoRenderer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">EzPickle</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mujoco._structs</span><span class="w"> </span><span class="kn">import</span> <span class="n">MjvScene</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">shimmy.utils.dm_env</span><span class="w"> </span><span class="kn">import</span> <span class="n">dm_env_step2gym_step</span><span class="p">,</span> <span class="n">dm_spec2gym_space</span>
 
 
-<span class="k">class</span> <span class="nc">EnvType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EnvType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The environment type.&quot;&quot;&quot;</span>
 
     <span class="n">COMPOSER</span> <span class="o">=</span> <span class="mi">0</span>
@@ -315,7 +316,7 @@
 
 <div class="viewcode-block" id="DmControlCompatibilityV0">
 <a class="viewcode-back" href="../../../environments/dm_control/#shimmy.dm_control_compatibility.DmControlCompatibilityV0">[docs]</a>
-<span class="k">class</span> <span class="nc">DmControlCompatibilityV0</span><span class="p">(</span><span class="n">gymnasium</span><span class="o">.</span><span class="n">Env</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">EzPickle</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DmControlCompatibilityV0</span><span class="p">(</span><span class="n">gymnasium</span><span class="o">.</span><span class="n">Env</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">EzPickle</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This compatibility wrapper converts a dm-control environment into a gymnasium environment.</span>
 
 <span class="sd">    Dm-control is DeepMind&#39;s software stack for physics-based simulation and Reinforcement Learning environments, using MuJoCo physics.</span>
@@ -339,7 +340,7 @@
         <span class="s2">&quot;render_fps&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>  <span class="c1"># this value is updated to use the `env.control_timesteps() * 1000`</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">env</span><span class="p">:</span> <span class="n">composer</span><span class="o">.</span><span class="n">Environment</span> <span class="o">|</span> <span class="n">control</span><span class="o">.</span><span class="n">Environment</span> <span class="o">|</span> <span class="n">dm_env</span><span class="o">.</span><span class="n">Environment</span><span class="p">,</span>
         <span class="n">render_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -381,13 +382,13 @@
             <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the environment control timestep which is equivalent to the number of actions per second.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">control_timestep</span><span class="p">()</span>
 
 <div class="viewcode-block" id="DmControlCompatibilityV0.reset">
 <a class="viewcode-back" href="../../../environments/dm_control/#shimmy.dm_control_compatibility.DmControlCompatibilityV0.reset">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Resets the dm-control environment.&quot;&quot;&quot;</span>
@@ -409,7 +410,7 @@
 
 <div class="viewcode-block" id="DmControlCompatibilityV0.step">
 <a class="viewcode-back" href="../../../environments/dm_control/#shimmy.dm_control_compatibility.DmControlCompatibilityV0.step">[docs]</a>
-    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsType</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Steps through the dm-control environment.&quot;&quot;&quot;</span>
@@ -431,7 +432,7 @@
 
 <div class="viewcode-block" id="DmControlCompatibilityV0.render">
 <a class="viewcode-back" href="../../../environments/dm_control/#shimmy.dm_control_compatibility.DmControlCompatibilityV0.render">[docs]</a>
-    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Renders the dm-control env.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_mode</span> <span class="o">==</span> <span class="s2">&quot;rgb_array&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
@@ -476,7 +477,7 @@
 
 <div class="viewcode-block" id="DmControlCompatibilityV0.close">
 <a class="viewcode-back" href="../../../environments/dm_control/#shimmy.dm_control_compatibility.DmControlCompatibilityV0.close">[docs]</a>
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Closes the environment.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">free</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -486,7 +487,7 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">np_random</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">np_random</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This should be np.random.Generator but dm-control uses np.random.RandomState.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">env_type</span> <span class="ow">is</span> <span class="n">EnvType</span><span class="o">.</span><span class="n">RL_CONTROL</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">_random</span>
@@ -494,17 +495,17 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">_random_state</span>
 
     <span class="nd">@np_random</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">np_random</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">np_random</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">env_type</span> <span class="ow">is</span> <span class="n">EnvType</span><span class="o">.</span><span class="n">RL_CONTROL</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">_random</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">_random_state</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;If the attribute is missing, try getting the attribute from dm_control env.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_find_env_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnvType</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_env_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnvType</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Tries to discover env types, in particular for environments with wrappers.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">composer</span><span class="o">.</span><span class="n">Environment</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">EnvType</span><span class="o">.</span><span class="n">COMPOSER</span>

@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>shimmy.openspiel_compatibility - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=3e7f4c72" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=82c8b628" />
     
@@ -282,22 +282,22 @@
             <h1>Source code for shimmy.openspiel_compatibility</h1><div class="highlight"><pre>
 <span></span><span class="c1"># pyright: reportGeneralTypeIssues=false</span>
 <span class="sd">&quot;&quot;&quot;Wrapper to convert an OpenSpiel environment into a pettingzoo compatible environment.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">string</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pettingzoo</span> <span class="k">as</span> <span class="nn">pz</span>
-<span class="kn">import</span> <span class="nn">pyspiel</span>
-<span class="kn">from</span> <span class="nn">gymnasium</span> <span class="kn">import</span> <span class="n">spaces</span>
-<span class="kn">from</span> <span class="nn">gymnasium.utils</span> <span class="kn">import</span> <span class="n">EzPickle</span><span class="p">,</span> <span class="n">seeding</span>
-<span class="kn">from</span> <span class="nn">pettingzoo.utils.env</span> <span class="kn">import</span> <span class="n">AgentID</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pettingzoo</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pz</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyspiel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="kn">import</span> <span class="n">spaces</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">EzPickle</span><span class="p">,</span> <span class="n">seeding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pettingzoo.utils.env</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentID</span>
 
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0">
 <a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0">[docs]</a>
-<span class="k">class</span> <span class="nc">OpenSpielCompatibilityV0</span><span class="p">(</span><span class="n">pz</span><span class="o">.</span><span class="n">AECEnv</span><span class="p">,</span> <span class="n">EzPickle</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpenSpielCompatibilityV0</span><span class="p">(</span><span class="n">pz</span><span class="o">.</span><span class="n">AECEnv</span><span class="p">,</span> <span class="n">EzPickle</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This compatibility wrapper converts an OpenSpiel environment into a PettingZoo environment.</span>
 
 <span class="sd">    OpenSpiel is a collection of environments and algorithms for research in general reinforcement learning</span>
@@ -313,7 +313,7 @@
         <span class="s2">&quot;is_parallelizable&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">env</span><span class="p">:</span> <span class="n">pyspiel</span><span class="o">.</span><span class="n">Game</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">game_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -372,7 +372,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">render_mode</span> <span class="o">=</span> <span class="n">render_mode</span>
 
-    <span class="k">def</span> <span class="nf">_update_observation_spaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_observation_spaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_type</span><span class="o">.</span><span class="n">provides_observation_tensor</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">observation_spaces</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span>
@@ -400,7 +400,7 @@
                     <span class="sa">f</span><span class="s2">&quot;No information/observation tensor/string implemented for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="si">}</span><span class="s2">.&quot;</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_update_action_spaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_action_spaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_agents</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">action_spaces</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Discrete</span><span class="p">(</span>
@@ -413,7 +413,7 @@
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0.observation_space">
 <a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observation_space">[docs]</a>
-    <span class="k">def</span> <span class="nf">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;observation_space.</span>
 
 <span class="sd">        We get the observation space from the underlying game.</span>
@@ -435,7 +435,7 @@
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0.action_space">
 <a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.action_space">[docs]</a>
-    <span class="k">def</span> <span class="nf">action_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;action_space.</span>
 
 <span class="sd">        Get the action space from the underlying OpenSpiel game.</span>
@@ -451,7 +451,7 @@
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0.render">
 <a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.render">[docs]</a>
-    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;render.</span>
 
 <span class="sd">        Print the current game state.</span>
@@ -466,7 +466,7 @@
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0.observe">
 <a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observe">[docs]</a>
-    <span class="k">def</span> <span class="nf">observe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">observe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;observe.</span>
 
 <span class="sd">        Args:</span>
@@ -480,14 +480,14 @@
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0.close">
 <a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.close">[docs]</a>
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;close.&quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0.reset">
 <a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.reset">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -547,7 +547,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_choose_next_agent</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_execute_chance_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_execute_chance_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;_execute_chance_node.</span>
 
 <span class="sd">        Some game states in the environment are out of the control of the agent.</span>
@@ -562,7 +562,7 @@
             <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">np_random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">action_list</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">prob_list</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_execute_action_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">[</span><span class="n">Any</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_execute_action_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">[</span><span class="n">Any</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;_execute_action_node.</span>
 
 <span class="sd">        Advances the game state.</span>
@@ -599,7 +599,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">game_length</span> <span class="o">+=</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">_choose_next_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_choose_next_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># handle possibility that we don&#39;t have anymore agents</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
             <span class="k">return</span>
@@ -628,7 +628,7 @@
                         <span class="k">return</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="c1"># ignore agents where there are no valid actions</span>
-                        <span class="c1"># this will raise assertations with PZ api</span>
+                        <span class="c1"># this will raise assertions with PZ api</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous_actions</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">return</span>
 
@@ -637,7 +637,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">current_player</span><span class="p">()</span>
         <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_update_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates all the observations inside the observations dictionary.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">is_terminal</span><span class="p">():</span>
             <span class="k">return</span>
@@ -671,7 +671,7 @@
                 <span class="sa">f</span><span class="s2">&quot;No information/observation tensor/string implemented for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_update_action_masks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_action_masks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates all the action masks inside the infos dictionary.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">agent_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">):</span>
             <span class="n">action_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">num_distinct_actions</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
@@ -679,12 +679,12 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;action_mask&quot;</span><span class="p">:</span> <span class="n">action_mask</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">_update_rewards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_rewards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates all the _cumulative_rewards of the environment.&quot;&quot;&quot;</span>
         <span class="c1"># retrieve rewards</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="n">r</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_state</span><span class="o">.</span><span class="n">rewards</span><span class="p">())}</span>
 
-    <span class="k">def</span> <span class="nf">_update_termination_truncation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_termination_truncation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates all terminations and truncations of the environment.&quot;&quot;&quot;</span>
         <span class="c1"># check for terminal</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">terminations</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminations</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
@@ -705,7 +705,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_length</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">max_game_length</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">truncations</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="kc">True</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">_end_routine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_end_routine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that handles the routines that happen at environment termination.</span>
 
 <span class="sd">        Since all agents end together we can hack our way around it.</span>
@@ -728,7 +728,7 @@
 
 <div class="viewcode-block" id="OpenSpielCompatibilityV0.step">
 <a class="viewcode-back" href="../../../environments/open_spiel/#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.step">[docs]</a>
-    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">[</span><span class="n">Any</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">[</span><span class="n">Any</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Steps.</span>
 
 <span class="sd">        Steps the agent with an action.</span>

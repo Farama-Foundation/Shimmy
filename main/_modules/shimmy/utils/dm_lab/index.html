@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="../../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>shimmy.utils.dm_lab - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=3e7f4c72" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=82c8b628" />
     
@@ -281,18 +281,19 @@
             
             <h1>Source code for shimmy.utils.dm_lab</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Utility functions for the compatibility wrappers.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">gymnasium</span> <span class="kn">import</span> <span class="n">spaces</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="kn">import</span> <span class="n">spaces</span>
 
 
 <div class="viewcode-block" id="load_dm_lab">
 <a class="viewcode-back" href="../../../../environments/dm_lab/#shimmy.utils.dm_lab.load_dm_lab">[docs]</a>
-<span class="k">def</span> <span class="nf">load_dm_lab</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_dm_lab</span><span class="p">(</span>
     <span class="n">level_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;lt_chasm&quot;</span><span class="p">,</span>
     <span class="n">observations</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;RGBD&quot;</span><span class="p">,</span>
     <span class="n">renderer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;hardware&quot;</span><span class="p">,</span>
@@ -323,7 +324,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        env: DM Lab environment</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">deepmind_lab</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">deepmind_lab</span>
 
     <span class="k">if</span> <span class="n">observations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span><span class="n">observations</span><span class="p">]</span>
@@ -366,7 +367,7 @@
 
 <div class="viewcode-block" id="dm_lab_obs2gym_obs_space">
 <a class="viewcode-back" href="../../../../environments/dm_lab/#shimmy.utils.dm_lab.dm_lab_obs2gym_obs_space">[docs]</a>
-<span class="k">def</span> <span class="nf">dm_lab_obs2gym_obs_space</span><span class="p">(</span><span class="n">observation</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dm_lab_obs2gym_obs_space</span><span class="p">(</span><span class="n">observation</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets the observation spec from a single observation.&quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
         <span class="n">observation</span><span class="p">,</span> <span class="p">(</span><span class="n">OrderedDict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
@@ -395,7 +396,7 @@
 
 <div class="viewcode-block" id="dm_lab_spec2gym_space">
 <a class="viewcode-back" href="../../../../environments/dm_lab/#shimmy.utils.dm_lab.dm_lab_spec2gym_space">[docs]</a>
-<span class="k">def</span> <span class="nf">dm_lab_spec2gym_space</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dm_lab_spec2gym_space</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a dm_lab spec to a gymnasium space.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">expanded</span> <span class="o">=</span> <span class="p">{}</span>

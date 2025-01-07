@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="../../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>shimmy.dm_control_multiagent_compatibility - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=3e7f4c72" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=82c8b628" />
     
@@ -281,29 +281,28 @@
             
             <h1>Source code for shimmy.dm_control_multiagent_compatibility</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Wrapper to convert a dm_env multiagent environment into a pettingzoo compatible environment.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">dm_control.composer</span>
-<span class="kn">import</span> <span class="nn">dm_env</span>
-<span class="kn">import</span> <span class="nn">gymnasium</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">gymnasium.envs.mujoco.mujoco_rendering</span> <span class="kn">import</span> <span class="n">MujocoRenderer</span>
-<span class="kn">from</span> <span class="nn">gymnasium.utils</span> <span class="kn">import</span> <span class="n">EzPickle</span>
-<span class="kn">from</span> <span class="nn">pettingzoo.utils.env</span> <span class="kn">import</span> <span class="n">ActionDict</span><span class="p">,</span> <span class="n">AgentID</span><span class="p">,</span> <span class="n">ObsDict</span><span class="p">,</span> <span class="n">ParallelEnv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
 
-<span class="kn">from</span> <span class="nn">shimmy.utils.dm_control_multiagent</span> <span class="kn">import</span> <span class="n">load_dm_control_soccer</span>
-<span class="kn">from</span> <span class="nn">shimmy.utils.dm_env</span> <span class="kn">import</span> <span class="n">dm_obs2gym_obs</span><span class="p">,</span> <span class="n">dm_spec2gym_space</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dm_control.composer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dm_env</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gymnasium</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium.envs.mujoco.mujoco_rendering</span><span class="w"> </span><span class="kn">import</span> <span class="n">MujocoRenderer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gymnasium.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">EzPickle</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pettingzoo.utils.env</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionDict</span><span class="p">,</span> <span class="n">AgentID</span><span class="p">,</span> <span class="n">ObsDict</span><span class="p">,</span> <span class="n">ParallelEnv</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">shimmy.utils.dm_control_multiagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dm_control_soccer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shimmy.utils.dm_env</span><span class="w"> </span><span class="kn">import</span> <span class="n">dm_obs2gym_obs</span><span class="p">,</span> <span class="n">dm_spec2gym_space</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">dm_control.locomotion</span> <span class="kn">import</span> <span class="n">soccer</span> <span class="k">as</span> <span class="n">dm_soccer</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">dm_control.locomotion</span><span class="w"> </span><span class="kn">import</span> <span class="n">soccer</span> <span class="k">as</span> <span class="n">dm_soccer</span>
 
 
-<span class="k">def</span> <span class="nf">_unravel_ma_timestep</span><span class="p">(</span>
-    <span class="n">timestep</span><span class="p">:</span> <span class="n">dm_env</span><span class="o">.</span><span class="n">TimeStep</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AgentID</span><span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_unravel_ma_timestep</span><span class="p">(</span><span class="n">timestep</span><span class="p">:</span> <span class="n">dm_env</span><span class="o">.</span><span class="n">TimeStep</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AgentID</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
     <span class="nb">dict</span><span class="p">[</span><span class="n">AgentID</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
     <span class="nb">dict</span><span class="p">[</span><span class="n">AgentID</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="nb">dict</span><span class="p">[</span><span class="n">AgentID</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
@@ -353,7 +352,7 @@
 
 <div class="viewcode-block" id="DmControlMultiAgentCompatibilityV0">
 <a class="viewcode-back" href="../../../environments/dm_multi/#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0">[docs]</a>
-<span class="k">class</span> <span class="nc">DmControlMultiAgentCompatibilityV0</span><span class="p">(</span><span class="n">ParallelEnv</span><span class="p">,</span> <span class="n">EzPickle</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DmControlMultiAgentCompatibilityV0</span><span class="p">(</span><span class="n">ParallelEnv</span><span class="p">,</span> <span class="n">EzPickle</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This compatibility wrapper converts multi-agent dm-control environments, primarily soccer, into a PettingZoo environment.</span>
 
 <span class="sd">    Dm-control is DeepMind&#39;s software stack for physics-based simulation and Reinforcement Learning environments,</span>
@@ -362,7 +361,7 @@
 
     <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;render_modes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;human&quot;</span><span class="p">],</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;DmControlMultiAgentCompatibilityV0&quot;</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">env</span><span class="p">:</span> <span class="n">dm_control</span><span class="o">.</span><span class="n">composer</span><span class="o">.</span><span class="n">Environment</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">team_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -450,7 +449,7 @@
 <div class="viewcode-block" id="DmControlMultiAgentCompatibilityV0.observation_space">
 <a class="viewcode-back" href="../../../environments/dm_multi/#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.observation_space">[docs]</a>
     <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">observation_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;observation_space.</span>
 
 <span class="sd">        Get the observation space from the underlying meltingpot substrate.</span>
@@ -467,7 +466,7 @@
 <div class="viewcode-block" id="DmControlMultiAgentCompatibilityV0.action_space">
 <a class="viewcode-back" href="../../../environments/dm_multi/#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.action_space">[docs]</a>
     <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">action_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">AgentID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Space</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;action_space.</span>
 
 <span class="sd">        Get the action space from the underlying dm-control env.</span>
@@ -483,7 +482,7 @@
 
 <div class="viewcode-block" id="DmControlMultiAgentCompatibilityV0.render">
 <a class="viewcode-back" href="../../../environments/dm_multi/#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.render">[docs]</a>
-    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;render.</span>
 
 <span class="sd">        Renders the environment.</span>
@@ -500,7 +499,7 @@
 
 <div class="viewcode-block" id="DmControlMultiAgentCompatibilityV0.close">
 <a class="viewcode-back" href="../../../environments/dm_multi/#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.close">[docs]</a>
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;close.</span>
 
 <span class="sd">        Closes the environment.</span>
@@ -515,7 +514,7 @@
 
 <div class="viewcode-block" id="DmControlMultiAgentCompatibilityV0.reset">
 <a class="viewcode-back" href="../../../environments/dm_multi/#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.reset">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">AgentID</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ObsDict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;reset.</span>
@@ -548,9 +547,7 @@
 
 <div class="viewcode-block" id="DmControlMultiAgentCompatibilityV0.step">
 <a class="viewcode-back" href="../../../environments/dm_multi/#shimmy.dm_control_multiagent_compatibility.DmControlMultiAgentCompatibilityV0.step">[docs]</a>
-    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">:</span> <span class="n">ActionDict</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">:</span> <span class="n">ActionDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
         <span class="n">ObsDict</span><span class="p">,</span>
         <span class="nb">dict</span><span class="p">[</span><span class="n">AgentID</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
         <span class="nb">dict</span><span class="p">[</span><span class="n">AgentID</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>

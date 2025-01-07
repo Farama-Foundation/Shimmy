@@ -13,7 +13,7 @@
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>Basic Usage - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=3e7f4c72" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=82c8b628" />
     
@@ -295,7 +295,7 @@
 <section id="single-agent">
 <h2>Single-agent<a class="headerlink" href="#single-agent" title="Link to this heading">¶</a></h2>
 <p>Single-agent <a class="reference external" href="https://gymnasium.farama.org/">Gymnasium</a> environments can be loaded via <code class="docutils literal notranslate"><span class="pre">gym.make()</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gym</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;dm_control/acrobot-swingup_sparse-v0&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -317,7 +317,7 @@
 <section id="aec-environments">
 <h3>AEC Environments<a class="headerlink" href="#aec-environments" title="Link to this heading">¶</a></h3>
 <p>Load the environment:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shimmy</span> <span class="kn">import</span> <span class="n">OpenSpielCompatibilityV0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">shimmy</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenSpielCompatibilityV0</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">OpenSpielCompatibilityV0</span><span class="p">(</span><span class="n">game_name</span><span class="o">=</span><span class="s2">&quot;backgammon&quot;</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -338,7 +338,7 @@
 <section id="parallel-environments">
 <h3>Parallel Environments<a class="headerlink" href="#parallel-environments" title="Link to this heading">¶</a></h3>
 <p>Load the environment:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shimmy</span> <span class="kn">import</span> <span class="n">MeltingPotCompatibilityV0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">shimmy</span><span class="w"> </span><span class="kn">import</span> <span class="n">MeltingPotCompatibilityV0</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">MeltingPotCompatibilityV0</span><span class="p">(</span><span class="n">substrate_name</span><span class="o">=</span><span class="s2">&quot;prisoners_dilemma_in_the_matrix__arena&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
