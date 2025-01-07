@@ -1,4 +1,5 @@
 """Tests the multi-agent dm-control soccer environment."""
+
 # pyright: reportUndefinedVariable=false
 # flake8: noqa F821
 import pickle

@@ -1,4 +1,5 @@
 """Utility functions for Melting Pot."""
+
 # pyright: reportGeneralTypeIssues=false
 # flake8: noqa F821
 import dm_env

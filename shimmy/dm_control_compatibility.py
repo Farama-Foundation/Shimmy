@@ -4,6 +4,7 @@ Taken from
 https://github.com/ikostrikov/dmcgym/blob/main/dmcgym/env.py
 and modified to modern gymnasium API
 """
+
 from __future__ import annotations
 
 import math

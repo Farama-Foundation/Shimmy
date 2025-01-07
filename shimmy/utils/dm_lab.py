@@ -1,4 +1,5 @@
 """Utility functions for the compatibility wrappers."""
+
 from __future__ import annotations
 
 from collections import OrderedDict

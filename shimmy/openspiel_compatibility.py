@@ -326,7 +326,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
                         return
                     else:
                         # ignore agents where there are no valid actions
-                        # this will raise assertations with PZ api
+                        # this will raise assertions with PZ api
                         self.simultaneous_actions[agent] = None
             return
 

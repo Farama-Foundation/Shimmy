@@ -9,6 +9,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN pip install --upgrade pip
 
+RUN python --version
+
 # Install Shimmy requirements
 RUN apt-get -y update \
     && apt-get install --no-install-recommends -y \

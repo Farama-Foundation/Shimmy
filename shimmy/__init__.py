@@ -1,4 +1,5 @@
 """API for converting popular non-gymnasium environments to a gymnasium compatible environment."""
+
 from __future__ import annotations
 
 from typing import Any
