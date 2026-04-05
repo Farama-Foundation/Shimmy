@@ -16,4 +16,4 @@ jobs:
             --build-arg PYTHON_VERSION='3.11' \
             --tag shimmy-meltingpot-docker .
       - name: Run meltingpot tests
-        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py
+        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py -v
