@@ -47,12 +47,14 @@ RUN apt-get -y update \
     libsdl2-dev lua5.1 pkg-config python3-dev \
     unzip zip zlib1g-dev g++
 
-# Install Bazel
+# Install Bazel (pinned to 6.x: sh_binary was removed as a built-in in Bazel 7+,
+# and deepmind/lab's BUILD file uses sh_binary without importing rules_shell)
 RUN apt-get install -y apt-transport-https curl gnupg  \
     && curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg  \
     && mv bazel.gpg /etc/apt/trusted.gpg.d/  \
     && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list \
-    && apt-get update && apt-get install -y bazel
+    && apt-get update && apt-get install -y bazel-6.5.0 \
+    && ln -s /usr/bin/bazel-6.5.0 /usr/local/bin/bazel
 
 # Build DM lab
 RUN git clone https://github.com/deepmind/lab.git \
