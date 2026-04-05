@@ -13,9 +13,6 @@ The documentation website is at [shimmy.farama.org](https://shimmy.farama.org/) 
 ### [OpenAI Gym](http://shimmy.farama.org/contents/gym/)
 - Bindings to convert [OpenAI Gym](https://github.com/openai/gym) environments to [Gymnasium](https://gymnasium.farama.org/).
 
-### [Atari Environments for OpenAI Gym](http://shimmy.farama.org/contents/atari/)
-- Bindings to convert [ALE-py](https://github.com/mgbellemare/Arcade-Learning-Environment) Atari environments to [Gymnasium](https://gymnasium.farama.org/).
-
 ### [DeepMind Control](http://shimmy.farama.org/contents/dm_control/)
 - Bindings to convert [DM Control](https://github.com/deepmind/dm_control/) environments to [Gymnasium](https://gymnasium.farama.org/).
 
