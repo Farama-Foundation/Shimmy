@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
     - name: Install dependencies
@@ -29,7 +29,7 @@ jobs:
     - name: Build wheels
       run: python -m build --sdist --wheel
     - name: Store wheels
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         path: dist
 
@@ -40,7 +40,7 @@ jobs:
     if: github.event_name == 'release' && github.event.action == 'published'
     steps:
     - name: Download dists
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: artifact
         path: dist
