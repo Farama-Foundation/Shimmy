@@ -43,6 +43,7 @@ extras = {
         "imageio",
         "h5py>=3.7.0",
         "pettingzoo>=1.23",
+        "protobuf<4",
     ],
     "dm-lab": ["dm-env>=1.6"],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.23"],
@@ -50,7 +51,7 @@ extras = {
         "pettingzoo>=1.23",
         "dm-meltingpot>=2.2.2; python_version > '3.10'",
     ],
-    "bsuite": ["bsuite>=0.3.5"],
+    "bsuite": ["bsuite>=0.3.5; python_version < '3.12'"],
 }
 extras["all"] = [
     lib for key, libs in extras.items() if key != "gym-v21" for lib in libs
