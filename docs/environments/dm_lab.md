@@ -37,9 +37,9 @@ curl https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/dm_lab.
 ```
 
 ```{eval-rst}
-.. note::
+.. warning::
 
-    Building DeepMind Lab requires Bazel 5.4.1. Newer versions of Bazel are incompatible with the DeepMind Lab build system.
+    DeepMind Lab's build system is currently broken due to unmaintained Bazel WORKSPACE dependencies that have drifted out of compatibility. Installation from source is not expected to work until this is fixed upstream.
 ```
 
 ## Usage

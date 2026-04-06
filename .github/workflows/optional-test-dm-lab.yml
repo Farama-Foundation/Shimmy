@@ -11,6 +11,7 @@ permissions:
 jobs:
   optional-test-dm-lab:
     runs-on: ubuntu-latest
+    if: false # deepmind/lab build is broken due to unmaintained Bazel WORKSPACE deps
     steps:
       - uses: actions/checkout@v6
 
