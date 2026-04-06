@@ -49,7 +49,7 @@ extras = {
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.23"],
     "meltingpot": [
         "pettingzoo>=1.23",
-        "dm-meltingpot>=2.2.2; python_version > '3.8' and python_version < '3.12'",
+        "dm-meltingpot>=2.2.2; python_version > '3.10' and python_version < '3.12'",
     ],
     "bsuite": ["bsuite>=0.3.5; python_version < '3.12'"],
 }

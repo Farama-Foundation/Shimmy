@@ -36,6 +36,12 @@ curl https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/dm_lab.
     DeepMind Lab does not currently support Windows or macOS operating systems.
 ```
 
+```{eval-rst}
+.. note::
+
+    Building DeepMind Lab requires Bazel 5.4.1. Newer versions of Bazel are incompatible with the DeepMind Lab build system.
+```
+
 ## Usage
 Load a `deepmind_lab` environment:
 ```python
