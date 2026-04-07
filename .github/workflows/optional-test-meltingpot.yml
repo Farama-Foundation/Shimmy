@@ -1,5 +1,9 @@
 name: build
-on: [pull_request, push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read # to fetch code (actions/checkout)
@@ -16,4 +20,4 @@ jobs:
             --build-arg PYTHON_VERSION='3.11' \
             --tag shimmy-meltingpot-docker .
       - name: Run meltingpot tests
-        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py
+        run: docker run shimmy-meltingpot-docker pytest tests/test_meltingpot.py -v

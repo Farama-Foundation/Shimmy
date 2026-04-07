@@ -1,5 +1,6 @@
 # pyright: reportGeneralTypeIssues=false
 """Wrapper to convert an OpenSpiel environment into a pettingzoo compatible environment."""
+
 from __future__ import annotations
 
 import string

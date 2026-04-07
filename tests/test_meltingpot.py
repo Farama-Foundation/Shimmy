@@ -48,6 +48,7 @@ def test_existing_env(substrate_name):
     env.close()
 
 
+@pytest.mark.skip(reason="Requires a display; segfaults in headless CI environments.")
 @pytest.mark.parametrize("substrate_name", SUBSTRATES)
 def test_rendering(substrate_name):
     """Tests rendering for all Melting Pot substrates with MeltingPotCompatibility wrapper (using pygame)."""

@@ -45,14 +45,16 @@ RUN apt-get -y update \
     build-essential curl freeglut3-dev gettext git libffi-dev libglu1-mesa \
     libglu1-mesa-dev libjpeg-dev liblua5.1-0-dev libosmesa6-dev \
     libsdl2-dev lua5.1 pkg-config python3-dev \
-    software-properties-common unzip zip zlib1g-dev g++
+    unzip zip zlib1g-dev g++
 
-# Install Bazel
+# Install Bazel (pinned to 5.4.1: deepmind/lab is incompatible with Bazel 6+ due to
+# sh_binary removal and rules_cc bzl path changes in newer versions)
 RUN apt-get install -y apt-transport-https curl gnupg  \
     && curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg  \
     && mv bazel.gpg /etc/apt/trusted.gpg.d/  \
     && echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list \
-    && apt-get update && apt-get install -y bazel
+    && apt-get update && apt-get install -y bazel-5.4.1 \
+    && ln -s /usr/bin/bazel-5.4.1 /usr/local/bin/bazel
 
 # Build DM lab
 RUN git clone https://github.com/deepmind/lab.git \

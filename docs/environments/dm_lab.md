@@ -36,6 +36,12 @@ curl https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/dm_lab.
     DeepMind Lab does not currently support Windows or macOS operating systems.
 ```
 
+```{eval-rst}
+.. warning::
+
+    DeepMind Lab's build system is currently broken due to unmaintained Bazel WORKSPACE dependencies that have drifted out of compatibility. Installation from source is not expected to work until this is fixed upstream.
+```
+
 ## Usage
 Load a `deepmind_lab` environment:
 ```python
