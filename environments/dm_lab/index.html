@@ -11,11 +11,11 @@
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Behavior Suite" href="../bsuite/" /><link rel="prev" title="DM Control" href="../dm_control/" />
         <link rel="canonical" href="https://shimmy.farama.org/environments/dm_lab.html" />
 
-    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.3.7 and Furo 2023.08.19.dev1 -->
+    <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>DM Lab - Shimmy Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=3e7f4c72" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=49cbaffd" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=82c8b628" />
     
     
 
@@ -317,12 +317,16 @@
 <p class="admonition-title">Warning</p>
 <p>DeepMind Lab does not currently support Windows or macOS operating systems.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>DeepMind Lab’s build system is currently broken due to unmaintained Bazel WORKSPACE dependencies that have drifted out of compatibility. Installation from source is not expected to work until this is fixed upstream.</p>
+</div>
 </section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
 <p>Load a <code class="docutils literal notranslate"><span class="pre">deepmind_lab</span></code> environment:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">deepmind_lab</span>
-<span class="kn">from</span> <span class="nn">shimmy.dm_lab_compatibility</span> <span class="kn">import</span> <span class="n">DmLabCompatibilityV0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">deepmind_lab</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shimmy.dm_lab_compatibility</span><span class="w"> </span><span class="kn">import</span> <span class="n">DmLabCompatibilityV0</span>
 
 <span class="n">observations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;RGBD&quot;</span><span class="p">]</span>
 <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;640&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;480&quot;</span><span class="p">,</span> <span class="s2">&quot;botCount&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">}</span>
@@ -632,7 +636,7 @@ All other arguments are specific to DM Lab and will be used to load a new enviro
         })()
       </script>
 
-    <script src="../../_static/documentation_options.js?v=b21b538c"></script>
+    <script src="../../_static/documentation_options.js?v=4f6b6cca"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=7660844c"></script>
