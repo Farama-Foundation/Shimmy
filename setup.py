@@ -34,9 +34,8 @@ version = get_version()
 header_count, long_description = get_description()
 
 extras = {
-    "gym-v21": ["gym>=0.21.0,<0.26", "pyglet==1.5.11", "numpy<2.0"],
-    "gym-v26": ["gym>=0.26.2", "numpy<2.0"],
-    # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
+    "gym-v21": ["gym==0.21.0", "pyglet==1.5.11", "numpy<2.0"],
+    "gym-v26": ["gym==0.26.2", "numpy<2.0"],
     "dm-control": ["dm-control>=1.0.10", "imageio", "h5py>=3.7.0"],
     "dm-control-multi-agent": [
         "dm-control>=1.0.10",
@@ -46,11 +45,11 @@ extras = {
         "protobuf<4",
     ],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.23"],
+    "testing": [
+        "pytest>=7.1.3",
+        "pillow>=9.3.0",
+    ],
 }
-extras["testing"] = [
-    "pytest>=7.1.3",
-    "pillow>=9.3.0",
-]
 
 setup(
     name="Shimmy",
