@@ -12,10 +12,10 @@ pip install shimmy
 ```
 To install required dependencies for environments, specify them as follows:
 ```
-pip install "shimmy[atari]"
+pip install "shimmy[dm-control]"
 ```
 
-Choices: `gym-v21`, `gym-v26`, `atari`, `dm-control`, `dm-control-multi-agent`, `openspiel`
+Choices: `gym-v21`, `gym-v26`, `dm-control`, `dm-control-multi-agent`, `openspiel`
 
 For development and testing, install the extras you need plus `testing`, e.g.:
 
