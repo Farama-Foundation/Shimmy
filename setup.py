@@ -37,9 +37,10 @@ extras = {
     "gym-v21": ["gym>=0.21.0,<0.26", "pyglet==1.5.11", "numpy<2.0"],
     "gym-v26": ["gym>=0.26.2", "numpy<2.0"],
     # "imageio" should be "gymnasium[mujoco]>=0.26" but there are install conflicts
-    "dm-control": ["dm-control>=1.0.10", "imageio", "h5py>=3.7.0"],
+    "dm-control": ["dm-control>=1.0.10", "dm-tree>=0.1.10", "imageio", "h5py>=3.7.0"],
     "dm-control-multi-agent": [
         "dm-control>=1.0.10",
+        "dm-tree>=0.1.10",
         "imageio",
         "h5py>=3.7.0",
         "pettingzoo>=1.23",
