@@ -60,8 +60,11 @@ env.close()
 Load the environment:
 
 ```python
-from shimmy import MeltingPotCompatibilityV0
-env = MeltingPotCompatibilityV0(substrate_name="prisoners_dilemma_in_the_matrix__arena")
+from shimmy import DmControlMultiAgentCompatibilityV0
+from dm_control.locomotion import soccer as dm_soccer
+
+env = dm_soccer.load(team_size=2)
+env = DmControlMultiAgentCompatibilityV0(env)
 ```
 
 Run the environment:
@@ -111,9 +114,9 @@ For more information, see [PettingZoo Wrappers](https://pettingzoo.farama.org/ap
 [//]: # ()
 [//]: # (```python)
 
-[//]: # (from shimmy import MeltingPotCompatibilityV0)
+[//]: # (from shimmy import DmControlMultiAgentCompatibilityV0)
 
-[//]: # (env = MeltingPotCompatibilityV0&#40;substrate_name="prisoners_dilemma_in_the_matrix__arena"&#41;)
+[//]: # (env = DmControlMultiAgentCompatibilityV0&#40;...&#41;)
 
 [//]: # (```)
 

@@ -19,17 +19,8 @@ The documentation website is at [shimmy.farama.org](https://shimmy.farama.org/) 
 ### [DeepMind Control: Multi-Agent](http://shimmy.farama.org/contents/dm_multi/)
 - Bindings to convert [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
-### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
-- Bindings to convert [DM Lab](https://github.com/deepmind/lab) environments to [PettingZoo](https://pettingzoo.farama.org/).
-
 ### [OpenSpiel](shimmy.farama.org/contents/open_spiel/)
 - Bindings to convert [OpenSpiel](https://github.com/deepmind/open_spiel) environments to [PettingZoo](https://pettingzoo.farama.org/).
-
-### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
-- Bindings to convert [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
-
-### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
-- Bindings to convert [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 
 ## Installation and Usage
@@ -40,16 +31,23 @@ pip install shimmy
 ```
 To install required dependencies for environments, specify them as follows:
 ```
-pip install shimmy[bsuite, atari]
+pip install shimmy[dm-control]
 ```
 
-Choices: `gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
+Choices: `gym-v21`, `gym-v26`, `dm-control`, `dm-control-multi-agent`, `openspiel`
 
-For development and testing:
+### Python version support
 
-```
-pip install shimmy[all, testing]
-```
+The underlying environment libraries impose ceilings that Shimmy itself cannot lift:
+
+| Extra | Highest supported Python | Why |
+|---|---|---|
+| `gym-v21` | 3.10 | gym 0.21.0 needs `setuptools==65.5.0`, which calls `pkgutil.ImpImporter` — removed in Python 3.12. Also needs `pip<24.1` to accept its malformed metadata. |
+| `gym-v26` | 3.12 | pins `numpy<2.0`; NumPy 1.26 ships wheels only through cp312. On newer Python pip falls back to building NumPy 1.x from source, which is slow and not guaranteed to work. |
+| `dm-control`, `dm-control-multi-agent` | 3.12 | `labmaze` (transitive via `dm_control`) currently ships no wheels beyond cp312. |
+| `openspiel` | 3.14 | `open_spiel` publishes wheels through cp314. |
+
+If you need a newer Python than an extra supports, use a separate virtual environment for that extra.
 
 ## At a glance
 

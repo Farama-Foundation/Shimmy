@@ -166,7 +166,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
     def observation_space(self, agent: AgentID) -> gymnasium.spaces.Space:
         """observation_space.
 
-        Get the observation space from the underlying meltingpot substrate.
+        Get the observation space from the underlying dm-control env.
 
         Args:
             agent (AgentID): agent
