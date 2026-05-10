@@ -37,9 +37,9 @@ if openai_gym.__version__ >= "0.24.0":
     ]
 else:
     CLASSIC_CONTROL_ENVS = [
-        spec.id
-        for spec in openai_gym.envs.registry.env_specs.versions()
-        if "classic_control" in spec.entry_point
+        env_id
+        for env_id in openai_gym.envs.registry.env_specs
+        if "classic_control" in openai_gym.envs.registry.spec(env_id).entry_point
     ]
 
 
