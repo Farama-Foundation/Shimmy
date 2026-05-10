@@ -17,22 +17,13 @@ An API conversion tool for reinforcement learning environments.
 
 ```{eval-rst}
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif      | .. figure::  /_static/img/dm_lab_single.gif    |
-|   :alt: DM Control                             |   :alt: DM Soccer                           |   :alt: DM Lab                                 |
+| .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif      | .. figure:: /_static/img/ALE.png               |
+|   :alt: DM Control                             |   :alt: DM Soccer                           |   :alt: Atari Learning Environment             |
 |   :height: 180px                               |   :height: 180px                            |   :height: 180px                               |
-|   :target: environments/dm_control             |   :target: environments/dm_multi            |   :target: environments/dm_lab                 |
+|   :target: environments/dm_control             |   :target: environments/dm_multi            |   :target: environments/atari                  |
 |                                                |                                             |                                                |
-|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **DM Lab**: 3D navigation and                |
-|   robotics simulation.                         |   cooperative soccer game.                  |   puzzle-solving.                              |
-+------------------------------------------------+---------------------------------------------+------------------------------------------------+
-+------------------------------------------------+---------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/bsuite.png            | .. figure:: /_static/img/ALE.png            | .. figure:: /_static/img/meltingpot.gif        |
-|    :alt: Behavior Suite                        |   :alt: Atari Learning Environment          |   :alt: Melting Pot                            |
-|    :height: 180px                              |   :height: 180px                            |   :height: 180px                               |
-|    :target: environments/bsuite                |   :target: environments/atari               |   :target: environments/meltingpot             |
-|                                                |                                             |                                                |
-|    **Behavior Suite**: Test suite for          |   **Atari Learning Environment**:           |   **Melting Pot**: Multi-agent social          |
-|    evaluating model behavior.                  |   Set of 50+ classic Atari 2600 games.      |   reasoning games.                             |
+|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **Atari Learning Environment**:              |
+|   robotics simulation.                         |   cooperative soccer game.                  |   Set of 50+ classic Atari 2600 games.         |
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
 +------------------------------------------------+---------------------------------------------+------------------------------------------------+
 | .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png      |                                                |
@@ -87,8 +78,6 @@ content/basic_usage
 :hidden:
 :caption: Environments
 environments/dm_control
-environments/dm_lab
-environments/bsuite
 environments/gym
 environments/atari
 ```
@@ -98,7 +87,6 @@ environments/atari
 :caption: Multi-Agent Environments
 environments/dm_multi
 environments/open_spiel
-environments/meltingpot
 ```
 
 ```{toctree}

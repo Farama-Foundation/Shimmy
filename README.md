@@ -19,17 +19,8 @@ The documentation website is at [shimmy.farama.org](https://shimmy.farama.org/) 
 ### [DeepMind Control: Multi-Agent](http://shimmy.farama.org/contents/dm_multi/)
 - Bindings to convert [DM Control Soccer](https://github.com/deepmind/dm_control/blob/main/dm_control/locomotion/soccer/README.md) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
-### [DMLab](http://shimmy.farama.org/contents/dm_lab/)
-- Bindings to convert [DM Lab](https://github.com/deepmind/lab) environments to [PettingZoo](https://pettingzoo.farama.org/).
-
 ### [OpenSpiel](shimmy.farama.org/contents/open_spiel/)
 - Bindings to convert [OpenSpiel](https://github.com/deepmind/open_spiel) environments to [PettingZoo](https://pettingzoo.farama.org/).
-
-### [Behavior Suite](http://shimmy.farama.org/contents/bsuite/)
-- Bindings to convert [Behavior Suite](https://github.com/deepmind/bsuite) environments to [Gymnasium](https://gymnasium.farama.org/).
-
-### [Melting Pot](http://shimmy.farama.org/contents/meltingpot/)
-- Bindings to convert [Melting Pot](https://github.com/deepmind/meltingpot) environments to [PettingZoo](https://pettingzoo.farama.org/).
 
 
 ## Installation and Usage
@@ -40,10 +31,10 @@ pip install shimmy
 ```
 To install required dependencies for environments, specify them as follows:
 ```
-pip install shimmy[bsuite, atari]
+pip install shimmy[atari]
 ```
 
-Choices: `gym-v21`, `gym-v26`, `atari`, `bsuite`, `dm-control`, `dm-control-multi-agent`, `openspiel`, `meltingpot`
+Choices: `gym-v21`, `gym-v26`, `atari`, `dm-control`, `dm-control-multi-agent`, `openspiel`
 
 For development and testing:
 

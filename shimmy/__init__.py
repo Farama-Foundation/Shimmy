@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from shimmy.dm_lab_compatibility import DmLabCompatibilityV0
 from shimmy.openai_gym_compatibility import GymV21CompatibilityV0, GymV26CompatibilityV0
 from shimmy.registration import register_gymnasium_envs
 
@@ -50,31 +49,12 @@ except ImportError as e:
         e,
     )
 
-try:
-    from shimmy.bsuite_compatibility import BSuiteCompatibilityV0
-except ImportError as e:
-    BSuiteCompatibilityV0 = NotInstallClass(
-        "BSuite is not installed, run `pip install 'shimmy[bsuite]'`",
-        e,
-    )
-
-try:
-    from shimmy.meltingpot_compatibility import MeltingPotCompatibilityV0
-except ImportError as e:
-    MeltingPotCompatibilityV0 = NotInstallClass(
-        "Melting Pot or PettingZoo is not installed, run `pip install 'shimmy[melting-pot]' and install Melting Pot via https://github.com/deepmind/meltingpot#installation`",
-        e,
-    )
-
 __all__ = [
-    "BSuiteCompatibilityV0",
     "DmControlCompatibilityV0",
     "DmControlMultiAgentCompatibilityV0",
     "OpenSpielCompatibilityV0",
-    "DmLabCompatibilityV0",
     "GymV21CompatibilityV0",
     "GymV26CompatibilityV0",
-    "MeltingPotCompatibilityV0",
 ]
 
 
