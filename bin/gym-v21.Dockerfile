@@ -13,4 +13,5 @@ COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
 
 # Install Shimmy
-RUN pip install ".[gym-v21, testing]" --no-cache-dir
+RUN pip install "setuptools==65.5.0" "wheel<0.40.0"
+RUN pip install --no-build-isolation ".[gym-v21, testing]" --no-cache-dir
