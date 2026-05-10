@@ -12,7 +12,7 @@ display=0
 file="/tmp/.X11-unix/X$display"
 for i in $(seq 1 10); do
     if [ -e "$file" ]; then
-	break
+        break
     fi
 
     echo "Waiting for $file to be created (try $i/10)"

@@ -9,6 +9,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN pip install --upgrade pip
 
+# Install Shimmy requirements
+RUN apt-get -y update \
+    && apt-get install --no-install-recommends -y \
+        xvfb libgl1 libglu1 libosmesa6 \
+        curl ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install bazel (via bazelisk) — required to build labmaze from source,
 # pulled in transitively by dm_control on Python versions without a prebuilt wheel.
 # Pin to bazel 5.4.1: labmaze's BUILD references @bazel_tools//platforms (removed in

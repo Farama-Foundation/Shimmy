@@ -14,5 +14,3 @@ WORKDIR /usr/local/shimmy/
 
 # Install Shimmy
 RUN pip install ".[openspiel, testing]" --no-cache-dir
-
-ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]

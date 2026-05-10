@@ -14,5 +14,3 @@ WORKDIR /usr/local/shimmy/
 
 # Install Shimmy
 RUN pip install ".[gym-v21, testing]" --no-cache-dir
-
-ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
