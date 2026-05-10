@@ -29,7 +29,7 @@ CHECK_ENV_IGNORE_WARNINGS.append(
 )
 
 # We do not test Atari environment's here because we check all variants of Pong in test_envs.py (There are too many Atari environments)
-if openai_gym.__version__ < "0.24.0":
+if openai_gym.__version__ >= "0.24.0":
     CLASSIC_CONTROL_ENVS = [
         env_id
         for env_id, spec in openai_gym.envs.registry.items()
