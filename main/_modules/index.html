@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>Overview: module code - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=3e7f4c72" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=5b1a364e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=82c8b628" />
     
     
@@ -217,8 +217,6 @@
 <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../environments/dm_control/">DM Control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../environments/dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../environments/bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../environments/gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../environments/atari/">Atari Environments</a></li>
 </ul>
@@ -226,7 +224,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../environments/dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../environments/open_spiel/">OpenSpiel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../environments/meltingpot/">Melting Pot</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -280,16 +277,7 @@
           <article role="main">
             
             <h1>All modules for which code is available</h1>
-<ul><li><a href="shimmy/bsuite_compatibility/">shimmy.bsuite_compatibility</a></li>
-<li><a href="shimmy/dm_control_compatibility/">shimmy.dm_control_compatibility</a></li>
-<li><a href="shimmy/dm_control_multiagent_compatibility/">shimmy.dm_control_multiagent_compatibility</a></li>
-<li><a href="shimmy/dm_lab_compatibility/">shimmy.dm_lab_compatibility</a></li>
-<li><a href="shimmy/meltingpot_compatibility/">shimmy.meltingpot_compatibility</a></li>
-<li><a href="shimmy/openai_gym_compatibility/">shimmy.openai_gym_compatibility</a></li>
-<li><a href="shimmy/openspiel_compatibility/">shimmy.openspiel_compatibility</a></li>
-<li><a href="shimmy/utils/dm_control_multiagent/">shimmy.utils.dm_control_multiagent</a></li>
-<li><a href="shimmy/utils/dm_lab/">shimmy.utils.dm_lab</a></li>
-<li><a href="shimmy/utils/meltingpot/">shimmy.utils.meltingpot</a></li>
+<ul><li><a href="shimmy/openai_gym_compatibility/">shimmy.openai_gym_compatibility</a></li>
 </ul>
           </article>
         </div>
@@ -471,14 +459,6 @@
         const jsonResponse = xhr.response;
         const sections = {
           "Core Projects": [],
-          "Mature Projects": {
-            "Documentation": [],
-            "Repositories": [],
-          },
-          "Incubating Projects": {
-            "Documentation": [],
-            "Repositories": [],
-          },
           "Foundation": [
             {
               name: "About",
@@ -492,7 +472,14 @@
               name: "Donate",
               link: "https://farama.org/donations"
             }
-          ]
+          ],
+          "Mature Projects": {
+            "Documentation": [],
+          },
+          "Incubating Projects": {
+            "Documentation": [],
+            "Repositories": [],
+          }
         }
 
         // Categorize projects
@@ -508,8 +495,6 @@
           } else if (projectJson.type == "mature") {
             if (projectJson.website !== null) {
               sections["Mature Projects"]["Documentation"].push(projectJson)
-            } else {
-              sections["Mature Projects"]["Repositories"].push(projectJson)
             }
           } else {
             if (projectJson.website !== null) {
@@ -521,6 +506,13 @@
         })
 
         const menuContainer = document.querySelector(".farama-header-menu__body");
+
+        const stackedColumnElem = Object.assign(
+          document.createElement('div'), {
+            style: 'display: flex; flex-direction: column;'
+          }
+        );
+        const stackedKeys = new Set(["Core Projects", "Foundation"]);
 
         Object.keys(sections).forEach((key, i) => {
           const sectionElem = Object.assign(
@@ -565,7 +557,14 @@
             const ulElem = createProjectsList(projects, true);
             sectionElem.appendChild(ulElem);
           }
-          menuContainer.appendChild(sectionElem)
+          if (stackedKeys.has(key)) {
+            if (!stackedColumnElem.parentNode) {
+              menuContainer.appendChild(stackedColumnElem);
+            }
+            stackedColumnElem.appendChild(sectionElem);
+          } else {
+            menuContainer.appendChild(sectionElem);
+          }
         });
       }
 

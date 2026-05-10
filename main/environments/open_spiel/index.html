@@ -8,13 +8,13 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://shimmy.farama.org/environments/open_spiel.html" /><meta name="twitter:card" content="summary_large_image"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Melting Pot" href="../meltingpot/" /><link rel="prev" title="DM Control (multi-agent)" href="../dm_multi/" />
+<link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Release Notes" href="../../release_notes/" /><link rel="prev" title="DM Control (multi-agent)" href="../dm_multi/" />
         <link rel="canonical" href="https://shimmy.farama.org/environments/open_spiel.html" />
 
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>OpenSpiel - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=3e7f4c72" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=5b1a364e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=82c8b628" />
     
     
@@ -218,8 +218,6 @@
 <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../dm_control/">DM Control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../atari/">Atari Environments</a></li>
 </ul>
@@ -227,7 +225,6 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">OpenSpiel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../meltingpot/">Melting Pot</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -362,122 +359,6 @@
 </section>
 <section id="class-description">
 <h2>Class Description<a class="headerlink" href="#class-description" title="Link to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">shimmy.openspiel_compatibility.</span></span><span class="sig-name descname"><span class="pre">OpenSpielCompatibilityV0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Game</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/openspiel_compatibility/#OpenSpielCompatibilityV0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0" title="Link to this definition">¶</a></dt>
-<dd><p>This compatibility wrapper converts an OpenSpiel environment into a PettingZoo environment.</p>
-<p>OpenSpiel is a collection of environments and algorithms for research in general reinforcement learning
-and search/planning in games. OpenSpiel supports n-player (single- and multi- agent) zero-sum,
-cooperative and general-sum, one-shot and sequential, strictly turn-taking and simultaneous-move,
-perfect and imperfect information games, as well as traditional multiagent environments such as
-(partially- and fully- observable) grid worlds and social dilemmas.</p>
-<p>Wrapper to convert a OpenSpiel environment into a PettingZoo environment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>env</strong> (<em>Optional</em><em>[</em><em>pyspiel.Game</em><em>]</em>) – existing OpenSpiel environment to wrap</p></li>
-<li><p><strong>game_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – name of OpenSpiel game to load</p></li>
-<li><p><strong>render_mode</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – rendering mode</p></li>
-<li><p><strong>config</strong> (<em>Optional</em><em>[</em><em>dict</em><em>]</em>) – PySpiel config</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.metadata">
-<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'is_parallelizable':</span> <span class="pre">False,</span> <span class="pre">'name':</span> <span class="pre">'OpenSpielCompatibilityV0',</span> <span class="pre">'render_modes':</span> <span class="pre">['human']}</span></em><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.metadata" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observation_space">
-<span class="sig-name descname"><span class="pre">observation_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AgentID</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/openspiel_compatibility/#OpenSpielCompatibilityV0.observation_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observation_space" title="Link to this definition">¶</a></dt>
-<dd><p>observation_space.</p>
-<p>We get the observation space from the underlying game.
-OpenSpiel possibly provides information and observation in several forms.
-This wrapper chooses which one to use depending on the following precedence:
-1. Observation Tensor
-2. Information Tensor
-3. Observation String
-4. Information String</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>AgentID</em>) – agent</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>space</strong> (<em>gymnasium.spaces.Space</em>) – observation space for the specified agent</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.action_space">
-<span class="sig-name descname"><span class="pre">action_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AgentID</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/openspiel_compatibility/#OpenSpielCompatibilityV0.action_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.action_space" title="Link to this definition">¶</a></dt>
-<dd><p>action_space.</p>
-<p>Get the action space from the underlying OpenSpiel game.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>AgentID</em>) – agent</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>space</strong> (<em>gymnasium.spaces.Space</em>) – action space for the specified agent</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/openspiel_compatibility/#OpenSpielCompatibilityV0.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.render" title="Link to this definition">¶</a></dt>
-<dd><p>render.</p>
-<p>Print the current game state.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observe">
-<span class="sig-name descname"><span class="pre">observe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AgentID</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/shimmy/openspiel_compatibility/#OpenSpielCompatibilityV0.observe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observe" title="Link to this definition">¶</a></dt>
-<dd><p>observe.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>AgentID</em>) – agent</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>observation</strong> (<em>Any</em>)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/openspiel_compatibility/#OpenSpielCompatibilityV0.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.close" title="Link to this definition">¶</a></dt>
-<dd><p>close.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/openspiel_compatibility/#OpenSpielCompatibilityV0.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.reset" title="Link to this definition">¶</a></dt>
-<dd><p>reset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>seed</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – seed</p></li>
-<li><p><strong>options</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>]</em>) – options</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">integer</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/shimmy/openspiel_compatibility/#OpenSpielCompatibilityV0.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.step" title="Link to this definition">¶</a></dt>
-<dd><p>Steps.</p>
-<p>Steps the agent with an action.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>action</strong> (<em>int</em>) – action</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 </section>
 
@@ -486,12 +367,12 @@ This wrapper chooses which one to use depending on the following precedence:
         <footer>
           
           <div class="related-pages">
-            <a class="next-page" href="../meltingpot/">
+            <a class="next-page" href="../../release_notes/">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Melting Pot</div>
+                <div class="title">Release Notes</div>
               </div>
               <svg class="furo-related-icon">
                 <use href="#svg-arrow-right"></use>
@@ -542,20 +423,7 @@ This wrapper chooses which one to use depending on the following precedence:
 <li><a class="reference internal" href="#deepmind-openspiel">DeepMind OpenSpiel</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
-<li><a class="reference internal" href="#class-description">Class Description</a><ul>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0</span></code></a><ul>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.metadata"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0.metadata</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observation_space"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0.observation_space()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.action_space"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0.action_space()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.render"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0.render()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.observe"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0.observe()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.close"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0.close()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.reset"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0.reset()</span></code></a></li>
-<li><a class="reference internal" href="#shimmy.openspiel_compatibility.OpenSpielCompatibilityV0.step"><code class="docutils literal notranslate"><span class="pre">OpenSpielCompatibilityV0.step()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#class-description">Class Description</a></li>
 </ul>
 </li>
 </ul>
@@ -706,14 +574,6 @@ This wrapper chooses which one to use depending on the following precedence:
         const jsonResponse = xhr.response;
         const sections = {
           "Core Projects": [],
-          "Mature Projects": {
-            "Documentation": [],
-            "Repositories": [],
-          },
-          "Incubating Projects": {
-            "Documentation": [],
-            "Repositories": [],
-          },
           "Foundation": [
             {
               name: "About",
@@ -727,7 +587,14 @@ This wrapper chooses which one to use depending on the following precedence:
               name: "Donate",
               link: "https://farama.org/donations"
             }
-          ]
+          ],
+          "Mature Projects": {
+            "Documentation": [],
+          },
+          "Incubating Projects": {
+            "Documentation": [],
+            "Repositories": [],
+          }
         }
 
         // Categorize projects
@@ -743,8 +610,6 @@ This wrapper chooses which one to use depending on the following precedence:
           } else if (projectJson.type == "mature") {
             if (projectJson.website !== null) {
               sections["Mature Projects"]["Documentation"].push(projectJson)
-            } else {
-              sections["Mature Projects"]["Repositories"].push(projectJson)
             }
           } else {
             if (projectJson.website !== null) {
@@ -756,6 +621,13 @@ This wrapper chooses which one to use depending on the following precedence:
         })
 
         const menuContainer = document.querySelector(".farama-header-menu__body");
+
+        const stackedColumnElem = Object.assign(
+          document.createElement('div'), {
+            style: 'display: flex; flex-direction: column;'
+          }
+        );
+        const stackedKeys = new Set(["Core Projects", "Foundation"]);
 
         Object.keys(sections).forEach((key, i) => {
           const sectionElem = Object.assign(
@@ -800,7 +672,14 @@ This wrapper chooses which one to use depending on the following precedence:
             const ulElem = createProjectsList(projects, true);
             sectionElem.appendChild(ulElem);
           }
-          menuContainer.appendChild(sectionElem)
+          if (stackedKeys.has(key)) {
+            if (!stackedColumnElem.parentNode) {
+              menuContainer.appendChild(stackedColumnElem);
+            }
+            stackedColumnElem.appendChild(sectionElem);
+          } else {
+            menuContainer.appendChild(sectionElem);
+          }
         });
       }
 

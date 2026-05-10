@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=3e7f4c72" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=5b1a364e" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=82c8b628" />
     
     
@@ -218,8 +218,6 @@
 <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="environments/dm_control/">DM Control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environments/dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environments/bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="environments/gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="environments/atari/">Atari Environments</a></li>
 </ul>
@@ -227,7 +225,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="environments/dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="environments/open_spiel/">OpenSpiel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environments/meltingpot/">Melting Pot</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -320,11 +317,11 @@ cooperative soccer game.</span><a class="headerlink" href="#id2" title="Link to 
 </figure>
 </td>
 <td><figure class="align-default" id="id3">
-<a class="reference external image-reference" href="environments/dm_lab"><img alt="DM Lab" src="_images/dm_lab_single.gif" style="height: 180px;" />
+<a class="reference external image-reference" href="environments/atari"><img alt="Atari Learning Environment" src="_images/ALE.png" style="height: 180px;" />
 </a>
 <figcaption>
-<p><span class="caption-text"><strong>DM Lab</strong>: 3D navigation and
-puzzle-solving.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+<p><span class="caption-text"><strong>Atari Learning Environment</strong>:
+Set of 50+ classic Atari 2600 games.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </td>
@@ -334,52 +331,20 @@ puzzle-solving.</span><a class="headerlink" href="#id3" title="Link to this imag
 <td></td>
 </tr>
 <tr class="row-odd"><td><figure class="align-default" id="id4">
-<a class="reference external image-reference" href="environments/bsuite"><img alt="Behavior Suite" src="_images/bsuite.png" style="height: 180px;" />
-</a>
-<figcaption>
-<p><span class="caption-text"><strong>Behavior Suite</strong>: Test suite for
-evaluating model behavior.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-</td>
-<td><figure class="align-default" id="id5">
-<a class="reference external image-reference" href="environments/atari"><img alt="Atari Learning Environment" src="_images/ALE.png" style="height: 180px;" />
-</a>
-<figcaption>
-<p><span class="caption-text"><strong>Atari Learning Environment</strong>:
-Set of 50+ classic Atari 2600 games.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-</td>
-<td><figure class="align-default" id="id6">
-<a class="reference external image-reference" href="environments/meltingpot"><img alt="Melting Pot" src="_images/meltingpot.gif" style="height: 180px;" />
-</a>
-<figcaption>
-<p><span class="caption-text"><strong>Melting Pot</strong>: Multi-agent social
-reasoning games.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-</td>
-</tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><figure class="align-default" id="id7">
 <a class="reference external image-reference" href="environments/gym"><img alt="OpenAI Gym" src="_images/openai_gym.png" style="height: 180px;" />
 </a>
 <figcaption>
 <p><span class="caption-text"><strong>OpenAI Gym</strong>: Compatibility support for
-Gym V21-V26.</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+Gym V21-V26.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </td>
-<td><figure class="align-default" id="id8">
+<td><figure class="align-default" id="id5">
 <a class="reference external image-reference" href="environments/open_spiel"><img alt="OpenSpiel" src="_images/openspiel.png" style="height: 180px;" />
 </a>
 <figcaption>
 <p><span class="caption-text"><strong>OpenSpiel</strong>: Collection of 70+ board
-&amp; card game environments.</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+&amp; card game environments.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </td>
@@ -603,14 +568,6 @@ Gym V21-V26.</span><a class="headerlink" href="#id7" title="Link to this image">
         const jsonResponse = xhr.response;
         const sections = {
           "Core Projects": [],
-          "Mature Projects": {
-            "Documentation": [],
-            "Repositories": [],
-          },
-          "Incubating Projects": {
-            "Documentation": [],
-            "Repositories": [],
-          },
           "Foundation": [
             {
               name: "About",
@@ -624,7 +581,14 @@ Gym V21-V26.</span><a class="headerlink" href="#id7" title="Link to this image">
               name: "Donate",
               link: "https://farama.org/donations"
             }
-          ]
+          ],
+          "Mature Projects": {
+            "Documentation": [],
+          },
+          "Incubating Projects": {
+            "Documentation": [],
+            "Repositories": [],
+          }
         }
 
         // Categorize projects
@@ -640,8 +604,6 @@ Gym V21-V26.</span><a class="headerlink" href="#id7" title="Link to this image">
           } else if (projectJson.type == "mature") {
             if (projectJson.website !== null) {
               sections["Mature Projects"]["Documentation"].push(projectJson)
-            } else {
-              sections["Mature Projects"]["Repositories"].push(projectJson)
             }
           } else {
             if (projectJson.website !== null) {
@@ -653,6 +615,13 @@ Gym V21-V26.</span><a class="headerlink" href="#id7" title="Link to this image">
         })
 
         const menuContainer = document.querySelector(".farama-header-menu__body");
+
+        const stackedColumnElem = Object.assign(
+          document.createElement('div'), {
+            style: 'display: flex; flex-direction: column;'
+          }
+        );
+        const stackedKeys = new Set(["Core Projects", "Foundation"]);
 
         Object.keys(sections).forEach((key, i) => {
           const sectionElem = Object.assign(
@@ -697,7 +666,14 @@ Gym V21-V26.</span><a class="headerlink" href="#id7" title="Link to this image">
             const ulElem = createProjectsList(projects, true);
             sectionElem.appendChild(ulElem);
           }
-          menuContainer.appendChild(sectionElem)
+          if (stackedKeys.has(key)) {
+            if (!stackedColumnElem.parentNode) {
+              menuContainer.appendChild(stackedColumnElem);
+            }
+            stackedColumnElem.appendChild(sectionElem);
+          } else {
+            menuContainer.appendChild(sectionElem);
+          }
         });
       }
 

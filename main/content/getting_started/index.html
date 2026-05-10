@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="../../_static/shimmy.svg"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>Getting Started - Shimmy Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=3e7f4c72" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=5b1a364e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=82c8b628" />
     
     
@@ -218,8 +218,6 @@
 <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../environments/dm_control/">DM Control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../environments/dm_lab/">DM Lab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../environments/bsuite/">Behavior Suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../environments/gym/">OpenAI Gym</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../environments/atari/">Atari Environments</a></li>
 </ul>
@@ -227,7 +225,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../environments/dm_multi/">DM Control (multi-agent)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../environments/open_spiel/">OpenSpiel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../environments/meltingpot/">Melting Pot</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -298,12 +295,12 @@
 </pre></div>
 </div>
 <p>To install required dependencies for environments, specify them as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;shimmy[bsuite,atari]&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;shimmy[atari]&quot;</span>
 </pre></div>
 </div>
-<p>Choices: <code class="docutils literal notranslate"><span class="pre">gym-v21</span></code>, <code class="docutils literal notranslate"><span class="pre">gym-v26</span></code>, <code class="docutils literal notranslate"><span class="pre">atari</span></code>, <code class="docutils literal notranslate"><span class="pre">bsuite</span></code>, <code class="docutils literal notranslate"><span class="pre">dm-control</span></code>, <code class="docutils literal notranslate"><span class="pre">dm-control-multi-agent</span></code>, <code class="docutils literal notranslate"><span class="pre">openspiel</span></code>, <code class="docutils literal notranslate"><span class="pre">meltingpot</span></code></p>
-<p>For development and testing:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;shimmy[all,testing]&quot;</span>
+<p>Choices: <code class="docutils literal notranslate"><span class="pre">gym-v21</span></code>, <code class="docutils literal notranslate"><span class="pre">gym-v26</span></code>, <code class="docutils literal notranslate"><span class="pre">atari</span></code>, <code class="docutils literal notranslate"><span class="pre">dm-control</span></code>, <code class="docutils literal notranslate"><span class="pre">dm-control-multi-agent</span></code>, <code class="docutils literal notranslate"><span class="pre">openspiel</span></code></p>
+<p>For development and testing, install the extras you need plus <code class="docutils literal notranslate"><span class="pre">testing</span></code>, e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;shimmy[dm-control, dm-control-multi-agent, openspiel, testing]&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -314,24 +311,24 @@ We provide <a class="reference external" href="https://docs.docker.com/engine/re
 <section id="build-a-docker-image">
 <h3>Build a Docker Image<a class="headerlink" href="#build-a-docker-image" title="Link to this heading">¶</a></h3>
 <p>To download environment’s Dockerfile and build an image:</p>
-<p><code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/dm_lab.Dockerfile</span> <span class="pre">|</span> <span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">dm_lab</span> <span class="pre">-f</span> <span class="pre">-</span> <span class="pre">.</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/bin/dm_control.Dockerfile</span> <span class="pre">|</span> <span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">dm_control</span> <span class="pre">-f</span> <span class="pre">-</span> <span class="pre">.</span></code></p>
 <p>Or, clone our <a class="reference external" href="https://github.com/Farama-Foundation/shimmy">GitHub repository</a> and build from the Dockerfile locally:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">dm_lab</span> <span class="o">-</span><span class="n">f</span> <span class="nb">bin</span><span class="o">/</span><span class="n">dm_lab</span><span class="o">.</span><span class="n">Dockerfile</span> <span class="o">.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">dm_control</span> <span class="o">-</span><span class="n">f</span> <span class="nb">bin</span><span class="o">/</span><span class="n">dm_control</span><span class="o">.</span><span class="n">Dockerfile</span> <span class="o">.</span>
 </pre></div>
 </div>
 </section>
 <section id="running-a-container">
 <h3>Running a Container<a class="headerlink" href="#running-a-container" title="Link to this heading">¶</a></h3>
 <p>Then, to run the Docker container with an interactive bash terminal:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">dm_lab</span> <span class="n">bash</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">dm_control</span> <span class="n">bash</span>
 </pre></div>
 </div>
 <p>Stop the container:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">stop</span> <span class="n">dm_lab</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">stop</span> <span class="n">dm_control</span>
 </pre></div>
 </div>
 <p>Remove the stopped container:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">rm</span> <span class="n">dm_lab</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">rm</span> <span class="n">dm_control</span>
 </pre></div>
 </div>
 <p>For more information, see <a class="reference external" href="https://docs.docker.com/get-started/">Docker Documentation</a>.</p>
@@ -557,14 +554,6 @@ We provide <a class="reference external" href="https://docs.docker.com/engine/re
         const jsonResponse = xhr.response;
         const sections = {
           "Core Projects": [],
-          "Mature Projects": {
-            "Documentation": [],
-            "Repositories": [],
-          },
-          "Incubating Projects": {
-            "Documentation": [],
-            "Repositories": [],
-          },
           "Foundation": [
             {
               name: "About",
@@ -578,7 +567,14 @@ We provide <a class="reference external" href="https://docs.docker.com/engine/re
               name: "Donate",
               link: "https://farama.org/donations"
             }
-          ]
+          ],
+          "Mature Projects": {
+            "Documentation": [],
+          },
+          "Incubating Projects": {
+            "Documentation": [],
+            "Repositories": [],
+          }
         }
 
         // Categorize projects
@@ -594,8 +590,6 @@ We provide <a class="reference external" href="https://docs.docker.com/engine/re
           } else if (projectJson.type == "mature") {
             if (projectJson.website !== null) {
               sections["Mature Projects"]["Documentation"].push(projectJson)
-            } else {
-              sections["Mature Projects"]["Repositories"].push(projectJson)
             }
           } else {
             if (projectJson.website !== null) {
@@ -607,6 +601,13 @@ We provide <a class="reference external" href="https://docs.docker.com/engine/re
         })
 
         const menuContainer = document.querySelector(".farama-header-menu__body");
+
+        const stackedColumnElem = Object.assign(
+          document.createElement('div'), {
+            style: 'display: flex; flex-direction: column;'
+          }
+        );
+        const stackedKeys = new Set(["Core Projects", "Foundation"]);
 
         Object.keys(sections).forEach((key, i) => {
           const sectionElem = Object.assign(
@@ -651,7 +652,14 @@ We provide <a class="reference external" href="https://docs.docker.com/engine/re
             const ulElem = createProjectsList(projects, true);
             sectionElem.appendChild(ulElem);
           }
-          menuContainer.appendChild(sectionElem)
+          if (stackedKeys.has(key)) {
+            if (!stackedColumnElem.parentNode) {
+              menuContainer.appendChild(stackedColumnElem);
+            }
+            stackedColumnElem.appendChild(sectionElem);
+          } else {
+            menuContainer.appendChild(sectionElem);
+          }
         });
       }
 
