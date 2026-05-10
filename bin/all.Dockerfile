@@ -18,9 +18,16 @@ RUN apt-get -y update \
     xvfb \
     patchelf \
     ffmpeg cmake \
+    curl ca-certificates \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install bazel (via bazelisk) — required to build labmaze from source,
+# pulled in transitively by dm_control on Python versions without a prebuilt wheel.
+RUN curl -fsSL https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-amd64 \
+        -o /usr/local/bin/bazel \
+    && chmod +x /usr/local/bin/bazel
 
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
