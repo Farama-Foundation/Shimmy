@@ -16,24 +16,24 @@ An API conversion tool for reinforcement learning environments.
 
 
 ```{eval-rst}
-+------------------------------------------------+---------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif      | .. figure:: /_static/img/ALE.png               |
-|   :alt: DM Control                             |   :alt: DM Soccer                           |   :alt: Atari Learning Environment             |
-|   :height: 180px                               |   :height: 180px                            |   :height: 180px                               |
-|   :target: environments/dm_control             |   :target: environments/dm_multi            |   :target: environments/atari                  |
-|                                                |                                             |                                                |
-|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |   **Atari Learning Environment**:              |
-|   robotics simulation.                         |   cooperative soccer game.                  |   Set of 50+ classic Atari 2600 games.         |
-+------------------------------------------------+---------------------------------------------+------------------------------------------------+
-+------------------------------------------------+---------------------------------------------+------------------------------------------------+
-| .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png      |                                                |
-|    :alt: OpenAI Gym                            |   :alt: OpenSpiel                           |                                                |
-|    :height: 180px                              |   :height: 180px                            |                                                |
-|    :target: environments/gym                   |   :target: environments/open_spiel          |                                                |
-|                                                |                                             |                                                |
-|    **OpenAI Gym**: Compatibility support for   |   **OpenSpiel**: Collection of 70+ board    |                                                |
-|    Gym V21-V26.                                |   & card game environments.                 |                                                |
-+------------------------------------------------+---------------------------------------------+------------------------------------------------+
++------------------------------------------------+---------------------------------------------+
+| .. figure:: /_static/img/dm_control.gif        | .. figure:: /_static/img/dm_soccer.gif      |
+|   :alt: DM Control                             |   :alt: DM Soccer                           |
+|   :height: 180px                               |   :height: 180px                            |
+|   :target: environments/dm_control             |   :target: environments/dm_multi            |
+|                                                |                                             |
+|   **DM Control**: 3D physics-based             |   **DM Control Soccer**: Multi-agent        |
+|   robotics simulation.                         |   cooperative soccer game.                  |
++------------------------------------------------+---------------------------------------------+
++------------------------------------------------+---------------------------------------------+
+| .. figure:: /_static/img/openai_gym.png        | .. figure:: /_static/img/openspiel.png      |
+|    :alt: OpenAI Gym                            |   :alt: OpenSpiel                           |
+|    :height: 180px                              |   :height: 180px                            |
+|    :target: environments/gym                   |   :target: environments/open_spiel          |
+|                                                |                                             |
+|    **OpenAI Gym**: Compatibility support for   |   **OpenSpiel**: Collection of 70+ board    |
+|    Gym V21-V26.                                |   & card game environments.                 |
++------------------------------------------------+---------------------------------------------+
 ```
 
 <style>
@@ -79,7 +79,7 @@ content/basic_usage
 :caption: Environments
 environments/dm_control
 environments/gym
-environments/atari
+environments/android_env
 ```
 
 ```{toctree}
