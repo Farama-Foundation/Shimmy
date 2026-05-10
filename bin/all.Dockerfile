@@ -25,9 +25,12 @@ RUN apt-get -y update \
 
 # Install bazel (via bazelisk) — required to build labmaze from source,
 # pulled in transitively by dm_control on Python versions without a prebuilt wheel.
+# Pin to bazel 6.5.0: labmaze's build uses WORKSPACE-style @bazel_skylib, which
+# bazel 7+ no longer resolves by default (bzlmod is now the default).
 RUN curl -fsSL https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-amd64 \
         -o /usr/local/bin/bazel \
     && chmod +x /usr/local/bin/bazel
+ENV USE_BAZEL_VERSION=6.5.0
 
 COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
