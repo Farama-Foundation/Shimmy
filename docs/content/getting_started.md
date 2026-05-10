@@ -17,10 +17,10 @@ pip install "shimmy[atari]"
 
 Choices: `gym-v21`, `gym-v26`, `atari`, `dm-control`, `dm-control-multi-agent`, `openspiel`
 
-For development and testing:
+For development and testing, install the extras you need plus `testing`, e.g.:
 
 ```
-pip install "shimmy[all,testing]"
+pip install "shimmy[dm-control, dm-control-multi-agent, openspiel, testing]"
 ```
 
 

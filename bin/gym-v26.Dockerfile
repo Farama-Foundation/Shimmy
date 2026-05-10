@@ -1,4 +1,4 @@
-# A Dockerfile that sets up an openspiel
+# A Dockerfile that sets up gym v0.26
 
 # if PYTHON_VERSION is not specified as a build argument, set it to 3.10.
 ARG PYTHON_VERSION
@@ -13,6 +13,6 @@ COPY . /usr/local/shimmy/
 WORKDIR /usr/local/shimmy/
 
 # Install Shimmy
-RUN pip install ".[openspiel, testing]" --no-cache-dir
+RUN pip install ".[gym-v26, testing]" --no-cache-dir
 
 ENTRYPOINT ["/usr/local/shimmy/bin/docker_entrypoint"]
