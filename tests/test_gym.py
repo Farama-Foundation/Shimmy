@@ -29,11 +29,18 @@ CHECK_ENV_IGNORE_WARNINGS.append(
 )
 
 # We do not test Atari environment's here because we check all variants of Pong in test_envs.py (There are too many Atari environments)
-CLASSIC_CONTROL_ENVS = [
-    env_id
-    for env_id, spec in openai_gym.envs.registry.items()  # pyright: ignore[reportGeneralTypeIssues]
-    if ("classic_control" in spec.entry_point)
-]
+if openai_gym.__version__ < "0.24.0":
+    CLASSIC_CONTROL_ENVS = [
+        env_id
+        for env_id, spec in openai_gym.envs.registry.items()
+        if "classic_control" in spec.entry_point
+    ]
+else:
+    CLASSIC_CONTROL_ENVS = [
+        spec.id
+        for spec in openai_gym.envs.registry.env_specs.versions()
+        if "classic_control" in spec.entry_point
+    ]
 
 
 @pytest.mark.parametrize(
