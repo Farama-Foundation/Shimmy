@@ -36,6 +36,19 @@ pip install shimmy[dm-control]
 
 Choices: `gym-v21`, `gym-v26`, `dm-control`, `dm-control-multi-agent`, `openspiel`
 
+### Python version support
+
+The underlying environment libraries impose ceilings that Shimmy itself cannot lift:
+
+| Extra | Highest supported Python | Why |
+|---|---|---|
+| `gym-v21` | 3.10 | gym 0.21.0 needs `setuptools==65.5.0`, which calls `pkgutil.ImpImporter` — removed in Python 3.12. Also needs `pip<24.1` to accept its malformed metadata. |
+| `gym-v26` | 3.12 | pins `numpy<2.0`; NumPy 1.26 ships wheels only through cp312. On newer Python pip falls back to building NumPy 1.x from source, which is slow and not guaranteed to work. |
+| `dm-control`, `dm-control-multi-agent` | 3.12 | `labmaze` (transitive via `dm_control`) currently ships no wheels beyond cp312. |
+| `openspiel` | 3.14 | `open_spiel` publishes wheels through cp314. |
+
+If you need a newer Python than an extra supports, use a separate virtual environment for that extra.
+
 ## At a glance
 
 This is an example of using Shimmy to convert DM Control environments into a Gymnasium compatible environment:
