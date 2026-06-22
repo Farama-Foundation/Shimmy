@@ -16,7 +16,7 @@ jobs:
       matrix:
         python-version: ['3.10', '3.14']
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # DM Control
       - run: |
@@ -33,7 +33,7 @@ jobs:
       matrix:
         python-version: ['3.10', '3.14']
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # DM Control Multi-Agent
       - run: |
@@ -50,7 +50,7 @@ jobs:
       matrix:
         python-version: ['3.10', '3.14']
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # OpenSpiel
       - run: |
@@ -67,7 +67,7 @@ jobs:
       matrix:
         python-version: ['3.10']
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Gym v21
       - run: |
@@ -84,7 +84,7 @@ jobs:
       matrix:
         python-version: ['3.10', '3.14']
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Gym v26
       - run: |
