@@ -1,4 +1,8 @@
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8140744.svg)](https://doi.org/10.5281/zenodo.8140744)
+[![Python](https://img.shields.io/pypi/pyversions/shimmy.svg)](https://badge.fury.io/py/shimmy)
+[![PyPI Version](https://img.shields.io/pypi/v/shimmy)](https://pypi.org/project/shimmy)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8140744.svg)](https://doi.org/10.5281/zenodo.8140744)
 
 <p align="center">
     <a href = "https://shimmy.farama.org/" target = "_blank"><img src="https://raw.githubusercontent.com/Farama-Foundation/Shimmy/main/shimmy-text.png" width="500px"/> </a>
