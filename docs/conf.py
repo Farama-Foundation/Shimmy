@@ -81,6 +81,7 @@ html_theme_options = {
     "light_logo": "img/shimmy.svg",
     "dark_logo": "img/shimmy-white.svg",
     "gtag": "G-07SGW5KKJF",
+    "versioning": True,
     "source_repository": "https://github.com/Farama-Foundation/Shimmy/",
     "source_branch": "main",
     "source_directory": "docs/",
