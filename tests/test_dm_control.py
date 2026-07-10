@@ -50,6 +50,10 @@ CHECK_ENV_IGNORE_WARNINGS = [
     ]
 ]
 CHECK_ENV_IGNORE_WARNINGS.append("`in1d` is deprecated. Use `np.isin` instead.")
+CHECK_ENV_IGNORE_WARNINGS.append(
+    "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\n"
+    "As an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+)
 
 
 @pytest.mark.parametrize("env_id", DM_CONTROL_ENV_IDS)
