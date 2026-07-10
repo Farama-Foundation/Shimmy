@@ -22,8 +22,10 @@ CHECK_ENV_IGNORE_WARNINGS = [
         "A Box observation space maximum value is infinity. This is probably too high.",
         "For Box action spaces, we recommend using a symmetric and normalized space (range=[-1, 1] or [0, 1]). See https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html for more information.",
         "The environment CartPole-v0 is out of date. You should consider upgrading to version `v1`.",
+        # Gym v21 warnings
         "Official support for the `seed` function is dropped. Standard practice is to reset gymnasium environments "
         "using `env.reset(seed=<desired seed>)`",
+        "Gym v21 environment do not accept options as a reset parameter, options={}",
     ]
 ]
 CHECK_ENV_IGNORE_WARNINGS.append(
