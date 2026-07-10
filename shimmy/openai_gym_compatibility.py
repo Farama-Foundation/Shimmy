@@ -223,6 +223,9 @@ class GymV21CompatibilityV0(gymnasium.Env[ObsType, ActType]):
         Returns:
             (observation, info)
         """
+        # Initialise Gymnasium's RNG (check_env / seeding API expect `_np_random`).
+        super().reset(seed=seed)
+
         if seed is not None:
             self.gym_env.seed(seed)
 
