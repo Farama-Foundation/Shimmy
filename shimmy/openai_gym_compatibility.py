@@ -3,7 +3,7 @@
 # pyright: reportGeneralTypeIssues=false, reportPrivateImportUsage=false
 from __future__ import annotations
 
-from typing import Any, List, Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 import gymnasium
 from gymnasium import error
@@ -152,7 +152,7 @@ class LegacyV21Env(Protocol):
         """Close the environment."""
         ...
 
-    def seed(self, seed: int | None = None) -> List[int] | None:
+    def seed(self, seed: int | None = None) -> list[int] | None:
         """Set the seed for this env's random number generator(s)."""
         ...
 
