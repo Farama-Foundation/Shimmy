@@ -152,7 +152,7 @@ class LegacyV21Env(Protocol):
         """Close the environment."""
         ...
 
-    def seed(self, seed: int | None = None):
+    def seed(self, seed: int | None = None) -> list[int] | None:
         """Set the seed for this env's random number generator(s)."""
         ...
 
@@ -223,6 +223,9 @@ class GymV21CompatibilityV0(gymnasium.Env[ObsType, ActType]):
         Returns:
             (observation, info)
         """
+        # Initialise Gymnasium's RNG (check_env / seeding API expect `_np_random`).
+        super().reset(seed=seed)
+
         if seed is not None:
             self.gym_env.seed(seed)
 

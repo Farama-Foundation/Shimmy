@@ -22,11 +22,21 @@ CHECK_ENV_IGNORE_WARNINGS = [
         "A Box observation space maximum value is infinity. This is probably too high.",
         "For Box action spaces, we recommend using a symmetric and normalized space (range=[-1, 1] or [0, 1]). See https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html for more information.",
         "The environment CartPole-v0 is out of date. You should consider upgrading to version `v1`.",
+        # Gym v21 warnings
+        "Official support for the `seed` function is dropped. Standard practice is to reset gymnasium environments "
+        "using `env.reset(seed=<desired seed>)`",
+        "Gym v21 environment do not accept options as a reset parameter, options={}",
     ]
 ]
 CHECK_ENV_IGNORE_WARNINGS.append(
     "`np.bool8` is a deprecated alias for `np.bool_`.  (Deprecated NumPy 1.24)"
 )
+
+# Gym V26 introduced render_mode / the new step API; V21 uses the legacy API.
+if openai_gym.__version__ >= "0.26":
+    GYM_COMPAT_ENV_ID = "GymV26Environment-v0"
+else:
+    GYM_COMPAT_ENV_ID = "GymV21Environment-v0"
 
 # We do not test Atari environment's here because we check all variants of Pong in test_envs.py (There are too many Atari environments)
 if openai_gym.__version__ >= "0.24.0":
@@ -48,7 +58,7 @@ else:
 )
 def test_gym_conversion_by_id(env_id):
     """Tests that the gym conversion works through specifying the env_id."""
-    env = gymnasium.make("GymV26Environment-v0", env_id=env_id).unwrapped
+    env = gymnasium.make(GYM_COMPAT_ENV_ID, env_id=env_id).unwrapped
 
     with warnings.catch_warnings(record=True) as caught_warnings:
         check_env(env, skip_render_check=True)
@@ -67,7 +77,7 @@ def test_gym_conversion_by_id(env_id):
 def test_gym_conversion_instantiated(env_id):
     """Tests that the gym conversion works with an instantiated gym environment."""
     env = openai_gym.make(env_id)
-    env = gymnasium.make("GymV26Environment-v0", env=env).unwrapped
+    env = gymnasium.make(GYM_COMPAT_ENV_ID, env=env).unwrapped
 
     print("render-mode", env.render_mode)
     print("render-modes", env.metadata)
@@ -88,8 +98,11 @@ class EnvWithData(openai_gym.Env):
 
     def __init__(self):
         """Initialises the environment with hidden data."""
-        self.observation_space = openai_Box(low=0, high=1)
-        self.action_space = openai_Box(low=0, high=1)
+        # gym 0.21 requires an explicit shape when low/high are scalars.
+        self.observation_space = openai_Box(low=0, high=1, shape=())
+        self.action_space = openai_Box(low=0, high=1, shape=())
+        # Present so GymV26CompatibilityV0 can read it on gym<0.26 installs.
+        self.render_mode = None
 
         self.data = 123
 
