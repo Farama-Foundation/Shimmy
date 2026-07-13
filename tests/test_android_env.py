@@ -139,7 +139,7 @@ def test_render_returns_pixels():
     env.reset(seed=0)
 
     frame = env.render()
-    assert isinstance(frame, np.ndarray)
+    assert frame is not None and isinstance(frame, np.ndarray)
     assert frame.shape == (4, 4, 3)
     assert frame.dtype == np.uint8
 
