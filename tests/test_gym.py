@@ -122,3 +122,16 @@ def test_compatibility_get_attr():
     assert env.data == 123
     assert env.get_env_data() == 123
     env.close()
+
+
+@pytest.mark.skipif(
+    openai_gym.__version__ < "0.23",
+    reason="gym.spaces.Discrete gained the `start` parameter in gym 0.23",
+)
+def test_convert_discrete_space_preserves_start():
+    """Discrete.start offset must be preserved when converting gym -> gymnasium."""
+    space = openai_gym.spaces.Discrete(5, start=2)
+    converted = shimmy.openai_gym_compatibility._convert_space(space)
+    assert isinstance(converted, gymnasium.spaces.Discrete)
+    assert converted.n == 5
+    assert converted.start == 2

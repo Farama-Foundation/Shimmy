@@ -308,7 +308,7 @@ def _convert_space(space: gym.Space) -> gymnasium.Space:
         The converted space
     """
     if isinstance(space, gym.spaces.Discrete):
-        return Discrete(n=space.n)
+        return Discrete(n=space.n, start=getattr(space, "start", 0))
     elif isinstance(space, gym.spaces.Box):
         return Box(low=space.low, high=space.high, shape=space.shape, dtype=space.dtype)
     elif isinstance(space, gym.spaces.MultiDiscrete):
