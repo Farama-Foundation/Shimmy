@@ -85,9 +85,7 @@ See [Basic Usage](https://shimmy.farama.org/content/basic_usage/) for more infor
 
 ## Project Maintainers
 
-Project Manager: [Elliot Tower](https://github.com/elliottower/)
-
-Core Contributors: [Jet Tai](https://github.com/jjshoots/), [Mark Towers](https://github.com/pseudo-rnd-thoughts/)
+Project Manager: [Mark Towers](https://github.com/pseudo-rnd-thoughts/)
 
 Maintenance for this project is also contributed by the broader Farama team: [farama.org/team](https://farama.org/team).
 
