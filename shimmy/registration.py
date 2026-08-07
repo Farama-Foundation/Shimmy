@@ -114,6 +114,21 @@ def _register_dm_control_envs():
         )
 
 
+def _register_android_envs():
+    """Registers a generic AndroidEnv compatibility env in gymnasium."""
+    try:
+        import android_env  # noqa: F401
+    except ImportError:
+        return
+
+    from shimmy.android_env_compatibility import AndroidEnvCompatibilityV0
+
+    def _make_android_env_generic_env(env, **kwargs):
+        return AndroidEnvCompatibilityV0(env, **kwargs)
+
+    register("android_env/compatibility-env-v0", _make_android_env_generic_env)
+
+
 def register_gymnasium_envs():
     """This function is called when gymnasium is imported."""
     if "GymV26Environment-v0" in registry:
@@ -130,3 +145,4 @@ def register_gymnasium_envs():
     )
 
     _register_dm_control_envs()
+    _register_android_envs()
