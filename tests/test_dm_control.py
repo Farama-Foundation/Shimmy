@@ -1,6 +1,5 @@
 """Tests the functionality of the DmControlCompatibility Wrapper on dm_control envs."""
 
-import inspect
 import pickle
 import warnings
 from typing import Callable
@@ -17,7 +16,6 @@ from dm_control.suite.wrappers import (
     pixels,
 )
 from dm_env import specs
-from gymnasium import spaces
 from gymnasium.envs.registration import registry
 from gymnasium.error import Error
 from gymnasium.utils.env_checker import check_env, data_equivalence
@@ -25,7 +23,7 @@ from gymnasium.utils.env_checker import check_env, data_equivalence
 import shimmy
 from shimmy.dm_control_compatibility import DmControlCompatibilityV0
 from shimmy.registration import DM_CONTROL_SUITE_ENVS
-from shimmy.utils.dm_env import dm_spec2gym_space
+from shimmy.utils.dm_env import _DISCRETE_ACCEPTS_DTYPE, dm_spec2gym_space
 
 gym.register_envs(shimmy)
 
@@ -261,12 +259,14 @@ def test_discrete_array_keeps_its_dtype(dtype):
     spec = specs.DiscreteArray(num_values=5, dtype=dtype)
     space = dm_spec2gym_space(spec)
 
-    if "dtype" in inspect.signature(spaces.Discrete.__init__).parameters:
-        assert np.dtype(space.dtype) == np.dtype(dtype)
-
-        space.seed(0)
-        for _ in range(20):
-            # Raises if the sampled action does not match the spec's dtype.
-            spec.validate(space.sample())
-
     assert space.contains(spec.generate_value())
+
+    if not _DISCRETE_ACCEPTS_DTYPE:
+        pytest.skip("`spaces.Discrete` only takes a dtype from Gymnasium 1.3.0")
+
+    assert np.dtype(space.dtype) == np.dtype(dtype)
+
+    space.seed(0)
+    for _ in range(20):
+        # Raises if the sampled action does not match the spec's dtype.
+        spec.validate(space.sample())

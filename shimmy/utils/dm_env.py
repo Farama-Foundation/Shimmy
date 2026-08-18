@@ -3,20 +3,20 @@
 from __future__ import annotations
 
 import copy
-import inspect
 from collections import OrderedDict
 from typing import Any
 
 import dm_env
+import gymnasium
 import numpy as np
 from dm_env.specs import Array, BoundedArray, DiscreteArray
 from gymnasium import spaces
 
 # `Discrete` only gained a `dtype` argument in Gymnasium 1.3.0, and this package
-# supports 1.0.0 upwards, so the argument is passed only where it exists.
-_DISCRETE_ACCEPTS_DTYPE = (
-    "dtype" in inspect.signature(spaces.Discrete.__init__).parameters
-)
+# supports 1.0.0 upwards, so the argument is passed only from 1.3.0 onwards.
+_DISCRETE_ACCEPTS_DTYPE = tuple(
+    int(part) for part in gymnasium.__version__.split(".")[:2]
+) >= (1, 3)
 
 
 def dm_spec2gym_space(spec) -> spaces.Space[Any]:
