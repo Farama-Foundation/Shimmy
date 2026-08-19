@@ -7,9 +7,16 @@ from collections import OrderedDict
 from typing import Any
 
 import dm_env
+import gymnasium
 import numpy as np
 from dm_env.specs import Array, BoundedArray, DiscreteArray
 from gymnasium import spaces
+
+# `Discrete` only gained a `dtype` argument in Gymnasium 1.3.0, and this package
+# supports 1.0.0 upwards, so the argument is passed only from 1.3.0 onwards.
+_DISCRETE_ACCEPTS_DTYPE = tuple(
+    int(part) for part in gymnasium.__version__.split(".")[:2]
+) >= (1, 3)
 
 
 def dm_spec2gym_space(spec) -> spaces.Space[Any]:
@@ -48,6 +55,15 @@ def dm_spec2gym_space(spec) -> spaces.Space[Any]:
             dtype=spec.dtype,  # pyright: ignore[reportGeneralTypeIssues]
         )
     elif type(spec) is DiscreteArray:
+        # Both branches above carry `spec.dtype` into the space. Dropping it
+        # here left the space reporting int64 while `DiscreteArray` defaults to
+        # int32, so an action sampled from the space failed the spec's own
+        # `validate()`.
+        if _DISCRETE_ACCEPTS_DTYPE:
+            return spaces.Discrete(
+                spec.num_values,
+                dtype=spec.dtype,  # pyright: ignore[reportGeneralTypeIssues]
+            )
         return spaces.Discrete(spec.num_values)
     else:
         raise NotImplementedError(
