@@ -322,9 +322,14 @@ def _convert_space(space: gym.Space) -> gymnasium.Space:
     elif isinstance(space, gym.spaces.Sequence):
         return Sequence(space=_convert_space(space.feature_space))
     elif isinstance(space, gym.spaces.Graph):
+        # Both gym and gymnasium allow `edge_space=None` for graphs without edge features.
         return Graph(
             node_space=_convert_space(space.node_space),  # type: ignore
-            edge_space=_convert_space(space.edge_space),  # type: ignore
+            edge_space=(
+                None
+                if space.edge_space is None
+                else _convert_space(space.edge_space)  # type: ignore
+            ),
         )
     elif isinstance(space, gym.spaces.Text):
         return Text(
