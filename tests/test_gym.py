@@ -135,3 +135,23 @@ def test_convert_discrete_space_preserves_start():
     assert isinstance(converted, gymnasium.spaces.Discrete)
     assert converted.n == 5
     assert converted.start == 2
+
+
+@pytest.mark.skipif(
+    openai_gym.__version__ < "0.25",
+    reason="gym.spaces.Graph was added in gym 0.25",
+)
+def test_convert_graph_space_without_edge_space():
+    """Graph spaces are allowed to have no edge space, converting one must not raise."""
+    space = openai_gym.spaces.Graph(
+        node_space=openai_gym.spaces.Discrete(3), edge_space=None
+    )
+    converted = shimmy.openai_gym_compatibility._convert_space(space)
+    assert isinstance(converted, gymnasium.spaces.Graph)
+    assert isinstance(converted.node_space, gymnasium.spaces.Discrete)
+    assert converted.node_space.n == 3
+    assert converted.edge_space is None
+
+    sample = converted.sample()
+    assert sample in converted
+    assert sample.edges is None

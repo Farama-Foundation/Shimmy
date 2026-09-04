@@ -1,7 +1,7 @@
 sphinx
 sphinx-autobuild
 myst-parser
-git+https://github.com/Farama-Foundation/Celshast#egg=furo
+celshast
 moviepy
 pygame==2.3.0
 sphinxext-opengraph
