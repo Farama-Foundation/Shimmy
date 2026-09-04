@@ -45,6 +45,7 @@ extras = {
         "protobuf<4",
     ],
     "openspiel": ["open_spiel>=1.2", "pettingzoo>=1.23"],
+    "android-env": ["android-env>=1.2.4"],
     "testing": [
         "pytest>=7.1.3",
         "pillow>=9.3.0",

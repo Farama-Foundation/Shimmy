@@ -93,3 +93,20 @@ jobs:
             --tag shimmy-gym-v26-docker .
       - name: Run Gym v0.26 tests
         run: docker run shimmy-gym-v26-docker pytest tests/test_gym.py
+
+  optional-test-android-env:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v6
+
+      # AndroidEnv
+      - run: |
+          docker build -f bin/android_env.Dockerfile \
+            --build-arg PYTHON_VERSION='${{ matrix.python-version }}' \
+            --tag shimmy-android-env-docker .
+      - name: Run android_env tests
+        run: docker run shimmy-android-env-docker pytest tests/test_android_env.py

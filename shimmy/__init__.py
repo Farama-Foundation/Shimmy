@@ -49,12 +49,20 @@ except ImportError as e:
         e,
     )
 
+try:
+    from shimmy.android_env_compatibility import AndroidEnvCompatibilityV0
+except ImportError as e:
+    AndroidEnvCompatibilityV0 = NotInstallClass(
+        "android_env is not installed, run `pip install 'shimmy[android-env]'`", e
+    )
+
 __all__ = [
     "DmControlCompatibilityV0",
     "DmControlMultiAgentCompatibilityV0",
     "OpenSpielCompatibilityV0",
     "GymV21CompatibilityV0",
     "GymV26CompatibilityV0",
+    "AndroidEnvCompatibilityV0",
 ]
 
 
