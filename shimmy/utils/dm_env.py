@@ -98,7 +98,7 @@ def dm_env_step2gym_step(timestep) -> tuple[Any, float, bool, bool, dict[str, An
         observation, reward, terminated, truncated, info.
     """
     obs = dm_obs2gym_obs(timestep.observation)
-    reward = timestep.reward or 0
+    reward = timestep.reward if timestep.reward is not None else 0
 
     # set terminated and truncated
     terminated, truncated = False, False

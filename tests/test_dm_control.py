@@ -5,6 +5,7 @@ import warnings
 from typing import Callable
 
 import dm_control.suite
+import dm_env
 import gymnasium as gym
 import numpy as np
 import pytest
@@ -23,7 +24,11 @@ from gymnasium.utils.env_checker import check_env, data_equivalence
 import shimmy
 from shimmy.dm_control_compatibility import DmControlCompatibilityV0
 from shimmy.registration import DM_CONTROL_SUITE_ENVS
-from shimmy.utils.dm_env import _DISCRETE_ACCEPTS_DTYPE, dm_spec2gym_space
+from shimmy.utils.dm_env import (
+    _DISCRETE_ACCEPTS_DTYPE,
+    dm_env_step2gym_step,
+    dm_spec2gym_space,
+)
 
 gym.register_envs(shimmy)
 
@@ -270,3 +275,41 @@ def test_discrete_array_keeps_its_dtype(dtype):
     for _ in range(20):
         # Raises if the sampled action does not match the spec's dtype.
         spec.validate(space.sample())
+
+
+def test_missing_reward_defaults_to_zero():
+    """None rewards (FIRST timesteps) must become 0, not crash."""
+    ts = dm_env.TimeStep(
+        step_type=dm_env.StepType.MID,
+        reward=None,
+        discount=1.0,
+        observation=np.array([0.0], dtype=np.float32),
+    )
+    _, reward, *_ = dm_env_step2gym_step(ts)
+    assert reward == 0
+
+
+def test_zero_float_reward_stays_float():
+    """A zero float reward must stay a float. `reward or 0` turned 0.0 into int 0."""
+    ts = dm_env.TimeStep(
+        step_type=dm_env.StepType.MID,
+        reward=0.0,
+        discount=1.0,
+        observation=np.array([0.0], dtype=np.float32),
+    )
+    _, reward, *_ = dm_env_step2gym_step(ts)
+    assert reward == 0.0
+    assert type(reward) is float
+
+
+def test_vector_reward_does_not_raise():
+    """Vector rewards must not be truth-tested (`or 0` raises ValueError on arrays)."""
+    vec = np.array([0.1, 0.2], dtype=np.float32)
+    ts = dm_env.TimeStep(
+        step_type=dm_env.StepType.MID,
+        reward=vec,
+        discount=1.0,
+        observation=np.array([0.0], dtype=np.float32),
+    )
+    _, reward, *_ = dm_env_step2gym_step(ts)
+    np.testing.assert_array_equal(reward, vec)
