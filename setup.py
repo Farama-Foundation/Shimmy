@@ -69,6 +69,9 @@ setup(
     install_requires=["numpy>=1.18.0", "gymnasium>=1.0.0"],
     tests_require=extras["testing"],
     extras_require=extras,
+    entry_points={
+        "console_scripts": ["gym-mcp=shimmy.mcp_adapters.gymnasium_mcp:main"],
+    },
     classifiers=[
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
