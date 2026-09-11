@@ -7,6 +7,7 @@ from typing import Any, cast
 
 import gymnasium
 import numpy as np
+from numpy.typing import NDArray
 
 from shimmy.mcp_adapters.spaces import (
     decode,
@@ -18,9 +19,11 @@ from shimmy.mcp_adapters.spaces import (
 )
 
 try:
+    from importlib import import_module
+
     from fastmcp import FastMCP
     from mcp.types import TextContent
-    from importlib import import_module
+
     import_module("PIL.Image")
 except ImportError as e:
     raise ImportError("MCP support requires: pip install 'shimmy[mcp]'") from e
@@ -149,9 +152,13 @@ class GymnasiumMCPAdapter:
             value = self.env.render()
             if isinstance(value, str):
                 return TextContent(type="text", text=value)
-            is_list_expected = self.env.render_mode and self.env.render_mode.endswith("_list")
+            is_list_expected = self.env.render_mode and self.env.render_mode.endswith(
+                "_list"
+            )
             frames = value if is_list_expected else [value]
-            assert frames is not None, f"render_mode of '{self.env.render_mode}' should not produce None"
+            assert (
+                frames is not None
+            ), f"render_mode of '{self.env.render_mode}' should not produce None"
             if all(isinstance(elem, str) for elem in frames):
                 return TextContent(type="text", text=str(frames))
             content = [
@@ -167,7 +174,11 @@ class GymnasiumMCPAdapter:
                 )
                 if layout:
                     content.append(
-                        image_content(cast(np.typing.NDArray[np.uint8], frame), layout, self.max_image_bytes)
+                        image_content(
+                            cast(NDArray[np.uint8], frame),
+                            layout,
+                            self.max_image_bytes,
+                        )
                     )
                 else:
                     content.append(

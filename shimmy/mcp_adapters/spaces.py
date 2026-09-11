@@ -4,11 +4,12 @@ import base64
 import io
 import json
 from typing import Any, cast
-from mcp.types import ImageContent
-from PIL import Image
+
 import gymnasium
 import numpy as np
 from gymnasium import spaces
+from mcp.types import ImageContent
+from PIL import Image
 
 
 def json_value(value: Any) -> Any:
@@ -46,7 +47,6 @@ def image_layout(space: spaces.Space) -> str | None:
 
 def image_content(value: np.ndarray, layout: str, limit: int) -> Any:
     """Encode an image as native MCP content within the base64 byte limit."""
-
     if layout == "CHW":
         value = np.moveaxis(value, 0, -1)
     if value.ndim == 3 and value.shape[-1] == 1:
@@ -197,7 +197,9 @@ def decode(space: spaces.Space, value: Any, path: str = "action") -> Any:
                 result = result[()]
         else:
             result = space.from_jsonable([value])[0]
-        if not space.contains(result):  # pyright: ignore[reportArgumentType,reportGeneralTypeIssues]
+        if not space.contains(
+            result  # pyright: ignore[reportArgumentType,reportGeneralTypeIssues]
+        ):
             raise ValueError("value is outside the space")
         return result
     except (

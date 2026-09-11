@@ -21,6 +21,7 @@ class GymEnvironmentArgument(argparse.Action):
     """Process keyword arguments that should passthrough to ``gym.make``."""
 
     def __call__(self, parser, namespace, values, option_string=None):
+        """Add arbitrary named arguments into ``namespace.environment_kwargs``."""
         kwargs = getattr(namespace, "environment_kwargs", None)
         if kwargs is None:
             kwargs = namespace.environment_kwargs = {}
@@ -43,7 +44,10 @@ def main(argv: list[str] | None = None) -> None:
         "-t", "--transport", default="stdio", help="MCP transport (default: stdio)"
     )
     parser.add_argument(
-        "-r", "--render-mode", action=GymEnvironmentArgument, help="Gymnasium render mode"
+        "-r",
+        "--render-mode",
+        action=GymEnvironmentArgument,
+        help="Gymnasium render mode",
     )
     parser.add_argument(
         "--kwargs",
@@ -54,7 +58,11 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("env_id")
     _, unknown = parser.parse_known_args(argv)
     for flag in dict.fromkeys(token.split("=", 1)[0] for token in unknown):
-        if flag.startswith("-") and flag != "--" and isinstance(try_load_json(flag), str):
+        if (
+            flag.startswith("-")
+            and flag != "--"
+            and isinstance(try_load_json(flag), str)
+        ):
             parser.add_argument(
                 flag,
                 dest=flag.lstrip("-").replace("-", "_"),
