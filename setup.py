@@ -34,6 +34,7 @@ version = get_version()
 header_count, long_description = get_description()
 
 extras = {
+    "mcp": ["fastmcp>=2,<5", "pillow"],
     "gym-v21": ["gym==0.21.0", "pyglet==1.5.11", "numpy<2.0"],
     "gym-v26": ["gym==0.26.2", "numpy<2.0"],
     "dm-control": ["dm-control>=1.0.10", "imageio", "h5py>=3.7.0"],
