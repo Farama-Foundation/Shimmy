@@ -2,7 +2,6 @@
 
 import asyncio
 import base64
-import builtins
 import io
 import json
 
@@ -131,7 +130,7 @@ def test_client():
             assert block.type == "image" and block.mimeType == "image/png"
             pixels = np.asarray(Image.open(io.BytesIO(base64.b64decode(block.data))))
             np.testing.assert_array_equal(pixels, env.render())
-            stepped = await client.call_tool("step", {"action": 0})
+            await client.call_tool("step", {"action": 0})
             stepped = await client.call_tool("step", {"action": 0})
             assert env.steps == 2
             assert json.loads(stepped.content[0].text)["total_reward"] == 2
