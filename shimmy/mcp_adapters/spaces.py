@@ -3,6 +3,7 @@
 import base64
 import io
 import json
+from importlib.metadata import version
 from typing import Any, cast
 
 import gymnasium
@@ -10,6 +11,12 @@ import numpy as np
 from gymnasium import spaces
 from mcp.types import ImageContent
 from PIL import Image
+
+MCP_MAJOR_VERSION = int(version("mcp").split(".")[0])
+if MCP_MAJOR_VERSION < 2:
+    MIMETYPE_FIELD = "mimeType"
+else:
+    MIMETYPE_FIELD = "mime_type"
 
 
 def json_value(value: Any) -> Any:
@@ -56,7 +63,8 @@ def image_content(value: np.ndarray, layout: str, limit: int) -> Any:
     data = base64.b64encode(buffer.getvalue()).decode("ascii")
     if len(data) > limit:
         raise ValueError(f"Encoded image exceeds max_image_bytes={limit}")
-    return ImageContent(type="image", data=data, mimeType="image/png")
+    kwargs: dict[str, str] = {MIMETYPE_FIELD: "image/png"}
+    return ImageContent(type="image", data=data, **kwargs)
 
 
 def encode(space: spaces.Space, value: Any, images: bool = False) -> Any:

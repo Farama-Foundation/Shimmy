@@ -12,6 +12,7 @@ import pytest
 from shimmy.mcp_adapters import GymnasiumMCPAdapter
 from shimmy.mcp_adapters import gymnasium_mcp as cli
 from shimmy.mcp_adapters.spaces import (
+    MIMETYPE_FIELD,
     decode,
     describe,
     encode,
@@ -127,7 +128,9 @@ def test_client():
             rendered = await client.call_tool("render", {})
             assert rendered.content[0].type == "text"
             block = rendered.content[1]
-            assert block.type == "image" and block.mimeType == "image/png"
+            assert (
+                block.type == "image" and getattr(block, MIMETYPE_FIELD) == "image/png"
+            )
             pixels = np.asarray(Image.open(io.BytesIO(base64.b64decode(block.data))))
             np.testing.assert_array_equal(pixels, env.render())
             await client.call_tool("step", {"action": 0})
