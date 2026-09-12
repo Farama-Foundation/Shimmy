@@ -98,11 +98,14 @@ def dm_env_step2gym_step(timestep) -> tuple[Any, float, bool, bool, dict[str, An
         observation, reward, terminated, truncated, info.
     """
     obs = dm_obs2gym_obs(timestep.observation)
+
     # Gymnasium only supports scalar float-like rewards
     if hasattr(timestep.reward, "__getitem__"):
-        if isinstance(timestep.reward, np.ndarray) and timestep.reward.size == 1:
+        if isinstance(timestep.reward, (np.floating, np.integer)):
+            reward = timestep.reward
+        elif isinstance(timestep.reward, np.ndarray) and timestep.reward.size == 1:
             reward = timestep.reward.item()
-        elif len(timestep.reward) == 1:
+        elif isinstance(timestep.reward, (list, tuple)) and len(timestep.reward) == 1:
             reward = timestep.reward[0]
         else:
             raise TypeError(
