@@ -4,6 +4,7 @@ import asyncio
 import base64
 import io
 import json
+from typing import Any
 
 import gymnasium as gym
 import numpy as np
@@ -63,7 +64,7 @@ def test_invalid_action(value):
 class Pixels(gym.Env):
     """Small deterministic environment for image and state tests."""
 
-    metadata = {"render_modes": ["rgb_array", "rgb_array_list", "ansi"]}
+    metadata: dict[str, Any] = {"render_modes": ["rgb_array", "rgb_array_list", "ansi"]}
     render_mode = "rgb_array"
 
     def __init__(self):
