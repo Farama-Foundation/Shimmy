@@ -302,8 +302,8 @@ def test_zero_float_reward_stays_float():
     assert type(reward) is float
 
 
-def test_vector_reward_does_not_raise():
-    """Vector rewards must not be truth-tested (`or 0` raises ValueError on arrays)."""
+def test_vector_reward_raises_type_error():
+    """Gymnasium only supports scalar rewards, so a vector must raise TypeError."""
     vec = np.array([0.1, 0.2], dtype=np.float32)
     ts = dm_env.TimeStep(
         step_type=dm_env.StepType.MID,
@@ -311,5 +311,56 @@ def test_vector_reward_does_not_raise():
         discount=1.0,
         observation=np.array([0.0], dtype=np.float32),
     )
+    with pytest.raises(TypeError, match="Gymnasium only supports scalar reward"):
+        dm_env_step2gym_step(ts)
+
+
+def test_zero_d_numpy_reward_is_accepted():
+    """A 0-d numpy array reward must pass through without calling len()."""
+    ts = dm_env.TimeStep(
+        step_type=dm_env.StepType.MID,
+        reward=np.array(0.0),
+        discount=1.0,
+        observation=np.array([0.0], dtype=np.float32),
+    )
     _, reward, *_ = dm_env_step2gym_step(ts)
-    np.testing.assert_array_equal(reward, vec)
+    assert reward == 0.0
+    assert np.ndim(reward) == 0
+
+
+def test_numpy_scalar_reward_is_accepted():
+    """A numpy scalar reward must pass through."""
+    ts = dm_env.TimeStep(
+        step_type=dm_env.StepType.MID,
+        reward=np.float64(0.0),
+        discount=1.0,
+        observation=np.array([0.0], dtype=np.float32),
+    )
+    _, reward, *_ = dm_env_step2gym_step(ts)
+    assert reward == 0.0
+    assert np.ndim(reward) == 0
+
+
+def test_length_one_array_reward_unwraps_to_scalar():
+    """A length-1 array unwraps to a scalar (ndim 0)."""
+    ts = dm_env.TimeStep(
+        step_type=dm_env.StepType.MID,
+        reward=np.array([0.5]),
+        discount=1.0,
+        observation=np.array([0.0], dtype=np.float32),
+    )
+    _, reward, *_ = dm_env_step2gym_step(ts)
+    assert reward == 0.5
+    assert np.ndim(reward) == 0
+
+
+def test_shape_one_by_two_reward_raises_type_error():
+    """len() == 1 is not enough: shape (1, 2) is still a vector and must raise."""
+    ts = dm_env.TimeStep(
+        step_type=dm_env.StepType.MID,
+        reward=np.array([[0.1, 0.2]]),
+        discount=1.0,
+        observation=np.array([0.0], dtype=np.float32),
+    )
+    with pytest.raises(TypeError, match="Gymnasium only supports scalar reward"):
+        dm_env_step2gym_step(ts)
