@@ -89,14 +89,14 @@ def encode(space: spaces.Space, value: Any, images: bool = False) -> Any:
             "value": encode(space.spaces[index], item, images),
         }
     if isinstance(space, spaces.Graph):
-        assert space.edge_space is not None
+        if value.edges is None:
+            edges = None
+        else:
+            assert space.edge_space is not None
+            edges = [encode(space.edge_space, v, images) for v in value.edges]
         return {
             "nodes": [encode(space.node_space, v, images) for v in value.nodes],
-            "edges": (
-                None
-                if value.edges is None
-                else [encode(space.edge_space, v, images) for v in value.edges]
-            ),
+            "edges": edges,
             "edge_links": json_value(value.edge_links),
         }
     try:
