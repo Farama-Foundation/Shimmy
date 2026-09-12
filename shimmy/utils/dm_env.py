@@ -109,7 +109,7 @@ def dm_env_step2gym_step(timestep) -> tuple[Any, float, bool, bool, dict[str, An
                 f"Gymnasium only supports scalar reward, got {timestep.reward}"
             )
     else:
-        reward = timestep.reward if timestep.reward is None else 0
+        reward = timestep.reward if timestep.reward is not None else 0
 
     # set terminated and truncated
     terminated, truncated = False, False
