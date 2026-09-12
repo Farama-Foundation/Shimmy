@@ -98,15 +98,18 @@ def dm_env_step2gym_step(timestep) -> tuple[Any, float, bool, bool, dict[str, An
         observation, reward, terminated, truncated, info.
     """
     obs = dm_obs2gym_obs(timestep.observation)
-    # Gymnasium only supports scalar SupportsFloat rewards. 0-d arrays and
-    # NumPy scalars must not be passed to len() (TypeError: unsized object).
-    # Unwrap a 1-d length-1 array; reject other non-scalars including (1, 2).
-    if np.ndim(timestep.reward) == 0:
-        reward = timestep.reward if timestep.reward is not None else 0
-    elif np.ndim(timestep.reward) == 1 and np.size(timestep.reward) == 1:
-        reward = timestep.reward[0]
+    # Gymnasium only supports scalar float-like rewards
+    if hasattr(timestep.reward, "__getitem__"):
+        if isinstance(timestep.reward, np.ndarray) and timestep.reward.size == 1:
+            reward = timestep.reward.item()
+        elif len(timestep.reward) == 1:
+            reward = timestep.reward[0]
+        else:
+            raise TypeError(
+                f"Gymnasium only supports scalar reward, got {timestep.reward}"
+            )
     else:
-        raise TypeError(f"Gymnasium only supports scalar reward, got {timestep.reward}")
+        reward = timestep.reward if timestep.reward is None else 0
 
     # set terminated and truncated
     terminated, truncated = False, False
