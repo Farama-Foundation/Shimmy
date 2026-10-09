@@ -1,8 +1,8 @@
 # A Dockerfile that sets up dm-control
 
-# if PYTHON_VERSION is not specified as a build argument, set it to 3.10.
+# if PYTHON_VERSION is not specified as a build argument, set it to 3.11.
 ARG PYTHON_VERSION
-ARG PYTHON_VERSION=${PYTHON_VERSION:-3.10}
+ARG PYTHON_VERSION=${PYTHON_VERSION:-3.11}
 FROM python:$PYTHON_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
