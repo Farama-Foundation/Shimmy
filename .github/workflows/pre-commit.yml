@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
-      - run: pip install pre-commit
+      - run: pip install pre-commit pillow "fastmcp>=2,<5"
       - run: pre-commit --version
       - run: pre-commit install
       - run: pre-commit run --all-files
