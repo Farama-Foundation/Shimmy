@@ -268,7 +268,7 @@ class DmControlMultiAgentCompatibilityV0(ParallelEnv, EzPickle):
             self.agents
         ), f"Must have actions for all {len(self.agents)} agents, currently only found {len(actions)}."
 
-        timestep = self._env.step(actions.values())
+        timestep = self._env.step([actions[agent] for agent in self.agents])
 
         obs, rewards, terminations, truncations, infos = _unravel_ma_timestep(
             timestep, self.agents
