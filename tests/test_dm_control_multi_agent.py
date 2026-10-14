@@ -141,6 +141,46 @@ def test_seeding(config):
     env2.close()
 
 
+def test_action_order_independent():
+    """Tests that actions are applied to the matching agents regardless of dict order."""
+    config = CONFIGS[0]
+    team_size, time_limit, disable_walker_contacts, enable_field_box, terminate_on_goal, walker_type = config  # fmt: skip
+
+    env1 = load_dm_control_soccer(
+        team_size,
+        time_limit,
+        disable_walker_contacts,
+        enable_field_box,
+        terminate_on_goal,
+        walker_type,
+    )
+    env2 = load_dm_control_soccer(
+        team_size,
+        time_limit,
+        disable_walker_contacts,
+        enable_field_box,
+        terminate_on_goal,
+        walker_type,
+    )
+    env1 = DmControlMultiAgentCompatibilityV0(env1, render_mode=None)
+    env2 = DmControlMultiAgentCompatibilityV0(env2, render_mode=None)
+
+    env1.reset(seed=42)
+    env2.reset(seed=42)
+    agents = env1.agents
+    actions = {agent: env1.action_space(agent).sample() for agent in agents}
+    actions[agents[1]] = actions[agents[1]] * 0.5
+
+    obs1, rewards1, _, _, _ = env1.step(actions)
+    reversed_actions = dict(reversed(list(actions.items())))
+    obs2, rewards2, _, _, _ = env2.step(reversed_actions)
+
+    assert data_equivalence(obs1, obs2), "Incorrect observations"
+    assert data_equivalence(rewards1, rewards2), "Incorrect values for rewards"
+    env1.close()
+    env2.close()
+
+
 @pytest.mark.skip(reason="Cannot pickle weakref objects used in dm_soccer envs.")
 @pytest.mark.parametrize("config", CONFIGS)
 def test_pickle(config):
