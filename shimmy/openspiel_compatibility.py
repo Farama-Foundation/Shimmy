@@ -227,8 +227,8 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         self.truncations = {a: False for a in self.agents}
         self.infos = {a: {} for a in self.agents}
 
-        # get a new game state, game_length = number of game nodes
-        self.game_length = 1
+        # get a new game state; game_length counts decisions, as max_game_length() does
+        self.game_length = 0
         self.game_state = self._env.new_initial_state()
 
         # holders in case of simultaneous actions
@@ -255,7 +255,6 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
         """
         # if the game state is a chance node, choose a random outcome
         while self.game_state.is_chance_node():
-            self.game_length += 1
             outcomes_with_probs = self.game_state.chance_outcomes()
             action_list, prob_list = zip(*outcomes_with_probs)
             action = self.np_random.choice(action_list, p=prob_list)
