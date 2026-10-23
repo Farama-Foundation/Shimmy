@@ -2,6 +2,8 @@
 
 import pickle
 
+import dm_env
+import numpy as np
 import pytest
 from dm_control.locomotion import soccer as dm_soccer
 from gymnasium.utils.env_checker import data_equivalence
@@ -9,6 +11,7 @@ from pettingzoo.test import parallel_api_test
 
 from shimmy.dm_control_multiagent_compatibility import (
     DmControlMultiAgentCompatibilityV0,
+    _unravel_ma_timestep,
 )
 from shimmy.utils.dm_control_multiagent import load_dm_control_soccer
 
@@ -179,6 +182,59 @@ def test_action_order_independent():
     assert data_equivalence(rewards1, rewards2), "Incorrect values for rewards"
     env1.close()
     env2.close()
+
+
+@pytest.mark.parametrize(
+    "make_timestep, terminated, truncated",
+    [(dm_env.termination, True, False), (dm_env.truncation, False, True)],
+)
+def test_last_timestep_terminates_or_truncates(make_timestep, terminated, truncated):
+    """Tests that a final discount of 0 terminates the episode and a positive one truncates it, as in dm_env."""
+    agents = ["player_0", "player_1"]
+    timestep = make_timestep(reward=[0.0, 0.0], observation=[{}, {}])
+
+    _, _, terminations, truncations, _ = _unravel_ma_timestep(timestep, agents)
+
+    assert terminations == {agent: terminated for agent in agents}
+    assert truncations == {agent: truncated for agent in agents}
+
+
+def test_time_limit_truncates():
+    """Tests that running out of time truncates the episode (dm_control ends it with discount 1)."""
+    env = DmControlMultiAgentCompatibilityV0(
+        team_size=2, time_limit=1.0, terminate_on_goal=False, render_mode=None
+    )
+    env.reset(seed=42)
+    while env.agents:
+        actions = {agent: env.action_space(agent).sample() for agent in env.agents}
+        _, _, terminations, truncations, _ = env.step(actions)
+
+    assert all(truncations.values())
+    assert not any(terminations.values())
+    env.close()
+
+
+def test_goal_terminates():
+    """Tests that a goal with `terminate_on_goal` terminates the episode (dm_control ends it with discount 0)."""
+    soccer_env = load_dm_control_soccer(2, 10.0, None, None, True, None)
+    env = DmControlMultiAgentCompatibilityV0(soccer_env, render_mode=None)
+    env.reset(seed=42)
+
+    # Keep the ball just behind a goal line until the arena detects a goal.
+    behind_goal_line = [-(soccer_env.task.arena.size[0] + 0.5), 0.0, 0.5]
+    for _ in range(100):
+        soccer_env.task.ball.set_pose(soccer_env.physics, position=behind_goal_line)
+        actions = {
+            agent: np.zeros_like(env.action_space(agent).low) for agent in env.agents
+        }
+        _, _, terminations, truncations, _ = env.step(actions)
+        if not env.agents:
+            break
+
+    assert soccer_env.task.arena.detected_goal() is not None
+    assert all(terminations.values())
+    assert not any(truncations.values())
+    env.close()
 
 
 @pytest.mark.skip(reason="Cannot pickle weakref objects used in dm_soccer envs.")

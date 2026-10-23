@@ -68,6 +68,8 @@ while env.agents:
 env.close()
 ```
 
+The episode ends for all agents at once. Following the [dm_env convention](https://github.com/deepmind/dm_env/blob/master/docs/index.md#example-sequences), `terminations` are true when it ends with a discount of 0 (a goal with `terminate_on_goal=True`), and `truncations` are true when it ends with a positive discount (the `time_limit` is reached).
+
 Environments are loaded as [`ParallelEnv`](https://pettingzoo.farama.org/api/parallel/), but can be converted to [`AECEnv`](https://pettingzoo.farama.org/api/aec/) using [PettingZoo Wrappers](https://pettingzoo.farama.org/api/pz_wrappers/).
 
 

@@ -31,7 +31,8 @@ def _unravel_ma_timestep(timestep: dm_env.TimeStep, agents: list[AgentID]) -> tu
     # set terminated and truncated
     term, trunc = False, False
     if timestep.last():
-        if timestep.discount == 0:
+        # https://github.com/deepmind/dm_env/blob/master/docs/index.md#example-sequences
+        if timestep.discount > 0:
             trunc = True
         else:
             term = True
