@@ -252,3 +252,27 @@ def test_pickle(game_name):
         env2.step(action2)
     env1.close()
     env2.close()
+
+
+@pytest.mark.parametrize(
+    "game_name, actions",
+    [
+        # Two chance nodes deal the cards, then pass, bet, call is Kuhn's longest game.
+        ("kuhn_poker", [0, 1, 1]),
+        # A single simultaneous decision.
+        ("matrix_rps", [0, 1]),
+    ],
+)
+def test_full_game_terminates_without_truncation(game_name, actions):
+    """Tests that chance outcomes and the final decision do not cause truncation."""
+    env = OpenSpielCompatibilityV0(game_name=game_name, render_mode=None)
+    env.reset(seed=42)
+
+    for action in actions:
+        assert not any(env.truncations.values())
+        env.step(action)
+
+    assert env.game_state.is_terminal()
+    assert all(env.terminations.values())
+    assert not any(env.truncations.values())
+    env.close()
