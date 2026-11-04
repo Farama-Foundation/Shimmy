@@ -45,7 +45,7 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
             render_mode (Optional[str]): rendering mode
             config (Optional[dict]): PySpiel config
         """
-        EzPickle.__init__(self, env, game_name, render_mode)
+        EzPickle.__init__(self, env, game_name, render_mode, config)
         super().__init__()
 
         self.config = config
@@ -66,6 +66,10 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
                 self._env = pyspiel.load_game(game_name)
         elif env is not None:
             self._env = env
+
+        # The game as configured, kept so every reset plays it. Games are immutable, so it can be reused as is, and
+        # reloading by short name would drop parameters baked into a game passed as `env`.
+        self._game = self._env
 
         self.possible_agents = [
             "player_" + str(r) for r in range(self._env.num_players())
@@ -205,17 +209,11 @@ class OpenSpielCompatibilityV0(pz.AECEnv, EzPickle):
 
         # seed argument is only valid for three games
         if self.game_name in ["deep_sea", "hanabi", "mfg_garnet"] and seed is not None:
-            if self.config is not None:
-                reset_config = self.config.copy()
-                reset_config["seed"] = seed
-            else:
-                reset_config = {"seed": seed}
+            reset_config = dict(self._game.get_parameters())
+            reset_config["seed"] = seed
             self._env = pyspiel.load_game(self.game_name, reset_config)
         else:
-            if self.config is not None:
-                self._env = pyspiel.load_game(self.game_name, self.config)
-            else:
-                self._env = pyspiel.load_game(self.game_name)
+            self._env = self._game
 
         # all agents
         self.agents = self.possible_agents[:]
