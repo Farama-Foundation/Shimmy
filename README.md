@@ -42,8 +42,6 @@ Choices: `gym-v21`, `gym-v26`, `dm-control`, `dm-control-multi-agent`, `openspie
 
 ### Python version support
 
-Shimmy requires Python 3.11 or newer.
-
 The underlying environment libraries impose ceilings that Shimmy itself cannot lift:
 
 | Extra | Highest supported Python | Why |
