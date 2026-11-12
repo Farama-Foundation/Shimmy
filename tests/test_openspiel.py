@@ -252,3 +252,44 @@ def test_pickle(game_name):
         env2.step(action2)
     env1.close()
     env2.close()
+
+
+def test_reset_keeps_parameters_of_a_passed_game():
+    """A game passed as `env` keeps its parameters across reset instead of being reloaded with defaults."""
+    env = OpenSpielCompatibilityV0(pyspiel.load_game("kuhn_poker", {"players": 3}))
+    assert len(env.possible_agents) == 3
+    env.reset(seed=0)
+    assert env.agents == env.possible_agents
+    for agent in env.agent_iter():
+        _, _, termination, truncation, info = env.last()
+        action = (
+            None
+            if termination or truncation
+            else env.action_space(agent).sample(mask=info["action_mask"])
+        )
+        env.step(action)
+
+    env = OpenSpielCompatibilityV0(pyspiel.load_game("go", {"board_size": 9}))
+    shape = env.observation_space(env.possible_agents[0]).shape
+    env.reset(seed=0)
+    assert env.observation_space(env.agents[0]).shape == shape
+    assert shape[-2:] == (9, 9)
+
+
+def test_pickle_keeps_config():
+    """A `config` survives pickling, so the restored env plays the same game."""
+    env = OpenSpielCompatibilityV0(game_name="go", config={"board_size": 9})
+    restored = pickle.loads(pickle.dumps(env))
+    assert restored.config == {"board_size": 9}
+    restored.reset(seed=0)
+    assert restored.observation_space(restored.agents[0]).shape[-2:] == (9, 9)
+
+
+def test_seeded_reset_keeps_config():
+    """The seeded reload for deep_sea keeps the configured size and only adds the seed."""
+    env = OpenSpielCompatibilityV0(game_name="deep_sea", config={"size": 3})
+    shape = env.observation_space(env.possible_agents[0]).shape
+    env.reset(seed=7)
+    assert env.observation_space(env.agents[0]).shape == shape
+    env.reset()
+    assert env.observation_space(env.agents[0]).shape == shape
