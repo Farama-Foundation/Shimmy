@@ -6,6 +6,7 @@ lastpage:
 
 ```{project-logo} _static/img/shimmy-text.png
 :alt: Shimmy Logo
+:class: farama-black-logo-invert
 ```
 
 ```{project-heading}
